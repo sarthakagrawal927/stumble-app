@@ -1,16 +1,9 @@
-# dating_made_better
+# dating_made_better.
+A dating app that meets all the needs of our generation :)
 
-A new Flutter project.
+- Tired of swiping away and getting nowhere?
+- Tired of finding people only seeking validations?
+- Tired of finding people who want something entirely different from what you want?
+- Tired of meeting people through apps and realizing they are nothing like what they portrayed on texts?
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Well, we have an answer for all your problems right here!
