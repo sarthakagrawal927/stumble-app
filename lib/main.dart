@@ -1,3 +1,4 @@
+import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/user_profile_overview_screen.dart';
@@ -17,6 +18,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: UserProfileScreen(),
+      routes: {
+        UserProfileCompletionScreen.routeName: (context) =>
+            UserProfileCompletionScreen(),
+      },
     );
   }
 }

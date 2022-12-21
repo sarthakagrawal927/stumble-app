@@ -1,3 +1,4 @@
+import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileScreen extends StatelessWidget {
@@ -13,73 +14,98 @@ class UserProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Expanded(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            const Center(
-              child: CircleAvatar(
-                maxRadius: 50,
-                minRadius: 30,
-                backgroundColor: Colors.transparent,
-                backgroundImage: NetworkImage(
-                  'https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg',
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Container(
-              color: Colors.amber,
-              child: const Text(
-                'Profile completion: ',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Row(
+      body: Column(
+        children: <Widget>[
+          Card(
+            color: Colors.amber,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                const SizedBox(
+                  height: 20,
+                ),
+                const Center(
+                  child: CircleAvatar(
+                    maxRadius: 50,
+                    minRadius: 30,
+                    backgroundColor: Colors.transparent,
+                    backgroundImage: NetworkImage(
+                      'https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg',
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Container(
                   color: Colors.amber,
                   child: const Text(
-                    'Name',
+                    'Profile completion: 20%',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
                     ),
                   ),
                 ),
-                Container(
-                  color: Colors.amber,
-                  child: const Text(
-                    'Age',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
+                const SizedBox(
+                  height: 20,
                 ),
-                Container(
-                  color: Colors.amber,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      color: Colors.amber,
+                      child: const Text(
+                        'Rahul Khare, ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      color: Colors.amber,
+                      child: const Text(
+                        '23 ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      color: Colors.amber,
+                      child: const Icon(
+                        color: Colors.blueAccent,
+                        Icons.verified_rounded,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextButton(
                   child: const Text(
-                    'Verified',
+                    'Complete Profile?',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 15,
                     ),
                   ),
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, UserProfileCompletionScreen.routeName);
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
