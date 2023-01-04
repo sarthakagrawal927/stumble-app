@@ -8,14 +8,16 @@ import '../providers/profiles.dart';
 class SwipingScreen extends StatefulWidget {
   static const routeName = '/swiping-screen';
 
+  const SwipingScreen({super.key});
+
   @override
   State<SwipingScreen> createState() => _SwipingScreenState();
 }
 
 class _SwipingScreenState extends State<SwipingScreen> {
-  List<SwipeItem> _swipeItems = <SwipeItem>[];
+  final List<SwipeItem> _swipeItems = <SwipeItem>[];
   MatchEngine? _matchEngine;
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
   void initState() {
@@ -29,17 +31,18 @@ class _SwipingScreenState extends State<SwipingScreen> {
           nopeAction: () {},
           superlikeAction: () {},
           onSlideUpdate: (region) async {
-            print("Region $region");
+            // print("Region $region");
           },
         ),
       );
     }
     _matchEngine = MatchEngine(swipeItems: _swipeItems);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final userProfiles = Provider.of<Profiles>(context).userProfiles;
+    // final userProfiles = Provider.of<Profiles>(context).userProfiles;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -53,39 +56,38 @@ class _SwipingScreenState extends State<SwipingScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Container(
-          child: Stack(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height - kToolbarHeight,
-                child: SwipeCards(
-                  matchEngine: _matchEngine!,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image:
-                              NetworkImage(_swipeItems[index].content.imageUrl),
-                        ),
+        child: Stack(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height - kToolbarHeight,
+              child: SwipeCards(
+                matchEngine: _matchEngine!,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image:
+                            NetworkImage(_swipeItems[index].content.imageUrl),
                       ),
-                      child: Text(
-                        _swipeItems[index].content.name,
-                        style: TextStyle(fontSize: 100),
-                      ),
-                    );
-                  },
-                  onStackFinished: () {},
-                  itemChanged: (SwipeItem item, int index) {
-                    print("item: ${item.content.text}, index: $index");
-                  },
-                  upSwipeAllowed: true,
-                  fillSpace: true,
-                ),
+                    ),
+                    child: Text(
+                      _swipeItems[index].content.name,
+                      style: const TextStyle(fontSize: 100),
+                    ),
+                  );
+                },
+                onStackFinished: () {},
+                itemChanged: (SwipeItem item, int index) {
+                  // print( "item: ${item.content.name}, index: $index");
+                  // content is an instance of profile
+                },
+                upSwipeAllowed: true,
+                fillSpace: true,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

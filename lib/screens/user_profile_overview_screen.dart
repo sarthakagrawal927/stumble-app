@@ -2,6 +2,8 @@ import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileScreen extends StatelessWidget {
+  const UserProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

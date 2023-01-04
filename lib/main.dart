@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SwipingScreen(),
+        home: const SwipingScreen(),
         routes: {
-          SwipingScreen.routeName: (context) => SwipingScreen(),
+          SwipingScreen.routeName: (context) => const SwipingScreen(),
           UserProfileCompletionScreen.routeName: (context) =>
               UserProfileCompletionScreen(),
         },
