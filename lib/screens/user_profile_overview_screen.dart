@@ -1,25 +1,27 @@
+import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileScreen extends StatelessWidget {
+  static const routeName = "/user-profile-screen";
   const UserProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.white,
         title: const Text(
           'Dating, made better!',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.amber,
           ),
         ),
       ),
       body: Column(
         children: <Widget>[
           Card(
-            color: Colors.amber,
+            color: Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +43,7 @@ class UserProfileScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Container(
-                  color: Colors.amber,
+                  color: Colors.white,
                   child: const Text(
                     'Profile completion: 20%',
                     style: TextStyle(
@@ -57,7 +59,7 @@ class UserProfileScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      color: Colors.amber,
+                      color: Colors.white,
                       child: const Text(
                         'Rahul Khare, ',
                         style: TextStyle(
@@ -67,7 +69,7 @@ class UserProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      color: Colors.amber,
+                      color: Colors.white,
                       child: const Text(
                         '23 ',
                         style: TextStyle(
@@ -77,7 +79,7 @@ class UserProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      color: Colors.amber,
+                      color: Colors.white,
                       child: const Icon(
                         color: Colors.blueAccent,
                         Icons.verified_rounded,
@@ -108,6 +110,31 @@ class UserProfileScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.account_box_rounded),
+                color: Colors.amber,
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.favorite),
+                color: Colors.grey,
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    SwipingScreen.routeName,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         home: const SwipingScreen(),
         routes: {
           SwipingScreen.routeName: (context) => const SwipingScreen(),
+          UserProfileScreen.routeName: (context) => UserProfileScreen(),
           UserProfileCompletionScreen.routeName: (context) =>
               UserProfileCompletionScreen(),
         },

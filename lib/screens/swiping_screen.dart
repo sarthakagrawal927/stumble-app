@@ -1,3 +1,4 @@
+import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,40 +55,75 @@ class _SwipingScreenState extends State<SwipingScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Stack(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height - kToolbarHeight,
-              child: SwipeCards(
-                matchEngine: _matchEngine!,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image:
-                            NetworkImage(_swipeItems[index].content.imageUrl),
-                      ),
-                    ),
-                    child: Text(
-                      _swipeItems[index].content.name,
-                      style: const TextStyle(fontSize: 100),
-                    ),
-                  );
-                },
-                onStackFinished: () {},
-                itemChanged: (SwipeItem item, int index) {
-                  // print( "item: ${item.content.name}, index: $index");
-                  // content is an instance of profile
-                },
-                upSwipeAllowed: true,
-                fillSpace: true,
-              ),
+      body: Column(
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
+            child: Stack(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height - 220,
+                  child: SwipeCards(
+                    matchEngine: _matchEngine!,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        alignment: Alignment.bottomLeft,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(
+                                _swipeItems[index].content.imageUrl),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            _swipeItems[index].content.name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    onStackFinished: () {},
+                    itemChanged: (SwipeItem item, int index) {
+                      // print( "item: ${item.content.name}, index: $index");
+                      // content is an instance of profile
+                    },
+                    upSwipeAllowed: true,
+                    fillSpace: true,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.account_box_rounded),
+                color: Colors.grey,
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                      context, UserProfileScreen.routeName);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.favorite),
+                color: Colors.amber,
+                onPressed: () {},
+              ),
+            ],
+          ),
         ),
       ),
     );
