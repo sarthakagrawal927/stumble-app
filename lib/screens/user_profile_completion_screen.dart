@@ -1,14 +1,50 @@
 import 'package:flutter/material.dart';
 
-class UserProfileCompletionScreen extends StatelessWidget {
+import '../providers/profile.dart';
+
+class UserProfileCompletionScreen extends StatefulWidget {
   static const routeName = '/user-profile-completion';
+
+  UserProfileCompletionScreen({super.key});
+
+  @override
+  State<UserProfileCompletionScreen> createState() =>
+      _UserProfileCompletionScreenState();
+}
+
+class _UserProfileCompletionScreenState
+    extends State<UserProfileCompletionScreen> {
   final List<String> _images = [
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmEQyguqPeNS0rFBoHIJ_JWFzAzN14Hk1R3e2xEEkr2g&s',
     'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk=',
     'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'
   ];
 
-  UserProfileCompletionScreen({super.key});
+  final _secondConversationStarterFocusNode = FocusNode();
+  final _thirdConversationStarterFocusNode = FocusNode();
+  final _form = GlobalKey<FormState>();
+
+  var _editedProduct = Profile(
+    id: '',
+    name: '',
+    age: 0,
+    imageUrl: '',
+    conversationStarterList: [],
+  );
+
+  var _isInit = true;
+  var _initValues = {
+    'firstConversationStarter': '',
+    'secondConversationStarter': '',
+    'thirdConversationStarter': '',
+  };
+
+  @override
+  void dispose() {
+    _secondConversationStarterFocusNode.dispose();
+    _thirdConversationStarterFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +59,7 @@ class UserProfileCompletionScreen extends StatelessWidget {
         ),
       ),
       body: ListView(
-        children: [
+        children: <Widget>[
           Padding(
             padding: EdgeInsets.all(MediaQuery.of(context).size.width / 12),
             child: const Text(
@@ -95,22 +131,61 @@ class UserProfileCompletionScreen extends StatelessWidget {
                 Icons.verified_sharp,
                 color: Colors.blueAccent,
               ),
-              Text(
-                'Verify my profile',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Verify my profile',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                  ),
                 ),
               ),
               Text(
-                'Verify my profile',
+                'Verified',
+                textAlign: TextAlign.right,
                 style: TextStyle(
                   color: Colors.blueAccent,
-                  fontSize: 20,
+                  fontSize: 15,
                 ),
               ),
             ],
-          )
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.all(40.0),
+            child: Form(
+              key: _form,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Text(
+                    'A few things you should come talk to me about!',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    initialValue: '',
+                    maxLines: 3,
+                    minLines: 1,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (_) => {
+                      FocusScope.of(context)
+                          .requestFocus(_secondConversationStarterFocusNode)
+                    },
+                    // Todo: onSaved and validations
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
