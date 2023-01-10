@@ -1,5 +1,6 @@
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
+import 'package:dating_made_better/widgets/bottom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileScreen extends StatelessWidget {
@@ -111,31 +112,8 @@ class UserProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.account_box_rounded),
-                color: Colors.amber,
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.favorite),
-                color: Colors.grey,
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                    context,
-                    SwipingScreen.routeName,
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar:
+          BottomBar(currentScreen: "UserProfileOverviewScreen"),
     );
   }
 }

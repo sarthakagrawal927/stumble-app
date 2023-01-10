@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
 import '../providers/profiles.dart';
+import '../widgets/bottom_app_bar.dart';
 
 class SwipingScreen extends StatefulWidget {
   static const routeName = '/swiping-screen';
@@ -73,18 +74,39 @@ class _SwipingScreenState extends State<SwipingScreen> {
                           image: DecorationImage(
                             fit: BoxFit.fill,
                             image: NetworkImage(
-                                _swipeItems[index].content.imageUrl),
+                                _swipeItems[index].content.imageUrls[0]),
                           ),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            _swipeItems[index].content.name,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w900,
-                            ),
+                          child: Row(
+                            children: [
+                              Text(
+                                _swipeItems[index].content.name,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              Text(
+                                _swipeItems[index].content.age.toString(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              _swipeItems[index].content.isVerified
+                                  ? const Icon(Icons.verified_sharp,
+                                      color: Colors.blue)
+                                  : const Icon(Icons.verified_outlined,
+                                      color: Colors.white),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.question_mark_outlined),
+                              ),
+                            ],
                           ),
                         ),
                       );
@@ -103,29 +125,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.account_box_rounded),
-                color: Colors.grey,
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                      context, UserProfileScreen.routeName);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.favorite),
-                color: Colors.amber,
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: BottomBar(currentScreen: "SwipingScreen"),
     );
   }
 }

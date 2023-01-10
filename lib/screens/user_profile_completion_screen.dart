@@ -28,7 +28,7 @@ class _UserProfileCompletionScreenState
     id: '',
     name: '',
     age: 0,
-    imageUrl: '',
+    imageUrls: [],
     conversationStarterList: [],
   );
 
@@ -87,35 +87,41 @@ class _UserProfileCompletionScreenState
           ),
           Row(
             children: [
-              Container(
-                width: (MediaQuery.of(context).size.width) / 2,
-                height: (MediaQuery.of(context).size.height) / 4,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(_images[0]),
+              GestureDetector(
+                child: Container(
+                  width: (MediaQuery.of(context).size.width) / 2,
+                  height: (MediaQuery.of(context).size.height) / 4,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(_images[0]),
+                    ),
                   ),
                 ),
               ),
               Column(
                 children: <Widget>[
-                  Container(
-                    width: (MediaQuery.of(context).size.width) / 2,
-                    height: (MediaQuery.of(context).size.height) / 8,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(_images[1]),
+                  GestureDetector(
+                    child: Container(
+                      width: (MediaQuery.of(context).size.width) / 2,
+                      height: (MediaQuery.of(context).size.height) / 8,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(_images[1]),
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    width: (MediaQuery.of(context).size.width) / 2,
-                    height: (MediaQuery.of(context).size.height) / 8,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(_images[2]),
+                  GestureDetector(
+                    child: Container(
+                      width: (MediaQuery.of(context).size.width) / 2,
+                      height: (MediaQuery.of(context).size.height) / 8,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(_images[2]),
+                        ),
                       ),
                     ),
                   ),
