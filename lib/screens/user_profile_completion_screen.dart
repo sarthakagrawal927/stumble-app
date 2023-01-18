@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../providers/profile.dart';
+import '../widgets/image_input.dart';
 
 class UserProfileCompletionScreen extends StatefulWidget {
   static const routeName = '/user-profile-completion';
@@ -129,6 +130,7 @@ class _UserProfileCompletionScreenState
               ),
             ],
           ),
+          ImageInput(),
           const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

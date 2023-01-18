@@ -26,21 +26,23 @@ class MyApp extends StatelessWidget {
           create: (context) => Profiles(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Dating, made better!',
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
-          accentColor: Colors.deepOrange,
-          fontFamily: 'Lato',
+      child: Consumer<Auth>(
+        builder: (context, auth, _) => MaterialApp(
+          title: 'Dating, made better!',
+          theme: ThemeData(
+            primarySwatch: Colors.purple,
+            accentColor: Colors.deepOrange,
+            fontFamily: 'Lato',
+          ),
+          home: auth.isAuth ? const SwipingScreen() : AuthScreen(),
+          routes: {
+            AuthScreen.routeName: (context) => AuthScreen(),
+            SwipingScreen.routeName: (context) => const SwipingScreen(),
+            UserProfileScreen.routeName: (context) => const UserProfileScreen(),
+            UserProfileCompletionScreen.routeName: (context) =>
+                UserProfileCompletionScreen(),
+          },
         ),
-        home: AuthScreen(),
-        routes: {
-          AuthScreen.routeName: (context) => AuthScreen(),
-          SwipingScreen.routeName: (context) => const SwipingScreen(),
-          UserProfileScreen.routeName: (context) => const UserProfileScreen(),
-          UserProfileCompletionScreen.routeName: (context) =>
-              UserProfileCompletionScreen(),
-        },
       ),
     );
   }
