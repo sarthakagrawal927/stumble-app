@@ -14,6 +14,7 @@ class UserProfileScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         title: const Text(
           'Dating, made better!',
+          textAlign: TextAlign.left,
           style: TextStyle(
             color: Colors.amber,
           ),

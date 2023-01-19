@@ -35,6 +35,8 @@ dependencies:
   swipe_cards: ^1.0.0
   provider: ^6.0.5
   http: ^0.13.5
+  image_picker: ^0.8.6
+  video_player: ^2.4.10
 
 
   # The following adds the Cupertino Icons font to your application.

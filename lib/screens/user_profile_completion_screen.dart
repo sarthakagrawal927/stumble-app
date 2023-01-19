@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../providers/profile.dart';
 import '../widgets/image_input.dart';
@@ -15,6 +18,18 @@ class UserProfileCompletionScreen extends StatefulWidget {
 
 class _UserProfileCompletionScreenState
     extends State<UserProfileCompletionScreen> {
+  File? imageFile;
+  void _getFromGallery() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+    }
+  }
+
   final List<String> _images = [
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmEQyguqPeNS0rFBoHIJ_JWFzAzN14Hk1R3e2xEEkr2g&s',
     'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk=',
@@ -24,21 +39,6 @@ class _UserProfileCompletionScreenState
   final _secondConversationStarterFocusNode = FocusNode();
   final _thirdConversationStarterFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
-
-  var _editedProduct = Profile(
-    id: '',
-    name: '',
-    age: 0,
-    imageUrls: [],
-    conversationStarterList: [],
-  );
-
-  var _isInit = true;
-  var _initValues = {
-    'firstConversationStarter': '',
-    'secondConversationStarter': '',
-    'thirdConversationStarter': '',
-  };
 
   @override
   void dispose() {
@@ -54,6 +54,7 @@ class _UserProfileCompletionScreenState
         backgroundColor: Colors.white,
         title: const Text(
           'Dating, made better!',
+          textAlign: TextAlign.left,
           style: TextStyle(
             color: Colors.amber,
           ),
@@ -88,18 +89,25 @@ class _UserProfileCompletionScreenState
           ),
           Row(
             children: [
-              GestureDetector(
-                child: Container(
-                  width: (MediaQuery.of(context).size.width) / 2,
-                  height: (MediaQuery.of(context).size.height) / 4,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(_images[0]),
+              imageFile == null
+                  ? ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(
+                          (MediaQuery.of(context).size.width) / 2,
+                          (MediaQuery.of(context).size.height) / 4,
+                        ),
+                      ),
+                      onPressed: _getFromGallery,
+                      child: const Icon(
+                        Icons.camera,
+                      ),
+                    )
+                  : Container(
+                      child: Image.file(
+                        imageFile!,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                ),
-              ),
               Column(
                 children: <Widget>[
                   GestureDetector(
@@ -130,7 +138,6 @@ class _UserProfileCompletionScreenState
               ),
             ],
           ),
-          ImageInput(),
           const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
