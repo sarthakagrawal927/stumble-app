@@ -1,6 +1,7 @@
 import 'package:dating_made_better/screens/auth_screen.dart';
 import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import './providers/profiles.dart';
@@ -30,9 +31,9 @@ class MyApp extends StatelessWidget {
         builder: (context, auth, _) => MaterialApp(
           title: 'Dating, made better!',
           theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
-            fontFamily: 'Lato',
+            textTheme: GoogleFonts.sacramentoTextTheme(
+              Theme.of(context).textTheme,
+            ),
           ),
           home: auth.isAuth ? const SwipingScreen() : AuthScreen(),
           routes: {

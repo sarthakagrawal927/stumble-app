@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 
 import '../models/http_exception.dart';
 import '../providers/auth.dart';
@@ -17,25 +19,38 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  VideoPlayerController? _videoPlayerController;
+  @override
+  void initState() {
+    super.initState();
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/firstScreenVideo.mp4")
+          ..initialize().then((_) {
+            _videoPlayerController!.play();
+            _videoPlayerController!.setLooping(true);
+            setState(() {});
+          });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _videoPlayerController!.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);
-    // transformConfig.translate(-10.0);
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(220, 236, 114, 1).withOpacity(0.5),
-                  Color.fromARGB(255, 6, 122, 255).withOpacity(0.9),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: [0, 1],
+          SizedBox.expand(
+            child: FittedBox(
+              fit: BoxFit.fill,
+              child: SizedBox(
+                width: _videoPlayerController!.value.size.width,
+                height: _videoPlayerController!.value.size.height,
+                child: VideoPlayer(_videoPlayerController!),
               ),
             ),
           ),
@@ -44,19 +59,16 @@ class _AuthScreenState extends State<AuthScreen> {
               height: deviceSize.height,
               width: deviceSize.width,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Flexible(
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 20.0),
+                      margin: EdgeInsets.only(top: 40, bottom: 40.0),
                       padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
-                      transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
+                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 85.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.amber,
                         boxShadow: const [
                           BoxShadow(
                             blurRadius: 8,
@@ -65,13 +77,12 @@ class _AuthScreenState extends State<AuthScreen> {
                           )
                         ],
                       ),
-                      child: const Text(
+                      child: Text(
                         'Stumble',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 50,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
+                        style: GoogleFonts.sacramento(
+                          fontSize: 40.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -175,12 +186,16 @@ class _AuthCardState extends State<AuthCard> {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Card(
+      color: Colors.amber.withOpacity(0.3),
+      margin: EdgeInsets.only(
+        bottom: 60,
+      ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 8.0,
       child: Container(
-        height: _authMode == AuthMode.Signup ? 320 : 260,
+        height: _authMode == AuthMode.Signup ? 360 : 300,
         constraints:
             BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
         width: deviceSize.width * 0.75,
@@ -191,7 +206,18 @@ class _AuthCardState extends State<AuthCard> {
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'E-Mail'),
+                  cursorColor: Colors.white,
+                  style: const TextStyle(
+                    color: Colors.white54,
+                    fontSize: 20,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'E-Mail',
+                    labelStyle: GoogleFonts.lato(
+                      fontSize: 20,
+                      color: Colors.white54,
+                    ),
+                  ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value!.isEmpty || !value.contains('@')) {
@@ -204,7 +230,13 @@ class _AuthCardState extends State<AuthCard> {
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: GoogleFonts.lato(
+                      fontSize: 20,
+                      color: Colors.white54,
+                    ),
+                  ),
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
@@ -219,8 +251,13 @@ class _AuthCardState extends State<AuthCard> {
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
                     enabled: _authMode == AuthMode.Signup,
-                    decoration:
-                        const InputDecoration(labelText: 'Confirm Password'),
+                    decoration: InputDecoration(
+                      labelText: 'Confirm Password',
+                      labelStyle: GoogleFonts.lato(
+                        fontSize: 20,
+                        color: Colors.white54,
+                      ),
+                    ),
                     obscureText: true,
                     validator: _authMode == AuthMode.Signup
                         ? (value) {
@@ -237,18 +274,23 @@ class _AuthCardState extends State<AuthCard> {
                   const CircularProgressIndicator()
                 else
                   ElevatedButton(
-                    onPressed: _submit,
+                    onPressed: _submit, 
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                       padding:
                           EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      foregroundColor: Colors.amber,
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blue.withOpacity(0.1),
                     ),
-                    child:
-                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                    child: Text(
+                      _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP',
+                      style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
                 Padding(
                   padding:
@@ -260,7 +302,9 @@ class _AuthCardState extends State<AuthCard> {
                     ),
                     onPressed: _switchAuthMode,
                     child: Text(
-                        '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD',
+                      style: GoogleFonts.lato(color: Colors.white54),
+                    ),
                   ),
                 ),
               ],
