@@ -14,6 +14,7 @@
 
 31/3/2023 - MVP Ready
 ## MVP
+- Logo
 - Beautiful App
   - Main Screen (Shows profiles)
   - Profile Screen
@@ -21,15 +22,15 @@
   - App setting screen
 - SEO Based Website (10hr)
 - Amazing name
-- Analytics
-- Feedback loop
-- Heavy Referral Game (3month free premium for first 10k users - more if you bring more people)
+- [Analytics](https://amplitude.com/)
 - Working Backend :
-  - map,
-  - auth,
-  - payment (can be after MVP)
-  - voice prompts
-  - photo verification (mostly by some online ML model)
+  - auth, (googleAuth -> phoneVerification(twilio))
+  - Socket Programming (RT-Chat & Online status)
+  - [map](https://redis.io/docs/data-types/geospatial/),
+  - [photo verification (mostly by some online ML model)](https://www.npmjs.com/package/face-api.js)
+  - Heavy Referral Game (3month free premium for first 10k users - more if you bring more people)
+  - Feedback loop
+  - User Block Report
 
 31/3/2023 - 31/12/2023 - Improve App, Market, Look for investment.
 
@@ -37,11 +38,39 @@ Set up alpha group.
 
 31/12/2023 - Revenue: 1.5L/monthly or received investment - Job Leave
 
+## Post MVP
+voice prompts
+Payment
+SuperLike
+
 ## Release Ideas
 
 ### If investment
 - Fests, Concerts
-- Youtubers (targeting our audience - like Tanmay Bhatt)
+- Youtubers (targeting our audience - like TanmayBhatt)
 
 ### If Not
 - Release, word of mouth
+
+## 20th Jan - 17th Feb
+
+### Sarthak
+- Basic Backend
+- Google Auth
+- Map Logic Complete (100m - 200m)
+- Face POC
+- Huge like/matches table querying POC (think about eliminating dislikes profiles from user feed)
+
+### Rahul
+- Chat Screen
+- Profile List (Swipe Logic)
+- Completion Profile
+- Niche Implementation
+- Research Notifications
+- Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart)
+
+### Common
+- Analytics
+  - Screen Time Spent
+
+Watch Ad to pay
