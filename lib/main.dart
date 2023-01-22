@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import './providers/profiles.dart';
 import './providers/auth.dart';
+import './providers/profiles.dart';
+import './providers/image_input.dart';
 import './screens/swiping_screen.dart';
 import './screens/user_profile_completion_screen.dart';
 
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
           create: (context) => Auth(),
         ),
         ChangeNotifierProvider(
+          create: (context) => ImageInput(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => Profiles(),
         ),
       ],
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
         builder: (context, auth, _) => MaterialApp(
           title: 'Dating, made better!',
           theme: ThemeData(
-            textTheme: GoogleFonts.sacramentoTextTheme(
+            textTheme: GoogleFonts.latoTextTheme(
               Theme.of(context).textTheme,
             ),
           ),

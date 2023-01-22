@@ -1,15 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
-import '../providers/profile.dart';
-import '../widgets/image_input.dart';
+import '../providers/image_input.dart';
 
 class UserProfileCompletionScreen extends StatefulWidget {
   static const routeName = '/user-profile-completion';
 
-  UserProfileCompletionScreen({super.key});
+  const UserProfileCompletionScreen({super.key});
 
   @override
   State<UserProfileCompletionScreen> createState() =>
@@ -18,43 +17,30 @@ class UserProfileCompletionScreen extends StatefulWidget {
 
 class _UserProfileCompletionScreenState
     extends State<UserProfileCompletionScreen> {
-  File? imageFile;
-  void _getFromGallery() async {
-    XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      imageFile = File(pickedFile.path);
-    }
-  }
-
   final List<String> _images = [
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmEQyguqPeNS0rFBoHIJ_JWFzAzN14Hk1R3e2xEEkr2g&s',
     'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk=',
     'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'
   ];
 
-  final _secondConversationStarterFocusNode = FocusNode();
-  final _thirdConversationStarterFocusNode = FocusNode();
+  final _conversationStarterFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _secondConversationStarterFocusNode.dispose();
-    _thirdConversationStarterFocusNode.dispose();
+    _conversationStarterFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    ImageInput imageInput = Provider.of<ImageInput>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(
-          'Dating, made better!',
-          textAlign: TextAlign.left,
+          'Stumble!',
+          textAlign: TextAlign.start,
           style: TextStyle(
             color: Colors.amber,
           ),
@@ -87,56 +73,30 @@ class _UserProfileCompletionScreenState
               ),
             ),
           ),
-          Row(
-            children: [
-              imageFile == null
-                  ? ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(
-                          (MediaQuery.of(context).size.width) / 2,
-                          (MediaQuery.of(context).size.height) / 4,
-                        ),
-                      ),
-                      onPressed: _getFromGallery,
-                      child: const Icon(
-                        Icons.camera,
-                      ),
-                    )
-                  : Container(
-                      child: Image.file(
-                        imageFile!,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-              Column(
-                children: <Widget>[
-                  GestureDetector(
-                    child: Container(
-                      width: (MediaQuery.of(context).size.width) / 2,
-                      height: (MediaQuery.of(context).size.height) / 8,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(_images[1]),
-                        ),
-                      ),
-                    ),
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: imageInput.elemenExistsAt(0)
+                      ? imageInput.returnContainer(0)
+                      : imageInput.renderElevatedButton(context, true),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      imageInput.elemenExistsAt(1)
+                          ? imageInput.returnContainer(1)
+                          : imageInput.renderElevatedButton(context, false),
+                      imageInput.elemenExistsAt(2)
+                          ? imageInput.returnContainer(2)
+                          : imageInput.renderElevatedButton(context, false),
+                    ],
                   ),
-                  GestureDetector(
-                    child: Container(
-                      width: (MediaQuery.of(context).size.width) / 2,
-                      height: (MediaQuery.of(context).size.height) / 8,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(_images[2]),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                )
+              ],
+            ),
           ),
           const Divider(),
           Row(
@@ -193,7 +153,7 @@ class _UserProfileCompletionScreenState
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (_) => {
                       FocusScope.of(context)
-                          .requestFocus(_secondConversationStarterFocusNode)
+                          .requestFocus(_conversationStarterFocusNode)
                     },
                     // Todo: onSaved and validations
                   ),
