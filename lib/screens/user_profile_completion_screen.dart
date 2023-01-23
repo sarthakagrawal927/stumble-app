@@ -33,6 +33,11 @@ class _UserProfileCompletionScreenState
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ImageInput imageInput = Provider.of<ImageInput>(context);
     return Scaffold(
@@ -74,27 +79,26 @@ class _UserProfileCompletionScreenState
             ),
           ),
           IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: Column(
               children: [
-                Expanded(
-                  child: imageInput.elemenExistsAt(0)
-                      ? imageInput.returnContainer(0)
-                      : imageInput.renderElevatedButton(context, true),
+                Row(
+                  children: [
+                    imageInput.renderButton(context, 0),
+                    imageInput.renderImage(context, 0)
+                  ],
                 ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      imageInput.elemenExistsAt(1)
-                          ? imageInput.returnContainer(1)
-                          : imageInput.renderElevatedButton(context, false),
-                      imageInput.elemenExistsAt(2)
-                          ? imageInput.returnContainer(2)
-                          : imageInput.renderElevatedButton(context, false),
-                    ],
-                  ),
-                )
+                Row(
+                  children: [
+                    imageInput.renderButton(context, 1),
+                    imageInput.renderImage(context, 1)
+                  ],
+                ),
+                Row(
+                  children: [
+                    imageInput.renderButton(context, 2),
+                    imageInput.renderImage(context, 2)
+                  ],
+                ),
               ],
             ),
           ),
