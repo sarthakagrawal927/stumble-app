@@ -40,6 +40,42 @@ class _UserProfileCompletionScreenState
   @override
   Widget build(BuildContext context) {
     ImageInput imageInput = Provider.of<ImageInput>(context);
+    Widget renderWidgetBasedOnSelection(BuildContext context, int imageNumber) {
+      int imageHeight = 14;
+      bool isFirstImage = false;
+      if (imageNumber == 0) {
+        imageHeight = 7;
+        isFirstImage = true;
+      } else {
+        isFirstImage = false;
+      }
+      Widget widgetToRender = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          fixedSize: Size(
+            (MediaQuery.of(context).size.width) / 2,
+            (MediaQuery.of(context).size.height) / imageHeight,
+          ),
+        ),
+        onPressed: imageInput.getFromGallery,
+        child: const Icon(
+          Icons.camera,
+          color: Colors.amber,
+        ),
+      );
+      if (imageInput.imageList() != null) {
+        widgetToRender = SizedBox(
+          width: (MediaQuery.of(context).size.width) / 2,
+          height: (MediaQuery.of(context).size.height) / imageHeight,
+          child: Image.file(
+            imageInput.imageList()![imageNumber],
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+      return widgetToRender;
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -78,28 +114,31 @@ class _UserProfileCompletionScreenState
               ),
             ),
           ),
-          IntrinsicHeight(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    imageInput.renderButton(context, 0),
-                    imageInput.renderImage(context, 0)
-                  ],
-                ),
-                Row(
-                  children: [
-                    imageInput.renderButton(context, 1),
-                    imageInput.renderImage(context, 1)
-                  ],
-                ),
-                Row(
-                  children: [
-                    imageInput.renderButton(context, 2),
-                    imageInput.renderImage(context, 2)
-                  ],
-                ),
-              ],
+          Consumer<ImageInput>(
+            builder: (context, imageInput, child) => IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      imageInput.renderButton(context, 0),
+                      imageInput.renderImage(context, 0),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      imageInput.renderButton(context, 1),
+                      imageInput.renderImage(context, 1),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      imageInput.renderButton(context, 2),
+                      imageInput.renderImage(context, 2),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           const Divider(),

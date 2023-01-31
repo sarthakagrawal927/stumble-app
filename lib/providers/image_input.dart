@@ -5,30 +5,25 @@ import 'package:image_picker/image_picker.dart';
 
 class ImageInput with ChangeNotifier {
   List<File>? _imageFiles = <File>[];
-  int _imageHeight = 14;
-  bool _isFirstImage = false;
-  int currentImageNumber = 0;
-  bool imageAlreadySet = false;
+  int _currentImageNumber = 5;
 
-  void _getFromGallery() async {
+  void getFromGallery() async {
+    if (_currentImageNumber < _imageFiles!.length) {
+      _imageFiles!.removeWhere(
+          (element) => element == _imageFiles![_currentImageNumber]);
+    }
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
     );
     if (pickedFile != null) {
-      if (_isFirstImage) {
-        _imageFiles = [File(pickedFile.path)];
-      }
-      if (imageAlreadySet) {
-        _imageFiles!.removeAt(currentImageNumber);
-      }
       _imageFiles!.add(File(pickedFile.path));
-      notifyListeners();
     }
+    notifyListeners();
   }
 
-  List<File> get imageFiles {
+  List<File>? imageList() {
     if (_imageFiles == null) {
       return <File>[];
     }
@@ -36,24 +31,22 @@ class ImageInput with ChangeNotifier {
   }
 
   bool elemenExistsAt(int index) {
-    if (imageFiles.length >= index + 1) return true;
+    if (_imageFiles!.length >= index + 1) return true;
     return false;
   }
 
   Widget renderButton(BuildContext context, int imageNumber) {
-    if (imageNumber == 0) {
-      _imageHeight = 7;
-      _isFirstImage = true;
-    }
+    _currentImageNumber = imageNumber;
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.white,
         fixedSize: Size(
           (MediaQuery.of(context).size.width) / 5,
-          (MediaQuery.of(context).size.height) / _imageHeight,
+          (MediaQuery.of(context).size.height) / 7,
         ),
       ),
-      onPressed: _getFromGallery,
+      onPressed: getFromGallery,
       child: const Icon(
         Icons.camera,
         color: Colors.amber,
@@ -62,21 +55,18 @@ class ImageInput with ChangeNotifier {
   }
 
   Widget renderImage(BuildContext context, int imageNumber) {
-    _imageHeight = 7;
-    _isFirstImage = imageNumber == 0 ? true : false;
-    if (_imageFiles!.length > imageNumber) {
-      return SizedBox(
-        width: (MediaQuery.of(context).size.width) / 1.25,
-        height: (MediaQuery.of(context).size.height) / _imageHeight,
-        child: Image.file(
-          _imageFiles![imageNumber],
-          fit: BoxFit.cover,
-        ),
-      );
-    }
-    return SizedBox(
-      width: (MediaQuery.of(context).size.width) / 1.5,
-      height: (MediaQuery.of(context).size.height) / _imageHeight,
+    return Container(
+      height: (MediaQuery.of(context).size.height) / 7,
+      width: (MediaQuery.of(context).size.width) / 5 * 4,
+      child: elemenExistsAt(imageNumber)
+          ? Image.file(
+              _imageFiles![imageNumber],
+              fit: BoxFit.cover,
+            )
+          : Text(
+              "Add image!",
+              textAlign: TextAlign.center,
+            ),
     );
   }
 }
