@@ -55,22 +55,24 @@ SuperLike
 ## 20th Jan - 17th Feb
 
 ### Sarthak
-- Basic Backend
+- Basic Backend - PARTIAL
 - Google Auth
-- Map Logic Complete (100m - 200m)
+- Map Logic Complete (100m - 200m) - DONE
 - Face POC
-- Huge like/matches table querying POC (think about eliminating dislikes profiles from user feed)
+- Huge like/matches table querying POC (think about eliminating dislikes profiles from user feed) - DONE
 
 ### Rahul
-- Chat Screen
-- Profile List (Swipe Logic)
-- Completion Profile
+- Chat Screen - PARTIAL
+- Profile List (Swipe Logic) - DONE
+- Completion Profile - PARTIAL
 - Niche Implementation
 - Research Notifications
+- Research Hard upgrade & Soft upgrade
 - Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart)
 
 ### Common
+- Research Brand Buildingx2
 - Analytics
-  - Screen Time Spent
+  - [Screen Time Spent](https://pub.dev/packages/amplitude_flutter)
 
 Watch Ad to pay
