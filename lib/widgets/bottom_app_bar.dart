@@ -22,6 +22,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
+      color: Theme.of(context).backgroundColor,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20.0),
         child: currentScreen == "SwipingScreen"

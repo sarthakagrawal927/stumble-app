@@ -43,7 +43,7 @@ class _UserProfileCompletionScreenState
     ImageInput imageInput = Provider.of<ImageInput>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         title: const Text(
           'Stumble!',
           textAlign: TextAlign.start,

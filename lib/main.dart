@@ -35,10 +35,12 @@ class MyApp extends StatelessWidget {
         builder: (context, auth, _) => MaterialApp(
           title: 'Dating, made better!',
           theme: ThemeData(
-            textTheme: GoogleFonts.latoTextTheme(
-              Theme.of(context).textTheme,
-            ),
-          ),
+              textTheme: GoogleFonts.latoTextTheme(
+                Theme.of(context).textTheme,
+              ),
+              // primarySwatch: MaterialColor(#0xF9A25E, color),
+              backgroundColor: Color.fromRGBO(105, 50, 30, 1),
+              cardColor: Color.fromRGBO(249, 162, 94, 1)),
           home: auth.isAuth ? const SwipingScreen() : AuthScreen(),
           routes: {
             AuthScreen.routeName: (context) => AuthScreen(),

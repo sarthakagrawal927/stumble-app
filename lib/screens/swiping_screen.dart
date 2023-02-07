@@ -1,4 +1,3 @@
-import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +47,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         title: const Text(
           'Dating, made better!',
           style: TextStyle(
@@ -71,8 +70,9 @@ class _SwipingScreenState extends State<SwipingScreen> {
                       return Container(
                         alignment: Alignment.bottomLeft,
                         decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
                           image: DecorationImage(
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                             image: NetworkImage(
                                 _swipeItems[index].content.imageUrls[0]),
                           ),
