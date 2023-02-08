@@ -1,4 +1,5 @@
 import 'package:dating_made_better/screens/auth_screen.dart';
+import 'package:dating_made_better/screens/chat_screen.dart';
 import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
             UserProfileScreen.routeName: (context) => const UserProfileScreen(),
             UserProfileCompletionScreen.routeName: (context) =>
                 UserProfileCompletionScreen(),
+            ChatScreen.routeName: (context) => ChatScreen(),
           },
         ),
       ),

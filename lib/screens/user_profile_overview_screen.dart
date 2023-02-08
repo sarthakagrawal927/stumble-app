@@ -1,4 +1,3 @@
-import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +11,11 @@ class UserProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
-        title: const Text(
-          'Dating, made better!',
+        title: Text(
+          'Stumble!',
           textAlign: TextAlign.left,
           style: TextStyle(
-            color: Colors.amber,
+            color: Theme.of(context).cardColor,
           ),
         ),
       ),

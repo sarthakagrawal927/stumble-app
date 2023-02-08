@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class ChatScreen extends StatelessWidget {
+import '../widgets/bottom_app_bar.dart';
+
+class ChatScreen extends StatefulWidget {
+  static const routeName = '/chat-screen';
   const ChatScreen({super.key});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Firebase.initializeApp().whenComplete(() {
+      print("completed");
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +56,7 @@ class ChatScreen extends StatelessWidget {
               .add({'text': 'This is the second entry!'});
         },
       ),
+      bottomNavigationBar: BottomBar(currentScreen: "ChatScreen"),
     );
   }
 }

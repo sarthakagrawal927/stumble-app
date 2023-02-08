@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dating_made_better/widgets/bottom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class _UserProfileCompletionScreenState
     'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk=',
     'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'
   ];
-
+  bool isProfileVerified = true;
   final _conversationStarterFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
 
@@ -44,27 +45,86 @@ class _UserProfileCompletionScreenState
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
-        title: const Text(
+        title: Text(
           'Stumble!',
           textAlign: TextAlign.start,
           style: TextStyle(
-            color: Colors.amber,
+            color: Theme.of(context).cardColor,
           ),
         ),
       ),
       body: ListView(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 12),
-            child: const Text(
-              textAlign: TextAlign.start,
-              'Profile completion: 20%',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+          Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width / 12),
+                child: Column(
+                  children: const [
+                    Text(
+                      textAlign: TextAlign.start,
+                      'Profile completion',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        textAlign: TextAlign.start,
+                        '20%',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
+              Padding(
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width / 12),
+                child: Column(
+                  children: <Widget>[
+                    const Padding(
+                      padding:
+                          EdgeInsets.only(top: 8.0, bottom: 8.0, left: 12.0),
+                      child: Icon(
+                        Icons.verified_sharp,
+                        color: Colors.blueAccent,
+                      ),
+                    ),
+                    isProfileVerified
+                        ? const Padding(
+                            padding: EdgeInsets.only(
+                                top: 8.0, bottom: 8.0, left: 12.0),
+                            child: Text(
+                              'Verified',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                          )
+                        : const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Verify my profile',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ],
           ),
           const Divider(),
           Padding(
@@ -99,34 +159,6 @@ class _UserProfileCompletionScreenState
             ),
           ),
           const Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const <Widget>[
-              Icon(
-                Icons.verified_sharp,
-                color: Colors.blueAccent,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text(
-                  'Verify my profile',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              Text(
-                'Verified',
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontSize: 15,
-                ),
-              ),
-            ],
-          ),
-          const Divider(),
           Padding(
             padding: const EdgeInsets.all(40.0),
             child: Form(
@@ -146,16 +178,18 @@ class _UserProfileCompletionScreenState
                   const SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    initialValue: '',
-                    maxLines: 3,
-                    minLines: 1,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => {
-                      FocusScope.of(context)
-                          .requestFocus(_conversationStarterFocusNode)
-                    },
-                    // Todo: onSaved and validations
+                  SingleChildScrollView(
+                    child: TextFormField(
+                      initialValue: '',
+                      maxLines: 3,
+                      minLines: 1,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (_) => {
+                        FocusScope.of(context)
+                            .requestFocus(_conversationStarterFocusNode)
+                      },
+                      // Todo: onSaved and validations
+                    ),
                   ),
                 ],
               ),

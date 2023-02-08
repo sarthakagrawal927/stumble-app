@@ -96,7 +96,7 @@ class _AuthCardState extends State<AuthCard> {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Card(
-      color: Colors.amber.withOpacity(0.2),
+      color: Theme.of(context).cardColor.withOpacity(0.2),
       margin: const EdgeInsets.only(
         bottom: 20,
       ),

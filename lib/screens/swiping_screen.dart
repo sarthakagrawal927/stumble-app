@@ -48,10 +48,10 @@ class _SwipingScreenState extends State<SwipingScreen> {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
-        title: const Text(
+        title:  Text(
           'Dating, made better!',
           style: TextStyle(
-            color: Colors.amber,
+            color: Theme.of(context).cardColor,
           ),
         ),
       ),

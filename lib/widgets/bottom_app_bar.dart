@@ -1,3 +1,4 @@
+import 'package:dating_made_better/screens/chat_screen.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,48 +20,103 @@ class BottomBar extends StatelessWidget {
 
   final String currentScreen;
   BottomBar({required this.currentScreen});
+
+  Widget returnWidgetBasedOnCurrentScreen(BuildContext context) {
+    Widget widgetToReturn;
+    switch (currentScreen) {
+      case "UserProfileOverviewScreen":
+        widgetToReturn = Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              iconButtonBasedOnCurrentScreen(
+                Icon(Icons.account_box_rounded),
+                Theme.of(context).cardColor,
+                context,
+                "",
+              ),
+              iconButtonBasedOnCurrentScreen(
+                Icon(Icons.favorite),
+                Colors.grey,
+                context,
+                SwipingScreen.routeName,
+              ),
+              iconButtonBasedOnCurrentScreen(
+                Icon(Icons.chat_bubble_rounded),
+                Colors.grey,
+                context,
+                ChatScreen.routeName,
+              ),
+            ],
+          ),
+        );
+        break;
+      case "ChatScreen":
+        widgetToReturn = Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              iconButtonBasedOnCurrentScreen(
+                Icon(Icons.account_box_rounded),
+                Colors.grey,
+                context,
+                UserProfileScreen.routeName,
+              ),
+              iconButtonBasedOnCurrentScreen(
+                Icon(Icons.favorite),
+                Colors.grey,
+                context,
+                SwipingScreen.routeName,
+              ),
+              iconButtonBasedOnCurrentScreen(
+                Icon(Icons.chat_bubble_rounded),
+                Theme.of(context).cardColor,
+                context,
+                "",
+              ),
+            ],
+          ),
+        );
+        break;
+      default:
+        widgetToReturn = Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              iconButtonBasedOnCurrentScreen(
+                Icon(Icons.account_box_rounded),
+                Colors.grey,
+                context,
+                UserProfileScreen.routeName,
+              ),
+              iconButtonBasedOnCurrentScreen(
+                Icon(Icons.favorite),
+                Theme.of(context).cardColor,
+                context,
+                "",
+              ),
+              iconButtonBasedOnCurrentScreen(
+                Icon(Icons.chat_bubble_rounded),
+                Colors.grey,
+                context,
+                ChatScreen.routeName,
+              ),
+            ],
+          ),
+        );
+        break;
+    }
+    return widgetToReturn;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
       color: Theme.of(context).backgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0),
-        child: currentScreen == "SwipingScreen"
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  iconButtonBasedOnCurrentScreen(
-                    Icon(Icons.account_box_rounded),
-                    Colors.grey,
-                    context,
-                    UserProfileScreen.routeName,
-                  ),
-                  iconButtonBasedOnCurrentScreen(
-                    Icon(Icons.favorite),
-                    Colors.amber,
-                    context,
-                    "",
-                  ),
-                ],
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  iconButtonBasedOnCurrentScreen(
-                    Icon(Icons.account_box_rounded),
-                    Colors.amber,
-                    context,
-                    "",
-                  ),
-                  iconButtonBasedOnCurrentScreen(
-                    Icon(Icons.favorite),
-                    Colors.grey,
-                    context,
-                    SwipingScreen.routeName,
-                  ),
-                ],
-              ),
-      ),
+      child: returnWidgetBasedOnCurrentScreen(context),
     );
   }
 }

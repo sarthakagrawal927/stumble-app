@@ -65,9 +65,9 @@ class ImageInput with ChangeNotifier {
               _imageFiles![imageNumber],
               fit: BoxFit.fill,
             )
-          : const Icon(
+          : Icon(
               Icons.camera,
-              color: Colors.amber,
+              color: Theme.of(context).cardColor,
             ),
     );
   }
