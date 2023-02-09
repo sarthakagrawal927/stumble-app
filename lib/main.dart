@@ -1,6 +1,7 @@
 import 'package:dating_made_better/screens/auth_screen.dart';
 import 'package:dating_made_better/screens/chat_screen.dart';
 import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,9 @@ import './providers/image_input.dart';
 import './screens/swiping_screen.dart';
 import './screens/user_profile_completion_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

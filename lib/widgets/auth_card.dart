@@ -1,10 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import 'package:dating_made_better/screens/swiping_screen.dart';
-import '../models/http_exception.dart';
-import '../providers/auth.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -18,6 +17,9 @@ class AuthCard extends StatefulWidget {
 
 class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final _auth = FirebaseAuth.instance;
+  late UserCredential authResult;
+
   AuthMode _authMode = AuthMode.Login;
   final Map<String, String> _authData = {
     'email': '',
@@ -55,19 +57,17 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false).signin(
-          _authData['email']!,
-          _authData['password']!,
-        );
+        authResult = await _auth.signInWithEmailAndPassword(
+            email: _authData['email']!, password: _authData['password']!);
+       
       } else {
         // Sign user up
-        await Provider.of<Auth>(context, listen: false).signup(
-          _authData['email']!,
-          _authData['password']!,
-        );
+        authResult = await _auth.createUserWithEmailAndPassword(
+            email: _authData['email']!, password: _authData['password']!);
+       
       }
       Navigator.of(context).pushReplacementNamed(SwipingScreen.routeName);
-    } on HttpException catch (error) {
+    } on PlatformException catch (error) {
       const errorMessage = 'Authentication failed!';
     } catch (error) {
       const errorMessage =
