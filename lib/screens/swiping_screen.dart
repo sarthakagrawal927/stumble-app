@@ -1,3 +1,5 @@
+import 'package:dating_made_better/widgets/top_app_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,15 +48,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
     // final userProfiles = Provider.of<Profiles>(context).userProfiles;
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
-        title:  Text(
-          'Dating, made better!',
-          style: TextStyle(
-            color: Theme.of(context).cardColor,
-          ),
-        ),
-      ),
+      appBar: const TopAppBar(),
       body: Column(
         children: [
           Padding(
@@ -70,7 +64,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                       return Container(
                         alignment: Alignment.bottomLeft,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
+                          color: Theme.of(context).accentColor,
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
@@ -81,20 +75,26 @@ class _SwipingScreenState extends State<SwipingScreen> {
                           padding: const EdgeInsets.all(15.0),
                           child: Row(
                             children: [
-                              Text(
-                                _swipeItems[index].content.name,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w900,
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  _swipeItems[index].content.name,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.w900,
+                                  ),
                                 ),
                               ),
-                              Text(
-                                _swipeItems[index].content.age.toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w900,
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  _swipeItems[index].content.age.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w900,
+                                  ),
                                 ),
                               ),
                               _swipeItems[index].content.isVerified
@@ -102,10 +102,6 @@ class _SwipingScreenState extends State<SwipingScreen> {
                                       color: Colors.blue)
                                   : const Icon(Icons.verified_outlined,
                                       color: Colors.white),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.question_mark_outlined),
-                              ),
                             ],
                           ),
                         ),

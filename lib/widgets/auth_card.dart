@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,12 +60,16 @@ class _AuthCardState extends State<AuthCard> {
         // Log user in
         authResult = await _auth.signInWithEmailAndPassword(
             email: _authData['email']!, password: _authData['password']!);
-       
       } else {
         // Sign user up
         authResult = await _auth.createUserWithEmailAndPassword(
             email: _authData['email']!, password: _authData['password']!);
-       
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(authResult.user!.uid)
+            .set({
+          'email': _authData['email']!,
+        });
       }
       Navigator.of(context).pushReplacementNamed(SwipingScreen.routeName);
     } on PlatformException catch (error) {
@@ -96,7 +101,7 @@ class _AuthCardState extends State<AuthCard> {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Card(
-      color: Theme.of(context).cardColor.withOpacity(0.2),
+      color: Theme.of(context).accentColor.withOpacity(0.2),
       margin: const EdgeInsets.only(
         bottom: 20,
       ),

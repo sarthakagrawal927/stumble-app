@@ -32,7 +32,7 @@ class BottomBar extends StatelessWidget {
             children: <Widget>[
               iconButtonBasedOnCurrentScreen(
                 Icon(Icons.account_box_rounded),
-                Theme.of(context).cardColor,
+                Theme.of(context).accentColor,
                 context,
                 "",
               ),
@@ -72,7 +72,7 @@ class BottomBar extends StatelessWidget {
               ),
               iconButtonBasedOnCurrentScreen(
                 Icon(Icons.chat_bubble_rounded),
-                Theme.of(context).cardColor,
+                Theme.of(context).accentColor,
                 context,
                 "",
               ),
@@ -94,7 +94,7 @@ class BottomBar extends StatelessWidget {
               ),
               iconButtonBasedOnCurrentScreen(
                 Icon(Icons.favorite),
-                Theme.of(context).cardColor,
+                Theme.of(context).accentColor,
                 context,
                 "",
               ),

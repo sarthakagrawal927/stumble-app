@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
+import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,16 +44,7 @@ class _UserProfileCompletionScreenState
   Widget build(BuildContext context) {
     ImageInput imageInput = Provider.of<ImageInput>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
-        title: Text(
-          'Stumble!',
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            color: Theme.of(context).cardColor,
-          ),
-        ),
-      ),
+      appBar: const TopAppBar(),
       body: ListView(
         children: <Widget>[
           Row(

@@ -67,7 +67,7 @@ class ImageInput with ChangeNotifier {
             )
           : Icon(
               Icons.camera,
-              color: Theme.of(context).cardColor,
+              color: Theme.of(context).accentColor,
             ),
     );
   }
