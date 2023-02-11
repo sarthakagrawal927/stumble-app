@@ -29,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: const TopAppBar(),
       body: Container(
-        color: Colors.white,
+        color: Color.fromRGBO(26, 28, 29, 1),
         child: Column(
           children: [
             Expanded(

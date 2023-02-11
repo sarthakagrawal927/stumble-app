@@ -1,5 +1,4 @@
 import 'package:dating_made_better/widgets/top_app_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,8 +44,8 @@ class _SwipingScreenState extends State<SwipingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final userProfiles = Provider.of<Profiles>(context).userProfiles;
     return Scaffold(
+      backgroundColor: Color.fromRGBO(26, 28, 29, 1),
       key: _scaffoldKey,
       appBar: const TopAppBar(),
       body: Column(

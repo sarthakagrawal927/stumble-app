@@ -28,18 +28,18 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
               FirebaseAuth.instance.signOut();
             }
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.more_vert,
-            color: Theme.of(context).accentColor,
+            color: Colors.white70,
           ),
         )
       ],
-      backgroundColor: Theme.of(context).backgroundColor,
-      title: Text(
+      backgroundColor: Theme.of(context).splashColor,
+      title: const Text(
         'Stumble!',
         style: TextStyle(
           fontSize: 25,
-          color: Theme.of(context).accentColor,
+          color: Colors.white70,
         ),
       ),
     );

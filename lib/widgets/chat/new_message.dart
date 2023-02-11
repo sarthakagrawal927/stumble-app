@@ -27,18 +27,25 @@ class _NewMessageState extends State<NewMessage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
+      color: Color.fromRGBO(38, 41, 42, 1),
+      margin: const EdgeInsets.only(
         top: 8.0,
       ),
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Row(
         children: <Widget>[
           Expanded(
             child: TextField(
               controller: _controller,
-              decoration: InputDecoration(
-                fillColor: Colors.black,
+              style: const TextStyle(
+                color: Color.fromRGBO(237, 237, 237, 1),
+              ),
+              cursorColor: Color.fromRGBO(237, 237, 237, 1),
+              decoration: const InputDecoration(
                 labelText: 'Send a message!',
+                labelStyle: TextStyle(
+                  color: Colors.white38,
+                ),
               ),
               onChanged: (value) {
                 _enteredMessage = value;
@@ -46,10 +53,14 @@ class _NewMessageState extends State<NewMessage> {
             ),
           ),
           IconButton(
+            color: Color.fromRGBO(38, 41, 42, 1),
             onPressed: () {
               _enteredMessage.trim().isEmpty ? null : _sendMessage();
             },
-            icon: Icon(Icons.send),
+            icon: const Icon(
+              Icons.send,
+              color: Color.fromRGBO(237, 237, 237, 1),
+            ),
           )
         ],
       ),

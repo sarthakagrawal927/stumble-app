@@ -8,18 +8,9 @@ class ImageInput with ChangeNotifier {
   int _currentImageNumber = 5;
 
   void getFromGallery() async {
-    for (var element in _imageFiles!) {
-      print("Initially." + _currentImageNumber.toString());
-      print(element);
-    }
     if (_currentImageNumber < _imageFiles!.length) {
       _imageFiles!.removeWhere(
           (element) => element == _imageFiles![_currentImageNumber]);
-    }
-    for (var element in _imageFiles!) {
-      print("After deletion." + _currentImageNumber.toString());
-
-      print(element);
     }
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -28,10 +19,6 @@ class ImageInput with ChangeNotifier {
     );
     if (pickedFile != null) {
       _imageFiles!.add(File(pickedFile.path));
-    }
-    for (var element in _imageFiles!) {
-      print("After addition." + _currentImageNumber.toString());
-      print(element);
     }
     notifyListeners();
   }
@@ -52,7 +39,7 @@ class ImageInput with ChangeNotifier {
     _currentImageNumber = imageNumber;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromRGBO(60, 42, 33, 1),
         fixedSize: Size(
           (MediaQuery.of(context).size.width) / 2,
           (MediaQuery.of(context).size.height) /

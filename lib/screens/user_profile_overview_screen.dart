@@ -10,11 +10,12 @@ class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(26, 28, 29, 0.5),
       appBar: const TopAppBar(),
       body: Column(
         children: <Widget>[
           Card(
-            color: Colors.white,
+            color: Color.fromRGBO(26, 28, 29, 1),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,11 +37,11 @@ class UserProfileScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Container(
-                  color: Colors.white,
+                  color: Color.fromRGBO(26, 28, 29, 1),
                   child: const Text(
                     'Profile completion: 20%',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Color.fromRGBO(237, 237, 237, 1),
                       fontSize: 20,
                     ),
                   ),
@@ -52,27 +53,27 @@ class UserProfileScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      color: Colors.white,
+                      color: Color.fromRGBO(26, 28, 29, 1),
                       child: const Text(
                         'Rahul Khare, ',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Color.fromRGBO(237, 237, 237, 1),
                           fontSize: 20,
                         ),
                       ),
                     ),
                     Container(
-                      color: Colors.white,
+                      color: Color.fromRGBO(26, 28, 29, 1),
                       child: const Text(
                         '23 ',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Color.fromRGBO(237, 237, 237, 1),
                           fontSize: 20,
                         ),
                       ),
                     ),
                     Container(
-                      color: Colors.white,
+                      color: Color.fromRGBO(26, 28, 29, 1),
                       child: const Icon(
                         color: Colors.blueAccent,
                         Icons.verified_rounded,
@@ -87,7 +88,7 @@ class UserProfileScreen extends StatelessWidget {
                   child: const Text(
                     'Complete Profile?',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Color.fromRGBO(237, 237, 237, 1),
                       fontSize: 15,
                     ),
                   ),

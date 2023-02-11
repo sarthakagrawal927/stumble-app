@@ -18,95 +18,59 @@ class BottomBar extends StatelessWidget {
     );
   }
 
+  Padding bottomAppBarConfigurationBasedOnCurrentScreen(
+      BuildContext context, String currentScreen) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          iconButtonBasedOnCurrentScreen(
+            Icon(Icons.account_box_rounded),
+            currentScreen == "UserProfileOverviewScreen"
+                ? Colors.red
+                : Colors.grey.shade500,
+            context,
+            currentScreen == "UserProfileOverviewScreen"
+                ? ""
+                : UserProfileScreen.routeName,
+          ),
+          iconButtonBasedOnCurrentScreen(
+            Icon(Icons.favorite),
+            currentScreen == "SwipingScreen"
+                ? Colors.red
+                : Colors.grey.shade500,
+            context,
+            currentScreen == "SwipingScreen" ? "" : SwipingScreen.routeName,
+          ),
+          iconButtonBasedOnCurrentScreen(
+            Icon(Icons.chat_bubble_rounded),
+            currentScreen == "ChatScreen" ? Colors.red : Colors.grey.shade500,
+            context,
+            currentScreen == "ChatScreen" ? "" : ChatScreen.routeName,
+          ),
+        ],
+      ),
+    );
+  }
+
   final String currentScreen;
-  BottomBar({required this.currentScreen});
+  const BottomBar({required this.currentScreen});
 
   Widget returnWidgetBasedOnCurrentScreen(BuildContext context) {
     Widget widgetToReturn;
     switch (currentScreen) {
       case "UserProfileOverviewScreen":
-        widgetToReturn = Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              iconButtonBasedOnCurrentScreen(
-                Icon(Icons.account_box_rounded),
-                Theme.of(context).accentColor,
-                context,
-                "",
-              ),
-              iconButtonBasedOnCurrentScreen(
-                Icon(Icons.favorite),
-                Colors.grey,
-                context,
-                SwipingScreen.routeName,
-              ),
-              iconButtonBasedOnCurrentScreen(
-                Icon(Icons.chat_bubble_rounded),
-                Colors.grey,
-                context,
-                ChatScreen.routeName,
-              ),
-            ],
-          ),
-        );
+        widgetToReturn = bottomAppBarConfigurationBasedOnCurrentScreen(
+            context, "UserProfileOverviewScreen");
         break;
       case "ChatScreen":
-        widgetToReturn = Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              iconButtonBasedOnCurrentScreen(
-                Icon(Icons.account_box_rounded),
-                Colors.grey,
-                context,
-                UserProfileScreen.routeName,
-              ),
-              iconButtonBasedOnCurrentScreen(
-                Icon(Icons.favorite),
-                Colors.grey,
-                context,
-                SwipingScreen.routeName,
-              ),
-              iconButtonBasedOnCurrentScreen(
-                Icon(Icons.chat_bubble_rounded),
-                Theme.of(context).accentColor,
-                context,
-                "",
-              ),
-            ],
-          ),
-        );
+        widgetToReturn = bottomAppBarConfigurationBasedOnCurrentScreen(
+            context, "ChatScreen");
         break;
       default:
-        widgetToReturn = Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              iconButtonBasedOnCurrentScreen(
-                Icon(Icons.account_box_rounded),
-                Colors.grey,
-                context,
-                UserProfileScreen.routeName,
-              ),
-              iconButtonBasedOnCurrentScreen(
-                Icon(Icons.favorite),
-                Theme.of(context).accentColor,
-                context,
-                "",
-              ),
-              iconButtonBasedOnCurrentScreen(
-                Icon(Icons.chat_bubble_rounded),
-                Colors.grey,
-                context,
-                ChatScreen.routeName,
-              ),
-            ],
-          ),
-        );
+        widgetToReturn = bottomAppBarConfigurationBasedOnCurrentScreen(
+            context, "SwipingScreen");
         break;
     }
     return widgetToReturn;
@@ -115,7 +79,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).bottomAppBarColor,
       child: returnWidgetBasedOnCurrentScreen(context),
     );
   }

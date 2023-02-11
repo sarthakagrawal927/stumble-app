@@ -35,13 +35,16 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Stumble!',
         theme: ThemeData(
-            textTheme: GoogleFonts.latoTextTheme(
-              Theme.of(context).textTheme,
-            ),
-            // primarySwatch: MaterialColor(#0xF9A25E, color),
-            backgroundColor: Color.fromRGBO(105, 50, 30, 1),
-            buttonColor: Color.fromRGBO(1, 177, 177, 0.5),
-            accentColor: Color.fromRGBO(249, 162, 94, 0.5)),
+          textTheme: GoogleFonts.latoTextTheme(
+            Theme.of(context).textTheme,
+          ),
+          // primarySwatch: MaterialColor(#0xF9A25E, color),
+          backgroundColor: Color.fromRGBO(105, 50, 30, 1),
+          buttonColor: Color.fromRGBO(1, 177, 177, 0.5),
+          accentColor: Color.fromRGBO(249, 162, 94, 0.5),
+          splashColor: Color.fromRGBO(60, 42, 33, 1),
+          bottomAppBarColor: Color.fromRGBO(27, 18, 11, 1),
+        ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
