@@ -2,6 +2,7 @@ import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/ask_me_about_text_field.dart';
 import '../providers/image_input.dart';
 
 class UserProfileCompletionScreen extends StatefulWidget {
@@ -170,40 +171,9 @@ class _UserProfileCompletionScreenState
             child: Padding(
               padding: const EdgeInsets.all(40.0),
               child: Form(
-                key: _form,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text(
-                      'Few things you should come talk to me about!',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Color.fromRGBO(237, 237, 237, 1),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SingleChildScrollView(
-                      child: TextFormField(
-                        style: const TextStyle(
-                            color: Color.fromRGBO(237, 237, 237, 1)),
-                        initialValue: '',
-                        maxLines: 3,
-                        minLines: 1,
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (_) => {
-                          FocusScope.of(context)
-                              .requestFocus(_conversationStarterFocusNode)
-                        },
-                        // Todo: onSaved and validations
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  key: _form,
+                  child: AskMeAboutTextField(
+                      _conversationStarterFocusNode, context)),
             ),
           ),
         ],

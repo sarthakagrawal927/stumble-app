@@ -60,6 +60,7 @@ class _AuthCardState extends State<AuthCard> {
         // Log user in
         authResult = await _auth.signInWithEmailAndPassword(
             email: _authData['email']!, password: _authData['password']!);
+        Navigator.of(context).pushReplacementNamed(SwipingScreen.routeName);
       } else {
         // Sign user up
         authResult = await _auth.createUserWithEmailAndPassword(
@@ -70,8 +71,8 @@ class _AuthCardState extends State<AuthCard> {
             .set({
           'email': _authData['email']!,
         });
+        Navigator.of(context).pushReplacementNamed(SwipingScreen.routeName);
       }
-      Navigator.of(context).pushReplacementNamed(SwipingScreen.routeName);
     } on PlatformException catch (error) {
       const errorMessage = 'Authentication failed!';
     } catch (error) {
@@ -122,6 +123,7 @@ class _AuthCardState extends State<AuthCard> {
               children: <Widget>[
                 TextFormField(
                   cursorColor: Colors.white,
+                  keyboardAppearance: Brightness.dark,
                   style: const TextStyle(
                     color: Colors.white54,
                     fontSize: 20,
@@ -145,6 +147,7 @@ class _AuthCardState extends State<AuthCard> {
                   },
                 ),
                 TextFormField(
+                  keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     labelStyle: GoogleFonts.lato(
@@ -165,6 +168,7 @@ class _AuthCardState extends State<AuthCard> {
                 ),
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
+                    keyboardAppearance: Brightness.dark,
                     enabled: _authMode == AuthMode.Signup,
                     decoration: InputDecoration(
                       labelText: 'Confirm Password',

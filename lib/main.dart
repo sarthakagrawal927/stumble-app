@@ -1,5 +1,6 @@
 import 'package:dating_made_better/screens/auth_screen.dart';
 import 'package:dating_made_better/screens/chat_screen.dart';
+import 'package:dating_made_better/screens/filters_screen.dart';
 import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import './providers/profiles.dart';
 import './providers/image_input.dart';
+import 'screens/newUser/initial_greeting_screen.dart';
 import './screens/swiping_screen.dart';
 import './screens/user_profile_completion_screen.dart';
 
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.latoTextTheme(
             Theme.of(context).textTheme,
           ),
+          primaryColorBrightness: Brightness.dark,
           // primarySwatch: MaterialColor(#0xF9A25E, color),
           backgroundColor: Color.fromRGBO(105, 50, 30, 1),
           buttonColor: Color.fromRGBO(1, 177, 177, 0.5),
@@ -61,6 +64,8 @@ class MyApp extends StatelessWidget {
           UserProfileCompletionScreen.routeName: (context) =>
               UserProfileCompletionScreen(),
           ChatScreen.routeName: (context) => ChatScreen(),
+          FiltersScreen.routeName: (context) => FiltersScreen(),
+          InitialDetailsScreen.routeName: (context) => InitialDetailsScreen(),
         },
       ),
     );

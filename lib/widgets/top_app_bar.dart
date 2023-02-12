@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/filters_screen.dart';
+
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TopAppBar({super.key});
 
@@ -9,15 +11,40 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       actions: [
         DropdownButton(
+          dropdownColor: Color.fromRGBO(27, 18, 11, 1),
           items: [
+            DropdownMenuItem(
+              value: 'Filters',
+              child: Container(
+                child: Row(
+                  children: const [
+                    Icon(
+                      Icons.filter_list_rounded,
+                      color: Color.fromRGBO(237, 237, 237, 1),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      'Filters',
+                      style: TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             DropdownMenuItem(
               value: 'Logout',
               child: Container(
                 child: Row(
                   children: const [
-                    Icon(Icons.exit_to_app),
+                    Icon(
+                      Icons.exit_to_app,
+                      color: Color.fromRGBO(237, 237, 237, 1),
+                    ),
                     SizedBox(width: 8),
-                    Text('Logout'),
+                    Text(
+                      'Logout',
+                      style: TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
+                    ),
                   ],
                 ),
               ),
@@ -26,13 +53,15 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           onChanged: (itemIdentifier) {
             if (itemIdentifier == 'Logout') {
               FirebaseAuth.instance.signOut();
+            } else if (itemIdentifier == 'Filters') {
+              Navigator.pushNamed(context, FiltersScreen.routeName);
             }
           },
           icon: const Icon(
-            Icons.more_vert,
+            Icons.menu,
             color: Colors.white70,
           ),
-        )
+        ),
       ],
       backgroundColor: Theme.of(context).splashColor,
       title: const Text(

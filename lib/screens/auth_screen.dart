@@ -19,9 +19,8 @@ class _AuthScreenState extends State<AuthScreen> {
   void initState() {
     super.initState();
     _videoPlayerController =
-        VideoPlayerController.asset("assets/firstScreenVideo.mp4")
+        VideoPlayerController.asset("assets/authScreen_secondVideo.mp4")
           ..initialize().then((_) {
-            
             _videoPlayerController!.play();
             _videoPlayerController!.setLooping(true);
             setState(() {});

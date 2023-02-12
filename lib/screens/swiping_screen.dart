@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
 import '../providers/profiles.dart';
+import '../widgets/ask_me_about_text_field.dart';
 import '../widgets/bottom_app_bar.dart';
 
 class SwipingScreen extends StatefulWidget {
@@ -48,7 +49,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
       backgroundColor: Color.fromRGBO(26, 28, 29, 1),
       key: _scaffoldKey,
       appBar: const TopAppBar(),
-      body: Column(
+      body: ListView(
         children: [
           Padding(
             padding:
@@ -56,7 +57,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
             child: Stack(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height - 220,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   child: SwipeCards(
                     matchEngine: _matchEngine!,
                     itemBuilder: (BuildContext context, int index) {
@@ -77,7 +78,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
-                                  _swipeItems[index].content.name,
+                                  _swipeItems[index].content.name + ", ",
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 35,
@@ -88,19 +89,29 @@ class _SwipingScreenState extends State<SwipingScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
-                                  _swipeItems[index].content.age.toString(),
+                                  _swipeItems[index]
+                                      .content
+                                      .age
+                                      .toInt()
+                                      .toString(),
                                   style: const TextStyle(
                                     color: Colors.white,
-                                    fontSize: 25,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.w900,
                                   ),
                                 ),
                               ),
                               _swipeItems[index].content.isVerified
-                                  ? const Icon(Icons.verified_sharp,
-                                      color: Colors.blue)
-                                  : const Icon(Icons.verified_outlined,
-                                      color: Colors.white),
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(4.0),
+                                      child: Icon(Icons.verified_sharp,
+                                          color: Colors.blue),
+                                    )
+                                  : const Padding(
+                                      padding: EdgeInsets.all(4.0),
+                                      child: Icon(Icons.verified_outlined,
+                                          color: Colors.white),
+                                    ),
                             ],
                           ),
                         ),
@@ -113,6 +124,36 @@ class _SwipingScreenState extends State<SwipingScreen> {
                     },
                     upSwipeAllowed: true,
                     fillSpace: true,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 20.0, right: 20.9, bottom: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const <Widget>[
+                Text(
+                  'Talk to me about',
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Color.fromRGBO(237, 237, 237, 1),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SingleChildScrollView(
+                  child: Text(
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color.fromRGBO(237, 237, 237, 1),
+                    ),
+                    "f1; I'm a real nerd about it. I'm also into software, as you can see by these ginormous specs I'm wearing.",
                   ),
                 ),
               ],
