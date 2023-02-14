@@ -63,7 +63,7 @@ SuperLike
 
 ### Rahul
 - Chat Screen - DONE
-- Profile List (Swipe Logic) - DONE
+- Profile List (Swipe Logic) - DONE - Needs to be revisited.
 - Completion Profile - DONE
 - Niche Implementation [WIP]
 - Research Notifications [WIP]
