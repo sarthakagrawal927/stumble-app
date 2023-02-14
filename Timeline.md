@@ -62,11 +62,11 @@ SuperLike
 - Huge like/matches table querying POC (think about eliminating dislikes profiles from user feed) - DONE
 
 ### Rahul
-- Chat Screen - PARTIAL
+- Chat Screen - DONE
 - Profile List (Swipe Logic) - DONE
-- Completion Profile - PARTIAL
-- Niche Implementation
-- Research Notifications
+- Completion Profile - DONE
+- Niche Implementation [WIP]
+- Research Notifications [WIP]
 - Research Hard upgrade & Soft upgrade
 - Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart)
 
