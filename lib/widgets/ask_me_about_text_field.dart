@@ -33,6 +33,7 @@ class AskMeAboutTextField extends StatelessWidget {
             minLines: 1,
             keyboardAppearance: Brightness.dark,
             textInputAction: TextInputAction.next,
+            cursorColor: Color.fromRGBO(237, 237, 237, 1),
 
             onFieldSubmitted: (_) => {
               FocusScope.of(ctx).requestFocus(_conversationStarterFocusNode)

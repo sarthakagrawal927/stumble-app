@@ -24,7 +24,7 @@ class _UserProfileCompletionScreenState
   ];
   bool isProfileVerified = true;
   final _conversationStarterFocusNode = FocusNode();
-  final _form = GlobalKey<FormState>();
+final _form = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -49,15 +49,20 @@ class _UserProfileCompletionScreenState
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Card(
-                margin: const EdgeInsets.all(8),
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width / 16,
+                  bottom: MediaQuery.of(context).size.width / 16,
+                  left: MediaQuery.of(context).size.width / 16,
+                  right: MediaQuery.of(context).size.width / 32,
+                ),
                 color: const Color.fromRGBO(26, 28, 29, 1),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 9,
-                      vertical: MediaQuery.of(context).size.width / 12),
+                      horizontal: MediaQuery.of(context).size.width / 16,
+                      vertical: MediaQuery.of(context).size.width / 16),
                   child: Column(
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         textAlign: TextAlign.start,
                         'Profile completion',
                         style: TextStyle(
@@ -67,8 +72,9 @@ class _UserProfileCompletionScreenState
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width / 16),
+                        child: const Text(
                           textAlign: TextAlign.start,
                           '20%',
                           style: TextStyle(
@@ -82,43 +88,54 @@ class _UserProfileCompletionScreenState
                   ),
                 ),
               ),
-              Card(
-                margin: const EdgeInsets.all(8),
-                color: const Color.fromRGBO(26, 28, 29, 1),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 9,
-                      vertical: MediaQuery.of(context).size.width / 12),
-                  child: Column(
-                    children: <Widget>[
-                      const Icon(
-                        Icons.verified_sharp,
-                        color: Colors.blueAccent,
-                      ),
-                      isProfileVerified
-                          ? const Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: Text(
-                                'Verified',
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  color: Color.fromRGBO(237, 237, 237, 1),
-                                  fontSize: 15,
+              Expanded(
+                child: Card(
+                  margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.width / 16,
+                    bottom: MediaQuery.of(context).size.width / 16,
+                    left: MediaQuery.of(context).size.width / 32,
+                    right: MediaQuery.of(context).size.width / 16,
+                  ),
+                  color: const Color.fromRGBO(26, 28, 29, 1),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width / 16,
+                        vertical: MediaQuery.of(context).size.width / 16),
+                    child: Column(
+                      children: <Widget>[
+                        const Icon(
+                          Icons.verified_sharp,
+                          color: Colors.blueAccent,
+                        ),
+                        isProfileVerified
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                    top:
+                                        MediaQuery.of(context).size.width / 20),
+                                child: const Text(
+                                  'Verified',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(237, 237, 237, 1),
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              )
+                            : Padding(
+                                padding: EdgeInsets.only(
+                                    top:
+                                        MediaQuery.of(context).size.width / 20),
+                                child: const Text(
+                                  'Verify my profile',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontSize: 15,
+                                  ),
                                 ),
                               ),
-                            )
-                          : const Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: Text(
-                                'Verify my profile',
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -131,10 +148,10 @@ class _UserProfileCompletionScreenState
               children: [
                 Padding(
                   padding:
-                      EdgeInsets.all(MediaQuery.of(context).size.width / 12),
+                      EdgeInsets.all(MediaQuery.of(context).size.width / 16),
                   child: const Text(
                     textAlign: TextAlign.start,
-                    'Your pretty face',
+                    'Your pretty face!',
                     style: TextStyle(
                       color: Color.fromRGBO(237, 237, 237, 1),
                       fontSize: 20,
@@ -166,10 +183,13 @@ class _UserProfileCompletionScreenState
           ),
           const Divider(),
           Container(
-            padding: const EdgeInsets.only(bottom: 60),
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.width / 16),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 16),
             color: const Color.fromRGBO(26, 28, 29, 1),
             child: Padding(
-              padding: const EdgeInsets.all(40.0),
+              padding:
+                  EdgeInsets.only(top: MediaQuery.of(context).size.width / 16),
               child: Form(
                   key: _form,
                   child: AskMeAboutTextField(

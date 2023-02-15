@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
 import '../providers/profiles.dart';
-import '../widgets/ask_me_about_text_field.dart';
 import '../widgets/bottom_app_bar.dart';
 
 class SwipingScreen extends StatefulWidget {
@@ -49,19 +48,19 @@ class _SwipingScreenState extends State<SwipingScreen> {
       backgroundColor: Color.fromRGBO(26, 28, 29, 1),
       key: _scaffoldKey,
       appBar: const TopAppBar(),
-      body: ListView(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
-            child: Stack(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: SwipeCards(
-                    matchEngine: _matchEngine!,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
+      body: Padding(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width / 16),
+        child: Stack(
+          alignment: AlignmentDirectional.topCenter,
+          children: [
+            SwipeCards(
+              matchEngine: _matchEngine!,
+              itemBuilder: (BuildContext context, int index) {
+                return ListView(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      child: Container(
                         alignment: Alignment.bottomLeft,
                         decoration: BoxDecoration(
                           color: Theme.of(context).accentColor,
@@ -71,97 +70,101 @@ class _SwipingScreenState extends State<SwipingScreen> {
                                 _swipeItems[index].content.imageUrls[0]),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  _swipeItems[index].content.name + ", ",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.w900,
-                                  ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.width / 64),
+                              child: Text(
+                                _swipeItems[index].content.name + ", ",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  _swipeItems[index]
-                                      .content
-                                      .age
-                                      .toInt()
-                                      .toString(),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w900,
-                                  ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.width / 64),
+                              child: Text(
+                                _swipeItems[index]
+                                    .content
+                                    .age
+                                    .toInt()
+                                    .toString(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
-                              _swipeItems[index].content.isVerified
-                                  ? const Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: Icon(Icons.verified_sharp,
-                                          color: Colors.blue),
-                                    )
-                                  : const Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: Icon(Icons.verified_outlined,
-                                          color: Colors.white),
-                                    ),
-                            ],
-                          ),
+                            ),
+                            _swipeItems[index].content.isVerified
+                                ? Padding(
+                                    padding: EdgeInsets.all(
+                                        MediaQuery.of(context).size.width / 64),
+                                    child: const Icon(Icons.verified_sharp,
+                                        color: Colors.blue),
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.all(
+                                        MediaQuery.of(context).size.width / 64),
+                                    child: const Icon(Icons.verified_outlined,
+                                        color: Colors.white),
+                                  ),
+                          ],
                         ),
-                      );
-                    },
-                    onStackFinished: () {},
-                    itemChanged: (SwipeItem item, int index) {
-                      // print( "item: ${item.content.name}, index: $index");
-                      // content is an instance of profile
-                    },
-                    upSwipeAllowed: true,
-                    fillSpace: true,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 20.0, right: 20.9, bottom: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
-                Text(
-                  'Talk to me about',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Color.fromRGBO(237, 237, 237, 1),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                SingleChildScrollView(
-                  child: Text(
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromRGBO(237, 237, 237, 1),
+                      ),
                     ),
-                    "f1; I'm a real nerd about it. I'm also into software, as you can see by these ginormous specs I'm wearing.",
-                  ),
-                ),
-              ],
+                    Padding(
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.width / 32),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          const Text(
+                            'Talk to me about',
+                            style: TextStyle(
+                              color: Color.fromRGBO(237, 237, 237, 1),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width / 32,
+                          ),
+                          const SingleChildScrollView(
+                            child: Text(
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Color.fromRGBO(237, 237, 237, 1),
+                              ),
+                              "f1; I'm a real nerd about it. I'm also into software, as you can see by these ginormous specs I'm wearing.",
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                    )
+                  ],
+                );
+              },
+              onStackFinished: () {},
+              itemChanged: (SwipeItem item, int index) {
+                // print( "item: ${item.content.name}, index: $index");
+                // content is an instance of profile
+              },
+              upSwipeAllowed: true,
+              fillSpace: true,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      bottomNavigationBar: BottomBar(currentScreen: "SwipingScreen"),
+      bottomNavigationBar: const BottomBar(currentScreen: "SwipingScreen"),
     );
   }
 }

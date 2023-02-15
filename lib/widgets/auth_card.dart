@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:dating_made_better/screens/swiping_screen.dart';
+import '../screens/newUser/terms_and_conditions_screen.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -65,13 +66,14 @@ class _AuthCardState extends State<AuthCard> {
         // Sign user up
         authResult = await _auth.createUserWithEmailAndPassword(
             email: _authData['email']!, password: _authData['password']!);
-        await FirebaseFirestore.instance
+        FirebaseFirestore.instance
             .collection('users')
             .doc(authResult.user!.uid)
             .set({
           'email': _authData['email']!,
         });
-        Navigator.of(context).pushReplacementNamed(SwipingScreen.routeName);
+        Navigator.of(context)
+            .pushReplacementNamed(TermsAndConditionsScreen.routeName);
       }
     } on PlatformException catch (error) {
       const errorMessage = 'Authentication failed!';

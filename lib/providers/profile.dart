@@ -11,6 +11,7 @@ class Profile with ChangeNotifier {
   final double age;
   List<String> imageUrls;
   bool isVerified;
+  //final String conversationStarterText;
   final List<String> conversationStarterList;
 
   Profile({
@@ -19,6 +20,7 @@ class Profile with ChangeNotifier {
     required this.age,
     this.isVerified = false,
     required this.imageUrls,
+    //required this.conversationStarterText,
     required this.conversationStarterList,
   });
 
