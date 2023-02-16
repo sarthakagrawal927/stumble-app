@@ -2,7 +2,9 @@ import 'package:dating_made_better/screens/auth_screen.dart';
 import 'package:dating_made_better/screens/chat_screen.dart';
 import 'package:dating_made_better/screens/filters_screen.dart';
 import 'package:dating_made_better/screens/newUser/first_name_screen.dart';
+import 'package:dating_made_better/screens/newUser/first_photo_addition_screen.dart';
 import 'package:dating_made_better/screens/newUser/gender_selection_screen.dart';
+import 'package:dating_made_better/screens/newUser/profile_prompt_addition_screen.dart';
 import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -71,6 +73,10 @@ class MyApp extends StatelessWidget {
               TermsAndConditionsScreen(),
           FirstNameScreen.routeName: (context) => FirstNameScreen(),
           GenderSelectionScreen.routeName: (context) => GenderSelectionScreen(),
+          FirstPhotoAdditionScreen.routeName: (context) =>
+              FirstPhotoAdditionScreen(),
+          ProfilePromptAdditionScreen.routeName: (context) =>
+              ProfilePromptAdditionScreen(),
         },
       ),
     );

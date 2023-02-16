@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'first_name_screen.dart';
+import '../../widgets/newUser/screen_heading_widget.dart';
+import '../../widgets/newUser/button_to_accept_or_reject.dart';
 
 class TermsAndConditionsScreen extends StatelessWidget {
   const TermsAndConditionsScreen({super.key});
@@ -26,19 +28,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
               child:
                   Icon(Icons.lock, size: MediaQuery.of(context).size.width / 3),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height / 32,
-                horizontal: MediaQuery.of(context).size.width / 16,
-              ),
-              child: const Text(
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 40,
-                    color: Color.fromRGBO(116, 91, 53, 1),
-                  ),
-                  "We care about your privacy!"),
-            ),
+            ScreenHeadingWidget("We care about your privacy!"),
             Padding(
               padding: EdgeInsets.symmetric(
                 vertical: MediaQuery.of(context).size.height / 32,
@@ -49,55 +39,10 @@ class TermsAndConditionsScreen extends StatelessWidget {
                       fontSize: 25, color: Color.fromRGBO(237, 237, 237, 1)),
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore "),
             ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(26, 28, 29, 0),
-                    fixedSize: Size(
-                      MediaQuery.of(context).size.width / 2,
-                      MediaQuery.of(context).size.height / 16,
-                    ),
-                  ),
-                  onPressed: (() {
-                    Navigator.of(context)
-                        .pushReplacementNamed(FirstNameScreen.routeName);
-                  }),
-                  child: const Text(
-                    "Accept",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Color.fromRGBO(116, 91, 53, 1),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(26, 28, 29, 0),
-                    fixedSize: Size(
-                      MediaQuery.of(context).size.width / 2,
-                      MediaQuery.of(context).size.height / 16,
-                    ),
-                  ),
-                  onPressed: (() {
-                    // Future work
-                  }),
-                  child: const Text(
-                    "Reject",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Color.fromRGBO(57, 66, 70, 1),
-                    ),
-                  ),
-                ),
-              ),
-            )
+            ButtonToAcceptOrRejectConditions("Accept",
+                Color.fromRGBO(116, 91, 53, 1), FirstNameScreen.routeName),
+            ButtonToAcceptOrRejectConditions(
+                "Reject", Color.fromRGBO(57, 66, 70, 1), ""),
           ],
         ),
       ),
