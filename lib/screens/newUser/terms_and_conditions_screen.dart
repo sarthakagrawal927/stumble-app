@@ -39,6 +39,9 @@ class TermsAndConditionsScreen extends StatelessWidget {
                       fontSize: 25, color: Color.fromRGBO(237, 237, 237, 1)),
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore "),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 32,
+            ),
             ButtonToAcceptOrRejectConditions("Accept",
                 Color.fromRGBO(116, 91, 53, 1), FirstNameScreen.routeName),
             ButtonToAcceptOrRejectConditions(

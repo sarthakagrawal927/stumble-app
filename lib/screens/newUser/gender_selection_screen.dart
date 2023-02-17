@@ -1,8 +1,8 @@
 import 'package:dating_made_better/screens/newUser/first_photo_addition_screen.dart';
-import 'package:dating_made_better/screens/swiping_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/newUser/screen_heading_widget.dart';
 import '../../widgets/newUser/screen_go_to_next_page_row.dart';
 
@@ -18,6 +18,34 @@ class GenderSelectionScreen extends StatefulWidget {
 
 class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
   Gender? _gender = Gender.woman;
+  final user = FirebaseAuth.instance.currentUser;
+
+  Future<String> functionToRetrieveDocumentID() async {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .collection("email")
+        .doc();
+
+    DocumentSnapshot docSnap = await documentReference.get();
+    var documentID = docSnap.reference.id;
+    return documentID;
+  }
+
+  void functionToSetGender() async {
+    String documentID = await functionToRetrieveDocumentID();
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .collection('email')
+        .doc(documentID)
+        .set(
+      {
+        "gender": _gender.toString(),
+      },
+      SetOptions(merge: true),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +89,11 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
                 ),
               ],
             ),
-            ScreenGoToNextPageRow("You can always update this later!",
-                FirstPhotoAdditionScreen.routeName),
+            ScreenGoToNextPageRow(
+              "You can always update this later!",
+              FirstPhotoAdditionScreen.routeName,
+              functionToSetGender,
+            ),
           ],
         ),
       ),

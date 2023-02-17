@@ -3,10 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/newUser/screen_heading_widget.dart';
 import '../../widgets/newUser/screen_go_to_next_page_row.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class FirstNameScreen extends StatelessWidget {
+class FirstNameScreen extends StatefulWidget {
   const FirstNameScreen({super.key});
   static const routeName = '/first-name-screen';
+
+  @override
+  State<FirstNameScreen> createState() => _FirstNameScreenState();
+}
+
+class _FirstNameScreenState extends State<FirstNameScreen> {
+  final nameTextBoxController = TextEditingController();
+  void functionToSetName() {
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .collection('email')
+        .add({
+      'text': nameTextBoxController.text,
+      'createdAt': DateTime.now(),
+      'userId': user.uid,
+    });
+  }
+
+  @override
+  void dispose() {
+    nameTextBoxController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,17 +55,20 @@ class FirstNameScreen extends StatelessWidget {
               ),
               child: const Text(
                   style: TextStyle(
-                      fontSize: 20, color: Color.fromRGBO(237, 237, 237, 1)),
+                    fontSize: 20,
+                    color: Color.fromRGBO(237, 237, 237, 1),
+                  ),
                   "You won't be able to change this later!"),
             ),
             Padding(
               padding:
                   EdgeInsets.only(top: MediaQuery.of(context).size.height / 32),
               child: TextField(
+                controller: nameTextBoxController,
                 cursorColor: Color.fromRGBO(116, 91, 53, 1),
                 keyboardAppearance: Brightness.dark,
                 style: const TextStyle(
-                  color: Color.fromRGBO(116, 91, 53, 1),
+                  color: Color.fromRGBO(237, 237, 237, 1),
                   fontSize: 35,
                 ),
                 decoration: InputDecoration(
@@ -49,10 +80,25 @@ class FirstNameScreen extends StatelessWidget {
                   ),
                 ),
                 keyboardType: TextInputType.name,
+                onSubmitted: (value) {
+                  final user = FirebaseAuth.instance.currentUser;
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(user!.uid)
+                      .collection('email')
+                      .add({
+                    'text': nameTextBoxController.text,
+                    'createdAt': DateTime.now(),
+                    'userId': user.uid,
+                  });
+                },
               ),
             ),
-            ScreenGoToNextPageRow("This will be shown on your profile!",
-                GenderSelectionScreen.routeName)
+            ScreenGoToNextPageRow(
+              "This will be shown on your profile!",
+              GenderSelectionScreen.routeName,
+              functionToSetName,
+            )
           ],
         ),
       ),

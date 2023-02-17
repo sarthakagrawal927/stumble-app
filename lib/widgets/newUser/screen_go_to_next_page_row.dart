@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ScreenGoToNextPageRow extends StatelessWidget {
-  ScreenGoToNextPageRow(this.textToDisplay, this.nextScreenRouteName);
+  ScreenGoToNextPageRow(
+      this.textToDisplay, this.nextScreenRouteName, this.functionToSetData);
   final String textToDisplay;
   final String nextScreenRouteName;
+  final Function functionToSetData;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,8 @@ class ScreenGoToNextPageRow extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromRGBO(26, 28, 29, 1),
               ),
-              onPressed: (() {
+              onPressed: (() async {
+                await functionToSetData();
                 Navigator.pushReplacementNamed(context, nextScreenRouteName);
               }),
               child: Icon(

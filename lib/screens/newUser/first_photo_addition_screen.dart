@@ -9,6 +9,8 @@ class FirstPhotoAdditionScreen extends StatelessWidget {
   const FirstPhotoAdditionScreen({super.key});
   static const routeName = '/first-photo-screen';
 
+  void functionToSetFirstImage() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +28,11 @@ class FirstPhotoAdditionScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height / 5,
             ),
             ImageInput().renderButton(context, 0),
-            ScreenGoToNextPageRow("This is displayed on your profile",
-                ProfilePromptAdditionScreen.routeName),
+            ScreenGoToNextPageRow(
+              "This is displayed on your profile",
+              ProfilePromptAdditionScreen.routeName,
+              functionToSetFirstImage,
+            ),
           ],
         ),
       ),

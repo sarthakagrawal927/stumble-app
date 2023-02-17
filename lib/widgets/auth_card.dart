@@ -72,6 +72,9 @@ class _AuthCardState extends State<AuthCard> {
             .set({
           'email': _authData['email']!,
         });
+        if (_isLoading) {
+          new CircularProgressIndicator();
+        }
         Navigator.of(context)
             .pushReplacementNamed(TermsAndConditionsScreen.routeName);
       }
