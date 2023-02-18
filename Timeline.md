@@ -21,16 +21,15 @@
   - Edit Profile Screen
   - App setting screen
 - SEO Based Website (10hr)
-- Amazing name
 - [Analytics](https://amplitude.com/)
 - Working Backend :
-  - auth, (googleAuth -> phoneVerification(twilio))
+  - auth, (googleAuth)
   - Socket Programming (RT-Chat & Online status)
   - [map](https://redis.io/docs/data-types/geospatial/),
   - [photo verification (mostly by some online ML model)](https://www.npmjs.com/package/face-api.js)
-  - Heavy Referral Game (3month free premium for first 10k users - more if you bring more people)
   - Feedback loop
-  - User Block Report
+  - User Report
+  - Heavy Referral Game (3month free premium for first 10k users - more if you bring more people)
 
 31/3/2023 - 31/12/2023 - Improve App, Market, Look for investment.
 
@@ -55,24 +54,39 @@ SuperLike
 ## 20th Jan - 17th Feb
 
 ### Sarthak
-- Basic Backend - PARTIAL
-- Google Auth
+- Basic Backend - DONE
+- Google Auth - Shifted
 - Map Logic Complete (100m - 200m) - DONE
-- Face POC
+- Face POC - DONE
 - Huge like/matches table querying POC (think about eliminating dislikes profiles from user feed) - DONE
 
 ### Rahul
 - Chat Screen - DONE
-- Profile List (Swipe Logic) - DONE - Needs to be revisited.
+- Profile List (Swipe Logic) - DONE
 - Completion Profile - DONE
+
+# Timeline S02
+
+## Sarthak
+- socket implement
+- research grpc & pushNotifications
+- Image upload serverless function
+- Implement Sentry
+
+## Rahul
+- Backend Integration
+- Google Auth
+- Research App UI (Checkout CRED & STOIC)
 - Niche Implementation [WIP]
 - Research Notifications [WIP]
-- Research Hard upgrade & Soft upgrade
+- Research Hard upgrade & Soft upgrade [WIP]
 - Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart)
+- Location Screen
+- Try generate QR code for a link (stumble.com/referral?referrer_id=122&referred_id=3324)
 
-### Common
-- Research Brand Buildingx2
+## Common
+- Squashed some bugs for you
+- Research Brand Building x 2
 - Analytics
   - [Screen Time Spent](https://pub.dev/packages/amplitude_flutter)
 
-Watch Ad to pay
