@@ -81,7 +81,7 @@ SuperLike
 - Research Notifications [WIP]
 - Research Hard upgrade & Soft upgrade [WIP]
 - Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart)
-- Location Screen
+- Location Screen [DONE]
 - Try generate QR code for a link (stumble.com/referral?referrer_id=122&referred_id=3324)
 
 ## Common

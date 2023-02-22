@@ -9,6 +9,17 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading: ElevatedButton(
+        child: Icon(Icons.navigation_sharp),
+        style: ElevatedButton.styleFrom(
+          padding:
+              EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
+          backgroundColor: Theme.of(context).splashColor,
+        ),
+        onPressed: () {
+          // Call location API here.
+        },
+      ),
       actions: [
         DropdownButton(
           dropdownColor: Color.fromRGBO(27, 18, 11, 1),
@@ -64,11 +75,14 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ],
       backgroundColor: Theme.of(context).splashColor,
-      title: const Text(
-        'Stumble!',
-        style: TextStyle(
-          fontSize: 25,
-          color: Colors.white70,
+      title: Padding(
+        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
+        child: const Text(
+          'Stumble!',
+          style: TextStyle(
+            fontSize: 25,
+            color: Colors.white70,
+          ),
         ),
       ),
     );
