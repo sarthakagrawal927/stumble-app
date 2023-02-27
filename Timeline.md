@@ -68,10 +68,10 @@ SuperLike
 # Timeline S02
 
 ## Sarthak
-- socket implement
-- research grpc & pushNotifications
-- Image upload serverless function
-- Implement Sentry
+- socket implement (done)
+- research grpc & pushNotifications (done)
+- Image upload serverless function (blocked by credit card requirement)
+- Implement Sentry (done)
 
 ## Rahul
 - Backend Integration
