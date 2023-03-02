@@ -70,23 +70,30 @@ SuperLike
 ## Sarthak
 - socket implement (done)
 - research grpc & pushNotifications (done)
-- Image upload serverless function (blocked by credit card requirement)
 - Implement Sentry (done)
 
 ## Rahul
-- Backend Integration
-- Google Auth
-- Research App UI (Checkout CRED & STOIC)
-- Niche Implementation [WIP]
-- Research Notifications [WIP]
-- Research Hard upgrade & Soft upgrade [WIP]
-- Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart)
+- Niche Implementation [DONE]
 - Location Screen [DONE]
-- Try generate QR code for a link (stumble.com/referral?referrer_id=122&referred_id=3324)
+
+# Timeline S03
+
+## Sarthak
+- Image/Voice upload serverless function (blocked by credit card requirement) (half day work)
+- Devops
+- Filters API
+
+## Rahul
+- Backend Integration
+- Research App UI (Checkout CRED & STOIC) [WIP]
+- Filters Screen (gender, age)
 
 ## Common
-- Squashed some bugs for you
-- Research Brand Building x 2
+- Research Hard upgrade & Soft upgrade [WIP]
+- Google Auth
+- Try generate QR code for a link (stumble.com/referral?referrer_id=122&referred_id=3324)
+- Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart)
+- Research Notifications (Tech) [WIP]
 - Analytics
   - [Screen Time Spent](https://pub.dev/packages/amplitude_flutter)
 
