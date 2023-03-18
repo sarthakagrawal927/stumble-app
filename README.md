@@ -1,4 +1,4 @@
-# dating_made_better.
+# Stumble.
 A dating app that meets all the needs of our generation :)
 
 - Tired of swiping away and getting nowhere?

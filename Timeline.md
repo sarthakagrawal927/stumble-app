@@ -78,11 +78,6 @@ SuperLike
 
 # Timeline S03
 
-## Sarthak
-- Image/Voice upload serverless function (blocked by credit card requirement) (half day work)
-- Devops
-- Filters API
-
 ## Rahul
 - Backend Integration
 - Research App UI (Checkout CRED & STOIC) [WIP]
@@ -90,10 +85,9 @@ SuperLike
 
 ## Common
 - Research Hard upgrade & Soft upgrade [WIP]
-- Google Auth
-- Try generate QR code for a link (stumble.com/referral?referrer_id=122&referred_id=3324)
+- Try generate QR code for a link ({{host}}/referral?referrer_id=122&referred_id=3324)
 - Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart)
 - Research Notifications (Tech) [WIP]
 - Analytics
   - [Screen Time Spent](https://pub.dev/packages/amplitude_flutter)
-
+- Add [Logger](https://pub.dev/packages/chucker_flutter)
