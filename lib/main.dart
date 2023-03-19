@@ -47,7 +47,9 @@ class MyApp extends StatelessWidget {
           // primarySwatch: MaterialColor(#0xF9A25E, color),
           backgroundColor: const Color.fromRGBO(105, 50, 30, 1),
           splashColor: const Color.fromRGBO(60, 42, 33, 1),
-          bottomAppBarColor: const Color.fromRGBO(27, 18, 11, 1), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color.fromRGBO(249, 162, 94, 0.5)),
+          bottomAppBarColor: const Color.fromRGBO(27, 18, 11, 1),
+          colorScheme: ColorScheme.fromSwatch()
+              .copyWith(secondary: const Color.fromRGBO(249, 162, 94, 0.5)),
         ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
@@ -69,7 +71,8 @@ class MyApp extends StatelessWidget {
           TermsAndConditionsScreen.routeName: (context) =>
               const TermsAndConditionsScreen(),
           FirstNameScreen.routeName: (context) => const FirstNameScreen(),
-          GenderSelectionScreen.routeName: (context) => const GenderSelectionScreen(),
+          GenderSelectionScreen.routeName: (context) =>
+              const GenderSelectionScreen(),
           FirstPhotoAdditionScreen.routeName: (context) =>
               const FirstPhotoAdditionScreen(),
           ProfilePromptAdditionScreen.routeName: (context) =>
