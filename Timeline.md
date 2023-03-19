@@ -86,7 +86,7 @@ SuperLike
 ## Common
 - Research Hard upgrade & Soft upgrade [WIP]
 - Try generate QR code for a link ({{host}}/referral?referrer_id=122&referred_id=3324)
-- Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart)
+- Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart) [WIP]
 - Research Notifications (Tech) [WIP]
 - Analytics
   - [Screen Time Spent](https://pub.dev/packages/amplitude_flutter)
