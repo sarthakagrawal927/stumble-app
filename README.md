@@ -12,4 +12,6 @@ Well, we have an answer for all your problems right here!
 
 ```bash
 dart fix --apply
+## More Errors:
+dart analyze .
 ```
