@@ -10,12 +10,12 @@ class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 28, 29, 0.5),
+      backgroundColor: const Color.fromRGBO(26, 28, 29, 0.5),
       appBar: const TopAppBar(),
       body: Column(
         children: <Widget>[
           Card(
-            color: Color.fromRGBO(26, 28, 29, 1),
+            color: const Color.fromRGBO(26, 28, 29, 1),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,7 +37,7 @@ class UserProfileScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Container(
-                  color: Color.fromRGBO(26, 28, 29, 1),
+                  color: const Color.fromRGBO(26, 28, 29, 1),
                   child: const Text(
                     'Profile completion: 20%',
                     style: TextStyle(
@@ -53,7 +53,7 @@ class UserProfileScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      color: Color.fromRGBO(26, 28, 29, 1),
+                      color: const Color.fromRGBO(26, 28, 29, 1),
                       child: const Text(
                         'Rahul Khare, ',
                         style: TextStyle(
@@ -63,7 +63,7 @@ class UserProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      color: Color.fromRGBO(26, 28, 29, 1),
+                      color: const Color.fromRGBO(26, 28, 29, 1),
                       child: const Text(
                         '23 ',
                         style: TextStyle(
@@ -73,7 +73,7 @@ class UserProfileScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      color: Color.fromRGBO(26, 28, 29, 1),
+                      color: const Color.fromRGBO(26, 28, 29, 1),
                       child: const Icon(
                         color: Colors.blueAccent,
                         Icons.verified_rounded,
@@ -106,7 +106,7 @@ class UserProfileScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar:
-          BottomBar(currentScreen: "UserProfileOverviewScreen"),
+          const BottomBar(currentScreen: "UserProfileOverviewScreen"),
     );
   }
 }

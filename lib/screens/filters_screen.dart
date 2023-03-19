@@ -7,18 +7,18 @@ class FiltersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 28, 29, 1),
+      backgroundColor: const Color.fromRGBO(26, 28, 29, 1),
       appBar: AppBar(
         centerTitle: true,
-        actions: [],
-        title: Text('Filters'),
+        actions: const [],
+        title: const Text('Filters'),
         backgroundColor: Theme.of(context).splashColor,
       ),
       body: Column(
         children: [
           Card(
             child: Column(
-              children: [
+              children: const [
                 Text('Who you want to date:'),
                 
               ],

@@ -50,7 +50,7 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 28, 29, 1),
+      backgroundColor: const Color.fromRGBO(26, 28, 29, 1),
       body: Padding(
         padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height / 16,
@@ -59,7 +59,7 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ScreenHeadingWidget("What's your gender?"),
+            const ScreenHeadingWidget("What's your gender?"),
             Padding(
               padding: EdgeInsets.symmetric(
                 vertical: MediaQuery.of(context).size.height / 32,
@@ -102,8 +102,8 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
 
   ListTile genderListTile(String text, Gender gender) {
     return ListTile(
-      iconColor: Color.fromRGBO(116, 91, 53, 1),
-      tileColor: Color.fromRGBO(26, 28, 29, 0.5),
+      iconColor: const Color.fromRGBO(116, 91, 53, 1),
+      tileColor: const Color.fromRGBO(26, 28, 29, 0.5),
       title: Text(
         text,
         style: const TextStyle(

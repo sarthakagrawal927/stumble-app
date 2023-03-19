@@ -73,12 +73,12 @@ class _AuthCardState extends State<AuthCard> {
           'email': _authData['email']!,
         });
         if (_isLoading) {
-          new CircularProgressIndicator();
+          const CircularProgressIndicator();
         }
         Navigator.of(context)
             .pushReplacementNamed(TermsAndConditionsScreen.routeName);
       }
-    } on PlatformException catch (error) {
+    } on PlatformException {
       const errorMessage = 'Authentication failed!';
     } catch (error) {
       const errorMessage =
@@ -107,7 +107,7 @@ class _AuthCardState extends State<AuthCard> {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Card(
-      color: Theme.of(context).accentColor.withOpacity(0.2),
+      color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
       margin: const EdgeInsets.only(
         bottom: 20,
       ),
@@ -166,6 +166,7 @@ class _AuthCardState extends State<AuthCard> {
                     if (value!.isEmpty || value.length < 5) {
                       return 'Password is too short!';
                     }
+                    return null;
                   },
                   onSaved: (value) {
                     _authData['password'] = value!;
@@ -188,6 +189,7 @@ class _AuthCardState extends State<AuthCard> {
                             if (value != _passwordController.text) {
                               return 'Passwords do not match!';
                             }
+                            return null;
                           }
                         : null,
                   ),

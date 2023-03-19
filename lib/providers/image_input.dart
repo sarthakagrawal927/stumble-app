@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageInput with ChangeNotifier {
-  List<File>? _imageFiles = <File>[];
+  final List<File> _imageFiles = <File>[];
   int _currentImageNumber = 5;
 
   void getFromGallery() async {
-    if (_currentImageNumber < _imageFiles!.length) {
-      _imageFiles!.removeWhere(
-          (element) => element == _imageFiles![_currentImageNumber]);
+    if (_currentImageNumber < _imageFiles.length) {
+      _imageFiles.removeWhere(
+          (element) => element == _imageFiles[_currentImageNumber]);
     }
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -18,7 +18,7 @@ class ImageInput with ChangeNotifier {
       maxHeight: 1800,
     );
     if (pickedFile != null) {
-      _imageFiles!.add(File(pickedFile.path));
+      _imageFiles.add(File(pickedFile.path));
     }
     notifyListeners();
   }
@@ -27,11 +27,11 @@ class ImageInput with ChangeNotifier {
     if (_imageFiles == null) {
       return <File>[];
     }
-    return [..._imageFiles!];
+    return [..._imageFiles];
   }
 
   bool elemenExistsAt(int index) {
-    if (_imageFiles!.length >= index + 1) return true;
+    if (_imageFiles.length >= index + 1) return true;
     return false;
   }
 
@@ -49,12 +49,12 @@ class ImageInput with ChangeNotifier {
       onPressed: getFromGallery,
       child: elemenExistsAt(imageNumber)
           ? Image.file(
-              _imageFiles![imageNumber],
+              _imageFiles[imageNumber],
               fit: BoxFit.fill,
             )
           : Icon(
               Icons.camera,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
     );
   }

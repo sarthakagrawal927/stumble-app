@@ -14,7 +14,7 @@ class FirstPhotoAdditionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 28, 29, 1),
+      backgroundColor: const Color.fromRGBO(26, 28, 29, 1),
       body: Padding(
         padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height / 16,
@@ -23,7 +23,7 @@ class FirstPhotoAdditionScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ScreenHeadingWidget("Add your first photo!"),
+            const ScreenHeadingWidget("Add your first photo!"),
             SizedBox(
               height: MediaQuery.of(context).size.height / 5,
             ),

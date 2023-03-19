@@ -50,7 +50,7 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
           SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: deviceSize.height,
               width: deviceSize.width,
               child: Column(

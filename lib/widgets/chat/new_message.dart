@@ -11,7 +11,7 @@ class NewMessage extends StatefulWidget {
 
 class _NewMessageState extends State<NewMessage> {
   var _enteredMessage = "";
-  final _controller = new TextEditingController();
+  final _controller = TextEditingController();
 
   void _sendMessage() {
     FocusScope.of(context).unfocus();
@@ -27,7 +27,7 @@ class _NewMessageState extends State<NewMessage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromRGBO(38, 41, 42, 1),
+      color: const Color.fromRGBO(38, 41, 42, 1),
       margin: const EdgeInsets.only(
         top: 8.0,
       ),
@@ -40,7 +40,7 @@ class _NewMessageState extends State<NewMessage> {
               style: const TextStyle(
                 color: Color.fromRGBO(237, 237, 237, 1),
               ),
-              cursorColor: Color.fromRGBO(237, 237, 237, 1),
+              cursorColor: const Color.fromRGBO(237, 237, 237, 1),
               decoration: const InputDecoration(
                 labelText: 'Send a message!',
                 labelStyle: TextStyle(
@@ -53,7 +53,7 @@ class _NewMessageState extends State<NewMessage> {
             ),
           ),
           IconButton(
-            color: Color.fromRGBO(38, 41, 42, 1),
+            color: const Color.fromRGBO(38, 41, 42, 1),
             onPressed: () {
               _enteredMessage.trim().isEmpty ? null : _sendMessage();
             },

@@ -44,19 +44,16 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.latoTextTheme(
             Theme.of(context).textTheme,
           ),
-          primaryColorBrightness: Brightness.dark,
           // primarySwatch: MaterialColor(#0xF9A25E, color),
-          backgroundColor: Color.fromRGBO(105, 50, 30, 1),
-          buttonColor: Color.fromRGBO(1, 177, 177, 0.5),
-          accentColor: Color.fromRGBO(249, 162, 94, 0.5),
-          splashColor: Color.fromRGBO(60, 42, 33, 1),
-          bottomAppBarColor: Color.fromRGBO(27, 18, 11, 1),
+          backgroundColor: const Color.fromRGBO(105, 50, 30, 1),
+          splashColor: const Color.fromRGBO(60, 42, 33, 1),
+          bottomAppBarColor: const Color.fromRGBO(27, 18, 11, 1), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color.fromRGBO(249, 162, 94, 0.5)),
         ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return SwipingScreen();
+              return const SwipingScreen();
             }
             return AuthScreen();
           },
@@ -66,17 +63,17 @@ class MyApp extends StatelessWidget {
           SwipingScreen.routeName: (context) => const SwipingScreen(),
           UserProfileScreen.routeName: (context) => const UserProfileScreen(),
           UserProfileCompletionScreen.routeName: (context) =>
-              UserProfileCompletionScreen(),
-          ChatScreen.routeName: (context) => ChatScreen(),
-          FiltersScreen.routeName: (context) => FiltersScreen(),
+              const UserProfileCompletionScreen(),
+          ChatScreen.routeName: (context) => const ChatScreen(),
+          FiltersScreen.routeName: (context) => const FiltersScreen(),
           TermsAndConditionsScreen.routeName: (context) =>
-              TermsAndConditionsScreen(),
-          FirstNameScreen.routeName: (context) => FirstNameScreen(),
-          GenderSelectionScreen.routeName: (context) => GenderSelectionScreen(),
+              const TermsAndConditionsScreen(),
+          FirstNameScreen.routeName: (context) => const FirstNameScreen(),
+          GenderSelectionScreen.routeName: (context) => const GenderSelectionScreen(),
           FirstPhotoAdditionScreen.routeName: (context) =>
-              FirstPhotoAdditionScreen(),
+              const FirstPhotoAdditionScreen(),
           ProfilePromptAdditionScreen.routeName: (context) =>
-              ProfilePromptAdditionScreen(),
+              const ProfilePromptAdditionScreen(),
         },
       ),
     );

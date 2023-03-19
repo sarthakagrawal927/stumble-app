@@ -45,7 +45,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 28, 29, 1),
+      backgroundColor: const Color.fromRGBO(26, 28, 29, 1),
       key: _scaffoldKey,
       appBar: const TopAppBar(),
       body: Padding(
@@ -100,11 +100,11 @@ class _SwipingScreenState extends State<SwipingScreen> {
                       ),
                     ),
                     Container(
-                      color: Color.fromRGBO(26, 28, 29, 1),
+                      color: const Color.fromRGBO(26, 28, 29, 1),
                       height: MediaQuery.of(context).size.height / 32,
                     ),
                     Container(
-                      color: Color.fromRGBO(26, 28, 29, 1),
+                      color: const Color.fromRGBO(26, 28, 29, 1),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -140,10 +140,10 @@ class _SwipingScreenState extends State<SwipingScreen> {
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height / 16,
-                      color: Color.fromRGBO(26, 28, 29, 1),
+                      color: const Color.fromRGBO(26, 28, 29, 1),
                     ),
                     Container(
-                      color: Color.fromRGBO(26, 28, 29, 1),
+                      color: const Color.fromRGBO(26, 28, 29, 1),
                       height: MediaQuery.of(context).size.height * 0.3,
                       child: Container(
                           alignment: Alignment.bottomLeft,
@@ -151,10 +151,10 @@ class _SwipingScreenState extends State<SwipingScreen> {
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height / 16,
-                      color: Color.fromRGBO(26, 28, 29, 1),
+                      color: const Color.fromRGBO(26, 28, 29, 1),
                     ),
                     Container(
-                      color: Color.fromRGBO(26, 28, 29, 1),
+                      color: const Color.fromRGBO(26, 28, 29, 1),
                       height: MediaQuery.of(context).size.height * 0.3,
                       child: Container(
                           alignment: Alignment.bottomLeft,
@@ -180,7 +180,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
 
   BoxDecoration imageBoxWidget(BuildContext context, int index) {
     return BoxDecoration(
-      color: Theme.of(context).accentColor,
+      color: Theme.of(context).colorScheme.secondary,
       image: DecorationImage(
         fit: BoxFit.cover,
         image: NetworkImage(_swipeItems[index].content.imageUrls[0]),

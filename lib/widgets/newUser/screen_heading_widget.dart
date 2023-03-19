@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ScreenHeadingWidget extends StatelessWidget {
-  ScreenHeadingWidget(this.text);
+  const ScreenHeadingWidget(this.text);
   final String text;
 
   @override

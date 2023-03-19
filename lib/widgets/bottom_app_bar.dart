@@ -26,7 +26,7 @@ class BottomBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           iconButtonBasedOnCurrentScreen(
-            Icon(Icons.account_box_rounded),
+            const Icon(Icons.account_box_rounded),
             currentScreen == "UserProfileOverviewScreen"
                 ? Colors.red
                 : Colors.grey.shade500,
@@ -36,7 +36,7 @@ class BottomBar extends StatelessWidget {
                 : UserProfileScreen.routeName,
           ),
           iconButtonBasedOnCurrentScreen(
-            Icon(Icons.favorite),
+            const Icon(Icons.favorite),
             currentScreen == "SwipingScreen"
                 ? Colors.red
                 : Colors.grey.shade500,
@@ -44,7 +44,7 @@ class BottomBar extends StatelessWidget {
             currentScreen == "SwipingScreen" ? "" : SwipingScreen.routeName,
           ),
           iconButtonBasedOnCurrentScreen(
-            Icon(Icons.chat_bubble_rounded),
+            const Icon(Icons.chat_bubble_rounded),
             currentScreen == "ChatScreen" ? Colors.red : Colors.grey.shade500,
             context,
             currentScreen == "ChatScreen" ? "" : ChatScreen.routeName,

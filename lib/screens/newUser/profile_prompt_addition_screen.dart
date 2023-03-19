@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../swiping_screen.dart';
 import '../../widgets/newUser/screen_heading_widget.dart';
-import '../../widgets/newUser/screen_go_to_next_page_row.dart';
 
 class ProfilePromptAdditionScreen extends StatelessWidget {
   const ProfilePromptAdditionScreen({super.key});
@@ -10,7 +9,7 @@ class ProfilePromptAdditionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 28, 29, 1),
+      backgroundColor: const Color.fromRGBO(26, 28, 29, 1),
       body: Padding(
         padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height / 16,
@@ -18,7 +17,7 @@ class ProfilePromptAdditionScreen extends StatelessWidget {
         ),
         child: ListView(
           children: [
-            ScreenHeadingWidget(
+            const ScreenHeadingWidget(
                 "Tell people somethings that you're interested in!"),
             SizedBox(
               height: MediaQuery.of(context).size.height / 7,
@@ -34,7 +33,7 @@ class ProfilePromptAdditionScreen extends StatelessWidget {
                 minLines: 1,
                 keyboardAppearance: Brightness.dark,
                 textInputAction: TextInputAction.next,
-                cursorColor: Color.fromRGBO(237, 237, 237, 1),
+                cursorColor: const Color.fromRGBO(237, 237, 237, 1),
                 onFieldSubmitted: (_) => {
                   Navigator.of(context)
                       .pushReplacementNamed(SwipingScreen.routeName),

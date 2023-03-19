@@ -38,7 +38,7 @@ class _FirstNameScreenState extends State<FirstNameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 28, 29, 1),
+      backgroundColor: const Color.fromRGBO(26, 28, 29, 1),
       body: Padding(
         padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height / 16,
@@ -47,7 +47,7 @@ class _FirstNameScreenState extends State<FirstNameScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ScreenHeadingWidget("What's your first name?"),
+            const ScreenHeadingWidget("What's your first name?"),
             Padding(
               padding: EdgeInsets.symmetric(
                 vertical: MediaQuery.of(context).size.height / 32,
@@ -65,18 +65,18 @@ class _FirstNameScreenState extends State<FirstNameScreen> {
                   EdgeInsets.only(top: MediaQuery.of(context).size.height / 32),
               child: TextField(
                 controller: nameTextBoxController,
-                cursorColor: Color.fromRGBO(116, 91, 53, 1),
+                cursorColor: const Color.fromRGBO(116, 91, 53, 1),
                 keyboardAppearance: Brightness.dark,
                 style: const TextStyle(
                   color: Color.fromRGBO(237, 237, 237, 1),
                   fontSize: 35,
                 ),
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'Ex: Daddy :)',
                   labelStyle: GoogleFonts.lato(
                     fontSize: 25,
-                    color: Color.fromRGBO(116, 91, 53, 1),
+                    color: const Color.fromRGBO(116, 91, 53, 1),
                   ),
                 ),
                 keyboardType: TextInputType.name,

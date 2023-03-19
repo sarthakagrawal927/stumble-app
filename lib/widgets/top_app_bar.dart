@@ -10,7 +10,6 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: ElevatedButton(
-        child: Icon(Icons.navigation_sharp),
         style: ElevatedButton.styleFrom(
           padding:
               EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
@@ -19,10 +18,11 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: () {
           // Call location API here.
         },
+        child: const Icon(Icons.navigation_sharp),
       ),
       actions: [
         DropdownButton(
-          dropdownColor: Color.fromRGBO(27, 18, 11, 1),
+          dropdownColor: const Color.fromRGBO(27, 18, 11, 1),
           items: [
             DropdownMenuItem(
               value: 'Filters',

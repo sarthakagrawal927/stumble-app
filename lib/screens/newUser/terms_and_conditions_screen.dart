@@ -11,7 +11,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 28, 29, 1),
+      backgroundColor: const Color.fromRGBO(26, 28, 29, 1),
       body: Padding(
         padding: EdgeInsets.symmetric(
           vertical: MediaQuery.of(context).size.height / 16,
@@ -28,7 +28,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
               child:
                   Icon(Icons.lock, size: MediaQuery.of(context).size.width / 3),
             ),
-            ScreenHeadingWidget("We care about your privacy!"),
+            const ScreenHeadingWidget("We care about your privacy!"),
             Padding(
               padding: EdgeInsets.symmetric(
                 vertical: MediaQuery.of(context).size.height / 32,
@@ -42,9 +42,9 @@ class TermsAndConditionsScreen extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height / 32,
             ),
-            ButtonToAcceptOrRejectConditions("Accept",
+            const ButtonToAcceptOrRejectConditions("Accept",
                 Color.fromRGBO(116, 91, 53, 1), FirstNameScreen.routeName),
-            ButtonToAcceptOrRejectConditions(
+            const ButtonToAcceptOrRejectConditions(
                 "Reject", Color.fromRGBO(57, 66, 70, 1), ""),
           ],
         ),

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class MessageBubble extends StatelessWidget {
   final String message;
   final bool isMe;
+  @override
   final Key key;
-  MessageBubble(this.message, this.isMe, {required this.key});
+  const MessageBubble(this.message, this.isMe, {required this.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,21 +16,21 @@ class MessageBubble extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-                bottomLeft: !isMe ? Radius.circular(0) : Radius.circular(12),
-                bottomRight: isMe ? Radius.circular(12) : Radius.circular(0),
+                topLeft: const Radius.circular(12),
+                topRight: const Radius.circular(12),
+                bottomLeft: !isMe ? const Radius.circular(0) : const Radius.circular(12),
+                bottomRight: isMe ? const Radius.circular(12) : const Radius.circular(0),
               ),
               color: isMe
-                  ? Theme.of(context).accentColor
+                  ? Theme.of(context).colorScheme.secondary
                   : Theme.of(context).buttonColor,
             ),
             width: 140,
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               vertical: 10,
               horizontal: 16,
             ),
-            margin: EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
               vertical: 4,
               horizontal: 8,
             ),

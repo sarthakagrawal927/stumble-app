@@ -7,3 +7,9 @@ A dating app that meets all the needs of our generation :)
 - Tired of meeting people through apps and realizing they are nothing like what they portrayed on texts?
 
 Well, we have an answer for all your problems right here!
+
+## Fix errors:
+
+```bash
+dart fix --apply
+```

@@ -29,9 +29,9 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: const TopAppBar(),
       body: Container(
-        color: Color.fromRGBO(26, 28, 29, 1),
+        color: const Color.fromRGBO(26, 28, 29, 1),
         child: Column(
-          children: [
+          children: const [
             Expanded(
               child: ChatMessages(),
             ),
@@ -39,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomBar(currentScreen: "ChatScreen"),
+      bottomNavigationBar: const BottomBar(currentScreen: "ChatScreen"),
     );
   }
 }
