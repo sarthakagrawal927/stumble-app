@@ -20,7 +20,6 @@ class FiltersScreen extends StatelessWidget {
             child: Column(
               children: const [
                 Text('Who you want to date:'),
-                
               ],
             ),
           ),
