@@ -1,8 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-
-import '../providers/image_input.dart';
 
 class Profile with ChangeNotifier {
   final String id;
@@ -23,7 +19,7 @@ class Profile with ChangeNotifier {
     required this.conversationStarterList,
   });
 
-  final List<File>? _images = ImageInput().imageList();
+  // final List<File>? _images = ImageInput().imageList();
   // // Function to get the list of images.
   // List<String> get images {
   //   return [..._images];

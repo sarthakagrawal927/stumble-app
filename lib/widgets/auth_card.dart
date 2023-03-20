@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import '../screens/newUser/terms_and_conditions_screen.dart';
 
-enum AuthMode { Signup, Login }
+enum AuthMode { signup, login }
 
 class AuthCard extends StatefulWidget {
   const AuthCard({super.key});
@@ -22,7 +22,7 @@ class _AuthCardState extends State<AuthCard> {
   final _auth = FirebaseAuth.instance;
   late UserCredential authResult;
 
-  AuthMode _authMode = AuthMode.Login;
+  AuthMode _authMode = AuthMode.login;
   final Map<String, String> _authData = {
     'email': '',
     'password': '',
@@ -57,11 +57,13 @@ class _AuthCardState extends State<AuthCard> {
       _isLoading = true;
     });
     try {
-      if (_authMode == AuthMode.Login) {
+      if (_authMode == AuthMode.login) {
         // Log user in
         authResult = await _auth.signInWithEmailAndPassword(
             email: _authData['email']!, password: _authData['password']!);
-        Navigator.of(context).pushReplacementNamed(SwipingScreen.routeName);
+        if (mounted) {
+          Navigator.of(context).pushReplacementNamed(SwipingScreen.routeName);
+        }
       } else {
         // Sign user up
         authResult = await _auth.createUserWithEmailAndPassword(
@@ -75,11 +77,14 @@ class _AuthCardState extends State<AuthCard> {
         if (_isLoading) {
           const CircularProgressIndicator();
         }
-        Navigator.of(context)
-            .pushReplacementNamed(TermsAndConditionsScreen.routeName);
+        if (mounted) {
+          Navigator.of(context)
+              .pushReplacementNamed(TermsAndConditionsScreen.routeName);
+        }
       }
     } on PlatformException {
       const errorMessage = 'Authentication failed!';
+      _showErrorDialog(errorMessage);
     } catch (error) {
       const errorMessage =
           'Could not authenticate you. Please try again later!';
@@ -92,13 +97,13 @@ class _AuthCardState extends State<AuthCard> {
   }
 
   void _switchAuthMode() {
-    if (_authMode == AuthMode.Login) {
+    if (_authMode == AuthMode.login) {
       setState(() {
-        _authMode = AuthMode.Signup;
+        _authMode = AuthMode.signup;
       });
     } else {
       setState(() {
-        _authMode = AuthMode.Login;
+        _authMode = AuthMode.login;
       });
     }
   }
@@ -116,9 +121,9 @@ class _AuthCardState extends State<AuthCard> {
       ),
       elevation: 8.0,
       child: Container(
-        height: _authMode == AuthMode.Signup ? 350 : 300,
+        height: _authMode == AuthMode.signup ? 350 : 300,
         constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 350 : 300),
+            BoxConstraints(minHeight: _authMode == AuthMode.signup ? 350 : 300),
         width: deviceSize.width * 0.75,
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -172,10 +177,10 @@ class _AuthCardState extends State<AuthCard> {
                     _authData['password'] = value!;
                   },
                 ),
-                if (_authMode == AuthMode.Signup)
+                if (_authMode == AuthMode.signup)
                   TextFormField(
                     keyboardAppearance: Brightness.dark,
-                    enabled: _authMode == AuthMode.Signup,
+                    enabled: _authMode == AuthMode.signup,
                     decoration: InputDecoration(
                       labelText: 'Confirm Password',
                       labelStyle: GoogleFonts.lato(
@@ -184,7 +189,7 @@ class _AuthCardState extends State<AuthCard> {
                       ),
                     ),
                     obscureText: true,
-                    validator: _authMode == AuthMode.Signup
+                    validator: _authMode == AuthMode.signup
                         ? (value) {
                             if (value != _passwordController.text) {
                               return 'Passwords do not match!';
@@ -211,7 +216,7 @@ class _AuthCardState extends State<AuthCard> {
                       backgroundColor: Colors.blue.withOpacity(0),
                     ),
                     child: Text(
-                      _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP',
+                      _authMode == AuthMode.login ? 'lOGIN' : 'SIGN UP',
                       style: GoogleFonts.lato(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
@@ -228,7 +233,7 @@ class _AuthCardState extends State<AuthCard> {
                     ),
                     onPressed: _switchAuthMode,
                     child: Text(
-                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD',
+                      '${_authMode == AuthMode.login ? 'sIGNUP' : 'lOGIN'} INSTEAD',
                       style: GoogleFonts.lato(color: Colors.white54),
                     ),
                   ),

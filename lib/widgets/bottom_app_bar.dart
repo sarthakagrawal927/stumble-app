@@ -55,7 +55,7 @@ class BottomBar extends StatelessWidget {
   }
 
   final String currentScreen;
-  const BottomBar({required this.currentScreen});
+  const BottomBar({required this.currentScreen, super.key});
 
   Widget returnWidgetBasedOnCurrentScreen(BuildContext context) {
     Widget widgetToReturn;
@@ -79,7 +79,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: Theme.of(context).bottomAppBarColor,
+      color: BottomAppBarTheme.of(context).color,
       child: returnWidgetBasedOnCurrentScreen(context),
     );
   }

@@ -26,38 +26,34 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           items: [
             DropdownMenuItem(
               value: 'Filters',
-              child: Container(
-                child: Row(
-                  children: const [
-                    Icon(
-                      Icons.filter_list_rounded,
-                      color: Color.fromRGBO(237, 237, 237, 1),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Filters',
-                      style: TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
-                    ),
-                  ],
-                ),
+              child: Row(
+                children: const [
+                  Icon(
+                    Icons.filter_list_rounded,
+                    color: Color.fromRGBO(237, 237, 237, 1),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'Filters',
+                    style: TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
+                  ),
+                ],
               ),
             ),
             DropdownMenuItem(
               value: 'Logout',
-              child: Container(
-                child: Row(
-                  children: const [
-                    Icon(
-                      Icons.exit_to_app,
-                      color: Color.fromRGBO(237, 237, 237, 1),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Logout',
-                      style: TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
-                    ),
-                  ],
-                ),
+              child: Row(
+                children: const [
+                  Icon(
+                    Icons.exit_to_app,
+                    color: Color.fromRGBO(237, 237, 237, 1),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    'Logout',
+                    style: TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
+                  ),
+                ],
               ),
             ),
           ],

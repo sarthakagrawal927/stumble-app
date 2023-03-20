@@ -24,9 +24,6 @@ class ImageInput with ChangeNotifier {
   }
 
   List<File>? imageList() {
-    if (_imageFiles == null) {
-      return <File>[];
-    }
     return [..._imageFiles];
   }
 

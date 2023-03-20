@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AskMeAboutTextField extends StatelessWidget {
-  const AskMeAboutTextField(this._conversationStarterFocusNode, this.ctx);
+  const AskMeAboutTextField(this._conversationStarterFocusNode, this.ctx,
+      {super.key});
   final FocusNode _conversationStarterFocusNode;
   final BuildContext ctx;
 

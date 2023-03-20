@@ -4,8 +4,7 @@ class MessageBubble extends StatelessWidget {
   final String message;
   final bool isMe;
   @override
-  final Key key;
-  const MessageBubble(this.message, this.isMe, {required this.key});
+  const MessageBubble(this.message, this.isMe, {required super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +17,15 @@ class MessageBubble extends StatelessWidget {
               borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(12),
                 topRight: const Radius.circular(12),
-                bottomLeft: !isMe ? const Radius.circular(0) : const Radius.circular(12),
-                bottomRight: isMe ? const Radius.circular(12) : const Radius.circular(0),
+                bottomLeft: !isMe
+                    ? const Radius.circular(0)
+                    : const Radius.circular(12),
+                bottomRight:
+                    isMe ? const Radius.circular(12) : const Radius.circular(0),
               ),
               color: isMe
                   ? Theme.of(context).colorScheme.secondary
-                  : Theme.of(context).buttonColor,
+                  : Theme.of(context).primaryColor,
             ),
             width: 140,
             padding: const EdgeInsets.symmetric(
@@ -38,7 +40,7 @@ class MessageBubble extends StatelessWidget {
               message,
               style: TextStyle(
                 fontSize: 20,
-                color: isMe ? Colors.black87 : Colors.black87,
+                color: isMe ? Colors.black87 : Colors.black12,
               ),
             ),
           ),

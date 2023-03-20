@@ -45,9 +45,7 @@ class MyApp extends StatelessWidget {
             Theme.of(context).textTheme,
           ),
           // primarySwatch: MaterialColor(#0xF9A25E, color),
-          backgroundColor: const Color.fromRGBO(105, 50, 30, 1),
           splashColor: const Color.fromRGBO(60, 42, 33, 1),
-          bottomAppBarColor: const Color.fromRGBO(27, 18, 11, 1),
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(secondary: const Color.fromRGBO(249, 162, 94, 0.5)),
         ),
@@ -57,11 +55,11 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return const SwipingScreen();
             }
-            return AuthScreen();
+            return const AuthScreen();
           },
         ),
         routes: {
-          AuthScreen.routeName: (context) => AuthScreen(),
+          AuthScreen.routeName: (context) => const AuthScreen(),
           SwipingScreen.routeName: (context) => const SwipingScreen(),
           UserProfileScreen.routeName: (context) => const UserProfileScreen(),
           UserProfileCompletionScreen.routeName: (context) =>

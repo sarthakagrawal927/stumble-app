@@ -4,11 +4,9 @@ import 'package:video_player/video_player.dart';
 
 import '../widgets/auth_card.dart';
 
-enum AuthMode { Signup, Login }
-
 class AuthScreen extends StatefulWidget {
   static const routeName = '/auth';
-
+  const AuthScreen({super.key});
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }

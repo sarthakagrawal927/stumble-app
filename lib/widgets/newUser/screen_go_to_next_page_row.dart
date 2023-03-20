@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class ScreenGoToNextPageRow extends StatelessWidget {
   const ScreenGoToNextPageRow(
-      this.textToDisplay, this.nextScreenRouteName, this.functionToSetData);
+      this.textToDisplay, this.nextScreenRouteName, this.functionToSetData,
+      {super.key});
   final String textToDisplay;
   final String nextScreenRouteName;
   final Function functionToSetData;
@@ -31,7 +32,9 @@ class ScreenGoToNextPageRow extends StatelessWidget {
               ),
               onPressed: (() async {
                 await functionToSetData();
-                Navigator.pushReplacementNamed(context, nextScreenRouteName);
+                if (context.mounted) {
+                  Navigator.pushReplacementNamed(context, nextScreenRouteName);
+                }
               }),
               child: Icon(
                 Icons.arrow_forward,
