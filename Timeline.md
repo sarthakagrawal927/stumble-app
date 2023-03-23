@@ -1,4 +1,4 @@
-# Timeline
+# Timeline S01
 
 ## Probable Expenses
 - Server Costs (depends on user)
@@ -86,8 +86,29 @@ SuperLike
 ## Common
 - Research Hard upgrade & Soft upgrade [WIP]
 - Try generate QR code for a link ({{host}}/referral?referrer_id=122&referred_id=3324)
-- Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart) [WIP]
+- Code Analysis Tool (https://github.com/marketplace/actions/analyze-dart) [DONE]
 - Research Notifications (Tech) [WIP]
 - Analytics
   - [Screen Time Spent](https://pub.dev/packages/amplitude_flutter)
+
+# Timeline S04
+
+Till 30th April'23 : MVP Finish & Release
+Till 31st May'23 : Setup Alpha Group, college ambassadors, clear App bugs etc.
+
+## 5 weeks until launch
+
+### Sarthak
+- Study [Push Notifications](https://pub.dev/packages/firebase_messaging)
+- Deep dive Whatsapp integration
+- Add update user & complete user profile properties
+
+### Rahul
 - Add [Logger](https://pub.dev/packages/chucker_flutter)
+- API Integration (atleast 4)
+- Add undo logic (both right & left swipe)
+
+## Post MVP
+- Basic Testing to automate stuff
+- Decide on which services to migrate first from NodeJS to (Go, Elixir)
+- Consider removing prisma (or just use raw queries in case it gets complicated)
