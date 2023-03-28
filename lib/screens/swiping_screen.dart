@@ -183,7 +183,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
       color: Theme.of(context).colorScheme.secondary,
       image: DecorationImage(
         fit: BoxFit.cover,
-        image: NetworkImage(_swipeItems[index].content.imageUrls[0]),
+        image: NetworkImage(_swipeItems[index].content.imageUrls[0].path),
       ),
     );
   }

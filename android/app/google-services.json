@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "370934336087",
+    "project_id": "chatscreendata",
+    "storage_bucket": "chatscreendata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370934336087:android:00d1778e619bdceef37112",
+        "android_client_info": {
+          "package_name": "com.example.dating_made_better"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "370934336087-lo6ps69p1p3jf4okafnqh8ocokv12k6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHUNE8P1F15wlJ-oR-KhLvlQhCXd2cCbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370934336087-lo6ps69p1p3jf4okafnqh8ocokv12k6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

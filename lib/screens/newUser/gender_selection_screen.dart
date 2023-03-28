@@ -1,12 +1,11 @@
-import 'package:dating_made_better/screens/newUser/first_photo_addition_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import './first_photo_addition_screen.dart';
+import '../../constants.dart';
+import '../../providers/profile.dart';
 import '../../widgets/newUser/screen_heading_widget.dart';
 import '../../widgets/newUser/screen_go_to_next_page_row.dart';
-
-enum Gender { woman, man, nonBinary }
 
 class GenderSelectionScreen extends StatefulWidget {
   const GenderSelectionScreen({super.key});
@@ -18,34 +17,6 @@ class GenderSelectionScreen extends StatefulWidget {
 
 class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
   Gender? _gender = Gender.woman;
-  final user = FirebaseAuth.instance.currentUser;
-
-  Future<String> functionToRetrieveDocumentID() async {
-    DocumentReference documentReference = FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .collection("email")
-        .doc();
-
-    DocumentSnapshot docSnap = await documentReference.get();
-    var documentID = docSnap.reference.id;
-    return documentID;
-  }
-
-  void functionToSetGender() async {
-    String documentID = await functionToRetrieveDocumentID();
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .collection('email')
-        .doc(documentID)
-        .set(
-      {
-        "gender": _gender.toString(),
-      },
-      SetOptions(merge: true),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,24 +46,25 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
                 Padding(
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height / 48),
-                  child: genderListTile('Woman', Gender.woman),
+                  child: genderListTile('Woman', Gender.woman, context),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height / 48),
-                  child: genderListTile('Man', Gender.man),
+                  child: genderListTile('Man', Gender.man, context),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height / 48),
-                  child: genderListTile('Nonbinary', Gender.nonBinary),
+                  child: genderListTile('Nonbinary', Gender.nonBinary, context),
                 ),
               ],
             ),
             ScreenGoToNextPageRow(
               "You can always update this later!",
               FirstPhotoAdditionScreen.routeName,
-              functionToSetGender,
+              () => Provider.of<Profile>(context, listen: false).setGender =
+                  _gender as Gender,
             ),
           ],
         ),
@@ -100,7 +72,7 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
     );
   }
 
-  ListTile genderListTile(String text, Gender gender) {
+  ListTile genderListTile(String text, Gender gender, BuildContext context) {
     return ListTile(
       iconColor: const Color.fromRGBO(116, 91, 53, 1),
       tileColor: const Color.fromRGBO(26, 28, 29, 0.5),
@@ -117,6 +89,8 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
         onChanged: (Gender? value) {
           setState(() {
             _gender = value;
+            Provider.of<Profile>(context, listen: false).setGender =
+                _gender as Gender;
           });
         },
       ),

@@ -1,10 +1,11 @@
-import 'package:dating_made_better/screens/newUser/gender_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import './gender_selection_screen.dart';
+import '../../providers/profile.dart';
 import '../../widgets/newUser/screen_heading_widget.dart';
 import '../../widgets/newUser/screen_go_to_next_page_row.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class FirstNameScreen extends StatefulWidget {
   const FirstNameScreen({super.key});
@@ -16,18 +17,7 @@ class FirstNameScreen extends StatefulWidget {
 
 class _FirstNameScreenState extends State<FirstNameScreen> {
   final nameTextBoxController = TextEditingController();
-  void functionToSetName() {
-    final user = FirebaseAuth.instance.currentUser;
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .collection('email')
-        .add({
-      'text': nameTextBoxController.text,
-      'createdAt': DateTime.now(),
-      'userId': user.uid,
-    });
-  }
+  String _name = "LMAO";
 
   @override
   void dispose() {
@@ -81,15 +71,8 @@ class _FirstNameScreenState extends State<FirstNameScreen> {
                 ),
                 keyboardType: TextInputType.name,
                 onSubmitted: (value) {
-                  final user = FirebaseAuth.instance.currentUser;
-                  FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(user!.uid)
-                      .collection('email')
-                      .add({
-                    'text': nameTextBoxController.text,
-                    'createdAt': DateTime.now(),
-                    'userId': user.uid,
+                  setState(() {
+                    _name = value;
                   });
                 },
               ),
@@ -97,7 +80,8 @@ class _FirstNameScreenState extends State<FirstNameScreen> {
             ScreenGoToNextPageRow(
               "This will be shown on your profile!",
               GenderSelectionScreen.routeName,
-              functionToSetName,
+              () =>
+                  Provider.of<Profile>(context, listen: false).setName = _name,
             )
           ],
         ),

@@ -1,11 +1,23 @@
+import 'package:dating_made_better/widgets/newUser/screen_go_to_next_page_row.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../swiping_screen.dart';
+import '../../providers/profile.dart';
 import '../../widgets/newUser/screen_heading_widget.dart';
 
-class ProfilePromptAdditionScreen extends StatelessWidget {
+class ProfilePromptAdditionScreen extends StatefulWidget {
   const ProfilePromptAdditionScreen({super.key});
   static const routeName = '/profile-prompt-addition-screen';
+
+  @override
+  State<ProfilePromptAdditionScreen> createState() =>
+      _ProfilePromptAdditionScreenState();
+}
+
+class _ProfilePromptAdditionScreenState
+    extends State<ProfilePromptAdditionScreen> {
+  String promptTextValue = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +27,7 @@ class ProfilePromptAdditionScreen extends StatelessWidget {
           vertical: MediaQuery.of(context).size.height / 16,
           horizontal: MediaQuery.of(context).size.width / 16,
         ),
-        child: ListView(
+        child: Column(
           children: [
             const ScreenHeadingWidget(
                 "Tell people somethings that you're interested in!"),
@@ -34,11 +46,20 @@ class ProfilePromptAdditionScreen extends StatelessWidget {
                 keyboardAppearance: Brightness.dark,
                 textInputAction: TextInputAction.next,
                 cursorColor: const Color.fromRGBO(237, 237, 237, 1),
-                onFieldSubmitted: (_) => {
-                  Navigator.of(context)
-                      .pushReplacementNamed(SwipingScreen.routeName),
+                onFieldSubmitted: (value) => {
+                  setState(() {
+                    promptTextValue = value;
+                  }),
                 },
               ),
+            ),
+            ScreenGoToNextPageRow(
+              "This will be shown on your profile!",
+              SwipingScreen.routeName,
+              () {
+                Provider.of<Profile>(context, listen: false).setProfilePrompt =
+                    promptTextValue;
+              },
             ),
           ],
         ),

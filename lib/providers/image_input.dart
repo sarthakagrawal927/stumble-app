@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageInput with ChangeNotifier {
-  final List<File> _imageFiles = <File>[];
+  List<File> imageUrls;
+  ImageInput(this.imageUrls);
+
   int _currentImageNumber = 5;
 
   void getFromGallery() async {
-    if (_currentImageNumber < _imageFiles.length) {
-      _imageFiles.removeWhere(
-          (element) => element == _imageFiles[_currentImageNumber]);
+    if (_currentImageNumber < imageUrls.length) {
+      imageUrls
+          .removeWhere((element) => element == imageUrls[_currentImageNumber]);
     }
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -18,17 +20,13 @@ class ImageInput with ChangeNotifier {
       maxHeight: 1800,
     );
     if (pickedFile != null) {
-      _imageFiles.add(File(pickedFile.path));
+      imageUrls.add(File(pickedFile.path));
+      notifyListeners();
     }
-    notifyListeners();
-  }
-
-  List<File>? imageList() {
-    return [..._imageFiles];
   }
 
   bool elemenExistsAt(int index) {
-    if (_imageFiles.length >= index + 1) return true;
+    if (imageUrls.length >= index + 1) return true;
     return false;
   }
 
@@ -46,7 +44,7 @@ class ImageInput with ChangeNotifier {
       onPressed: getFromGallery,
       child: elemenExistsAt(imageNumber)
           ? Image.file(
-              _imageFiles[imageNumber],
+              imageUrls[imageNumber],
               fit: BoxFit.fill,
             )
           : Icon(

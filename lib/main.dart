@@ -1,22 +1,22 @@
-import 'package:dating_made_better/screens/auth_screen.dart';
-import 'package:dating_made_better/screens/chat_screen.dart';
-import 'package:dating_made_better/screens/filters_screen.dart';
-import 'package:dating_made_better/screens/newUser/first_name_screen.dart';
-import 'package:dating_made_better/screens/newUser/first_photo_addition_screen.dart';
-import 'package:dating_made_better/screens/newUser/gender_selection_screen.dart';
-import 'package:dating_made_better/screens/newUser/profile_prompt_addition_screen.dart';
-import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import './providers/profile.dart';
 import './providers/profiles.dart';
-import './providers/image_input.dart';
-import 'screens/newUser/terms_and_conditions_screen.dart';
+import './screens/auth_screen.dart';
+import './screens/chat_screen.dart';
+import './screens/filters_screen.dart';
 import './screens/swiping_screen.dart';
+import './screens/newUser/first_name_screen.dart';
+import './screens/newUser/first_photo_addition_screen.dart';
+import './screens/newUser/gender_selection_screen.dart';
+import './screens/newUser/profile_prompt_addition_screen.dart';
+import './screens/newUser/terms_and_conditions_screen.dart';
 import './screens/user_profile_completion_screen.dart';
+import './screens/user_profile_overview_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ImageInput(),
+        ChangeNotifierProvider.value(
+          value: Profile(imageUrls: [],),
         ),
         ChangeNotifierProvider(
           create: (context) => Profiles(),
@@ -69,8 +69,7 @@ class MyApp extends StatelessWidget {
           TermsAndConditionsScreen.routeName: (context) =>
               const TermsAndConditionsScreen(),
           FirstNameScreen.routeName: (context) => const FirstNameScreen(),
-          GenderSelectionScreen.routeName: (context) =>
-              const GenderSelectionScreen(),
+          GenderSelectionScreen.routeName: (context) => GenderSelectionScreen(),
           FirstPhotoAdditionScreen.routeName: (context) =>
               const FirstPhotoAdditionScreen(),
           ProfilePromptAdditionScreen.routeName: (context) =>

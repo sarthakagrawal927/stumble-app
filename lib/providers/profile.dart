@@ -1,34 +1,67 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../constants.dart';
 
 class Profile with ChangeNotifier {
-  final String id;
-  final String name;
-  final double age;
-  List<String> imageUrls;
+  String id;
+  String name;
+  Gender gender;
+  double age;
+  List<File> imageUrls = [];
   bool isVerified;
-  //final String conversationStarterText;
-  final List<String> conversationStarterList;
+  String conversationStarterPrompt;
 
   Profile({
-    required this.id,
-    required this.name,
-    required this.age,
+    this.id = "",
+    this.name = "",
+    this.gender = Gender.nonBinary,
+    this.age = 0.0,
     this.isVerified = false,
-    required this.imageUrls,
-    //required this.conversationStarterText,
-    required this.conversationStarterList,
+    required this.imageUrls, // TODO: make this non-required as well.
+    this.conversationStarterPrompt = "",
   });
 
-  // final List<File>? _images = ImageInput().imageList();
-  // // Function to get the list of images.
-  // List<String> get images {
-  //   return [..._images];
-  // }
+  // Setters
 
-  // // // Function to add an image to the profile.
-  // void addImage(String imageUrl) {
-  //   _images.add(imageUrl);
-  //   notifyListeners();
+  set setName(String nameInput) {
+    name = nameInput;
+    notifyListeners();
+  }
+
+  set setGender(Gender genderInput) {
+    gender = genderInput;
+    notifyListeners();
+  }
+
+  set setProfilePrompt(String conversationStarterPromptInput) {
+    conversationStarterPrompt = conversationStarterPromptInput;
+    notifyListeners();
+  }
+
+  // Getters
+
+  String get getName {
+    return name;
+  }
+
+  Gender get getGender {
+    return gender;
+  }
+
+  List<File> get getImageUrls {
+    return imageUrls;
+  }
+
+  // Future<void> setUserData() async { // TODO: Complete this function.
+  //   final url = 'http://localhost:8000';
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+  //   } catch (error) {
+  //     print(error);
+  //   }
   // }
 
   // // Function to change an image in the profile.
