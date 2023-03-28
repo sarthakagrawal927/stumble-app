@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
           TermsAndConditionsScreen.routeName: (context) =>
               const TermsAndConditionsScreen(),
           FirstNameScreen.routeName: (context) => const FirstNameScreen(),
-          GenderSelectionScreen.routeName: (context) => GenderSelectionScreen(),
+          GenderSelectionScreen.routeName: (context) => const GenderSelectionScreen(),
           FirstPhotoAdditionScreen.routeName: (context) =>
               const FirstPhotoAdditionScreen(),
           ProfilePromptAdditionScreen.routeName: (context) =>

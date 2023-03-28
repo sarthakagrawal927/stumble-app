@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import '../constants.dart';
 
@@ -20,7 +19,7 @@ class Profile with ChangeNotifier {
     this.gender = Gender.nonBinary,
     this.age = 0.0,
     this.isVerified = false,
-    required this.imageUrls, // TODO: make this non-required as well.
+    required this.imageUrls, // Make this non-required as well.
     this.conversationStarterPrompt = "",
   });
 
@@ -55,7 +54,7 @@ class Profile with ChangeNotifier {
     return imageUrls;
   }
 
-  // Future<void> setUserData() async { // TODO: Complete this function.
+  // Future<void> setUserData() async { // Complete this function.
   //   final url = 'http://localhost:8000';
   //   try {
   //     final response = await http.get(Uri.parse(url));
