@@ -11,6 +11,7 @@ Well, we have an answer for all your problems right here!
 ## Fix errors:
 
 ```bash
+dart format .
 dart fix --apply
 ## More Errors:
 dart analyze .

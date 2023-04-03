@@ -32,7 +32,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: Profile(imageUrls: [],),
+          value: Profile(
+            imageUrls: [],
+          ),
         ),
         ChangeNotifierProvider(
           create: (context) => Profiles(),
@@ -69,7 +71,8 @@ class MyApp extends StatelessWidget {
           TermsAndConditionsScreen.routeName: (context) =>
               const TermsAndConditionsScreen(),
           FirstNameScreen.routeName: (context) => const FirstNameScreen(),
-          GenderSelectionScreen.routeName: (context) => const GenderSelectionScreen(),
+          GenderSelectionScreen.routeName: (context) =>
+              const GenderSelectionScreen(),
           FirstPhotoAdditionScreen.routeName: (context) =>
               const FirstPhotoAdditionScreen(),
           ProfilePromptAdditionScreen.routeName: (context) =>
