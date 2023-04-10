@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'first_name_screen.dart';
 import '../../widgets/newUser/screen_heading_widget.dart';
 import '../../widgets/newUser/button_to_accept_or_reject.dart';
 
@@ -42,8 +41,8 @@ class TermsAndConditionsScreen extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height / 32,
             ),
-            const ButtonToAcceptOrRejectConditions("Accept",
-                Color.fromRGBO(116, 91, 53, 1), FirstNameScreen.routeName),
+            const ButtonToAcceptOrRejectConditions(
+                "Accept", Color.fromRGBO(116, 91, 53, 1), ""),
             const ButtonToAcceptOrRejectConditions(
                 "Reject", Color.fromRGBO(57, 66, 70, 1), ""),
           ],

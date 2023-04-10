@@ -19,7 +19,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
             Icon(
               Icons.remove_red_eye,
               size: MediaQuery.of(context).size.width / 16,
-              color: const Color.fromRGBO(116, 91, 53, 1),
+              color: Colors.white,
             ),
             Text(
               textToDisplay,
@@ -28,18 +28,18 @@ class ScreenGoToNextPageRow extends StatelessWidget {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromRGBO(26, 28, 29, 1),
+                backgroundColor: Colors.transparent,
               ),
               onPressed: (() async {
                 await functionToSetData();
-                if (context.mounted) {
+                if (context.mounted && nextScreenRouteName != "") {
                   Navigator.pushReplacementNamed(context, nextScreenRouteName);
                 }
               }),
               child: Icon(
                 Icons.arrow_forward,
-                color: const Color.fromRGBO(116, 91, 53, 1),
-                size: MediaQuery.of(context).size.width / 8,
+                color: Colors.white,
+                size: MediaQuery.of(context).size.width / 16,
               ),
             ),
           ],

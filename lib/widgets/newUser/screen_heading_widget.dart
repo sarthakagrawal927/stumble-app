@@ -8,14 +8,15 @@ class ScreenHeadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: MediaQuery.of(context).size.height / 32,
+        vertical: MediaQuery.of(context).size.height / 8,
         horizontal: MediaQuery.of(context).size.width / 16,
       ),
       child: Text(
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 40,
-            color: Color.fromRGBO(116, 91, 53, 1),
+            color: Colors.black54,
+            backgroundColor: Color.fromRGBO(230, 230, 250, 0.5),
           ),
           text),
     );

@@ -1,3 +1,4 @@
+import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +7,10 @@ import 'package:provider/provider.dart';
 
 import './providers/profile.dart';
 import './providers/profiles.dart';
-import './screens/auth_screen.dart';
+import 'screens/welcome_screen.dart';
 import './screens/chat_screen.dart';
 import './screens/filters_screen.dart';
 import './screens/swiping_screen.dart';
-import './screens/newUser/first_name_screen.dart';
 import './screens/newUser/first_photo_addition_screen.dart';
 import './screens/newUser/gender_selection_screen.dart';
 import './screens/newUser/profile_prompt_addition_screen.dart';
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(value: FirstScreenStateProviders()),
         ChangeNotifierProvider.value(
           value: Profile(
             imageUrls: [],
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
           FiltersScreen.routeName: (context) => const FiltersScreen(),
           TermsAndConditionsScreen.routeName: (context) =>
               const TermsAndConditionsScreen(),
-          FirstNameScreen.routeName: (context) => const FirstNameScreen(),
+          // FirstNameScreen.routeName: (context) => const FirstNameScreen(),
           GenderSelectionScreen.routeName: (context) =>
               const GenderSelectionScreen(),
           FirstPhotoAdditionScreen.routeName: (context) =>
