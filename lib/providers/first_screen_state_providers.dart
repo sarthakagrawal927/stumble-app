@@ -5,6 +5,8 @@ class FirstScreenStateProviders extends ChangeNotifier {
   bool isOTPSubmitted = false;
   bool isNameSubmitted = false;
   bool isGenderSubmitted = false;
+  bool isFirstPhotoSubmitted = false;
+  bool isPromptSubmitted = false;
 
   bool get getUseMobileNumberButtonClickedValue {
     return isUseMobileNumberButtonClicked;
@@ -39,6 +41,24 @@ class FirstScreenStateProviders extends ChangeNotifier {
 
   set setisGenderSubmittedValue(bool value) {
     isGenderSubmitted = value;
+    notifyListeners();
+  }
+
+  bool get getisFirstPhotoSubmittedValue {
+    return isFirstPhotoSubmitted;
+  }
+
+  set setisFirstPhotoSubmittedValue(bool value) {
+    isFirstPhotoSubmitted = value;
+    notifyListeners();
+  }
+
+  bool get getisPromptSubmittedValue {
+    return isPromptSubmitted;
+  }
+
+  set setisPromptSubmittedValue(bool value) {
+    isPromptSubmitted = value;
     notifyListeners();
   }
 }

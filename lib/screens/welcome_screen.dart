@@ -1,6 +1,8 @@
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/gender_column.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/otp_screen_column.dart';
+import 'package:dating_made_better/widgets/new_account_screen_widgets/photo_addition_column.dart';
+import 'package:dating_made_better/widgets/new_account_screen_widgets/prompt_addition_column.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -48,6 +50,10 @@ class _AuthScreenState extends State<AuthScreen> {
         Provider.of<FirstScreenStateProviders>(context).getisOTPSubmittedValue;
     bool isNameSubmitted =
         Provider.of<FirstScreenStateProviders>(context).getisNameSubmittedValue;
+    bool isGenderSubmitted = Provider.of<FirstScreenStateProviders>(context)
+        .getisGenderSubmittedValue;
+    bool isFirstPhotoSubmitted = Provider.of<FirstScreenStateProviders>(context)
+        .getisFirstPhotoSubmittedValue;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
@@ -74,7 +80,11 @@ class _AuthScreenState extends State<AuthScreen> {
                         ? OTPScreenColumn(deviceSize)
                         : !isNameSubmitted
                             ? NameColumn(deviceSize)
-                            : GenderColumn(deviceSize),
+                            : !isGenderSubmitted
+                                ? GenderColumn(deviceSize)
+                                : !isFirstPhotoSubmitted
+                                    ? PhotoAdditionColumn(deviceSize)
+                                    : PromptAdditionColumn(deviceSize),
               ),
             ],
           ),

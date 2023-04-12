@@ -64,7 +64,7 @@ class _NameColumnState extends State<NameColumn> {
             ),
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              labelText: 'Ex: Daddy :)',
+              labelText: 'Name',
               labelStyle: GoogleFonts.lato(
                 fontSize: 25,
                 color: Colors.white,
