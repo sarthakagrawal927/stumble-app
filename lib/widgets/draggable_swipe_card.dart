@@ -1,5 +1,5 @@
 import 'package:dating_made_better/widgets/swipe_card.dart';
-import 'package:dating_made_better/widgets/tag_widget.dart';
+import 'package:dating_made_better/widgets/tag_swipe_card.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';

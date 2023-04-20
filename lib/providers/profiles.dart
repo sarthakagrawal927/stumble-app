@@ -67,7 +67,6 @@ class Profiles with ChangeNotifier {
   }
 
   set setUndoListOfProfiles(Profile profile) {
-
     undoListOfProfiles.add(profile);
     notifyListeners();
   }
@@ -89,10 +88,8 @@ class Profiles with ChangeNotifier {
       }
       //userProfiles = response.body; // Return list from getStumbles API
       // notifyListeners();
-    // ignore: empty_catches
-    } catch (error) {
-
-    }
+      // ignore: empty_catches
+    } catch (error) {}
   }
 
   List<Profile> get getCurrentListOfCachedStumbles {
