@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 import './profile.dart';
 import '../constants.dart';
@@ -51,4 +52,53 @@ class Profiles with ChangeNotifier {
       conversationStarterPrompt: "",
     ),
   ];
+
+  List<Profile> undoListOfProfiles = [];
+
+  List<Profile> get getUndoListOfProfiles {
+    return undoListOfProfiles;
+  }
+
+  void removeLikedProfiles(int index) {
+    //Change this later
+
+    userProfiles.removeAt(index);
+    notifyListeners();
+  }
+
+  set setUndoListOfProfiles(Profile profile) {
+
+    undoListOfProfiles.add(profile);
+    notifyListeners();
+  }
+
+  void setUndoListProfilesToFrontOfGetStumblesList() {
+    if (undoListOfProfiles.isNotEmpty) {
+      userProfiles.insert(0, undoListOfProfiles.last);
+      undoListOfProfiles.removeLast;
+    }
+    notifyListeners();
+  }
+
+  Future<void> getStumblesFromBackendAndSetCurrentList() async {
+    const url = 'http://localhost:8000';
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.body.isEmpty) {
+        return;
+      }
+      //userProfiles = response.body; // Return list from getStumbles API
+      // notifyListeners();
+    // ignore: empty_catches
+    } catch (error) {
+
+    }
+  }
+
+  List<Profile> get getCurrentListOfCachedStumbles {
+    if (userProfiles.isEmpty) {
+      getStumblesFromBackendAndSetCurrentList();
+    }
+    return userProfiles;
+  }
 }

@@ -13,7 +13,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: ElevatedButton.styleFrom(
           padding:
               EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
-          backgroundColor: Theme.of(context).splashColor,
+          backgroundColor: const Color.fromRGBO(9, 0, 19, 1),
         ),
         onPressed: () {
           // Call location API here.
@@ -22,7 +22,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         DropdownButton(
-          dropdownColor: const Color.fromRGBO(27, 18, 11, 1),
+          dropdownColor: const Color.fromRGBO(9, 0, 19, 1),
           items: [
             DropdownMenuItem(
               value: 'Filters',
@@ -70,7 +70,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
-      backgroundColor: Theme.of(context).splashColor,
+      backgroundColor: const Color.fromRGBO(9, 0, 19, 1),
       title: Padding(
         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
         child: const Text(

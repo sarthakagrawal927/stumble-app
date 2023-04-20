@@ -79,7 +79,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: BottomAppBarTheme.of(context).color,
+      color: const Color.fromRGBO(9, 0, 19, 0.8),
       child: returnWidgetBasedOnCurrentScreen(context),
     );
   }

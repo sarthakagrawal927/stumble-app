@@ -15,7 +15,7 @@ class AskMeAboutTextField extends StatelessWidget {
           'Few things you should come talk to me about!',
           textAlign: TextAlign.start,
           style: TextStyle(
-            color: Color.fromRGBO(237, 237, 237, 1),
+            color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),

@@ -6,19 +6,26 @@ class ScreenHeadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
+    return Container(
+      margin: EdgeInsets.symmetric(
         vertical: MediaQuery.of(context).size.height / 8,
-        horizontal: MediaQuery.of(context).size.width / 16,
+        horizontal: MediaQuery.of(context).size.width / 8,
       ),
+      padding: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.height / 32,
+        horizontal: MediaQuery.of(context).size.width / 32,
+      ),
+      color: Colors.black38,
       child: Text(
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 40,
-            color: Colors.black54,
-            backgroundColor: Color.fromRGBO(230, 230, 250, 0.5),
-          ),
-          text),
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+          // backgroundColor: Color.fromRGBO(230, 230, 250, 0.5),
+        ),
+        text,
+      ),
     );
   }
 }

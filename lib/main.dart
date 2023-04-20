@@ -1,4 +1,5 @@
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/providers/swipe_items_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import './providers/profile.dart';
 import './providers/profiles.dart';
+import 'providers/image_input.dart';
 import 'screens/welcome_screen.dart';
 import './screens/chat_screen.dart';
 import './screens/filters_screen.dart';
@@ -40,6 +42,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Profiles(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => ImageInput([]),
+        ),
+        ChangeNotifierProvider(create: (context) => SwipeItemsList()),
       ],
       child: MaterialApp(
         title: 'Stumble!',
@@ -47,10 +53,6 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.latoTextTheme(
             Theme.of(context).textTheme,
           ),
-          // primarySwatch: MaterialColor(#0xF9A25E, color),
-          splashColor: const Color.fromRGBO(60, 42, 33, 1),
-          colorScheme: ColorScheme.fromSwatch()
-              .copyWith(secondary: const Color.fromRGBO(249, 162, 94, 0.5)),
         ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),

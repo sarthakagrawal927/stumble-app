@@ -54,6 +54,8 @@ class Profile with ChangeNotifier {
     return imageUrls;
   }
 
+  Future<void> getStumblesFromBackend() async {}
+
   // Future<void> setUserData() async { // Complete this function.
   //   final url = 'http://localhost:8000';
   //   try {
