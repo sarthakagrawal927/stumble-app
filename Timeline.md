@@ -12,7 +12,7 @@
 
 ## 2023 Start
 
-31/3/2023 - MVP Ready
+31/4/2023 - MVP Ready
 ## MVP
 - Logo
 - Beautiful App
@@ -23,7 +23,7 @@
 - SEO Based Website (10hr)
 - [Analytics](https://amplitude.com/)
 - Working Backend :
-  - auth, (googleAuth)
+  - Whatsapp login
   - Socket Programming (RT-Chat & Online status)
   - [map](https://redis.io/docs/data-types/geospatial/),
   - [photo verification (mostly by some online ML model)](https://www.npmjs.com/package/face-api.js)
@@ -108,7 +108,11 @@ Till 31st May'23 : Setup Alpha Group, college ambassadors, clear App bugs etc.
 - API Integration (atleast 4)
 - Add undo logic (both right & left swipe)
 
-## Post MVP
-- Basic Testing to automate stuff
-- Decide on which services to migrate first from NodeJS to (Go, Elixir)
-- Consider removing prisma (or just use raw queries in case it gets complicated)
+### Regular
+- Like with compliments (unlimited)
+- Chat (delete message until read)
+- Filters
+- Undo unlimited
+
+### Premium
+
