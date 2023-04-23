@@ -34,9 +34,9 @@ class ImageInput with ChangeNotifier {
     _currentImageNumber = imageNumber;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.black38,
+        backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
         fixedSize: Size(
-          (MediaQuery.of(context).size.width) / 2,
+          (MediaQuery.of(context).size.width) * 7 / 16,
           (MediaQuery.of(context).size.height) /
               (5 * (imageNumber != 0 ? 2 : 1)),
         ),
@@ -49,7 +49,7 @@ class ImageInput with ChangeNotifier {
             )
           : const Icon(
               Icons.camera,
-              color: Colors.white,
+              color: Colors.white70,
             ),
     );
   }

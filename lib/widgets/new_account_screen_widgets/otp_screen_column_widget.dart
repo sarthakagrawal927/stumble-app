@@ -27,15 +27,15 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
             child: Text(
               'Stumble',
               style: GoogleFonts.sacramento(
-                fontSize: 40.0,
-                color: Colors.white70,
+                fontSize: 60.0,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
         ),
         SizedBox(
-          height: widget.deviceSize.height / 8,
+          height: widget.deviceSize.height / 4,
         ),
         OtpTextField(
           numberOfFields: 4,

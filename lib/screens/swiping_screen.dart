@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../providers/profiles.dart';
 import '../widgets/bottom_app_bar.dart';
 import '../widgets/cards_stack_widget.dart';
 import '../widgets/swipe_screen_background.dart';
@@ -21,22 +19,19 @@ class _SwipingScreenState extends State<SwipingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(15, 15, 15, 0.2),
       key: _scaffoldKey,
       appBar: AppBar(
         leading: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
-            backgroundColor: const Color.fromRGBO(9, 0, 19, 1),
+            backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
           ),
-          onPressed: () {
-            Provider.of<Profiles>(context, listen: false)
-                .setUndoListProfilesToFrontOfGetStumblesList();
-          },
+          onPressed: () {},
           child: const Icon(Icons.undo_rounded),
         ),
-        backgroundColor: const Color.fromRGBO(9, 0, 19, 1),
+        backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
         title: Padding(
           padding:
               EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
@@ -44,7 +39,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
             'Stumble!',
             style: TextStyle(
               fontSize: 25,
-              color: Colors.white70,
+              color: Color.fromRGBO(231, 10, 95, 1),
             ),
           ),
         ),

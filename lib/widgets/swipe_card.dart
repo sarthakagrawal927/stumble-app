@@ -52,28 +52,32 @@ class SwipeCard extends StatelessWidget {
                   ),
                   profile.isVerified
                       ? const Icon(Icons.verified_sharp, color: Colors.blue)
-                      : const Icon(Icons.verified_outlined,
-                          color: Colors.white),
+                      : const Icon(
+                          Icons.verified_outlined,
+                          color: Colors.white,
+                        ),
                 ],
               ),
             ),
           ),
           Container(
-            color: Colors.white,
+            color: const Color.fromRGBO(15, 15, 15, 1),
             height: MediaQuery.of(context).size.height / 15,
           ),
           Container(
-            color: Colors.white,
+            color: const Color.fromRGBO(15, 15, 15, 1),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                SizedBox(
+                Container(
                   height: MediaQuery.of(context).size.height / 32,
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width / 32),
                   child: const Text(
                     'Talk to me about',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white70,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -82,13 +86,17 @@ class SwipeCard extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 32,
                 ),
-                SizedBox(
+                Container(
                   height: MediaQuery.of(context).size.height * 0.20,
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 32,
+                    right: MediaQuery.of(context).size.width / 32,
+                  ),
                   child: const SingleChildScrollView(
                     child: Text(
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.black,
+                        color: Colors.white70,
                       ),
                       "f1; I'm a real nerd about it. I'm also into software, as you can see by these ginormous specs I'm wearing.",
                     ),
@@ -98,11 +106,11 @@ class SwipeCard extends StatelessWidget {
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height / 16,
-            color: Colors.white,
+            height: MediaQuery.of(context).size.height / 15,
+            color: const Color.fromRGBO(15, 15, 15, 1),
           ),
           Container(
-            color: Colors.white,
+            color: const Color.fromRGBO(15, 15, 15, 1),
             height: MediaQuery.of(context).size.height * 0.3,
             child: Container(
                 alignment: Alignment.bottomLeft,
@@ -110,14 +118,18 @@ class SwipeCard extends StatelessWidget {
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
-            color: Colors.white,
+            color: const Color.fromRGBO(15, 15, 15, 1),
           ),
           Container(
-            color: Colors.white,
+            color: const Color.fromRGBO(15, 15, 15, 1),
             height: MediaQuery.of(context).size.height * 0.3,
             child: Container(
                 alignment: Alignment.bottomLeft,
                 decoration: imageBoxWidget(context, 2)),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height / 16,
+            color: const Color.fromRGBO(15, 15, 15, 1),
           ),
         ],
       ),

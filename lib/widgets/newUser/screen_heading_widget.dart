@@ -22,7 +22,6 @@ class ScreenHeadingWidget extends StatelessWidget {
           fontSize: 30,
           fontWeight: FontWeight.w600,
           color: Colors.white,
-          // backgroundColor: Color.fromRGBO(230, 230, 250, 0.5),
         ),
         text,
       ),

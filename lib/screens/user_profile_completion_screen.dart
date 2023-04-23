@@ -41,7 +41,7 @@ class _UserProfileCompletionScreenState
   Widget build(BuildContext context) {
     ImageInput imageInput = Provider.of<ImageInput>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(15, 15, 15, 0.2),
       appBar: const TopAppBar(),
       body: ListView(
         children: <Widget>[
@@ -55,7 +55,7 @@ class _UserProfileCompletionScreenState
                   left: MediaQuery.of(context).size.width / 16,
                   right: MediaQuery.of(context).size.width / 32,
                 ),
-                color: Colors.white,
+                color: const Color.fromRGBO(15, 15, 15, 1),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width / 16,
@@ -66,7 +66,7 @@ class _UserProfileCompletionScreenState
                         textAlign: TextAlign.start,
                         'Profile completion',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white70,
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
@@ -78,7 +78,7 @@ class _UserProfileCompletionScreenState
                           textAlign: TextAlign.start,
                           '20%',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white70,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
@@ -96,7 +96,7 @@ class _UserProfileCompletionScreenState
                     left: MediaQuery.of(context).size.width / 32,
                     right: MediaQuery.of(context).size.width / 16,
                   ),
-                  color: Colors.white,
+                  color: const Color.fromRGBO(15, 15, 15, 1),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width / 16,
@@ -116,7 +116,7 @@ class _UserProfileCompletionScreenState
                                   'Verified',
                                   textAlign: TextAlign.end,
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: Colors.white70,
                                     fontSize: 15,
                                   ),
                                 ),
@@ -143,7 +143,11 @@ class _UserProfileCompletionScreenState
           ),
           const Divider(),
           Container(
-            color: Colors.white,
+            margin: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width / 16,
+              right: MediaQuery.of(context).size.width / 16,
+            ),
+            color: const Color.fromRGBO(15, 15, 15, 1),
             child: Column(
               children: [
                 Padding(
@@ -153,7 +157,7 @@ class _UserProfileCompletionScreenState
                     textAlign: TextAlign.start,
                     'Your pretty face!',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white70,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -183,10 +187,13 @@ class _UserProfileCompletionScreenState
           ),
           const Divider(),
           Container(
-            margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.width / 16),
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width / 16,
+              left: MediaQuery.of(context).size.width / 16,
+              right: MediaQuery.of(context).size.width / 16,
+            ),
             padding: EdgeInsets.all(MediaQuery.of(context).size.width / 16),
-            color: Colors.white,
+            color: const Color.fromRGBO(15, 15, 15, 1),
             child: Padding(
               padding:
                   EdgeInsets.only(top: MediaQuery.of(context).size.width / 16),

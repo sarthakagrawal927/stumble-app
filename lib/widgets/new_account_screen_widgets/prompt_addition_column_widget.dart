@@ -29,22 +29,28 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
           height: MediaQuery.of(context).size.height / 7,
         ),
         SingleChildScrollView(
-          child: TextFormField(
-            style: const TextStyle(
-              color: Color.fromRGBO(237, 237, 237, 1),
-              fontSize: 20,
+          child: Container(
+            margin: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width / 16,
+              right: MediaQuery.of(context).size.width / 16,
             ),
-            initialValue: '',
-            maxLines: 3,
-            minLines: 1,
-            keyboardAppearance: Brightness.dark,
-            textInputAction: TextInputAction.next,
-            cursorColor: const Color.fromRGBO(237, 237, 237, 1),
-            onFieldSubmitted: (value) => {
-              setState(() {
-                promptTextValue = value;
-              }),
-            },
+            child: TextFormField(
+              style: const TextStyle(
+                color: Color.fromRGBO(237, 237, 237, 1),
+                fontSize: 20,
+              ),
+              initialValue: '',
+              maxLines: 3,
+              minLines: 1,
+              keyboardAppearance: Brightness.dark,
+              textInputAction: TextInputAction.next,
+              cursorColor: const Color.fromRGBO(237, 237, 237, 1),
+              onFieldSubmitted: (value) => {
+                setState(() {
+                  promptTextValue = value;
+                }),
+              },
+            ),
           ),
         ),
         ScreenGoToNextPageRow(

@@ -1,14 +1,14 @@
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
-import 'package:dating_made_better/widgets/new_account_screen_widgets/gender_column.dart';
-import 'package:dating_made_better/widgets/new_account_screen_widgets/otp_screen_column.dart';
-import 'package:dating_made_better/widgets/new_account_screen_widgets/photo_addition_column.dart';
-import 'package:dating_made_better/widgets/new_account_screen_widgets/prompt_addition_column.dart';
+import 'package:dating_made_better/widgets/new_account_screen_widgets/gender_column_widget.dart';
+import 'package:dating_made_better/widgets/new_account_screen_widgets/otp_screen_column_widget.dart';
+import 'package:dating_made_better/widgets/new_account_screen_widgets/photo_addition_column_widget.dart';
+import 'package:dating_made_better/widgets/new_account_screen_widgets/prompt_addition_column_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-import '../widgets/new_account_screen_widgets/first_screen_column.dart';
-import '../widgets/new_account_screen_widgets/name_column.dart';
+import '../widgets/new_account_screen_widgets/first_screen_column_widget.dart';
+import '../widgets/new_account_screen_widgets/name_column_widget.dart';
 
 class AuthScreen extends StatefulWidget {
   static const routeName = '/auth';

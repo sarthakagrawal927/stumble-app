@@ -56,7 +56,7 @@ class _NameColumnState extends State<NameColumn> {
           padding: EdgeInsets.only(top: widget.deviceSize.height / 32),
           child: TextField(
             controller: nameTextBoxController,
-            cursorColor: Colors.white,
+            cursorColor: const Color.fromRGBO(15, 15, 15, 1),
             keyboardAppearance: Brightness.dark,
             style: const TextStyle(
               color: Color.fromRGBO(237, 237, 237, 1),

@@ -77,7 +77,8 @@ class _GenderColumnState extends State<GenderColumn> {
         ),
       ),
       leading: Radio<Gender>(
-        fillColor: MaterialStateColor.resolveWith((states) => Colors.white),
+        fillColor: MaterialStateColor.resolveWith(
+            (states) => const Color.fromRGBO(15, 15, 15, 1)),
         value: gender,
         groupValue: _gender,
         onChanged: (Gender? value) {

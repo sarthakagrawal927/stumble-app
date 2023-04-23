@@ -19,7 +19,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
             Icon(
               Icons.remove_red_eye,
               size: MediaQuery.of(context).size.width / 16,
-              color: Colors.white,
+              color: const Color.fromRGBO(15, 15, 15, 1),
             ),
             Text(
               textToDisplay,
@@ -38,7 +38,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
               }),
               child: Icon(
                 Icons.arrow_forward,
-                color: Colors.white,
+                color: const Color.fromRGBO(15, 15, 15, 1),
                 size: MediaQuery.of(context).size.width / 16,
               ),
             ),

@@ -43,9 +43,7 @@ class _NewMessageState extends State<NewMessage> {
               cursorColor: const Color.fromRGBO(237, 237, 237, 1),
               decoration: const InputDecoration(
                 labelText: 'Send a message!',
-                labelStyle: TextStyle(
-                  color: Colors.white38,
-                ),
+                labelStyle: TextStyle(color: Color.fromRGBO(15, 15, 15, 1)),
               ),
               onChanged: (value) {
                 _enteredMessage = value;

@@ -13,7 +13,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: ElevatedButton.styleFrom(
           padding:
               EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
-          backgroundColor: const Color.fromRGBO(9, 0, 19, 1),
+          backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
         ),
         onPressed: () {
           // Call location API here.
@@ -22,7 +22,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         DropdownButton(
-          dropdownColor: const Color.fromRGBO(9, 0, 19, 1),
+          dropdownColor: const Color.fromRGBO(15, 15, 15, 1),
           items: [
             DropdownMenuItem(
               value: 'Filters',
@@ -66,18 +66,18 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
           icon: const Icon(
             Icons.menu,
-            color: Colors.white70,
+            color: Color.fromRGBO(231, 10, 95, 1),
           ),
         ),
       ],
-      backgroundColor: const Color.fromRGBO(9, 0, 19, 1),
+      backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
       title: Padding(
         padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
         child: const Text(
           'Stumble!',
           style: TextStyle(
             fontSize: 25,
-            color: Colors.white70,
+            color: Color.fromRGBO(231, 10, 95, 1),
           ),
         ),
       ),
