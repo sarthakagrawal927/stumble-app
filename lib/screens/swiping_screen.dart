@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/profile.dart';
 import '../widgets/bottom_app_bar.dart';
 import '../widgets/cards_stack_widget.dart';
 import '../widgets/swipe_screen_background.dart';
@@ -28,7 +30,10 @@ class _SwipingScreenState extends State<SwipingScreen> {
                 EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
             backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Provider.of<Profile>(context, listen: false)
+                .setUndoListProfilesToFrontOfGetStumblesList();
+          },
           child: const Icon(Icons.undo_rounded),
         ),
         backgroundColor: const Color.fromRGBO(15, 15, 15, 1),

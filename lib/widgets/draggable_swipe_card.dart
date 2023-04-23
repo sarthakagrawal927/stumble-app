@@ -1,9 +1,10 @@
-import 'package:dating_made_better/widgets/swipe_card.dart';
-import 'package:dating_made_better/widgets/tag_swipe_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../providers/profile.dart';
+import '../../widgets/swipe_card.dart';
+import '../../widgets/tag_swipe_card.dart';
 
 class DragWidget extends StatefulWidget {
   const DragWidget({
@@ -89,6 +90,10 @@ class _DragWidgetState extends State<DragWidget> {
           }
         },
         onDragEnd: (drag) {
+          if (swipeNotifier.value == Swipe.left) {
+            Provider.of<Profile>(context, listen: false).setUndoListOfProfiles =
+                widget.profile;
+          }
           swipeNotifier.value = Swipe.none;
         },
 
