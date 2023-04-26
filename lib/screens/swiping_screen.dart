@@ -23,39 +23,37 @@ class _SwipingScreenState extends State<SwipingScreen> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(15, 15, 15, 0.2),
       key: _scaffoldKey,
-      appBar: AppBar(
-        leading: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            padding:
-                EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
-            backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
-          ),
-          onPressed: () {
-            Provider.of<Profile>(context, listen: false)
-                .setUndoListProfilesToFrontOfGetStumblesList();
-          },
-          child: const Icon(Icons.undo_rounded),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(
+          MediaQuery.of(context).size.height / 16,
         ),
-        backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
-        title: Padding(
-          padding:
-              EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
-          child: const Text(
-            'Stumble!',
-            style: TextStyle(
-              fontSize: 25,
-              color: Color.fromRGBO(231, 10, 95, 1),
+        child: AppBar(
+          leading: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding:
+                  EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
+              backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+            ),
+            onPressed: () {
+              Provider.of<Profile>(context, listen: false)
+                  .setUndoListProfilesToFrontOfGetStumblesList();
+            },
+            child: const Icon(Icons.undo_rounded),
+          ),
+          backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+          title: Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
+            child: const Text(
+              'Stumble!',
+              style: TextStyle(
+                fontSize: 25,
+                color: Color.fromRGBO(231, 10, 95, 1),
+              ),
             ),
           ),
         ),
       ),
-      //Padding(
-      // padding: EdgeInsets.only(
-      //   left: MediaQuery.of(context).size.width / 16,
-      //   right: MediaQuery.of(context).size.width / 16,
-      //   top: MediaQuery.of(context).size.height / 32,
-      //   bottom: MediaQuery.of(context).size.height / 32,
-      // ),
       body: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [
@@ -63,7 +61,6 @@ class _SwipingScreenState extends State<SwipingScreen> {
           CardsStackWidget(),
         ],
       ),
-
       bottomNavigationBar: const BottomBar(currentScreen: "SwipingScreen"),
     );
   }

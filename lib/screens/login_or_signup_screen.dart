@@ -1,4 +1,5 @@
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/widgets/new_account_screen_widgets/age_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/gender_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/otp_screen_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/photo_addition_column_widget.dart';
@@ -50,6 +51,8 @@ class _AuthScreenState extends State<AuthScreen> {
         Provider.of<FirstScreenStateProviders>(context).getisOTPSubmittedValue;
     bool isNameSubmitted =
         Provider.of<FirstScreenStateProviders>(context).getisNameSubmittedValue;
+    bool isAgeSubmitted =
+        Provider.of<FirstScreenStateProviders>(context).getisAgeSubmittedValue;
     bool isGenderSubmitted = Provider.of<FirstScreenStateProviders>(context)
         .getisGenderSubmittedValue;
     bool isFirstPhotoSubmitted = Provider.of<FirstScreenStateProviders>(context)
@@ -80,11 +83,13 @@ class _AuthScreenState extends State<AuthScreen> {
                         ? OTPScreenColumn(deviceSize)
                         : !isNameSubmitted
                             ? NameColumn(deviceSize)
-                            : !isGenderSubmitted
-                                ? GenderColumn(deviceSize)
-                                : !isFirstPhotoSubmitted
-                                    ? PhotoAdditionColumn(deviceSize)
-                                    : PromptAdditionColumn(deviceSize),
+                            : !isAgeSubmitted
+                                ? AgeColumn(deviceSize)
+                                : !isGenderSubmitted
+                                    ? GenderColumn(deviceSize)
+                                    : !isFirstPhotoSubmitted
+                                        ? PhotoAdditionColumn(deviceSize)
+                                        : PromptAdditionColumn(deviceSize),
               ),
             ],
           ),

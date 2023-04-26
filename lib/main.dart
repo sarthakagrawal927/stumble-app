@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import './providers/profile.dart';
-import 'providers/image_input.dart';
 import 'screens/login_or_signup_screen.dart';
 import './screens/chat_screen.dart';
 import './screens/filters_screen.dart';
@@ -32,9 +31,6 @@ class MyApp extends StatelessWidget {
           value: Profile(
             imageUrls: [],
           ),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ImageInput([]),
         ),
       ],
       child: MaterialApp(

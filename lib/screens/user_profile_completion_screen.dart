@@ -39,7 +39,6 @@ class _UserProfileCompletionScreenState
 
   @override
   Widget build(BuildContext context) {
-    ImageInput imageInput = Provider.of<ImageInput>(context);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(15, 15, 15, 0.2),
       appBar: const TopAppBar(),
@@ -167,18 +166,7 @@ class _UserProfileCompletionScreenState
                   builder: (context, value, child) => IntrinsicHeight(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        imageInput.renderButton(context, 0),
-                        IntrinsicWidth(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              imageInput.renderButton(context, 1),
-                              imageInput.renderButton(context, 2),
-                            ],
-                          ),
-                        )
-                      ],
+                      children: const [],
                     ),
                   ),
                 ),

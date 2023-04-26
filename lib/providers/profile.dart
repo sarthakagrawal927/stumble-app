@@ -31,6 +31,11 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
+  set setAge(double ageInput) {
+    age = ageInput;
+    notifyListeners();
+  }
+
   set setGender(Gender genderInput) {
     gender = genderInput;
     notifyListeners();
@@ -40,6 +45,13 @@ class Profile with ChangeNotifier {
     conversationStarterPrompt = conversationStarterPromptInput;
     notifyListeners();
   }
+
+  set setFirstImage(File firstImageFile) {
+    imageUrls.add(firstImageFile);
+    notifyListeners();
+  }
+
+  // set setProfilePicture()
 
   // Getters
 
@@ -51,22 +63,33 @@ class Profile with ChangeNotifier {
     return gender;
   }
 
+  // File get getFirstImageUrl {
+  //   if (imageUrls.isEmpty) return File
+  //   return imageUrls[0];
+  // }
+
   List<File> get getImageUrls {
     return imageUrls;
   }
 
-  Future<void> getStumblesFromBackend() async {}
-
-  List<Profile> undoListOfProfiles = [];
-  List<Profile> currentListOfStumbles = [];
-
-  List<Profile> get getUndoListOfProfiles {
-    return undoListOfProfiles;
+  bool isFirstImagePresent() {
+    return imageUrls.isNotEmpty;
   }
 
-  void removeLikedProfiles(int index) {
+  Future<void> getStumblesFromBackend() async {}
+
+  Set<Profile> undoListOfProfiles = {};
+  List<Profile> currentListOfStumbles = [];
+
+  void removeLikedProfiles(Profile profile) {
     //Change this later
-    currentListOfStumbles.removeAt(index);
+    currentListOfStumbles.remove(profile);
+    notifyListeners();
+  }
+
+  void removeLikedProfilesWhenButtonIsClicked(
+      Profile profile, String preference) {
+    currentListOfStumbles.remove(profile);
     notifyListeners();
   }
 

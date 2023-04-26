@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/profile.dart';
 
@@ -9,22 +10,14 @@ class SwipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.8,
+      height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width * 0.8,
       child: ListView(
         shrinkWrap: true,
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.395,
             width: double.infinity,
-            decoration: const ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(64),
-                  bottomRight: Radius.circular(64),
-                ),
-              ),
-            ),
             child: Container(
               alignment: Alignment.bottomRight,
               decoration: imageBoxWidget(context, 0),
@@ -46,7 +39,7 @@ class SwipeCard extends StatelessWidget {
                     "${profile.age.toInt()} ",
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 30,
+                      fontSize: 35,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
@@ -62,7 +55,7 @@ class SwipeCard extends StatelessWidget {
           ),
           Container(
             color: const Color.fromRGBO(15, 15, 15, 1),
-            height: MediaQuery.of(context).size.height / 15,
+            height: MediaQuery.of(context).size.height / 24,
           ),
           Container(
             color: const Color.fromRGBO(15, 15, 15, 1),
@@ -79,15 +72,16 @@ class SwipeCard extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white70,
                       fontWeight: FontWeight.bold,
-                      fontSize: 22,
+                      fontSize: 25,
                     ),
                   ),
                 ),
-                SizedBox(
+                Container(
                   height: MediaQuery.of(context).size.height / 32,
+                  color: const Color.fromRGBO(15, 15, 15, 1),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.20,
+                  height: MediaQuery.of(context).size.height * 0.235,
                   padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width / 32,
                     right: MediaQuery.of(context).size.width / 32,
@@ -106,7 +100,7 @@ class SwipeCard extends StatelessWidget {
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height / 15,
+            height: MediaQuery.of(context).size.height / 16,
             color: const Color.fromRGBO(15, 15, 15, 1),
           ),
           Container(
@@ -121,6 +115,10 @@ class SwipeCard extends StatelessWidget {
             color: const Color.fromRGBO(15, 15, 15, 1),
           ),
           Container(
+            height: MediaQuery.of(context).size.height / 64,
+            color: const Color.fromRGBO(15, 15, 15, 1),
+          ),
+          Container(
             color: const Color.fromRGBO(15, 15, 15, 1),
             height: MediaQuery.of(context).size.height * 0.3,
             child: Container(
@@ -129,6 +127,26 @@ class SwipeCard extends StatelessWidget {
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
+            color: const Color.fromRGBO(15, 15, 15, 1),
+          ),
+          Container(
+            color: const Color.fromRGBO(15, 15, 15, 1),
+            child: Column(
+              children: [
+                ButtonToSelectUserDatingPreference(
+                    "A conversation for now!", profile),
+                SizedBox(height: MediaQuery.of(context).size.height / 64),
+                ButtonToSelectUserDatingPreference(
+                    "Looking to be friends.", profile),
+                SizedBox(height: MediaQuery.of(context).size.height / 64),
+                ButtonToSelectUserDatingPreference("Relationship", profile),
+                SizedBox(height: MediaQuery.of(context).size.height / 64),
+                ButtonToSelectUserDatingPreference("Hookup", profile),
+              ],
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height / 32,
             color: const Color.fromRGBO(15, 15, 15, 1),
           ),
         ],
@@ -142,6 +160,35 @@ class SwipeCard extends StatelessWidget {
       image: DecorationImage(
         fit: BoxFit.cover,
         image: NetworkImage(profile.imageUrls[0].path),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class ButtonToSelectUserDatingPreference extends StatelessWidget {
+  String preference;
+  Profile profile;
+  ButtonToSelectUserDatingPreference(this.preference, this.profile,
+      {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size.fromHeight(MediaQuery.of(context).size.height / 16),
+        backgroundColor: const Color.fromRGBO(231, 10, 95, 0.5),
+      ),
+      onPressed: () {
+        Provider.of<Profile>(context, listen: false)
+            .removeLikedProfilesWhenButtonIsClicked(profile, preference);
+      },
+      child: Text(
+        preference,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 25,
+        ),
       ),
     );
   }

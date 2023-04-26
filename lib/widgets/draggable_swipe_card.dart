@@ -93,6 +93,9 @@ class _DragWidgetState extends State<DragWidget> {
           if (swipeNotifier.value == Swipe.left) {
             Provider.of<Profile>(context, listen: false).setUndoListOfProfiles =
                 widget.profile;
+          } else if (swipeNotifier.value == Swipe.right) {
+            Provider.of<Profile>(context, listen: false)
+                .removeLikedProfiles(widget.profile);
           }
           swipeNotifier.value = Swipe.none;
         },

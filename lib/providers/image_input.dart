@@ -2,49 +2,50 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
-class ImageInput with ChangeNotifier {
-  List<File> imageUrls;
-  ImageInput(this.imageUrls);
+import 'profile.dart';
 
-  int _currentImageNumber = 5;
+class ImageInput {
+  late File imageUrl;
+
+  File get getImageUrl {
+    return imageUrl;
+  }
+
+  void setFirstImage(BuildContext context) {
+    Provider.of<Profile>(context).setFirstImage = imageUrl;
+  }
 
   void getFromGallery() async {
-    if (_currentImageNumber < imageUrls.length) {
-      imageUrls
-          .removeWhere((element) => element == imageUrls[_currentImageNumber]);
-    }
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
     );
     if (pickedFile != null) {
-      imageUrls.add(File(pickedFile.path));
-      notifyListeners();
+      imageUrl = File(pickedFile.path);
     }
   }
 
-  bool elemenExistsAt(int index) {
-    if (imageUrls.length >= index + 1) return true;
-    return false;
+  bool elemenExistsAt(BuildContext context) {
+    setFirstImage(context);
+    return true;
   }
 
-  Widget renderButton(BuildContext context, int imageNumber) {
-    _currentImageNumber = imageNumber;
+  Widget renderPhotoButtonForFirstImage(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+        backgroundColor: const Color.fromRGBO(15, 15, 15, 0.5),
         fixedSize: Size(
-          (MediaQuery.of(context).size.width) * 7 / 16,
-          (MediaQuery.of(context).size.height) /
-              (5 * (imageNumber != 0 ? 2 : 1)),
+          (MediaQuery.of(context).size.width) * 10 / 16,
+          (MediaQuery.of(context).size.height) / 4,
         ),
       ),
       onPressed: getFromGallery,
-      child: elemenExistsAt(imageNumber)
+      child: elemenExistsAt(context)
           ? Image.file(
-              imageUrls[imageNumber],
+              imageUrl,
               fit: BoxFit.fill,
             )
           : const Icon(
@@ -53,4 +54,27 @@ class ImageInput with ChangeNotifier {
             ),
     );
   }
+
+  // Widget renderButton(BuildContext context, int imageNumber) {
+  //   return ElevatedButton(
+  //     style: ElevatedButton.styleFrom(
+  //       backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+  //       fixedSize: Size(
+  //         (MediaQuery.of(context).size.width) * 7 / 16,
+  //         (MediaQuery.of(context).size.height) /
+  //             (5 * (imageNumber != 0 ? 2 : 1)),
+  //       ),
+  //     ),
+  //     onPressed: getFromGallery,
+  //     child: elemenExistsAt()
+  //         ? Image.file(
+  //             imageUrl,
+  //             fit: BoxFit.fill,
+  //           )
+  //         : const Icon(
+  //             Icons.camera,
+  //             color: Colors.white70,
+  //           ),
+  //   );
+  // }
 }

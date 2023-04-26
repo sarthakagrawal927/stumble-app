@@ -32,7 +32,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  swipe_cards: ^2.0.0+1
   flutter_otp_text_field: ^1.1.1
   provider: ^6.0.5
   http: ^0.13.5
