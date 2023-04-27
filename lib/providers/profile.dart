@@ -9,19 +9,19 @@ class Profile with ChangeNotifier {
   String id;
   String name;
   Gender gender;
-  double age;
+  var birthDate = {'year': 0, 'month': 0, 'day': 0};
   List<File> imageUrls = [];
   bool isVerified;
   String conversationStarterPrompt;
 
   Profile({
-    this.id = "",
-    this.name = "",
-    this.gender = Gender.nonBinary,
-    this.age = 0.0,
-    this.isVerified = false,
+    required this.id,
+    required this.name,
+    required this.gender,
+    required this.birthDate,
+    required this.isVerified,
     required this.imageUrls, // Make this non-required as well.
-    this.conversationStarterPrompt = "",
+    required this.conversationStarterPrompt,
   });
 
   // Setters
@@ -31,8 +31,9 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  set setAge(double ageInput) {
-    age = ageInput;
+  set setAge(var birthDateInput) {
+    birthDate = birthDateInput;
+    print(birthDate);
     notifyListeners();
   }
 
@@ -43,6 +44,15 @@ class Profile with ChangeNotifier {
 
   set setProfilePrompt(String conversationStarterPromptInput) {
     conversationStarterPrompt = conversationStarterPromptInput;
+    print(name);
+    print(birthDate);
+
+    print(gender);
+
+    print(conversationStarterPrompt);
+
+    print(imageUrls[0]);
+
     notifyListeners();
   }
 
@@ -61,6 +71,10 @@ class Profile with ChangeNotifier {
 
   Gender get getGender {
     return gender;
+  }
+
+  int get getAge {
+    return 20; //Have to change later.
   }
 
   // File get getFirstImageUrl {
@@ -125,7 +139,7 @@ class Profile with ChangeNotifier {
       currentListOfStumbles = [
         Profile(
           id: '1',
-          age: 22,
+          birthDate: {},
           name: 'A',
           gender: Gender.man,
           imageUrls: [
@@ -139,7 +153,7 @@ class Profile with ChangeNotifier {
         ),
         Profile(
           id: '3',
-          age: 22,
+          birthDate: {},
           name: 'B',
           gender: Gender.nonBinary,
           imageUrls: [
@@ -153,7 +167,7 @@ class Profile with ChangeNotifier {
         ),
         Profile(
           id: '3',
-          age: 22,
+          birthDate: {},
           name: 'C',
           gender: Gender.nonBinary,
           imageUrls: [
@@ -167,7 +181,7 @@ class Profile with ChangeNotifier {
         ),
         Profile(
           id: '3',
-          age: 22,
+          birthDate: {},
           name: 'D',
           gender: Gender.nonBinary,
           imageUrls: [
@@ -181,7 +195,7 @@ class Profile with ChangeNotifier {
         ),
         Profile(
           id: '3',
-          age: 22,
+          birthDate: {},
           name: 'E',
           gender: Gender.nonBinary,
           imageUrls: [
@@ -195,7 +209,7 @@ class Profile with ChangeNotifier {
         ),
         Profile(
           id: '2',
-          age: 22,
+          birthDate: {},
           gender: Gender.man,
           name: 'F',
           imageUrls: [

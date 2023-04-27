@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +30,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: FirstScreenStateProviders()),
         ChangeNotifierProvider.value(
           value: Profile(
+            id: "",
+            name: "",
+            birthDate: {},
+            conversationStarterPrompt: "",
+            gender: Gender.woman,
+            isVerified: false,
             imageUrls: [],
           ),
         ),

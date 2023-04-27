@@ -21,9 +21,9 @@ class _AgeColumnState extends State<AgeColumn> {
   final monthTextBoxController = TextEditingController();
   final yearTextBoxController = TextEditingController();
 
-  final double _day = 0.0;
-  final double _month = 0.0;
-  final double _year = 0.0;
+  int _day = 0;
+  int _month = 0;
+  int _year = 0;
 
   @override
   void dispose() {
@@ -48,23 +48,84 @@ class _AgeColumnState extends State<AgeColumn> {
           // child: Container(
           //     color: Colors.white,
           //     height: MediaQuery.of(context).size.height / 2,
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              DateInputBox(
-                controller: dayTextBoxController,
-                calendarParameter: _day,
-                calendarParameterText: "Day",
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 5,
+                child: TextField(
+                  keyboardType: TextInputType.datetime,
+                  controller: dayTextBoxController,
+                  cursorColor: const Color.fromRGBO(15, 15, 15, 1),
+                  style: const TextStyle(
+                    color: Color.fromRGBO(237, 237, 237, 1),
+                    fontSize: 20,
+                  ),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Day',
+                    labelStyle: GoogleFonts.lato(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _day = int.parse(value);
+                    });
+                  },
+                ),
               ),
-              DateInputBox(
-                controller: monthTextBoxController,
-                calendarParameter: _month,
-                calendarParameterText: "Month",
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 5,
+                child: TextField(
+                  keyboardType: TextInputType.datetime,
+                  controller: monthTextBoxController,
+                  cursorColor: const Color.fromRGBO(15, 15, 15, 1),
+                  style: const TextStyle(
+                    color: Color.fromRGBO(237, 237, 237, 1),
+                    fontSize: 20,
+                  ),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Month',
+                    labelStyle: GoogleFonts.lato(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      print("Month" + _month.toString());
+                      _month = int.parse(value);
+                    });
+                  },
+                ),
               ),
-              DateInputBox(
-                controller: yearTextBoxController,
-                calendarParameter: _year,
-                calendarParameterText: "Year",
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 5,
+                child: TextField(
+                  keyboardType: TextInputType.datetime,
+                  controller: yearTextBoxController,
+                  cursorColor: const Color.fromRGBO(15, 15, 15, 1),
+                  style: const TextStyle(
+                    color: Color.fromRGBO(237, 237, 237, 1),
+                    fontSize: 20,
+                  ),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Year',
+                    labelStyle: GoogleFonts.lato(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      _year = int.parse(value);
+                    });
+                  },
+                ),
               ),
             ],
           ),
@@ -76,73 +137,14 @@ class _AgeColumnState extends State<AgeColumn> {
           () {
             Provider.of<FirstScreenStateProviders>(context, listen: false)
                 .setisAgeSubmittedValue = true;
-
-            Provider.of<Profile>(context, listen: false).setAge =
-                (DateTime.now().year) - _year;
+            Provider.of<Profile>(context, listen: false).setAge = {
+              'year': _year,
+              'month': _month,
+              'day': _day
+            };
           },
         )
       ],
-    );
-  }
-}
-
-class DateInputBox extends StatefulWidget {
-  const DateInputBox(
-      {super.key,
-      required this.controller,
-      required this.calendarParameter,
-      required this.calendarParameterText});
-  final TextEditingController controller;
-  final double calendarParameter;
-  final String calendarParameterText;
-
-  @override
-  // ignore: no_logic_in_create_state
-  State<DateInputBox> createState() => _DateInputBoxState(
-        controller,
-        calendarParameter,
-        calendarParameterText,
-      );
-}
-
-class _DateInputBoxState extends State<DateInputBox> {
-  final TextEditingController controller;
-  double calendarParameter;
-  String calendarParameterText;
-
-  _DateInputBoxState(
-      this.controller, this.calendarParameter, this.calendarParameterText);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 8,
-      width: MediaQuery.of(context).size.width / 8,
-      child: TextField(
-        controller: controller,
-        cursorColor: const Color.fromRGBO(15, 15, 15, 1),
-        keyboardAppearance: Brightness.dark,
-        style: const TextStyle(
-          color: Color.fromRGBO(237, 237, 237, 1),
-          decorationColor: Colors.white,
-          fontSize: 35,
-        ),
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white, width: 20)),
-          labelText: calendarParameterText,
-          labelStyle: GoogleFonts.lato(
-            fontSize: 25,
-            color: Colors.white,
-          ),
-        ),
-        keyboardType: TextInputType.datetime,
-        onSubmitted: (value) {
-          setState(() {
-            calendarParameter = double.parse(value);
-          });
-        },
-      ),
     );
   }
 }

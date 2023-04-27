@@ -36,7 +36,7 @@ class SwipeCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${profile.age.toInt()} ",
+                    profile.getAge.toString(),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 35,
