@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
             gender: Gender.woman,
             isVerified: false,
             imageUrls: [],
+            nicheFilterSelected: false,
           ),
         ),
       ],

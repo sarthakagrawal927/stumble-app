@@ -13,6 +13,7 @@ class Profile with ChangeNotifier {
   List<File> imageUrls = [];
   bool isVerified;
   String conversationStarterPrompt;
+  bool nicheFilterSelected;
 
   Profile({
     required this.id,
@@ -20,8 +21,9 @@ class Profile with ChangeNotifier {
     required this.gender,
     required this.birthDate,
     required this.isVerified,
-    required this.imageUrls, // Make this non-required as well.
+    required this.imageUrls,
     required this.conversationStarterPrompt,
+    required this.nicheFilterSelected,
   });
 
   // Setters
@@ -33,7 +35,6 @@ class Profile with ChangeNotifier {
 
   set setAge(var birthDateInput) {
     birthDate = birthDateInput;
-    print(birthDate);
     notifyListeners();
   }
 
@@ -44,20 +45,17 @@ class Profile with ChangeNotifier {
 
   set setProfilePrompt(String conversationStarterPromptInput) {
     conversationStarterPrompt = conversationStarterPromptInput;
-    print(name);
-    print(birthDate);
-
-    print(gender);
-
-    print(conversationStarterPrompt);
-
-    print(imageUrls[0]);
 
     notifyListeners();
   }
 
   set setFirstImage(File firstImageFile) {
     imageUrls.add(firstImageFile);
+    notifyListeners();
+  }
+
+  set setNicheFilterValue(bool isNicheFilterSelected) {
+    nicheFilterSelected = isNicheFilterSelected;
     notifyListeners();
   }
 
@@ -77,6 +75,10 @@ class Profile with ChangeNotifier {
     return 20; //Have to change later.
   }
 
+  bool get getNicheFilterSelectedValue {
+    return nicheFilterSelected;
+  }
+
   // File get getFirstImageUrl {
   //   if (imageUrls.isEmpty) return File
   //   return imageUrls[0];
@@ -94,6 +96,8 @@ class Profile with ChangeNotifier {
 
   Set<Profile> undoListOfProfiles = {};
   List<Profile> currentListOfStumbles = [];
+  List<Profile> likedListOfProfiles = [];
+  List<Profile> admirerListOfProfiles = [];
 
   void removeLikedProfiles(Profile profile) {
     //Change this later
@@ -118,6 +122,24 @@ class Profile with ChangeNotifier {
       undoListOfProfiles.remove(undoListOfProfiles.last);
     }
     notifyListeners();
+  }
+
+  set setLikedListOfProfiles(Profile profile) {
+    likedListOfProfiles.add(profile);
+    notifyListeners();
+  }
+
+  List<Profile> getLikedListOfProfiles() {
+    return likedListOfProfiles;
+  }
+
+  set setAdmirersListOfProfiles(Profile profile) {
+    admirerListOfProfiles.add(profile);
+    notifyListeners();
+  }
+
+  List<Profile> getAdmirersListOfProfiles() {
+    return admirerListOfProfiles;
   }
 
   Future<void> getStumblesFromBackendAndSetCurrentList() async {
@@ -150,6 +172,7 @@ class Profile with ChangeNotifier {
           ],
           isVerified: false,
           conversationStarterPrompt: "",
+          nicheFilterSelected: false,
         ),
         Profile(
           id: '3',
@@ -164,6 +187,7 @@ class Profile with ChangeNotifier {
           ],
           isVerified: false,
           conversationStarterPrompt: "",
+          nicheFilterSelected: false,
         ),
         Profile(
           id: '3',
@@ -178,6 +202,7 @@ class Profile with ChangeNotifier {
           ],
           isVerified: false,
           conversationStarterPrompt: "",
+          nicheFilterSelected: true,
         ),
         Profile(
           id: '3',
@@ -192,6 +217,7 @@ class Profile with ChangeNotifier {
           ],
           isVerified: false,
           conversationStarterPrompt: "",
+          nicheFilterSelected: true,
         ),
         Profile(
           id: '3',
@@ -206,6 +232,7 @@ class Profile with ChangeNotifier {
           ],
           isVerified: false,
           conversationStarterPrompt: "",
+          nicheFilterSelected: false,
         ),
         Profile(
           id: '2',
@@ -220,6 +247,7 @@ class Profile with ChangeNotifier {
           ],
           isVerified: false,
           conversationStarterPrompt: "",
+          nicheFilterSelected: true,
         ),
       ];
     }

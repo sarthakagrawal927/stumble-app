@@ -1,3 +1,4 @@
+import 'package:dating_made_better/widgets/comment_feature_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,41 +16,43 @@ class SwipeCard extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.395,
-            width: double.infinity,
-            child: Container(
-              alignment: Alignment.bottomRight,
-              decoration: imageBoxWidget(context, 0),
-              child: Row(
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.all(MediaQuery.of(context).size.width / 32),
-                    child: Text(
-                      "${profile.name}, ",
+          CommentFeatureWidget(
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.395,
+              width: double.infinity,
+              child: Container(
+                alignment: Alignment.bottomRight,
+                decoration: imageBoxWidget(context, 0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.width / 32),
+                      child: Text(
+                        "${profile.name}, ",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      profile.getAge.toString(),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 35,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                  ),
-                  Text(
-                    profile.getAge.toString(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  profile.isVerified
-                      ? const Icon(Icons.verified_sharp, color: Colors.blue)
-                      : const Icon(
-                          Icons.verified_outlined,
-                          color: Colors.white,
-                        ),
-                ],
+                    profile.isVerified
+                        ? const Icon(Icons.verified_sharp, color: Colors.blue)
+                        : const Icon(
+                            Icons.verified_outlined,
+                            color: Colors.white,
+                          ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -57,94 +60,102 @@ class SwipeCard extends StatelessWidget {
             color: const Color.fromRGBO(15, 15, 15, 1),
             height: MediaQuery.of(context).size.height / 24,
           ),
-          Container(
-            color: const Color.fromRGBO(15, 15, 15, 1),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height / 32,
-                  padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 32),
-                  child: const Text(
-                    'Talk to me about',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
+          CommentFeatureWidget(
+            Container(
+              color: const Color.fromRGBO(15, 15, 15, 1),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height / 32,
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 32),
+                    child: const Text(
+                      'Talk to me about',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height / 32,
+                  Container(
+                    height: MediaQuery.of(context).size.height / 32,
+                    color: const Color.fromRGBO(15, 15, 15, 1),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.235,
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width / 32,
+                      right: MediaQuery.of(context).size.width / 32,
+                    ),
+                    child: const SingleChildScrollView(
+                      child: Text(
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white70,
+                        ),
+                        "f1; I'm a real nerd about it. I'm also into software, as you can see by these ginormous specs I'm wearing.",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height / 16,
+            color: const Color.fromRGBO(15, 15, 15, 1),
+          ),
+          CommentFeatureWidget(
+            Container(
+              color: const Color.fromRGBO(15, 15, 15, 1),
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Container(
+                  alignment: Alignment.bottomLeft,
+                  decoration: imageBoxWidget(context, 1)),
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height / 16,
+            color: const Color.fromRGBO(15, 15, 15, 1),
+          ),
+          CommentFeatureWidget(
+            Container(
+              color: const Color.fromRGBO(15, 15, 15, 1),
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Container(
+                  alignment: Alignment.bottomLeft,
+                  decoration: imageBoxWidget(context, 2)),
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height / 16,
+            color: const Color.fromRGBO(15, 15, 15, 1),
+          ),
+          profile.nicheFilterSelected
+              ? Container(
+                  color: const Color.fromRGBO(15, 15, 15, 1),
+                  child: Column(
+                    children: [
+                      ButtonToSelectUserDatingPreference(
+                          "A conversation for now!", profile),
+                      SizedBox(height: MediaQuery.of(context).size.height / 64),
+                      ButtonToSelectUserDatingPreference(
+                          "Looking to be friends.", profile),
+                      SizedBox(height: MediaQuery.of(context).size.height / 64),
+                      ButtonToSelectUserDatingPreference(
+                          "Relationship", profile),
+                      SizedBox(height: MediaQuery.of(context).size.height / 64),
+                      ButtonToSelectUserDatingPreference("Hookup", profile),
+                    ],
+                  ),
+                )
+              : Container(
+                  height: MediaQuery.of(context).size.height / 64,
                   color: const Color.fromRGBO(15, 15, 15, 1),
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.235,
-                  padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 32,
-                    right: MediaQuery.of(context).size.width / 32,
-                  ),
-                  child: const SingleChildScrollView(
-                    child: Text(
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
-                      "f1; I'm a real nerd about it. I'm also into software, as you can see by these ginormous specs I'm wearing.",
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height / 16,
-            color: const Color.fromRGBO(15, 15, 15, 1),
-          ),
-          Container(
-            color: const Color.fromRGBO(15, 15, 15, 1),
-            height: MediaQuery.of(context).size.height * 0.3,
-            child: Container(
-                alignment: Alignment.bottomLeft,
-                decoration: imageBoxWidget(context, 1)),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height / 16,
-            color: const Color.fromRGBO(15, 15, 15, 1),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height / 64,
-            color: const Color.fromRGBO(15, 15, 15, 1),
-          ),
-          Container(
-            color: const Color.fromRGBO(15, 15, 15, 1),
-            height: MediaQuery.of(context).size.height * 0.3,
-            child: Container(
-                alignment: Alignment.bottomLeft,
-                decoration: imageBoxWidget(context, 2)),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height / 16,
-            color: const Color.fromRGBO(15, 15, 15, 1),
-          ),
-          Container(
-            color: const Color.fromRGBO(15, 15, 15, 1),
-            child: Column(
-              children: [
-                ButtonToSelectUserDatingPreference(
-                    "A conversation for now!", profile),
-                SizedBox(height: MediaQuery.of(context).size.height / 64),
-                ButtonToSelectUserDatingPreference(
-                    "Looking to be friends.", profile),
-                SizedBox(height: MediaQuery.of(context).size.height / 64),
-                ButtonToSelectUserDatingPreference("Relationship", profile),
-                SizedBox(height: MediaQuery.of(context).size.height / 64),
-                ButtonToSelectUserDatingPreference("Hookup", profile),
-              ],
-            ),
-          ),
           Container(
             height: MediaQuery.of(context).size.height / 32,
             color: const Color.fromRGBO(15, 15, 15, 1),

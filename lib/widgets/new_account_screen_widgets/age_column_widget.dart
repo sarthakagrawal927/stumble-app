@@ -96,7 +96,6 @@ class _AgeColumnState extends State<AgeColumn> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      print("Month" + _month.toString());
                       _month = int.parse(value);
                     });
                   },

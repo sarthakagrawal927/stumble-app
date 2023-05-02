@@ -96,6 +96,8 @@ class _DragWidgetState extends State<DragWidget> {
           } else if (swipeNotifier.value == Swipe.right) {
             Provider.of<Profile>(context, listen: false)
                 .removeLikedProfiles(widget.profile);
+            Provider.of<Profile>(context, listen: false)
+                .setLikedListOfProfiles = widget.profile;
           }
           swipeNotifier.value = Swipe.none;
         },
