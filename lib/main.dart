@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,7 +38,9 @@ class MyApp extends StatelessWidget {
             conversationStarterPrompt: "",
             gender: Gender.woman,
             isVerified: false,
-            imageUrls: [],
+            firstimageUrl: File(""),
+            secondImageUrl: File(""),
+            thirdImageUrl: File(""),
             nicheFilterSelected: false,
           ),
         ),

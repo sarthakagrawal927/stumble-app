@@ -170,7 +170,7 @@ class SwipeCard extends StatelessWidget {
       color: Theme.of(context).colorScheme.secondary,
       image: DecorationImage(
         fit: BoxFit.cover,
-        image: NetworkImage(profile.imageUrls[0].path),
+        image: NetworkImage(profile.firstimageUrl.path),
       ),
     );
   }

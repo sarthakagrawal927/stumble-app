@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/profile.dart';
 import '../widgets/ask_me_about_text_field.dart';
-import '../providers/image_input.dart';
 
 class UserProfileCompletionScreen extends StatefulWidget {
   static const routeName = '/user-profile-completion';
@@ -25,6 +28,57 @@ class _UserProfileCompletionScreenState
   bool isProfileVerified = true;
   final _conversationStarterFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
+
+  File secondImageUrl = File("lmao");
+  File thirdImageUrl = File("lmao");
+
+  void getSecondImageFromGallery() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    secondImageUrl = File("lmao");
+    if (pickedFile != null) {
+      secondImageUrl = File(pickedFile.path);
+      // ignore: use_build_context_synchronously
+      Provider.of<Profile>(context, listen: false).setSecondImage =
+          secondImageUrl;
+    }
+  }
+
+  void getThirdImageFromGallery() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    thirdImageUrl = File("lmao");
+    if (pickedFile != null) {
+      thirdImageUrl = File(pickedFile.path);
+      // ignore: use_build_context_synchronously
+      Provider.of<Profile>(context, listen: false).setThirdImage =
+          thirdImageUrl;
+    }
+  }
+
+  bool secondImageExists() {
+    if (Provider.of<Profile>(context, listen: false).isSecondImagePresent()) {
+      Provider.of<Profile>(context, listen: false).setSecondImage =
+          secondImageUrl;
+      return true;
+    }
+    return false;
+  }
+
+  bool thirdImageExists() {
+    if (Provider.of<Profile>(context, listen: false).isThirdImagePresent()) {
+      Provider.of<Profile>(context, listen: false).setThirdImage =
+          thirdImageUrl;
+      return true;
+    }
+    return false;
+  }
 
   @override
   void dispose() {
@@ -162,13 +216,72 @@ class _UserProfileCompletionScreenState
                     ),
                   ),
                 ),
-                Consumer<ImageInput>(
-                  builder: (context, value, child) => IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: const [],
+                Row(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(15, 15, 15, 0.5),
+                        fixedSize: Size(
+                          (MediaQuery.of(context).size.width) * 0.4375,
+                          (MediaQuery.of(context).size.height) / 4,
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Image.file(
+                        Provider.of<Profile>(context, listen: false)
+                            .getFirstImageUrl,
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                  ),
+                    Column(
+                      children: [
+                        Consumer<Profile>(
+                          builder: (context, value, child) => ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromRGBO(15, 15, 15, 0.5),
+                              fixedSize: Size(
+                                (MediaQuery.of(context).size.width) * 0.4375,
+                                (MediaQuery.of(context).size.height) / 8,
+                              ),
+                            ),
+                            onPressed: getSecondImageFromGallery,
+                            child: secondImageExists()
+                                ? Image.file(
+                                    secondImageUrl,
+                                    fit: BoxFit.fill,
+                                  )
+                                : const Icon(
+                                    Icons.camera,
+                                    color: Colors.white70,
+                                  ),
+                          ),
+                        ),
+                        Consumer<Profile>(
+                          builder: (context, value, child) => ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromRGBO(15, 15, 15, 0.5),
+                              fixedSize: Size(
+                                (MediaQuery.of(context).size.width) * 0.4375,
+                                (MediaQuery.of(context).size.height) / 8,
+                              ),
+                            ),
+                            onPressed: getThirdImageFromGallery,
+                            child: thirdImageExists()
+                                ? Image.file(
+                                    thirdImageUrl,
+                                    fit: BoxFit.fill,
+                                  )
+                                : const Icon(
+                                    Icons.camera,
+                                    color: Colors.white70,
+                                  ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ],
             ),

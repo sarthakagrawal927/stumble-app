@@ -19,7 +19,7 @@ class PhotoAdditionColumn extends StatefulWidget {
 }
 
 class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
-  late File imageUrl;
+  File imageUrl = File("");
 
   void getFromGallery() async {
     XFile? pickedFile = await ImagePicker().pickImage(
@@ -27,7 +27,6 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
       maxWidth: 1800,
       maxHeight: 1800,
     );
-    imageUrl = File("lmao");
     if (pickedFile != null) {
       imageUrl = File(pickedFile.path);
       // ignore: use_build_context_synchronously

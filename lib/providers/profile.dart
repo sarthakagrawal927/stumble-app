@@ -10,7 +10,9 @@ class Profile with ChangeNotifier {
   String name;
   Gender gender;
   var birthDate = {'year': 0, 'month': 0, 'day': 0};
-  List<File> imageUrls = [];
+  File firstimageUrl;
+  File secondImageUrl;
+  File thirdImageUrl;
   bool isVerified;
   String conversationStarterPrompt;
   bool nicheFilterSelected;
@@ -21,7 +23,9 @@ class Profile with ChangeNotifier {
     required this.gender,
     required this.birthDate,
     required this.isVerified,
-    required this.imageUrls,
+    required this.firstimageUrl,
+    required this.secondImageUrl,
+    required this.thirdImageUrl,
     required this.conversationStarterPrompt,
     required this.nicheFilterSelected,
   });
@@ -50,7 +54,17 @@ class Profile with ChangeNotifier {
   }
 
   set setFirstImage(File firstImageFile) {
-    imageUrls.add(firstImageFile);
+    firstimageUrl = firstImageFile;
+    notifyListeners();
+  }
+
+  set setSecondImage(File secondImageFile) {
+    secondImageUrl = secondImageFile;
+    notifyListeners();
+  }
+
+  set setThirdImage(File thirdImageFile) {
+    thirdImageUrl = thirdImageFile;
     notifyListeners();
   }
 
@@ -84,12 +98,28 @@ class Profile with ChangeNotifier {
   //   return imageUrls[0];
   // }
 
-  List<File> get getImageUrls {
-    return imageUrls;
+  File get getFirstImageUrl {
+    return firstimageUrl;
+  }
+
+  File get getSecondImageUrl {
+    return secondImageUrl;
+  }
+
+  File get getThirdImageUrl {
+    return thirdImageUrl;
   }
 
   bool isFirstImagePresent() {
-    return imageUrls.isNotEmpty;
+    return firstimageUrl.isAbsolute;
+  }
+
+  bool isSecondImagePresent() {
+    return secondImageUrl.isAbsolute;
+  }
+
+  bool isThirdImagePresent() {
+    return thirdImageUrl.isAbsolute;
   }
 
   Future<void> getStumblesFromBackend() async {}
@@ -164,12 +194,11 @@ class Profile with ChangeNotifier {
           birthDate: {},
           name: 'A',
           gender: Gender.man,
-          imageUrls: [
-            File(
-                'https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg'),
-            File(
-                'https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg'),
-          ],
+          firstimageUrl: File(
+              'https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg'),
+          secondImageUrl: File(
+              'https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg'),
+          thirdImageUrl: File(""),
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: false,
@@ -179,12 +208,11 @@ class Profile with ChangeNotifier {
           birthDate: {},
           name: 'B',
           gender: Gender.nonBinary,
-          imageUrls: [
-            File(
-                'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
-            File(
-                'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk=')
-          ],
+          firstimageUrl: File(
+              'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
+          secondImageUrl: File(
+              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
+          thirdImageUrl: File(""),
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: false,
@@ -194,12 +222,11 @@ class Profile with ChangeNotifier {
           birthDate: {},
           name: 'C',
           gender: Gender.nonBinary,
-          imageUrls: [
-            File(
-                'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
-            File(
-                'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk=')
-          ],
+          firstimageUrl: File(
+              'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
+          secondImageUrl: File(
+              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
+          thirdImageUrl: File(""),
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: true,
@@ -209,12 +236,11 @@ class Profile with ChangeNotifier {
           birthDate: {},
           name: 'D',
           gender: Gender.nonBinary,
-          imageUrls: [
-            File(
-                'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
-            File(
-                'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk=')
-          ],
+          firstimageUrl: File(
+              'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
+          secondImageUrl: File(
+              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
+          thirdImageUrl: File(""),
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: true,
@@ -224,12 +250,11 @@ class Profile with ChangeNotifier {
           birthDate: {},
           name: 'E',
           gender: Gender.nonBinary,
-          imageUrls: [
-            File(
-                'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
-            File(
-                'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk=')
-          ],
+          firstimageUrl: File(
+              'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
+          secondImageUrl: File(
+              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
+          thirdImageUrl: File(""),
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: false,
@@ -239,12 +264,11 @@ class Profile with ChangeNotifier {
           birthDate: {},
           gender: Gender.man,
           name: 'F',
-          imageUrls: [
-            File(
-                'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
-            File(
-                'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk=')
-          ],
+          firstimageUrl: File(
+              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
+          secondImageUrl: File(
+              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
+          thirdImageUrl: File(""),
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: true,

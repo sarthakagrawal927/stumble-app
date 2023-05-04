@@ -30,7 +30,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
         color: Theme.of(context).colorScheme.secondary,
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(likedListOfProfiles[index].imageUrls[0].path),
+          image: NetworkImage(likedListOfProfiles[index].getFirstImageUrl.path),
         ),
       );
     }
@@ -96,11 +96,11 @@ class _SwipingScreenState extends State<SwipingScreen> {
               ],
               onChanged: (itemIdentifier) {
                 if (itemIdentifier == 'Liked by me') {
-                  likedListOfProfiles.isNotEmpty
-                      ? showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Dialog(
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return likedListOfProfiles.isNotEmpty
+                          ? Dialog(
                               backgroundColor: Colors.black,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40)),
@@ -120,27 +120,27 @@ class _SwipingScreenState extends State<SwipingScreen> {
                                   );
                                 },
                               ),
-                            );
-                          },
-                        )
-                      : Dialog(
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)),
-                          elevation: 16,
-                          child: const Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Keep swiping!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
+                            )
+                          : Dialog(
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40)),
+                              elevation: 16,
+                              child: const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Keep swiping!',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
+                            );
+                    },
+                  );
                 } else if (itemIdentifier == 'Admirers') {
                   showDialog(
                     context: context,
