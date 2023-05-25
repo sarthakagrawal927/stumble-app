@@ -42,6 +42,8 @@ class MyApp extends StatelessWidget {
             secondImageUrl: File(""),
             thirdImageUrl: File(""),
             nicheFilterSelected: false,
+            genderPreferences: [],
+            ageRangePreference: const RangeValues(18, 40),
           ),
         ),
       ],

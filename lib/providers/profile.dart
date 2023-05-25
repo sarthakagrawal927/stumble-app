@@ -16,6 +16,8 @@ class Profile with ChangeNotifier {
   bool isVerified;
   String conversationStarterPrompt;
   bool nicheFilterSelected;
+  RangeValues ageRangePreference;
+  List<Gender> genderPreferences;
 
   Profile({
     required this.id,
@@ -28,6 +30,8 @@ class Profile with ChangeNotifier {
     required this.thirdImageUrl,
     required this.conversationStarterPrompt,
     required this.nicheFilterSelected,
+    required this.ageRangePreference,
+    required this.genderPreferences,
   });
 
   // Setters
@@ -70,6 +74,17 @@ class Profile with ChangeNotifier {
 
   set setNicheFilterValue(bool isNicheFilterSelected) {
     nicheFilterSelected = isNicheFilterSelected;
+    notifyListeners();
+  }
+
+  set setAgeRangePreference(RangeValues ageRangeValues) {
+    ageRangePreference = ageRangeValues;
+    notifyListeners();
+  }
+
+  set setGenderPreference(List<Gender> genderPreferencesList) {
+    genderPreferences = genderPreferencesList;
+
     notifyListeners();
   }
 
@@ -202,6 +217,8 @@ class Profile with ChangeNotifier {
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: false,
+          genderPreferences: [],
+          ageRangePreference: const RangeValues(18, 40),
         ),
         Profile(
           id: '3',
@@ -216,6 +233,8 @@ class Profile with ChangeNotifier {
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: false,
+          genderPreferences: [],
+          ageRangePreference: const RangeValues(18, 40),
         ),
         Profile(
           id: '3',
@@ -230,6 +249,8 @@ class Profile with ChangeNotifier {
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: true,
+          genderPreferences: [],
+          ageRangePreference: const RangeValues(18, 40),
         ),
         Profile(
           id: '3',
@@ -244,6 +265,8 @@ class Profile with ChangeNotifier {
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: true,
+          genderPreferences: [],
+          ageRangePreference: const RangeValues(18, 40),
         ),
         Profile(
           id: '3',
@@ -258,6 +281,8 @@ class Profile with ChangeNotifier {
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: false,
+          genderPreferences: [],
+          ageRangePreference: const RangeValues(18, 40),
         ),
         Profile(
           id: '2',
@@ -272,6 +297,8 @@ class Profile with ChangeNotifier {
           isVerified: false,
           conversationStarterPrompt: "",
           nicheFilterSelected: true,
+          genderPreferences: [],
+          ageRangePreference: const RangeValues(18, 40),
         ),
       ];
     }

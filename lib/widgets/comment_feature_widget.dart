@@ -54,6 +54,10 @@ class CommentFeatureWidget extends StatelessWidget {
                         ),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 12),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_circle_right_sharp),
+                          onPressed: () {},
+                        )
                       ],
                     ),
                   );
