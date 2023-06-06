@@ -8,6 +8,7 @@ import '../constants.dart';
 class Profile with ChangeNotifier {
   String id;
   String name;
+  String phoneNumber;
   Gender gender;
   var birthDate = {'year': 0, 'month': 0, 'day': 0};
   File firstimageUrl;
@@ -22,6 +23,7 @@ class Profile with ChangeNotifier {
   Profile({
     required this.id,
     required this.name,
+    required this.phoneNumber,
     required this.gender,
     required this.birthDate,
     required this.isVerified,
@@ -38,6 +40,11 @@ class Profile with ChangeNotifier {
 
   set setName(String nameInput) {
     name = nameInput;
+    notifyListeners();
+  }
+
+  set setPhoneNumber(String phoneNumberInput) {
+    phoneNumber = phoneNumberInput;
     notifyListeners();
   }
 
@@ -98,6 +105,10 @@ class Profile with ChangeNotifier {
 
   Gender get getGender {
     return gender;
+  }
+
+  String get getPhoneNumber {
+    return phoneNumber;
   }
 
   int get getAge {
@@ -208,6 +219,7 @@ class Profile with ChangeNotifier {
           id: '1',
           birthDate: {},
           name: 'A',
+          phoneNumber: '1234567890',
           gender: Gender.man,
           firstimageUrl: File(
               'https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg'),
@@ -224,6 +236,7 @@ class Profile with ChangeNotifier {
           id: '3',
           birthDate: {},
           name: 'B',
+          phoneNumber: '1234567890',
           gender: Gender.nonBinary,
           firstimageUrl: File(
               'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
@@ -240,6 +253,7 @@ class Profile with ChangeNotifier {
           id: '3',
           birthDate: {},
           name: 'C',
+          phoneNumber: '1234567890',
           gender: Gender.nonBinary,
           firstimageUrl: File(
               'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
@@ -256,6 +270,7 @@ class Profile with ChangeNotifier {
           id: '3',
           birthDate: {},
           name: 'D',
+          phoneNumber: '1234567890',
           gender: Gender.nonBinary,
           firstimageUrl: File(
               'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
@@ -272,6 +287,7 @@ class Profile with ChangeNotifier {
           id: '3',
           birthDate: {},
           name: 'E',
+          phoneNumber: '1234567890',
           gender: Gender.nonBinary,
           firstimageUrl: File(
               'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
@@ -289,6 +305,7 @@ class Profile with ChangeNotifier {
           birthDate: {},
           gender: Gender.man,
           name: 'F',
+          phoneNumber: '1234567890',
           firstimageUrl: File(
               'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
           secondImageUrl: File(
@@ -303,6 +320,11 @@ class Profile with ChangeNotifier {
       ];
     }
     return currentListOfStumbles;
+  }
+
+  bool isOTPCorrect(String verificationCode) {
+    // Call backend API for whatsapp OTP
+    return (verificationCode == "1111");
   }
 
   // Future<void> setUserData() async { // Complete this function.

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class FirstScreenStateProviders extends ChangeNotifier {
   bool isUseMobileNumberButtonClicked = false;
+  bool isPhoneNumberSubmitted = false;
   bool isOTPSubmitted = false;
   bool isNameSubmitted = false;
   bool isAgeSubmitted = false;
@@ -15,6 +16,15 @@ class FirstScreenStateProviders extends ChangeNotifier {
 
   set setUseMobileNumberButtonClickedValue(bool value) {
     isUseMobileNumberButtonClicked = value;
+    notifyListeners();
+  }
+
+  bool get getIsPhoneNumberSubmittedValue {
+    return isPhoneNumberSubmitted;
+  }
+
+  set setIsPhoneNumberSubmittedValue(bool value) {
+    isPhoneNumberSubmitted = value;
     notifyListeners();
   }
 

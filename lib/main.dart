@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
           value: Profile(
             id: "",
             name: "",
+            phoneNumber: "",
             birthDate: {},
             conversationStarterPrompt: "",
             gender: Gender.woman,

@@ -2,6 +2,7 @@ import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/age_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/gender_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/otp_screen_column_widget.dart';
+import 'package:dating_made_better/widgets/new_account_screen_widgets/phone_number_column._widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/photo_addition_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/prompt_addition_column_widget.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,9 @@ class _AuthScreenState extends State<AuthScreen> {
     bool isUseMobileNumberButtonClicked =
         Provider.of<FirstScreenStateProviders>(context)
             .getUseMobileNumberButtonClickedValue;
+    bool isPhoneNumberSubmitted =
+        Provider.of<FirstScreenStateProviders>(context)
+            .getIsPhoneNumberSubmittedValue;
     bool isOTPSubmitted =
         Provider.of<FirstScreenStateProviders>(context).getisOTPSubmittedValue;
     bool isNameSubmitted =
@@ -79,17 +83,19 @@ class _AuthScreenState extends State<AuthScreen> {
                 width: deviceSize.width,
                 child: !isUseMobileNumberButtonClicked
                     ? FirstScreenColumn(deviceSize)
-                    : !isOTPSubmitted
-                        ? OTPScreenColumn(deviceSize)
-                        : !isNameSubmitted
-                            ? NameColumn(deviceSize)
-                            : !isAgeSubmitted
-                                ? AgeColumn(deviceSize)
-                                : !isGenderSubmitted
-                                    ? GenderColumn(deviceSize)
-                                    : !isFirstPhotoSubmitted
-                                        ? PhotoAdditionColumn(deviceSize)
-                                        : PromptAdditionColumn(deviceSize),
+                    : !isPhoneNumberSubmitted
+                        ? PhoneNumberColumnWidget(deviceSize)
+                        : !isOTPSubmitted
+                            ? OTPScreenColumn(deviceSize)
+                            : !isNameSubmitted
+                                ? NameColumn(deviceSize)
+                                : !isAgeSubmitted
+                                    ? AgeColumn(deviceSize)
+                                    : !isGenderSubmitted
+                                        ? GenderColumn(deviceSize)
+                                        : !isFirstPhotoSubmitted
+                                            ? PhotoAdditionColumn(deviceSize)
+                                            : PromptAdditionColumn(deviceSize),
               ),
             ],
           ),

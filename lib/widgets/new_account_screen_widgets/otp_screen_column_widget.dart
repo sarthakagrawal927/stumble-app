@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/first_screen_state_providers.dart';
+import '../../providers/profile.dart';
 
 // ignore: must_be_immutable
 class OTPScreenColumn extends StatefulWidget {
@@ -50,8 +51,12 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
           onSubmit: (String verificationCode) {
             // Add logic to differentiate existing user with new user.
             setState(() {
-              Provider.of<FirstScreenStateProviders>(context, listen: false)
-                  .setisOTPSubmittedValue = true;
+              if (Provider.of<Profile>(context, listen: false)
+                      .isOTPCorrect(verificationCode) ==
+                  true) {
+                Provider.of<FirstScreenStateProviders>(context, listen: false)
+                    .setisOTPSubmittedValue = true;
+              }
             });
           }, // end onSubmit
         ),
