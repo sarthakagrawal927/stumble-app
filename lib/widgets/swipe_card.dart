@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/widgets/comment_feature_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +56,7 @@ class SwipeCard extends StatelessWidget {
                 ),
               ),
             ),
+            profile,
           ),
           Container(
             color: const Color.fromRGBO(15, 15, 15, 1),
@@ -103,6 +105,7 @@ class SwipeCard extends StatelessWidget {
                 ],
               ),
             ),
+            profile,
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
@@ -116,6 +119,7 @@ class SwipeCard extends StatelessWidget {
                   alignment: Alignment.bottomLeft,
                   decoration: imageBoxWidget(context, 1)),
             ),
+            profile,
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
@@ -129,6 +133,7 @@ class SwipeCard extends StatelessWidget {
                   alignment: Alignment.bottomLeft,
                   decoration: imageBoxWidget(context, 2)),
             ),
+            profile,
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
@@ -192,7 +197,15 @@ class ButtonToSelectUserDatingPreference extends StatelessWidget {
       ),
       onPressed: () {
         Provider.of<Profile>(context, listen: false)
-            .removeLikedProfilesWhenButtonIsClicked(profile, preference);
+            .removeLikedProfilesWhenButtonIsClicked(
+          profile,
+          Container(),
+          "",
+          preference,
+          SwipeType.nicheSelection,
+        );
+        Provider.of<Profile>(context, listen: false).setLikedListOfProfiles =
+            profile;
       },
       child: Text(
         preference,

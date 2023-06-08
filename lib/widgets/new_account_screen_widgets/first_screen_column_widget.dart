@@ -39,7 +39,7 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
               top: widget.deviceSize.height / 32,
             ),
             child: Text(
-              'onto the next part of your life...',
+              'into someone amazing!',
               style: GoogleFonts.sacramento(
                 fontSize: 30.0,
                 color: Colors.white,

@@ -161,9 +161,17 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeLikedProfilesWhenButtonIsClicked(
-      Profile profile, String preference) {
-    currentListOfStumbles.remove(profile);
+  void removeLikedProfilesWhenButtonIsClicked(Profile profile, Widget widget,
+      String comment, String preference, SwipeType swipeType) {
+    if (swipeType == SwipeType.swipe) {
+      currentListOfStumbles.remove(profile);
+    } else if (swipeType == SwipeType.comment) {
+      // Add code for storing comment.
+      currentListOfStumbles.remove(profile);
+    } else if (swipeType == SwipeType.nicheSelection) {
+      // Add code for storing nicheValue
+      currentListOfStumbles.remove(profile);
+    }
     notifyListeners();
   }
 
@@ -189,12 +197,12 @@ class Profile with ChangeNotifier {
     return likedListOfProfiles;
   }
 
-  set setAdmirersListOfProfiles(Profile profile) {
+  set setStumbledOntoMeListOfProfiles(Profile profile) {
     admirerListOfProfiles.add(profile);
     notifyListeners();
   }
 
-  List<Profile> getAdmirersListOfProfiles() {
+  List<Profile> getStumbledOntoMeListOfProfiles() {
     return admirerListOfProfiles;
   }
 

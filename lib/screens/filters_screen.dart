@@ -13,8 +13,8 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  List<Gender> selectedGenders = [];
-  RangeValues _currentRangeValues = const RangeValues(19, 39);
+  List<Gender> selectedGenders = [Gender.nonBinary, Gender.woman, Gender.man];
+  RangeValues _currentRangeValues = const RangeValues(18, 40);
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +110,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height / 24),
                 RangeSlider(
                   values: _currentRangeValues,
-                  max: 40,
+                  max: 80,
                   min: 18,
                   divisions: 5,
                   labels: RangeLabels(

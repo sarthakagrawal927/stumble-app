@@ -1,11 +1,17 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/profile.dart';
 
 class CommentFeatureWidget extends StatelessWidget {
-  const CommentFeatureWidget(this.widget, {super.key});
+  const CommentFeatureWidget(this.widget, this.profile, {super.key});
   final Widget widget;
+  final Profile profile;
 
   @override
   Widget build(BuildContext context) {
+    String commentOnWidget = "";
     return Stack(
       children: [
         widget,
@@ -17,7 +23,7 @@ class CommentFeatureWidget extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return Dialog(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.white38,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40)),
                     elevation: 16,
@@ -31,7 +37,8 @@ class CommentFeatureWidget extends StatelessWidget {
                             'Leave a comment!',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
                             ),
                           ),
                         ),
@@ -40,24 +47,44 @@ class CommentFeatureWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(
                               MediaQuery.of(context).size.width / 12),
-                          child: const TextField(
-                            cursorColor: Colors.white70,
+                          child: TextField(
+                            maxLines: 3,
+                            minLines: 1,
+                            cursorColor: Colors.black,
                             autocorrect: true,
                             keyboardType: TextInputType.multiline,
                             textInputAction: TextInputAction.newline,
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 15,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
                             ),
-                            maxLength: 250,
+                            maxLength: 75,
+                            onChanged: (value) {
+                              commentOnWidget = value;
+                            },
                           ),
                         ),
                         SizedBox(
                             height: MediaQuery.of(context).size.height / 12),
                         IconButton(
+                          iconSize: 60,
                           icon: const Icon(Icons.arrow_circle_right_sharp),
-                          onPressed: () {},
-                        )
+                          onPressed: () {
+                            Provider.of<Profile>(context, listen: false)
+                                .setLikedListOfProfiles = profile;
+                            Provider.of<Profile>(context, listen: false)
+                                .removeLikedProfilesWhenButtonIsClicked(
+                                    profile,
+                                    widget,
+                                    commentOnWidget,
+                                    "",
+                                    SwipeType.comment);
+
+                            Navigator.of(context, rootNavigator: true).pop("");
+                          },
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height / 12),
                       ],
                     ),
                   );

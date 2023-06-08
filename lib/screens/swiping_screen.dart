@@ -22,9 +22,9 @@ class _SwipingScreenState extends State<SwipingScreen> {
   Widget build(BuildContext context) {
     List<Profile> likedListOfProfiles =
         Provider.of<Profile>(context, listen: false).getLikedListOfProfiles();
-    List<Profile> admirersListOfProfiles =
+    List<Profile> stumbledOntoMeListOfProfiles =
         Provider.of<Profile>(context, listen: false)
-            .getAdmirersListOfProfiles();
+            .getStumbledOntoMeListOfProfiles();
     BoxDecoration imageBoxWidget(BuildContext context, int index) {
       return BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
@@ -60,7 +60,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
               dropdownColor: const Color.fromRGBO(15, 15, 15, 1),
               items: [
                 DropdownMenuItem(
-                  value: 'Liked by me',
+                  value: 'I want to stumble into',
                   child: Row(
                     children: const [
                       Icon(
@@ -69,7 +69,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        'Liked by me',
+                        'I want to stumble into',
                         style:
                             TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
                       ),
@@ -77,7 +77,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                   ),
                 ),
                 DropdownMenuItem(
-                  value: 'Admirers',
+                  value: 'Stumbled onto me',
                   child: Row(
                     children: const [
                       Icon(
@@ -86,7 +86,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        'Admirers',
+                        'Stumbled onto me',
                         style:
                             TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
                       ),
@@ -95,7 +95,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                 ),
               ],
               onChanged: (itemIdentifier) {
-                if (itemIdentifier == 'Liked by me') {
+                if (itemIdentifier == 'I want to stumble into') {
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -130,7 +130,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: Text(
-                                    'Keep swiping!',
+                                    'Keep stumbling!',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -141,18 +141,18 @@ class _SwipingScreenState extends State<SwipingScreen> {
                             );
                     },
                   );
-                } else if (itemIdentifier == 'Admirers') {
+                } else if (itemIdentifier == 'Stumbled onto me') {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return admirersListOfProfiles.isNotEmpty
+                      return stumbledOntoMeListOfProfiles.isNotEmpty
                           ? Dialog(
                               backgroundColor: Colors.black,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40)),
                               elevation: 16,
                               child: GridView.builder(
-                                itemCount: admirersListOfProfiles.length,
+                                itemCount: stumbledOntoMeListOfProfiles.length,
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2),
@@ -176,7 +176,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: Text(
-                                    'We\'re certain your admirers are on their way!',
+                                    'We\'re certain your stumblers are on their way!',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
