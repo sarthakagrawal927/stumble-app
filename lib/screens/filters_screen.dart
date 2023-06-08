@@ -43,11 +43,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ),
             child: const Text(
               textAlign: TextAlign.start,
-              'Who you want to date',
+              'Do you have a preference for the genders shown to you?',
               style: TextStyle(
                 color: Colors.white70,
                 backgroundColor: Color.fromRGBO(15, 15, 15, 1),
-                fontSize: 25,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -79,11 +79,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ),
             child: const Text(
               textAlign: TextAlign.start,
-              'Age',
+              'Do you have a preference for the age of people you want to meet?',
               style: TextStyle(
                 color: Colors.white70,
                 backgroundColor: Color.fromRGBO(15, 15, 15, 1),
-                fontSize: 25,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             ),
