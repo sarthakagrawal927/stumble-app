@@ -103,6 +103,7 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
                   .setIsPhoneNumberSubmittedValue = true;
               Provider.of<Profile>(context, listen: false).setPhoneNumber =
                   phoneNumberValue;
+              Provider.of<Profile>(context, listen: false).sendOTPAPI();
             });
           },
           style: ElevatedButton.styleFrom(

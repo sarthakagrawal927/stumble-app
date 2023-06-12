@@ -36,6 +36,8 @@ class Profile with ChangeNotifier {
     required this.genderPreferences,
   });
 
+  final url = 'https://stumbe.onrender.com';
+
   // Setters
 
   set setName(String nameInput) {
@@ -335,6 +337,36 @@ class Profile with ChangeNotifier {
     return (verificationCode == "1111");
   }
 
+  Future<void> sendOTPAPI() async {
+    final urlToCallSendOTPAPI = '$url/api/v1/user/send_otp';
+    try {
+      await http.post(Uri.parse(urlToCallSendOTPAPI), body: {
+        'phone': phoneNumber
+      }, headers: {
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjcwMTEyMTA4NzQiLCJpZCI6MTA0LCJpYXQiOjE2ODY0OTI3NDQsImV4cCI6MTY4NjU3OTE0NH0.HUT212-_hm8kmV-l1228-WhrcpigjVYVuDfCkdQPZ60'
+      });
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  // Future<void> createUserAPI() async {
+  //   final urlToCallCreateUserAPI = url + '/api/v1/user';
+  //   try {
+  //     final response =
+  //         await http.post(Uri.parse(urlToCallCreateUserAPI), body: {
+  //       'name': name
+  //     }, headers: {
+  //       'Authorization':
+  //           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjcwMTEyMTA4NzQiLCJpZCI6MTA0LCJpYXQiOjE2ODY0OTI3NDQsImV4cCI6MTY4NjU3OTE0NH0.HUT212-_hm8kmV-l1228-WhrcpigjVYVuDfCkdQPZ60'
+  //     });
+  //     print(response.body);
+  //   } catch (error) {
+  //     print(error);
+  //     throw error;
+  //   }
+
   // Future<void> setUserData() async { // Complete this function.
   //   final url = 'http://localhost:8000';
   //   try {
@@ -353,5 +385,6 @@ class Profile with ChangeNotifier {
   //   } else {
   //     print('...');
   //   }
+  // }
   // }
 }
