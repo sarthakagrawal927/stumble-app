@@ -197,7 +197,7 @@ class ButtonToSelectUserDatingPreference extends StatelessWidget {
       ),
       onPressed: () {
         Provider.of<Profile>(context, listen: false)
-            .removeLikedProfilesWhenButtonIsClicked(
+            .removeLikedProfilesWhenNicheButtonIsClicked(
           profile,
           Container(),
           "",

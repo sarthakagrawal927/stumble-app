@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:provider/provider.dart';
 
 import './providers/profile.dart';
 import 'screens/login_or_signup_screen.dart';
-import './screens/chat_screen.dart';
+import 'screens/individual_chats_screen.dart';
 import './screens/filters_screen.dart';
 import './screens/swiping_screen.dart';
 import './screens/user_profile_completion_screen.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
             id: "",
             name: "",
             phoneNumber: "",
-            birthDate: {},
+            birthDate: "",
             conversationStarterPrompt: "",
             gender: Gender.woman,
             isVerified: false,
@@ -71,6 +72,8 @@ class MyApp extends StatelessWidget {
           UserProfileCompletionScreen.routeName: (context) =>
               const UserProfileCompletionScreen(),
           ChatScreen.routeName: (context) => const ChatScreen(),
+          MatchesAndChatsScreen.routeName: (context) =>
+              const MatchesAndChatsScreen(),
           FiltersScreen.routeName: (context) => const FiltersScreen(),
         },
       ),

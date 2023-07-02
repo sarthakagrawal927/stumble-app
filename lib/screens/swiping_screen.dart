@@ -20,11 +20,12 @@ class _SwipingScreenState extends State<SwipingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Profile> likedListOfProfiles =
+    List<dynamic> likedListOfProfiles =
         Provider.of<Profile>(context, listen: false).getLikedListOfProfiles();
-    List<Profile> stumbledOntoMeListOfProfiles =
+    List<dynamic> stumbledOntoMeListOfProfiles =
         Provider.of<Profile>(context, listen: false)
             .getStumbledOntoMeListOfProfiles();
+
     BoxDecoration imageBoxWidget(BuildContext context, int index) {
       return BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
@@ -170,7 +171,8 @@ class _SwipingScreenState extends State<SwipingScreen> {
                           : Dialog(
                               backgroundColor: Colors.black,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40)),
+                                borderRadius: BorderRadius.circular(40),
+                              ),
                               elevation: 16,
                               child: const Center(
                                 child: Padding(

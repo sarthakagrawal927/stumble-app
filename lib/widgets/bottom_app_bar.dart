@@ -1,7 +1,7 @@
-import 'package:dating_made_better/screens/chat_screen.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/matches_and_chats_screen.dart';
 import '../screens/user_profile_overview_screen.dart';
 
 class BottomBar extends StatelessWidget {
@@ -47,7 +47,9 @@ class BottomBar extends StatelessWidget {
             const Icon(Icons.chat_bubble_rounded),
             currentScreen == "ChatScreen" ? Colors.red : Colors.grey.shade500,
             context,
-            currentScreen == "ChatScreen" ? "" : ChatScreen.routeName,
+            currentScreen == "ChatScreen"
+                ? ""
+                : MatchesAndChatsScreen.routeName,
           ),
         ],
       ),

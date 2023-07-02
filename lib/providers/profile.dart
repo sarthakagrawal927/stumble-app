@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class Profile with ChangeNotifier {
   String name;
   String phoneNumber;
   Gender gender;
-  var birthDate = {'year': 0, 'month': 0, 'day': 0};
+  String birthDate;
   File firstimageUrl;
   File secondImageUrl;
   File thirdImageUrl;
@@ -37,6 +38,10 @@ class Profile with ChangeNotifier {
   });
 
   final url = 'https://stumbe.onrender.com';
+  var bearerToken =
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk3OTI5NzI5NzgiLCJpZCI6OTkzLCJyb2xlIjoxLCJpYXQiOjE2ODgzMDk5ODQsImV4cCI6MTcxOTg0NTk4NH0.8Ctg0hDp4KXLU813dbiotkpr8_-0avg5dU9okfdzKBA';
+  int currentUser = -1;
+  String currentThreadId = "";
 
   // Setters
 
@@ -50,7 +55,7 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  set setAge(var birthDateInput) {
+  set setAge(String birthDateInput) {
     birthDate = birthDateInput;
     notifyListeners();
   }
@@ -93,11 +98,8 @@ class Profile with ChangeNotifier {
 
   set setGenderPreference(List<Gender> genderPreferencesList) {
     genderPreferences = genderPreferencesList;
-
     notifyListeners();
   }
-
-  // set setProfilePicture()
 
   // Getters
 
@@ -114,17 +116,12 @@ class Profile with ChangeNotifier {
   }
 
   int get getAge {
-    return 20; //Have to change later.
+    return 20;
   }
 
   bool get getNicheFilterSelectedValue {
     return nicheFilterSelected;
   }
-
-  // File get getFirstImageUrl {
-  //   if (imageUrls.isEmpty) return File
-  //   return imageUrls[0];
-  // }
 
   File get getFirstImageUrl {
     return firstimageUrl;
@@ -150,241 +147,282 @@ class Profile with ChangeNotifier {
     return thirdImageUrl.isAbsolute;
   }
 
-  Future<void> getStumblesFromBackend() async {}
+  Set<Profile> undoListOfProfilesForCurrentUser = {};
+  List<dynamic> currentListOfStumblesForCurrentUser = [];
+  List<dynamic> currentListOfMatchesForCurrentUser = [];
+  List<dynamic> likedListOfProfilesForCurrentUser = [];
+  List<dynamic> admirerListOfProfilesForCurrentUser = [];
+  List<dynamic> threadsListForCurrentUser = [];
+  List<dynamic> messagesListForCorrespondingThread = [];
 
-  Set<Profile> undoListOfProfiles = {};
-  List<Profile> currentListOfStumbles = [];
-  List<Profile> likedListOfProfiles = [];
-  List<Profile> admirerListOfProfiles = [];
+  List<dynamic> get getMessagesList {
+    return messagesListForCorrespondingThread;
+  }
 
-  void removeLikedProfiles(Profile profile) {
-    //Change this later
-    currentListOfStumbles.remove(profile);
+  void addMessageToMessagesList(var message) {
+    messagesListForCorrespondingThread.add(message);
     notifyListeners();
   }
 
-  void removeLikedProfilesWhenButtonIsClicked(Profile profile, Widget widget,
-      String comment, String preference, SwipeType swipeType) {
+  void deleteMessageFromMessagesList(int messageId) {
+    for (var messageObject in messagesListForCorrespondingThread) {
+      if (messageObject['id'] == messageId) {
+        messagesListForCorrespondingThread.remove(messageObject);
+        break;
+      }
+    }
+    notifyListeners();
+  }
+
+  void removeLikedProfiles(Profile profile) {
+    //Change this later
+    currentListOfStumblesForCurrentUser.remove(profile);
+    notifyListeners();
+  }
+
+  void removeLikedProfilesWhenNicheButtonIsClicked(Profile profile,
+      Widget widget, String comment, String preference, SwipeType swipeType) {
     if (swipeType == SwipeType.swipe) {
-      currentListOfStumbles.remove(profile);
+      currentListOfStumblesForCurrentUser.remove(profile);
     } else if (swipeType == SwipeType.comment) {
       // Add code for storing comment.
-      currentListOfStumbles.remove(profile);
+      currentListOfStumblesForCurrentUser.remove(profile);
     } else if (swipeType == SwipeType.nicheSelection) {
       // Add code for storing nicheValue
-      currentListOfStumbles.remove(profile);
+      currentListOfStumblesForCurrentUser.remove(profile);
     }
     notifyListeners();
   }
 
   set setUndoListOfProfiles(Profile profile) {
-    undoListOfProfiles.add(profile);
+    undoListOfProfilesForCurrentUser.add(profile);
     notifyListeners();
   }
 
   void setUndoListProfilesToFrontOfGetStumblesList() {
-    if (undoListOfProfiles.isNotEmpty) {
-      currentListOfStumbles.add(undoListOfProfiles.last);
-      undoListOfProfiles.remove(undoListOfProfiles.last);
+    if (undoListOfProfilesForCurrentUser.isNotEmpty) {
+      currentListOfStumblesForCurrentUser
+          .add(undoListOfProfilesForCurrentUser.last);
+      undoListOfProfilesForCurrentUser
+          .remove(undoListOfProfilesForCurrentUser.last);
     }
     notifyListeners();
   }
 
   set setLikedListOfProfiles(Profile profile) {
-    likedListOfProfiles.add(profile);
+    likedListOfProfilesForCurrentUser.add(profile);
     notifyListeners();
   }
 
-  List<Profile> getLikedListOfProfiles() {
-    return likedListOfProfiles;
+  List<dynamic> getLikedListOfProfiles() {
+    getProfilesWhoCurrentUserHasLikedAPI();
+    return likedListOfProfilesForCurrentUser;
   }
 
-  set setStumbledOntoMeListOfProfiles(Profile profile) {
-    admirerListOfProfiles.add(profile);
-    notifyListeners();
+  List<dynamic> getStumbledOntoMeListOfProfiles() {
+    getProfilesWhichHaveLikedCurrentUserAPI();
+    return admirerListOfProfilesForCurrentUser;
   }
 
-  List<Profile> getStumbledOntoMeListOfProfiles() {
-    return admirerListOfProfiles;
-  }
-
-  Future<void> getStumblesFromBackendAndSetCurrentList() async {
-    const url = 'http://localhost:8000';
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.body.isEmpty) {
-        return;
-      }
-      //userProfiles = response.body; // Return list from getStumbles API
-      // notifyListeners();
-      // ignore: empty_catches
-    } catch (error) {}
-  }
-
-  List<Profile> get getCurrentListOfCachedStumbles {
-    if (currentListOfStumbles.isEmpty) {
-      // getStumblesFromBackendAndSetCurrentList();
-      currentListOfStumbles = [
-        Profile(
-          id: '1',
-          birthDate: {},
-          name: 'A',
-          phoneNumber: '1234567890',
-          gender: Gender.man,
-          firstimageUrl: File(
-              'https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg'),
-          secondImageUrl: File(
-              'https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg'),
-          thirdImageUrl: File(""),
-          isVerified: false,
-          conversationStarterPrompt: "",
-          nicheFilterSelected: false,
-          genderPreferences: [],
-          ageRangePreference: const RangeValues(18, 40),
-        ),
-        Profile(
-          id: '3',
-          birthDate: {},
-          name: 'B',
-          phoneNumber: '1234567890',
-          gender: Gender.nonBinary,
-          firstimageUrl: File(
-              'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
-          secondImageUrl: File(
-              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
-          thirdImageUrl: File(""),
-          isVerified: false,
-          conversationStarterPrompt: "",
-          nicheFilterSelected: false,
-          genderPreferences: [],
-          ageRangePreference: const RangeValues(18, 40),
-        ),
-        Profile(
-          id: '3',
-          birthDate: {},
-          name: 'C',
-          phoneNumber: '1234567890',
-          gender: Gender.nonBinary,
-          firstimageUrl: File(
-              'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
-          secondImageUrl: File(
-              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
-          thirdImageUrl: File(""),
-          isVerified: false,
-          conversationStarterPrompt: "",
-          nicheFilterSelected: true,
-          genderPreferences: [],
-          ageRangePreference: const RangeValues(18, 40),
-        ),
-        Profile(
-          id: '3',
-          birthDate: {},
-          name: 'D',
-          phoneNumber: '1234567890',
-          gender: Gender.nonBinary,
-          firstimageUrl: File(
-              'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
-          secondImageUrl: File(
-              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
-          thirdImageUrl: File(""),
-          isVerified: false,
-          conversationStarterPrompt: "",
-          nicheFilterSelected: true,
-          genderPreferences: [],
-          ageRangePreference: const RangeValues(18, 40),
-        ),
-        Profile(
-          id: '3',
-          birthDate: {},
-          name: 'E',
-          phoneNumber: '1234567890',
-          gender: Gender.nonBinary,
-          firstimageUrl: File(
-              'https://thumbs.dreamstime.com/b/smiling-indian-man-looking-camera-mature-wearing-spectacles-portrait-middle-eastern-confident-businessman-office-195195079.jpg'),
-          secondImageUrl: File(
-              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
-          thirdImageUrl: File(""),
-          isVerified: false,
-          conversationStarterPrompt: "",
-          nicheFilterSelected: false,
-          genderPreferences: [],
-          ageRangePreference: const RangeValues(18, 40),
-        ),
-        Profile(
-          id: '2',
-          birthDate: {},
-          gender: Gender.man,
-          name: 'F',
-          phoneNumber: '1234567890',
-          firstimageUrl: File(
-              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
-          secondImageUrl: File(
-              'https://media.istockphoto.com/photos/smiling-man-outdoors-in-the-city-picture-id1179420343?b=1&k=20&m=1179420343&s=612x612&w=0&h=c9Z3DyUg-YvgOQnL_ykTIgVTWXjF-GNo4FUQ7i5fyyk='),
-          thirdImageUrl: File(""),
-          isVerified: false,
-          conversationStarterPrompt: "",
-          nicheFilterSelected: true,
-          genderPreferences: [],
-          ageRangePreference: const RangeValues(18, 40),
-        ),
-      ];
+  List<dynamic> get getCurrentListOfCachedStumbles {
+    if (currentListOfStumblesForCurrentUser.isEmpty) {
+      getPotentialStumblesFromBackend();
+      currentListOfStumblesForCurrentUser = constantListOfStumbles;
     }
-    return currentListOfStumbles;
+    return currentListOfStumblesForCurrentUser;
   }
 
-  bool isOTPCorrect(String verificationCode) {
-    // Call backend API for whatsapp OTP
-    return (verificationCode == "1111");
-  }
+  // INTEGRATION APIs
 
   Future<void> sendOTPAPI() async {
     final urlToCallSendOTPAPI = '$url/api/v1/user/send_otp';
     try {
-      await http.post(Uri.parse(urlToCallSendOTPAPI), body: {
-        'phone': phoneNumber
+      await http
+          .post(Uri.parse(urlToCallSendOTPAPI), body: {"phone": phoneNumber});
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<bool> verifyOTPAPI(String otpEntered) async {
+    final urlToCallVerifyOTPAPI = '$url/api/v1/user/verify_otp';
+    try {
+      final response = await http.post(Uri.parse(urlToCallVerifyOTPAPI), body: {
+        'otp': otpEntered,
+        'phone': phoneNumber,
+      });
+      return response.statusCode == 200;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> createUserAPI() async {
+    final urlToCallCreateUserAPI = '$url/api/v1/user';
+    try {
+      final response = await http.post(Uri.parse(urlToCallCreateUserAPI),
+          body: jsonEncode(
+            {
+              "name": name,
+              "phone": phoneNumber,
+              "dob": birthDate,
+              "gender": gender == Gender.man
+                  ? 1
+                  : gender == Gender.woman
+                      ? 2
+                      : 3,
+              "conversation_starter": conversationStarterPrompt,
+              // "photo_verified": isVerified,
+              // 'firstImageUrl': firstimageUrl,
+              // 'secondImageUrl': secondImageUrl,
+              // 'thirdImageUrl': thirdImageUrl,
+              // "target_age": [ageRangePreference.start, ageRangePreference.end],
+              // "photos": [],
+              // "target_gender": genderPreferences.toString(),
+            },
+          ),
+          headers: {
+            "content-type": "application/json",
+            'Authorization': bearerToken
+          });
+      final decodedResponseFromBackend = jsonDecode(response.body);
+      final data = decodedResponseFromBackend['data'];
+      currentUser = data["id"];
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> getProfilesWhichHaveLikedCurrentUserAPI() async {
+    final urlToCallGetProfilesWhichBeenHaveLikedByCurrentUserFromBackend =
+        '$url/api/v1/activity/liked_by';
+    try {
+      final response = await http.get(
+          Uri.parse(
+              urlToCallGetProfilesWhichBeenHaveLikedByCurrentUserFromBackend),
+          headers: {'Authorization': bearerToken});
+      final decodedResponseFromBackend = jsonDecode(response.body);
+
+      admirerListOfProfilesForCurrentUser =
+          decodedResponseFromBackend['data'] as List;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> getThreadsAPI() async {
+    final urlToCallGetThreadsFromBackend = '$url/api/v1/chat/threads';
+    try {
+      final response = await http.get(Uri.parse(urlToCallGetThreadsFromBackend),
+          headers: {'Authorization': bearerToken});
+
+      final decodedResponseFromBackend = jsonDecode(response.body);
+      final data = decodedResponseFromBackend['data'] as List;
+      threadsListForCurrentUser = data;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> getMessagesAPI(String threadId) async {
+    currentThreadId = threadId;
+    final urlToCallGetMessagesFromBackend =
+        '$url/api/v1/chat?thread_id=$currentThreadId';
+    try {
+      final response = await http.get(
+          Uri.parse(urlToCallGetMessagesFromBackend),
+          headers: {'Authorization': bearerToken});
+
+      final decodedResponseFromBackend = jsonDecode(response.body);
+      final data = decodedResponseFromBackend['data'] as List;
+      messagesListForCorrespondingThread = data;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>> addMessageAPI(
+      String message, int receiverId, String threadId) async {
+    final urlToCallAddMessageFromBackend = '$url/api/v1/chat';
+    try {
+      final response = await http
+          .post(Uri.parse(urlToCallAddMessageFromBackend), body: {
+        'message': message,
+        'receiverId': receiverId.toString(),
+        'threadId': threadId
       }, headers: {
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjcwMTEyMTA4NzQiLCJpZCI6MTA0LCJpYXQiOjE2ODY0OTI3NDQsImV4cCI6MTY4NjU3OTE0NH0.HUT212-_hm8kmV-l1228-WhrcpigjVYVuDfCkdQPZ60'
+        'Authorization': bearerToken
+      });
+      final decodedResponseFromBackend = jsonDecode(response.body);
+      final data = decodedResponseFromBackend['data'] as Map<String, dynamic>;
+      return data;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteMessageAPI(int messageId, int receiverId) async {
+    final urlToCallDeleteMessageFromBackend = '$url/api/v1/chat/delete';
+    try {
+      await http.post(Uri.parse(urlToCallDeleteMessageFromBackend), body: {
+        'messageId': messageId.toString(),
+        'receiverId': receiverId.toString(),
+      }, headers: {
+        'Authorization': bearerToken
       });
     } catch (error) {
       rethrow;
     }
   }
 
-  // Future<void> createUserAPI() async {
-  //   final urlToCallCreateUserAPI = url + '/api/v1/user';
-  //   try {
-  //     final response =
-  //         await http.post(Uri.parse(urlToCallCreateUserAPI), body: {
-  //       'name': name
-  //     }, headers: {
-  //       'Authorization':
-  //           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjcwMTEyMTA4NzQiLCJpZCI6MTA0LCJpYXQiOjE2ODY0OTI3NDQsImV4cCI6MTY4NjU3OTE0NH0.HUT212-_hm8kmV-l1228-WhrcpigjVYVuDfCkdQPZ60'
-  //     });
-  //     print(response.body);
-  //   } catch (error) {
-  //     print(error);
-  //     throw error;
-  //   }
+  Future<void> getStumbleMatchesFromBackend() async {
+    final urlToCallGetStumbleMatchesFromBackendAPI =
+        '$url/api/v1/activity?status=69';
+    try {
+      final response = await http.get(
+          Uri.parse(urlToCallGetStumbleMatchesFromBackendAPI),
+          headers: {'Authorization': bearerToken});
+      final decodedResponseFromBackend = jsonDecode(response.body);
+      final data = decodedResponseFromBackend['data'] as List;
+      currentListOfMatchesForCurrentUser = data;
+      notifyListeners();
+      return;
+    } catch (error) {
+      rethrow;
+    }
+  }
 
-  // Future<void> setUserData() async { // Complete this function.
-  //   final url = 'http://localhost:8000';
-  //   try {
-  //     final response = await http.get(Uri.parse(url));
-  //   } catch (error) {
-  //     print(error);
-  //   }
-  // }
+  Future<void> getProfilesWhoCurrentUserHasLikedAPI() async {
+    final urlToCallGetProfilesWhoHaveLikedCurrentUserFromBackendAPI =
+        '$url/api/v1/activity?status=1';
+    try {
+      final response = await http.get(
+          Uri.parse(urlToCallGetProfilesWhoHaveLikedCurrentUserFromBackendAPI),
+          headers: {'Authorization': bearerToken});
+      final decodedResponseFromBackend = jsonDecode(response.body);
+      likedListOfProfilesForCurrentUser =
+          decodedResponseFromBackend['data'] as List;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
 
-  // // Function to change an image in the profile.
-  // void updateImage(String id, String imageUrl) {
-  //   final imageIndex = _images.indexWhere((image) => prod.id == id);
-  //   if (prodIndex >= 0) {
-  //     _items[prodIndex] = newProduct;
-  //     notifyListeners();
-  //   } else {
-  //     print('...');
-  //   }
-  // }
-  // }
+  Future<void> getPotentialStumblesFromBackend() async {
+    final urlToCallGetPotentialStumblesFromBackendAPI =
+        '$url/api/v1/activity/find';
+    try {
+      final response = await http.get(
+          Uri.parse(urlToCallGetPotentialStumblesFromBackendAPI),
+          headers: {'Authorization': bearerToken});
+      final decodedResponseFromBackend = jsonDecode(response.body);
+      currentListOfStumblesForCurrentUser =
+          decodedResponseFromBackend['data'] as List;
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

@@ -73,7 +73,7 @@ class CommentFeatureWidget extends StatelessWidget {
                             Provider.of<Profile>(context, listen: false)
                                 .setLikedListOfProfiles = profile;
                             Provider.of<Profile>(context, listen: false)
-                                .removeLikedProfilesWhenButtonIsClicked(
+                                .removeLikedProfilesWhenNicheButtonIsClicked(
                                     profile,
                                     widget,
                                     commentOnWidget,

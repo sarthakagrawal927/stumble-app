@@ -104,6 +104,7 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
               Provider.of<Profile>(context, listen: false).setPhoneNumber =
                   phoneNumberValue;
               Provider.of<Profile>(context, listen: false).sendOTPAPI();
+              //Provider.of<Profile>(context, listen: false).createUserAPI();
             });
           },
           style: ElevatedButton.styleFrom(

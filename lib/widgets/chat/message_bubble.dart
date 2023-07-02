@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/profile.dart';
 
 class MessageBubble extends StatelessWidget {
   final String message;
   final bool isMe;
+  final int messageId;
+  final int receiverId;
+
   @override
-  const MessageBubble(this.message, this.isMe, {required super.key});
+  const MessageBubble(this.message, this.isMe, this.messageId, this.receiverId,
+      {required super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
-        mainAxisAlignment:
-            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [
-          Container(
+      mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onLongPress: () async {
+            Provider.of<Profile>(context, listen: false)
+                .deleteMessageFromMessagesList(messageId);
+            await Provider.of<Profile>(context, listen: false)
+                .deleteMessageAPI(messageId, receiverId);
+          },
+          child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: const Radius.circular(12),
@@ -25,7 +38,7 @@ class MessageBubble extends StatelessWidget {
               ),
               color: isMe
                   ? Theme.of(context).colorScheme.secondary
-                  : Theme.of(context).primaryColor,
+                  : Colors.redAccent,
             ),
             width: 140,
             padding: const EdgeInsets.symmetric(
@@ -44,6 +57,8 @@ class MessageBubble extends StatelessWidget {
               ),
             ),
           ),
-        ]);
+        ),
+      ],
+    );
   }
 }

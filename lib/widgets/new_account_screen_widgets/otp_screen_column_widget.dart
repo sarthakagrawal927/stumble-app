@@ -39,7 +39,7 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
           height: widget.deviceSize.height / 4,
         ),
         OtpTextField(
-          numberOfFields: 4,
+          numberOfFields: 6,
           borderColor: const Color(0xFF512DA8),
           //set to true to show as box or false to show as dash
           showFieldAsBox: true,
@@ -48,12 +48,13 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
             //handle validation or checks here
           },
           //runs when every textfield is filled
-          onSubmit: (String verificationCode) {
-            // Add logic to differentiate existing user with new user.
+          onSubmit: (String verificationCode) async {
+            bool isOTPCorrect =
+                await Provider.of<Profile>(context, listen: false)
+                    .verifyOTPAPI(verificationCode);
+
             setState(() {
-              if (Provider.of<Profile>(context, listen: false)
-                      .isOTPCorrect(verificationCode) ==
-                  true) {
+              if (isOTPCorrect) {
                 Provider.of<FirstScreenStateProviders>(context, listen: false)
                     .setisOTPSubmittedValue = true;
               }

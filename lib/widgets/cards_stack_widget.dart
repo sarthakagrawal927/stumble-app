@@ -16,7 +16,7 @@ class CardsStackWidget extends StatefulWidget with ChangeNotifier {
 class _CardsStackWidgetState extends State<CardsStackWidget>
     with SingleTickerProviderStateMixin {
   List<Profile> undoListOfProfiles = [];
-  List<Profile> dragabbleItems = [];
+  List<dynamic> dragabbleItems = [];
   late final AnimationController _animationController;
 
   @override

@@ -74,6 +74,7 @@ flutter:
   assets:
     - assets/firstScreenVideo.mp4
     - assets/authScreen_secondVideo.mp4
+    - assets/man.jpeg
     - fonts/
   #   - images/a_dot_ham.jpeg
 

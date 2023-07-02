@@ -130,19 +130,13 @@ class _AgeColumnState extends State<AgeColumn> {
           ),
         ),
         // ),
-        ScreenGoToNextPageRow(
-          "This will be shown on your profile!",
-          "",
-          () {
-            Provider.of<FirstScreenStateProviders>(context, listen: false)
-                .setisAgeSubmittedValue = true;
-            Provider.of<Profile>(context, listen: false).setAge = {
-              'year': _year,
-              'month': _month,
-              'day': _day
-            };
-          },
-        )
+        ScreenGoToNextPageRow("This will be shown on your profile!", "", () {
+          Provider.of<FirstScreenStateProviders>(context, listen: false)
+              .setisAgeSubmittedValue = true;
+          Provider.of<Profile>(context, listen: false).setAge =
+              "$_day-$_month-$_year";
+          // Provider.of<Profile>(context, listen: false).createUserAPI();
+        }),
       ],
     );
   }

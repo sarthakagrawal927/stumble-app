@@ -1,41 +1,37 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:dating_made_better/widgets/chat/message_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ChatMessages extends StatelessWidget {
+import '../../providers/profile.dart';
+
+class ChatMessages extends StatefulWidget {
   const ChatMessages({super.key});
 
   @override
+  State<ChatMessages> createState() => _ChatMessagesState();
+}
+
+class _ChatMessagesState extends State<ChatMessages> {
+  // Future<List<dynamic>> getMessages() async {
+  //   return await Provider.of<Profile>(context, listen: false).getMessagesAPI();
+  // }
+
+  @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('chat')
-          .orderBy(
-            'createdAt',
-            descending: true,
-          )
-          .snapshots(),
-      builder: ((context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        final currentUser = FirebaseAuth.instance.currentUser;
-        return ListView.builder(
-          reverse: true,
-          itemBuilder: ((context, index) => MessageBubble(
-                snapshot.data?.docs[index]['text'],
-                snapshot.data?.docs[index]['userId'] == currentUser!.uid,
-                key: ValueKey(
-                  snapshot.data?.docs[index].id,
-                ),
-              )),
-          itemCount: snapshot.data!.docs.length,
-        );
-      }),
+    int currentUser = Provider.of<Profile>(context, listen: false).currentUser;
+    List<dynamic> messagesList = Provider.of<Profile>(context).getMessagesList;
+    return ListView.builder(
+      reverse: false,
+      itemBuilder: ((context, index) => MessageBubble(
+            messagesList[index]['message'],
+            messagesList[index]['sender_id'] == currentUser,
+            messagesList[index]['id'],
+            messagesList[index]['receiver_id'],
+            key: ValueKey(
+              messagesList[index]['id'],
+            ),
+          )),
+      itemCount: messagesList.length,
     );
   }
 }

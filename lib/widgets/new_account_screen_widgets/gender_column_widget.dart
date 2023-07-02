@@ -59,6 +59,7 @@ class _GenderColumnState extends State<GenderColumn> {
                 .setisGenderSubmittedValue = true;
             Provider.of<Profile>(context, listen: false).setGender =
                 _gender as Gender;
+            //Provider.of<Profile>(context, listen: false).createUserAPI();
           },
         )
       ],
