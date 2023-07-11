@@ -3,6 +3,8 @@ import 'package:dating_made_better/widgets/bottom_app_bar.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class UserProfileScreen extends StatelessWidget {
   static const routeName = "/user-profile-screen";
   const UserProfileScreen({super.key});
@@ -10,12 +12,16 @@ class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(15, 15, 15, 0.2),
+      backgroundColor: backgroundColor,
       appBar: const TopAppBar(),
       body: Column(
         children: <Widget>[
           Card(
-            color: const Color.fromRGBO(15, 15, 15, 1),
+            margin: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 16,
+              vertical: MediaQuery.of(context).size.height / 32,
+            ),
+            color: widgetColor,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,11 +43,11 @@ class UserProfileScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Container(
-                  color: const Color.fromRGBO(15, 15, 15, 1),
+                  color: widgetColor,
                   child: const Text(
                     'Profile completion: 20%',
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
@@ -53,27 +59,27 @@ class UserProfileScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      color: const Color.fromRGBO(15, 15, 15, 1),
+                      color: widgetColor,
                       child: const Text(
                         'Rahul Khare, ',
                         style: TextStyle(
-                          color: Colors.white70,
+                          color: Colors.white,
                           fontSize: 20,
                         ),
                       ),
                     ),
                     Container(
-                      color: const Color.fromRGBO(15, 15, 15, 1),
+                      color: widgetColor,
                       child: const Text(
                         '23 ',
                         style: TextStyle(
-                          color: Colors.white70,
+                          color: Colors.white,
                           fontSize: 20,
                         ),
                       ),
                     ),
                     Container(
-                      color: const Color.fromRGBO(15, 15, 15, 1),
+                      color: widgetColor,
                       child: const Icon(
                         color: Colors.blueAccent,
                         Icons.verified_rounded,
@@ -88,7 +94,7 @@ class UserProfileScreen extends StatelessWidget {
                   child: const Text(
                     'Complete Profile?',
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.white,
                       fontSize: 15,
                     ),
                   ),
@@ -103,65 +109,67 @@ class UserProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Card(
-              color: const Color.fromRGBO(15, 15, 15, 1),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    "Premium Features: ",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  SizedBox(
-                    height: 60,
-                    width: MediaQuery.of(context).size.width,
-                  ),
-                  Container(
-                    color: const Color.fromRGBO(15, 15, 15, 1),
-                    child: const Text(
-                      'Feauture 1.',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 20,
-                      ),
+          Card(
+            margin: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width / 16,
+              vertical: MediaQuery.of(context).size.height / 32,
+            ),
+            color: widgetColor,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Premium Features: ",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                SizedBox(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                ),
+                Container(
+                  color: widgetColor,
+                  child: const Text(
+                    'Feauture 1.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    color: const Color.fromRGBO(15, 15, 15, 1),
-                    child: const Text(
-                      'Feauture 2.',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 20,
-                      ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  color: widgetColor,
+                  child: const Text(
+                    'Feauture 2.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    color: const Color.fromRGBO(15, 15, 15, 1),
-                    child: const Text(
-                      'Feauture 2.',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 20,
-                      ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  color: widgetColor,
+                  child: const Text(
+                    'Feauture 2.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
           ),
         ],

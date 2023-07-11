@@ -131,7 +131,7 @@
 //             child: Column(
 //               children: <Widget>[
 //                 TextFormField(
-//                   cursorColor: const Color.fromRGBO(15, 15, 15, 1),
+//                   cursorColor: const backgroundColor,
 //                   keyboardAppearance: Brightness.dark,
 //                   style: const TextStyle(
 //                     color: Colors.white54,
@@ -211,13 +211,13 @@
 //                       ),
 //                       padding: const EdgeInsets.symmetric(
 //                           horizontal: 30.0, vertical: 8.0),
-//                       foregroundColor: const Color.fromRGBO(15, 15, 15, 1),
+//                       foregroundColor: const backgroundColor,
 //                       backgroundColor: Colors.blue.withOpacity(0),
 //                     ),
 //                     child: Text(
 //                       _authMode == AuthMode.login ? 'lOGIN' : 'SIGN UP',
 //                       style: GoogleFonts.lato(
-//                         color: const Color.fromRGBO(15, 15, 15, 1),
+//                         color: const backgroundColor,
 //                         fontWeight: FontWeight.w400,
 //                       ),
 //                     ),

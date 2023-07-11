@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../providers/profile.dart';
 import '../widgets/bottom_app_bar.dart';
 import '../widgets/cards_stack_widget.dart';
@@ -37,7 +38,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
     }
 
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(15, 15, 15, 0.2),
+      backgroundColor: widgetColor,
       key: _scaffoldKey,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(
@@ -48,17 +49,20 @@ class _SwipingScreenState extends State<SwipingScreen> {
             style: ElevatedButton.styleFrom(
               padding:
                   EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
-              backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+              backgroundColor: topAppBarColor,
             ),
             onPressed: () {
               Provider.of<Profile>(context, listen: false)
                   .setUndoListProfilesToFrontOfGetStumblesList();
             },
-            child: const Icon(Icons.undo_rounded),
+            child: Icon(
+              Icons.undo_rounded,
+              color: headingColor,
+            ),
           ),
           actions: [
             DropdownButton(
-              dropdownColor: const Color.fromRGBO(15, 15, 15, 1),
+              dropdownColor: topAppBarColor,
               items: [
                 DropdownMenuItem(
                   value: 'I want to stumble into',
@@ -66,13 +70,12 @@ class _SwipingScreenState extends State<SwipingScreen> {
                     children: const [
                       Icon(
                         Icons.filter_list_rounded,
-                        color: Color.fromRGBO(237, 237, 237, 1),
+                        color: whiteColor,
                       ),
                       SizedBox(width: 8),
                       Text(
                         'I want to stumble into',
-                        style:
-                            TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
+                        style: TextStyle(color: whiteColor),
                       ),
                     ],
                   ),
@@ -83,13 +86,12 @@ class _SwipingScreenState extends State<SwipingScreen> {
                     children: const [
                       Icon(
                         Icons.exit_to_app,
-                        color: Color.fromRGBO(237, 237, 237, 1),
+                        color: whiteColor,
                       ),
                       SizedBox(width: 8),
                       Text(
                         'Stumbled onto me',
-                        style:
-                            TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
+                        style: TextStyle(color: whiteColor),
                       ),
                     ],
                   ),
@@ -112,12 +114,25 @@ class _SwipingScreenState extends State<SwipingScreen> {
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2),
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    margin: EdgeInsets.all(
-                                        MediaQuery.of(context).size.height /
-                                            64),
-                                    alignment: Alignment.bottomLeft,
-                                    decoration: imageBoxWidget(context, index),
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Dialog(
+                                        backgroundColor: Colors.black,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40)),
+                                        elevation: 16,
+                                        child: Container(),
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.all(
+                                          MediaQuery.of(context).size.height /
+                                              64),
+                                      alignment: Alignment.bottomLeft,
+                                      decoration:
+                                          imageBoxWidget(context, index),
+                                    ),
                                   );
                                 },
                               ),
@@ -158,12 +173,16 @@ class _SwipingScreenState extends State<SwipingScreen> {
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2),
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    margin: EdgeInsets.all(
-                                        MediaQuery.of(context).size.height /
-                                            64),
-                                    alignment: Alignment.bottomLeft,
-                                    decoration: imageBoxWidget(context, index),
+                                  return GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      margin: EdgeInsets.all(
+                                          MediaQuery.of(context).size.height /
+                                              64),
+                                      alignment: Alignment.bottomLeft,
+                                      decoration:
+                                          imageBoxWidget(context, index),
+                                    ),
                                   );
                                 },
                               ),
@@ -191,19 +210,19 @@ class _SwipingScreenState extends State<SwipingScreen> {
                   );
                 }
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.menu,
-                color: Color.fromRGBO(231, 10, 95, 1),
+                color: headingColor,
               ),
             ),
           ],
-          backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
-          title: const Text(
+          backgroundColor: topAppBarColor,
+          title: Text(
             textAlign: TextAlign.center,
             'Stumble!',
             style: TextStyle(
               fontSize: 25,
-              color: Color.fromRGBO(231, 10, 95, 1),
+              color: headingColor,
             ),
           ),
         ),

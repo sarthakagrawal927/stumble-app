@@ -24,8 +24,6 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
   void getFromGallery() async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
     );
     if (pickedFile != null) {
       imageUrl = File(pickedFile.path);
@@ -50,7 +48,7 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
         Consumer<Profile>(
           builder: (context, value, child) => ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(15, 15, 15, 0.5),
+              backgroundColor: Colors.transparent,
               fixedSize: Size(
                 (MediaQuery.of(context).size.width) * 10 / 16,
                 (MediaQuery.of(context).size.height) / 4,
@@ -60,7 +58,9 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
             child: elemenExistsAt()
                 ? Image.file(
                     imageUrl,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
                   )
                 : const Icon(
                     Icons.camera,
@@ -74,6 +74,7 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
           () {
             Provider.of<Profile>(context, listen: false).setFirstImage =
                 imageUrl;
+            Provider.of<Profile>(context, listen: false).uploadPhotosAPI(1);
             Provider.of<FirstScreenStateProviders>(context, listen: false)
                 .setisFirstPhotoSubmittedValue = true;
             //Provider.of<Profile>(context, listen: false).createUserAPI();

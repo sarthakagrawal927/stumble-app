@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants.dart';
 import '../../providers/profile.dart';
 import '../newUser/screen_heading_widget.dart';
 import '../newUser/screen_go_to_next_page_row.dart';
@@ -44,7 +45,7 @@ class _NameColumnState extends State<NameColumn> {
           child: const Text(
               style: TextStyle(
                 fontSize: 20,
-                color: Color.fromRGBO(237, 237, 237, 1),
+                color: whiteColor,
               ),
               "You won't be able to change this later!"),
         ),
@@ -56,10 +57,10 @@ class _NameColumnState extends State<NameColumn> {
           padding: EdgeInsets.only(top: widget.deviceSize.height / 32),
           child: TextField(
             controller: nameTextBoxController,
-            cursorColor: const Color.fromRGBO(15, 15, 15, 1),
+            cursorColor: backgroundColor,
             keyboardAppearance: Brightness.dark,
             style: const TextStyle(
-              color: Color.fromRGBO(237, 237, 237, 1),
+              color: whiteColor,
               fontSize: 35,
             ),
             decoration: InputDecoration(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants.dart';
 import '../../providers/profile.dart';
 
 class NewMessage extends StatefulWidget {
@@ -43,12 +44,12 @@ class _NewMessageState extends State<NewMessage> {
             child: TextField(
               controller: _controller,
               style: const TextStyle(
-                color: Color.fromRGBO(237, 237, 237, 1),
+                color: whiteColor,
               ),
-              cursorColor: const Color.fromRGBO(237, 237, 237, 1),
-              decoration: const InputDecoration(
+              cursorColor: whiteColor,
+              decoration: InputDecoration(
                 labelText: 'Send a message!',
-                labelStyle: TextStyle(color: Color.fromRGBO(15, 15, 15, 1)),
+                labelStyle: TextStyle(color: backgroundColor),
               ),
               onChanged: (value) {
                 _enteredMessage = value.toString();
@@ -62,7 +63,7 @@ class _NewMessageState extends State<NewMessage> {
             },
             icon: const Icon(
               Icons.send,
-              color: Color.fromRGBO(237, 237, 237, 1),
+              color: whiteColor,
             ),
           )
         ],

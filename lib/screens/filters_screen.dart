@@ -19,34 +19,34 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         centerTitle: true,
         actions: const [],
         title: const Text(
           'Filters',
           style: TextStyle(
-            color: Color.fromRGBO(231, 10, 95, 1),
+            color: Color.fromRGBO(231, 10, 95, 0.5),
           ),
         ),
-        backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+        backgroundColor: backgroundColor,
       ),
       body: Column(
         children: [
           Container(
-            color: const Color.fromRGBO(15, 15, 15, 0.5),
+            color: widgetColor,
             margin: EdgeInsets.only(
               top: MediaQuery.of(context).size.width / 16,
               bottom: MediaQuery.of(context).size.width / 16,
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 32,
             ),
-            child: const Text(
+            child: Text(
               textAlign: TextAlign.start,
               'Do you have a preference for the genders shown to you?',
               style: TextStyle(
                 color: Colors.white70,
-                backgroundColor: Color.fromRGBO(15, 15, 15, 1),
+                backgroundColor: backgroundColor,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
@@ -57,7 +57,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 16,
             ),
-            color: const Color.fromRGBO(15, 15, 15, 0.5),
+            color: widgetColor,
             child: Column(
               children: [
                 checkBoxListTileFunction('Nonbinary people', Gender.nonBinary),
@@ -70,19 +70,19 @@ class _FiltersScreenState extends State<FiltersScreen> {
             height: MediaQuery.of(context).size.height / 16,
           ),
           Container(
-            color: const Color.fromRGBO(15, 15, 15, 0.5),
+            color: widgetColor,
             margin: EdgeInsets.only(
               top: MediaQuery.of(context).size.width / 16,
               bottom: MediaQuery.of(context).size.width / 16,
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 32,
             ),
-            child: const Text(
+            child: Text(
               textAlign: TextAlign.start,
               'Do you have a preference for the age of people you want to meet?',
               style: TextStyle(
                 color: Colors.white70,
-                backgroundColor: Color.fromRGBO(15, 15, 15, 1),
+                backgroundColor: backgroundColor,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
@@ -93,7 +93,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 16,
             ),
-            color: const Color.fromRGBO(15, 15, 15, 0.5),
+            color: widgetColor,
             child: Column(
               children: [
                 Padding(

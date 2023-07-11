@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:logger/logger.dart';
+import 'package:path/path.dart';
 import '../constants.dart';
 
 class Profile with ChangeNotifier {
@@ -12,9 +14,9 @@ class Profile with ChangeNotifier {
   String phoneNumber;
   Gender gender;
   String birthDate;
-  File firstimageUrl;
-  File secondImageUrl;
-  File thirdImageUrl;
+  File firstImageUrl = File("");
+  File secondImageUrl = File("");
+  File thirdImageUrl = File("");
   bool isVerified;
   String conversationStarterPrompt;
   bool nicheFilterSelected;
@@ -28,7 +30,7 @@ class Profile with ChangeNotifier {
     required this.gender,
     required this.birthDate,
     required this.isVerified,
-    required this.firstimageUrl,
+    required this.firstImageUrl,
     required this.secondImageUrl,
     required this.thirdImageUrl,
     required this.conversationStarterPrompt,
@@ -38,10 +40,12 @@ class Profile with ChangeNotifier {
   });
 
   final url = 'https://stumbe.onrender.com';
+  final _chuckerHttpClient = ChuckerHttpClient(http.Client());
   var bearerToken =
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk3OTI5NzI5NzgiLCJpZCI6OTkzLCJyb2xlIjoxLCJpYXQiOjE2ODgzMDk5ODQsImV4cCI6MTcxOTg0NTk4NH0.8Ctg0hDp4KXLU813dbiotkpr8_-0avg5dU9okfdzKBA';
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk3OTI5NzI5NzgiLCJpZCI6MTE5NCwicm9sZSI6MSwiaWF0IjoxNjg5MDc1OTcwLCJleHAiOjE3MjA2MTE5NzB9.Jrcls3KDh1ggVOWAmWfYa1fRoVRGc7A7a0v4g-VtGz0';
   int currentUser = -1;
   String currentThreadId = "";
+  var logger = Logger();
 
   // Setters
 
@@ -67,12 +71,11 @@ class Profile with ChangeNotifier {
 
   set setProfilePrompt(String conversationStarterPromptInput) {
     conversationStarterPrompt = conversationStarterPromptInput;
-
     notifyListeners();
   }
 
   set setFirstImage(File firstImageFile) {
-    firstimageUrl = firstImageFile;
+    firstImageUrl = firstImageFile;
     notifyListeners();
   }
 
@@ -103,28 +106,12 @@ class Profile with ChangeNotifier {
 
   // Getters
 
-  String get getName {
-    return name;
-  }
-
-  Gender get getGender {
-    return gender;
-  }
-
-  String get getPhoneNumber {
-    return phoneNumber;
-  }
-
   int get getAge {
     return 20;
   }
 
-  bool get getNicheFilterSelectedValue {
-    return nicheFilterSelected;
-  }
-
   File get getFirstImageUrl {
-    return firstimageUrl;
+    return firstImageUrl;
   }
 
   File get getSecondImageUrl {
@@ -136,19 +123,19 @@ class Profile with ChangeNotifier {
   }
 
   bool isFirstImagePresent() {
-    return firstimageUrl.isAbsolute;
+    return firstImageUrl.isAbsolute && firstImageUrl != File("");
   }
 
   bool isSecondImagePresent() {
-    return secondImageUrl.isAbsolute;
+    return secondImageUrl.isAbsolute && secondImageUrl != File("");
   }
 
   bool isThirdImagePresent() {
-    return thirdImageUrl.isAbsolute;
+    return thirdImageUrl.isAbsolute && thirdImageUrl.path.isNotEmpty;
   }
 
   Set<Profile> undoListOfProfilesForCurrentUser = {};
-  List<dynamic> currentListOfStumblesForCurrentUser = [];
+  List<Profile> currentListOfStumblesForCurrentUser = [];
   List<dynamic> currentListOfMatchesForCurrentUser = [];
   List<dynamic> likedListOfProfilesForCurrentUser = [];
   List<dynamic> admirerListOfProfilesForCurrentUser = [];
@@ -224,10 +211,12 @@ class Profile with ChangeNotifier {
     return admirerListOfProfilesForCurrentUser;
   }
 
-  List<dynamic> get getCurrentListOfCachedStumbles {
+  List<Profile> get getCurrentListOfCachedStumbles {
     if (currentListOfStumblesForCurrentUser.isEmpty) {
       getPotentialStumblesFromBackend();
-      currentListOfStumblesForCurrentUser = constantListOfStumbles;
+      if (currentListOfStumblesForCurrentUser.isEmpty) {
+        currentListOfStumblesForCurrentUser = constantListOfStumbles;
+      }
     }
     return currentListOfStumblesForCurrentUser;
   }
@@ -237,8 +226,13 @@ class Profile with ChangeNotifier {
   Future<void> sendOTPAPI() async {
     final urlToCallSendOTPAPI = '$url/api/v1/user/send_otp';
     try {
-      await http
-          .post(Uri.parse(urlToCallSendOTPAPI), body: {"phone": phoneNumber});
+      final response = await _chuckerHttpClient.post(
+        Uri.parse(urlToCallSendOTPAPI),
+        body: jsonEncode(
+          {"phone": phoneNumber},
+        ),
+      );
+      logger.i(response.body);
     } catch (error) {
       rethrow;
     }
@@ -247,10 +241,12 @@ class Profile with ChangeNotifier {
   Future<bool> verifyOTPAPI(String otpEntered) async {
     final urlToCallVerifyOTPAPI = '$url/api/v1/user/verify_otp';
     try {
-      final response = await http.post(Uri.parse(urlToCallVerifyOTPAPI), body: {
+      final response = await _chuckerHttpClient
+          .post(Uri.parse(urlToCallVerifyOTPAPI), body: {
         'otp': otpEntered,
         'phone': phoneNumber,
       });
+      logger.i(response.body);
       return response.statusCode == 200;
     } catch (error) {
       rethrow;
@@ -260,7 +256,8 @@ class Profile with ChangeNotifier {
   Future<void> createUserAPI() async {
     final urlToCallCreateUserAPI = '$url/api/v1/user';
     try {
-      final response = await http.post(Uri.parse(urlToCallCreateUserAPI),
+      final response = await _chuckerHttpClient.post(
+          Uri.parse(urlToCallCreateUserAPI),
           body: jsonEncode(
             {
               "name": name,
@@ -273,7 +270,7 @@ class Profile with ChangeNotifier {
                       : 3,
               "conversation_starter": conversationStarterPrompt,
               // "photo_verified": isVerified,
-              // 'firstImageUrl': firstimageUrl,
+              // 'firstImageUrl': firstImageUrl,
               // 'secondImageUrl': secondImageUrl,
               // 'thirdImageUrl': thirdImageUrl,
               // "target_age": [ageRangePreference.start, ageRangePreference.end],
@@ -288,6 +285,7 @@ class Profile with ChangeNotifier {
       final decodedResponseFromBackend = jsonDecode(response.body);
       final data = decodedResponseFromBackend['data'];
       currentUser = data["id"];
+      logger.i("Data of Upsert user: $data");
     } catch (error) {
       rethrow;
     }
@@ -297,11 +295,12 @@ class Profile with ChangeNotifier {
     final urlToCallGetProfilesWhichBeenHaveLikedByCurrentUserFromBackend =
         '$url/api/v1/activity/liked_by';
     try {
-      final response = await http.get(
+      final response = await _chuckerHttpClient.get(
           Uri.parse(
               urlToCallGetProfilesWhichBeenHaveLikedByCurrentUserFromBackend),
           headers: {'Authorization': bearerToken});
       final decodedResponseFromBackend = jsonDecode(response.body);
+      logger.i("Data of users who liked current user: ${response.body}");
 
       admirerListOfProfilesForCurrentUser =
           decodedResponseFromBackend['data'] as List;
@@ -314,11 +313,14 @@ class Profile with ChangeNotifier {
   Future<void> getThreadsAPI() async {
     final urlToCallGetThreadsFromBackend = '$url/api/v1/chat/threads';
     try {
-      final response = await http.get(Uri.parse(urlToCallGetThreadsFromBackend),
+      final response = await _chuckerHttpClient.get(
+          Uri.parse(urlToCallGetThreadsFromBackend),
           headers: {'Authorization': bearerToken});
 
       final decodedResponseFromBackend = jsonDecode(response.body);
       final data = decodedResponseFromBackend['data'] as List;
+      logger.i("Data of threads: $data");
+
       threadsListForCurrentUser = data;
       notifyListeners();
     } catch (error) {
@@ -331,12 +333,14 @@ class Profile with ChangeNotifier {
     final urlToCallGetMessagesFromBackend =
         '$url/api/v1/chat?thread_id=$currentThreadId';
     try {
-      final response = await http.get(
+      final response = await _chuckerHttpClient.get(
           Uri.parse(urlToCallGetMessagesFromBackend),
           headers: {'Authorization': bearerToken});
 
       final decodedResponseFromBackend = jsonDecode(response.body);
       final data = decodedResponseFromBackend['data'] as List;
+      logger.i("Data of get message: $data");
+
       messagesListForCorrespondingThread = data;
       notifyListeners();
     } catch (error) {
@@ -348,7 +352,7 @@ class Profile with ChangeNotifier {
       String message, int receiverId, String threadId) async {
     final urlToCallAddMessageFromBackend = '$url/api/v1/chat';
     try {
-      final response = await http
+      final response = await _chuckerHttpClient
           .post(Uri.parse(urlToCallAddMessageFromBackend), body: {
         'message': message,
         'receiverId': receiverId.toString(),
@@ -358,6 +362,8 @@ class Profile with ChangeNotifier {
       });
       final decodedResponseFromBackend = jsonDecode(response.body);
       final data = decodedResponseFromBackend['data'] as Map<String, dynamic>;
+      logger.i("Data of add message: $data");
+
       return data;
     } catch (error) {
       rethrow;
@@ -367,12 +373,31 @@ class Profile with ChangeNotifier {
   Future<void> deleteMessageAPI(int messageId, int receiverId) async {
     final urlToCallDeleteMessageFromBackend = '$url/api/v1/chat/delete';
     try {
-      await http.post(Uri.parse(urlToCallDeleteMessageFromBackend), body: {
+      final response = await _chuckerHttpClient
+          .post(Uri.parse(urlToCallDeleteMessageFromBackend), body: {
         'messageId': messageId.toString(),
         'receiverId': receiverId.toString(),
       }, headers: {
         'Authorization': bearerToken
       });
+      logger.i("Data of delete message: ${response.body}");
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<Profile> getSingleUserAPI(int userIdToGetProfileOf) async {
+    final urlToCallGetSingleUserAPI =
+        '$url/api/v1/user?user_id=$userIdToGetProfileOf';
+    try {
+      final response = await _chuckerHttpClient.get(
+          Uri.parse(urlToCallGetSingleUserAPI),
+          headers: {'Authorization': bearerToken});
+      final decodedResponseFromBackend = jsonDecode(response.body);
+      final data = decodedResponseFromBackend['data'] as Profile;
+      logger.i("Data of single user: $data");
+
+      return data;
     } catch (error) {
       rethrow;
     }
@@ -382,11 +407,13 @@ class Profile with ChangeNotifier {
     final urlToCallGetStumbleMatchesFromBackendAPI =
         '$url/api/v1/activity?status=69';
     try {
-      final response = await http.get(
+      final response = await _chuckerHttpClient.get(
           Uri.parse(urlToCallGetStumbleMatchesFromBackendAPI),
           headers: {'Authorization': bearerToken});
       final decodedResponseFromBackend = jsonDecode(response.body);
       final data = decodedResponseFromBackend['data'] as List;
+      logger.i("Data of matches: $data");
+
       currentListOfMatchesForCurrentUser = data;
       notifyListeners();
       return;
@@ -399,10 +426,12 @@ class Profile with ChangeNotifier {
     final urlToCallGetProfilesWhoHaveLikedCurrentUserFromBackendAPI =
         '$url/api/v1/activity?status=1';
     try {
-      final response = await http.get(
+      final response = await _chuckerHttpClient.get(
           Uri.parse(urlToCallGetProfilesWhoHaveLikedCurrentUserFromBackendAPI),
           headers: {'Authorization': bearerToken});
       final decodedResponseFromBackend = jsonDecode(response.body);
+      logger.i("Data of profiles liked by user: $decodedResponseFromBackend");
+
       likedListOfProfilesForCurrentUser =
           decodedResponseFromBackend['data'] as List;
       notifyListeners();
@@ -415,12 +444,43 @@ class Profile with ChangeNotifier {
     final urlToCallGetPotentialStumblesFromBackendAPI =
         '$url/api/v1/activity/find';
     try {
-      final response = await http.get(
+      final response = await _chuckerHttpClient.get(
           Uri.parse(urlToCallGetPotentialStumblesFromBackendAPI),
           headers: {'Authorization': bearerToken});
       final decodedResponseFromBackend = jsonDecode(response.body);
+      logger.i("Data of stumbles: $decodedResponseFromBackend");
+
       currentListOfStumblesForCurrentUser =
-          decodedResponseFromBackend['data'] as List;
+          decodedResponseFromBackend['data'] as List<Profile>;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> uploadPhotosAPI(int imageNumber) async {
+    final urlToCallUploadPicsAPI = '$url/api/v1/user/upload';
+
+    final File fileToSendToBackend = imageNumber == 1
+        ? firstImageUrl
+        : imageNumber == 2
+            ? secondImageUrl
+            : thirdImageUrl;
+
+    try {
+      final stream = http.ByteStream(fileToSendToBackend.openRead());
+      final length = await fileToSendToBackend.length();
+      final request =
+          http.MultipartRequest("POST", Uri.parse(urlToCallUploadPicsAPI));
+      final multipartFile = http.MultipartFile('file', stream, length,
+          filename: basename(fileToSendToBackend.path));
+      request.files.add(multipartFile);
+      final response = await request.send();
+      logger.i(response.statusCode);
+      response.stream.transform(utf8.decoder).listen((value) async {
+        logger.i(value);
+      });
+      // final decodedResponseFromBackend = jsonDecode(response.body);
+      // logger.i("Data of upload pics: " + decodedResponseFromBackend.toString());
     } catch (error) {
       rethrow;
     }

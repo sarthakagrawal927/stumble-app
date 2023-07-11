@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -28,8 +29,8 @@ class BottomBar extends StatelessWidget {
           iconButtonBasedOnCurrentScreen(
             const Icon(Icons.account_box_rounded),
             currentScreen == "UserProfileOverviewScreen"
-                ? Colors.red
-                : Colors.grey.shade500,
+                ? headingColor
+                : whiteColor,
             context,
             currentScreen == "UserProfileOverviewScreen"
                 ? ""
@@ -37,15 +38,13 @@ class BottomBar extends StatelessWidget {
           ),
           iconButtonBasedOnCurrentScreen(
             const Icon(Icons.favorite),
-            currentScreen == "SwipingScreen"
-                ? Colors.red
-                : Colors.grey.shade500,
+            currentScreen == "SwipingScreen" ? headingColor : whiteColor,
             context,
             currentScreen == "SwipingScreen" ? "" : SwipingScreen.routeName,
           ),
           iconButtonBasedOnCurrentScreen(
             const Icon(Icons.chat_bubble_rounded),
-            currentScreen == "ChatScreen" ? Colors.red : Colors.grey.shade500,
+            currentScreen == "ChatScreen" ? headingColor : whiteColor,
             context,
             currentScreen == "ChatScreen"
                 ? ""
@@ -85,7 +84,7 @@ class BottomBar extends StatelessWidget {
         MediaQuery.of(context).size.height / 16,
       ),
       child: BottomAppBar(
-        color: const Color.fromRGBO(24, 26, 27, 0.8),
+        color: bottomAppBarColor,
         child: returnWidgetBasedOnCurrentScreen(context),
       ),
     );

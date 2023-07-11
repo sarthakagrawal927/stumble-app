@@ -31,8 +31,7 @@ class _GenderColumnState extends State<GenderColumn> {
             vertical: widget.deviceSize.height / 16,
           ),
           child: const Text(
-              style: TextStyle(
-                  fontSize: 20, color: Color.fromRGBO(237, 237, 237, 1)),
+              style: TextStyle(fontSize: 20, color: whiteColor),
               "Pick which best describes you!"),
         ),
         Column(
@@ -78,8 +77,7 @@ class _GenderColumnState extends State<GenderColumn> {
         ),
       ),
       leading: Radio<Gender>(
-        fillColor: MaterialStateColor.resolveWith(
-            (states) => const Color.fromRGBO(15, 15, 15, 1)),
+        fillColor: MaterialStateColor.resolveWith((states) => whiteColor),
         value: gender,
         groupValue: _gender,
         onChanged: (Gender? value) {

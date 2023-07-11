@@ -2,6 +2,7 @@ import 'package:dating_made_better/widgets/chat/matches_conversation_started_wit
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../providers/profile.dart';
 import '../widgets/bottom_app_bar.dart';
 import '../widgets/top_app_bar.dart';
@@ -25,7 +26,7 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
       backgroundColor: Colors.black,
       appBar: const TopAppBar(),
       body: Container(
-        color: const Color.fromRGBO(26, 28, 29, 1),
+        color: backgroundColor,
         child: Column(
           children: [
             Expanded(
@@ -47,7 +48,7 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
                               left: MediaQuery.of(context).size.width / 32,
                               right: MediaQuery.of(context).size.width / 32,
                             ),
-                            color: const Color.fromRGBO(15, 15, 15, 0.2),
+                            color: widgetColor,
                             child:
                                 listOfStumbleMatches[index]['photos'][0] != null
                                     ? (listOfStumbleMatches[index]['photos'][0])

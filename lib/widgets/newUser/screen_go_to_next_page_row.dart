@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+
 class ScreenGoToNextPageRow extends StatelessWidget {
   const ScreenGoToNextPageRow(
       this.textToDisplay, this.nextScreenRouteName, this.functionToSetData,
@@ -19,12 +21,11 @@ class ScreenGoToNextPageRow extends StatelessWidget {
             Icon(
               Icons.remove_red_eye,
               size: MediaQuery.of(context).size.width / 16,
-              color: const Color.fromRGBO(15, 15, 15, 1),
+              color: whiteColor,
             ),
             Text(
               textToDisplay,
-              style: const TextStyle(
-                  fontSize: 15, color: Color.fromRGBO(237, 237, 237, 1)),
+              style: const TextStyle(fontSize: 15, color: whiteColor),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -38,7 +39,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
               }),
               child: Icon(
                 Icons.arrow_forward,
-                color: const Color.fromRGBO(15, 15, 15, 1),
+                color: whiteColor,
                 size: MediaQuery.of(context).size.width / 16,
               ),
             ),

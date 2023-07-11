@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants.dart';
 import '../../providers/profile.dart';
 import '../newUser/screen_heading_widget.dart';
 import '../newUser/screen_go_to_next_page_row.dart';
@@ -56,9 +57,9 @@ class _AgeColumnState extends State<AgeColumn> {
                 child: TextField(
                   keyboardType: TextInputType.datetime,
                   controller: dayTextBoxController,
-                  cursorColor: const Color.fromRGBO(15, 15, 15, 1),
+                  cursorColor: backgroundColor,
                   style: const TextStyle(
-                    color: Color.fromRGBO(237, 237, 237, 1),
+                    color: whiteColor,
                     fontSize: 20,
                   ),
                   decoration: InputDecoration(
@@ -81,9 +82,9 @@ class _AgeColumnState extends State<AgeColumn> {
                 child: TextField(
                   keyboardType: TextInputType.datetime,
                   controller: monthTextBoxController,
-                  cursorColor: const Color.fromRGBO(15, 15, 15, 1),
+                  cursorColor: backgroundColor,
                   style: const TextStyle(
-                    color: Color.fromRGBO(237, 237, 237, 1),
+                    color: whiteColor,
                     fontSize: 20,
                   ),
                   decoration: InputDecoration(
@@ -106,9 +107,9 @@ class _AgeColumnState extends State<AgeColumn> {
                 child: TextField(
                   keyboardType: TextInputType.datetime,
                   controller: yearTextBoxController,
-                  cursorColor: const Color.fromRGBO(15, 15, 15, 1),
+                  cursorColor: backgroundColor,
                   style: const TextStyle(
-                    color: Color.fromRGBO(237, 237, 237, 1),
+                    color: whiteColor,
                     fontSize: 20,
                   ),
                   decoration: InputDecoration(

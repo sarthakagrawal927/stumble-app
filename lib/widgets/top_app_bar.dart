@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
+import '../constants.dart';
 import '../screens/filters_screen.dart';
 
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,16 +18,19 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           style: ElevatedButton.styleFrom(
             padding:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
-            backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+            backgroundColor: topAppBarColor,
           ),
           onPressed: () {
             // Call location API here.
           },
-          child: const Icon(Icons.navigation_sharp),
+          child: Icon(
+            Icons.navigation_sharp,
+            color: headingColor,
+          ),
         ),
         actions: [
           DropdownButton(
-            dropdownColor: const Color.fromRGBO(15, 15, 15, 1),
+            dropdownColor: backgroundColor,
             items: [
               DropdownMenuItem(
                 value: 'Filters',
@@ -34,12 +38,12 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                   children: const [
                     Icon(
                       Icons.filter_list_rounded,
-                      color: Color.fromRGBO(237, 237, 237, 1),
+                      color: whiteColor,
                     ),
                     SizedBox(width: 8),
                     Text(
                       'Filters',
-                      style: TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
+                      style: TextStyle(color: whiteColor),
                     ),
                   ],
                 ),
@@ -50,12 +54,12 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                   children: const [
                     Icon(
                       Icons.exit_to_app,
-                      color: Color.fromRGBO(237, 237, 237, 1),
+                      color: whiteColor,
                     ),
                     SizedBox(width: 8),
                     Text(
                       'Logout',
-                      style: TextStyle(color: Color.fromRGBO(237, 237, 237, 1)),
+                      style: TextStyle(color: whiteColor),
                     ),
                   ],
                 ),
@@ -63,26 +67,27 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
             ],
             onChanged: (itemIdentifier) {
               if (itemIdentifier == 'Logout') {
-                FirebaseAuth.instance.signOut();
+                var logger = Logger();
+                logger.i("Need to add Logout mechanism here.");
               } else if (itemIdentifier == 'Filters') {
                 Navigator.pushNamed(context, FiltersScreen.routeName);
               }
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.menu,
-              color: Color.fromRGBO(231, 10, 95, 1),
+              color: topAppBarColor,
             ),
           ),
         ],
-        backgroundColor: const Color.fromRGBO(15, 15, 15, 1),
+        backgroundColor: topAppBarColor,
         title: Padding(
           padding:
               EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
-          child: const Text(
+          child: Text(
             'Stumble!',
             style: TextStyle(
               fontSize: 25,
-              color: Color.fromRGBO(231, 10, 95, 1),
+              color: headingColor,
             ),
           ),
         ),

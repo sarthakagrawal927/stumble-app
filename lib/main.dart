@@ -1,10 +1,9 @@
 import 'dart:io';
 
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +18,7 @@ import './screens/user_profile_overview_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  ChuckerFlutter.showOnRelease = true;
   runApp(const MyApp());
 }
 
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
             conversationStarterPrompt: "",
             gender: Gender.woman,
             isVerified: false,
-            firstimageUrl: File(""),
+            firstImageUrl: File(""),
             secondImageUrl: File(""),
             thirdImageUrl: File(""),
             nicheFilterSelected: false,
@@ -50,21 +49,15 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorObservers: [ChuckerFlutter.navigatorObserver],
         title: 'Stumble!',
         theme: ThemeData(
           textTheme: GoogleFonts.latoTextTheme(
             Theme.of(context).textTheme,
           ),
         ),
-        home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const SwipingScreen();
-            }
-            return const AuthScreen();
-          },
-        ),
+        home: const AuthScreen(),
         routes: {
           AuthScreen.routeName: (context) => const AuthScreen(),
           SwipingScreen.routeName: (context) => const SwipingScreen(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants.dart';
 import '../../providers/profile.dart';
 import '../../screens/swiping_screen.dart';
 import '../newUser/screen_heading_widget.dart';
@@ -36,7 +37,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
             ),
             child: TextFormField(
               style: const TextStyle(
-                color: Color.fromRGBO(237, 237, 237, 1),
+                color: whiteColor,
                 fontSize: 20,
               ),
               initialValue: '',
@@ -44,7 +45,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
               minLines: 1,
               keyboardAppearance: Brightness.dark,
               textInputAction: TextInputAction.next,
-              cursorColor: const Color.fromRGBO(237, 237, 237, 1),
+              cursorColor: whiteColor,
               onFieldSubmitted: (value) => {
                 setState(() {
                   promptTextValue = value;

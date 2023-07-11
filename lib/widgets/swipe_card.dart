@@ -59,12 +59,12 @@ class SwipeCard extends StatelessWidget {
             profile,
           ),
           Container(
-            color: const Color.fromRGBO(15, 15, 15, 1),
+            color: backgroundColor,
             height: MediaQuery.of(context).size.height / 24,
           ),
           CommentFeatureWidget(
             Container(
-              color: const Color.fromRGBO(15, 15, 15, 1),
+              color: backgroundColor,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -84,7 +84,7 @@ class SwipeCard extends StatelessWidget {
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height / 32,
-                    color: const Color.fromRGBO(15, 15, 15, 1),
+                    color: backgroundColor,
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.235,
@@ -109,11 +109,11 @@ class SwipeCard extends StatelessWidget {
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
-            color: const Color.fromRGBO(15, 15, 15, 1),
+            color: backgroundColor,
           ),
           CommentFeatureWidget(
             Container(
-              color: const Color.fromRGBO(15, 15, 15, 1),
+              color: backgroundColor,
               height: MediaQuery.of(context).size.height * 0.3,
               child: Container(
                   alignment: Alignment.bottomLeft,
@@ -123,11 +123,11 @@ class SwipeCard extends StatelessWidget {
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
-            color: const Color.fromRGBO(15, 15, 15, 1),
+            color: backgroundColor,
           ),
           CommentFeatureWidget(
             Container(
-              color: const Color.fromRGBO(15, 15, 15, 1),
+              color: backgroundColor,
               height: MediaQuery.of(context).size.height * 0.3,
               child: Container(
                   alignment: Alignment.bottomLeft,
@@ -137,11 +137,11 @@ class SwipeCard extends StatelessWidget {
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
-            color: const Color.fromRGBO(15, 15, 15, 1),
+            color: backgroundColor,
           ),
           profile.nicheFilterSelected
               ? Container(
-                  color: const Color.fromRGBO(15, 15, 15, 1),
+                  color: backgroundColor,
                   child: Column(
                     children: [
                       ButtonToSelectUserDatingPreference(
@@ -159,11 +159,11 @@ class SwipeCard extends StatelessWidget {
                 )
               : Container(
                   height: MediaQuery.of(context).size.height / 64,
-                  color: const Color.fromRGBO(15, 15, 15, 1),
+                  color: backgroundColor,
                 ),
           Container(
             height: MediaQuery.of(context).size.height / 32,
-            color: const Color.fromRGBO(15, 15, 15, 1),
+            color: backgroundColor,
           ),
         ],
       ),
@@ -175,7 +175,7 @@ class SwipeCard extends StatelessWidget {
       color: Theme.of(context).colorScheme.secondary,
       image: DecorationImage(
         fit: BoxFit.cover,
-        image: NetworkImage(profile.firstimageUrl.path),
+        image: NetworkImage(profile.firstImageUrl.path),
       ),
     );
   }
