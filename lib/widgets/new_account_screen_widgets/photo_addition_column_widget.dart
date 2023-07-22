@@ -76,7 +76,7 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
                 imageUrl;
             Provider.of<Profile>(context, listen: false).uploadPhotosAPI(1);
             Provider.of<FirstScreenStateProviders>(context, listen: false)
-                .setisFirstPhotoSubmittedValue = true;
+                .setNextScreenActive();
             //Provider.of<Profile>(context, listen: false).createUserAPI();
           },
         ),

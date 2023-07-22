@@ -1,3 +1,4 @@
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -70,7 +71,9 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
               children: <Widget>[
                 InternationalPhoneNumberInput(
                   cursorColor: Colors.white,
-                  onInputChanged: (PhoneNumber number) {},
+                  onInputChanged: (PhoneNumber number) {
+                    phoneNumberValue = number.phoneNumber!;
+                  },
                   onInputValidated: (bool value) {},
                   selectorConfig: const SelectorConfig(
                     selectorType: PhoneInputSelectorType.DIALOG,
@@ -98,12 +101,12 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
         ),
         ElevatedButton(
           onPressed: () {
+            sendOtpApi(phoneNumberValue);
             setState(() {
               Provider.of<FirstScreenStateProviders>(context, listen: false)
-                  .setIsPhoneNumberSubmittedValue = true;
+                  .setNextScreenActive();
               Provider.of<Profile>(context, listen: false).setPhoneNumber =
                   phoneNumberValue;
-              Provider.of<Profile>(context, listen: false).sendOTPAPI();
               //Provider.of<Profile>(context, listen: false).createUserAPI();
             });
           },

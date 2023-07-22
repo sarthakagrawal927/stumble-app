@@ -84,7 +84,7 @@ class _NameColumnState extends State<NameColumn> {
           "",
           () {
             Provider.of<FirstScreenStateProviders>(context, listen: false)
-                .setisNameSubmittedValue = true;
+                .setNextScreenActive();
             Provider.of<Profile>(context, listen: false).setName = _name;
             //Provider.of<Profile>(context, listen: false).createUserAPI();
           },

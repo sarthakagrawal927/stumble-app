@@ -1,3 +1,5 @@
+import 'package:dating_made_better/global_store.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -49,14 +51,13 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
           },
           //runs when every textfield is filled
           onSubmit: (String verificationCode) async {
-            bool isOTPCorrect =
-                await Provider.of<Profile>(context, listen: false)
-                    .verifyOTPAPI(verificationCode);
+            await verifyOtpApi(verificationCode,
+                Provider.of<Profile>(context, listen: false).getPhone);
 
             setState(() {
-              if (isOTPCorrect) {
+              if (AppConstants.token.isNotEmpty) {
                 Provider.of<FirstScreenStateProviders>(context, listen: false)
-                    .setisOTPSubmittedValue = true;
+                    .setNextScreenActive();
               }
             });
           }, // end onSubmit

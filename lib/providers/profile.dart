@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:chucker_flutter/chucker_flutter.dart';
+import 'package:dating_made_better/global_store.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
@@ -22,6 +24,7 @@ class Profile with ChangeNotifier {
   bool nicheFilterSelected;
   RangeValues ageRangePreference;
   List<Gender> genderPreferences;
+  String bearerToken = AppConstants.token;
 
   Profile({
     required this.id,
@@ -39,10 +42,8 @@ class Profile with ChangeNotifier {
     required this.genderPreferences,
   });
 
-  final url = 'https://stumbe.onrender.com';
+  final url = 'http://192.168.1.3:8080';
   final _chuckerHttpClient = ChuckerHttpClient(http.Client());
-  var bearerToken =
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk3OTI5NzI5NzgiLCJpZCI6MTE5NCwicm9sZSI6MSwiaWF0IjoxNjg5MDc1OTcwLCJleHAiOjE3MjA2MTE5NzB9.Jrcls3KDh1ggVOWAmWfYa1fRoVRGc7A7a0v4g-VtGz0';
   int currentUser = -1;
   String currentThreadId = "";
   var logger = Logger();
@@ -108,6 +109,10 @@ class Profile with ChangeNotifier {
 
   int get getAge {
     return 20;
+  }
+
+  String get getPhone {
+    return phoneNumber;
   }
 
   File get getFirstImageUrl {
@@ -223,69 +228,26 @@ class Profile with ChangeNotifier {
 
   // INTEGRATION APIs
 
-  Future<void> sendOTPAPI() async {
-    final urlToCallSendOTPAPI = '$url/api/v1/user/send_otp';
-    try {
-      final response = await _chuckerHttpClient.post(
-        Uri.parse(urlToCallSendOTPAPI),
-        body: jsonEncode(
-          {"phone": phoneNumber},
-        ),
-      );
-      logger.i(response.body);
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<bool> verifyOTPAPI(String otpEntered) async {
-    final urlToCallVerifyOTPAPI = '$url/api/v1/user/verify_otp';
-    try {
-      final response = await _chuckerHttpClient
-          .post(Uri.parse(urlToCallVerifyOTPAPI), body: {
-        'otp': otpEntered,
-        'phone': phoneNumber,
-      });
-      logger.i(response.body);
-      return response.statusCode == 200;
-    } catch (error) {
-      rethrow;
-    }
-  }
-
   Future<void> createUserAPI() async {
-    final urlToCallCreateUserAPI = '$url/api/v1/user';
     try {
-      final response = await _chuckerHttpClient.post(
-          Uri.parse(urlToCallCreateUserAPI),
-          body: jsonEncode(
-            {
-              "name": name,
-              "phone": phoneNumber,
-              "dob": birthDate,
-              "gender": gender == Gender.man
-                  ? 1
-                  : gender == Gender.woman
-                      ? 2
-                      : 3,
-              "conversation_starter": conversationStarterPrompt,
-              // "photo_verified": isVerified,
-              // 'firstImageUrl': firstImageUrl,
-              // 'secondImageUrl': secondImageUrl,
-              // 'thirdImageUrl': thirdImageUrl,
-              // "target_age": [ageRangePreference.start, ageRangePreference.end],
-              // "photos": [],
-              // "target_gender": genderPreferences.toString(),
-            },
-          ),
-          headers: {
-            "content-type": "application/json",
-            'Authorization': bearerToken
-          });
-      final decodedResponseFromBackend = jsonDecode(response.body);
-      final data = decodedResponseFromBackend['data'];
-      currentUser = data["id"];
-      logger.i("Data of Upsert user: $data");
+      upsertUserApi({
+        "name": name,
+        "phone": phoneNumber,
+        "dob": birthDate,
+        "gender": gender == Gender.man
+            ? "1"
+            : gender == Gender.woman
+                ? "2"
+                : "3",
+        "conversation_starter": conversationStarterPrompt,
+        // "photo_verified": isVerified,
+        // 'firstImageUrl': firstImageUrl,
+        // 'secondImageUrl': secondImageUrl,
+        // 'thirdImageUrl': thirdImageUrl,
+        // "target_age": [ageRangePreference.start, ageRangePreference.end],
+        // "photos": [],
+        // "target_gender": genderPreferences.toString(),
+      });
     } catch (error) {
       rethrow;
     }

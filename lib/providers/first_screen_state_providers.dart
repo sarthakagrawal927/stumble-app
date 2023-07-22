@@ -1,84 +1,25 @@
 import 'package:flutter/material.dart';
 
+enum ScreenMode {
+  landing,
+  phoneNumberInput,
+  otpInput,
+  nameInput,
+  ageInput,
+  genderInput,
+  photoAdditionInput,
+  promptAdditionInput,
+}
+
 class FirstScreenStateProviders extends ChangeNotifier {
-  bool isUseMobileNumberButtonClicked = false;
-  bool isPhoneNumberSubmitted = false;
-  bool isOTPSubmitted = false;
-  bool isNameSubmitted = false;
-  bool isAgeSubmitted = false;
-  bool isGenderSubmitted = false;
-  bool isFirstPhotoSubmitted = false;
-  bool isPromptSubmitted = false;
+  static var activeScreenMode = ScreenMode.landing;
 
-  bool get getUseMobileNumberButtonClickedValue {
-    return isUseMobileNumberButtonClicked;
-  }
-
-  set setUseMobileNumberButtonClickedValue(bool value) {
-    isUseMobileNumberButtonClicked = value;
+  setNextScreenActive() {
+    activeScreenMode = ScreenMode.values[activeScreenMode.index + 1];
     notifyListeners();
   }
 
-  bool get getIsPhoneNumberSubmittedValue {
-    return isPhoneNumberSubmitted;
-  }
-
-  set setIsPhoneNumberSubmittedValue(bool value) {
-    isPhoneNumberSubmitted = value;
-    notifyListeners();
-  }
-
-  bool get getisOTPSubmittedValue {
-    return isOTPSubmitted;
-  }
-
-  set setisOTPSubmittedValue(bool value) {
-    isOTPSubmitted = value;
-    notifyListeners();
-  }
-
-  bool get getisNameSubmittedValue {
-    return isNameSubmitted;
-  }
-
-  set setisNameSubmittedValue(bool value) {
-    isNameSubmitted = value;
-    notifyListeners();
-  }
-
-  bool get getisAgeSubmittedValue {
-    return isAgeSubmitted;
-  }
-
-  set setisAgeSubmittedValue(bool value) {
-    isAgeSubmitted = value;
-    notifyListeners();
-  }
-
-  bool get getisGenderSubmittedValue {
-    return isGenderSubmitted;
-  }
-
-  set setisGenderSubmittedValue(bool value) {
-    isGenderSubmitted = value;
-    notifyListeners();
-  }
-
-  bool get getisFirstPhotoSubmittedValue {
-    return isFirstPhotoSubmitted;
-  }
-
-  set setisFirstPhotoSubmittedValue(bool value) {
-    isFirstPhotoSubmitted = value;
-    notifyListeners();
-  }
-
-  bool get getisPromptSubmittedValue {
-    return isPromptSubmitted;
-  }
-
-  set setisPromptSubmittedValue(bool value) {
-    isPromptSubmitted = value;
-    notifyListeners();
+  ScreenMode get getActiveScreenModeValue {
+    return activeScreenMode;
   }
 }

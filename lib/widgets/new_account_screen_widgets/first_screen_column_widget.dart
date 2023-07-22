@@ -55,7 +55,7 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
           onPressed: () {
             setState(() {
               Provider.of<FirstScreenStateProviders>(context, listen: false)
-                  .setUseMobileNumberButtonClickedValue = true;
+                  .setNextScreenActive();
             });
           },
           style: ElevatedButton.styleFrom(

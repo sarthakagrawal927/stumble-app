@@ -133,7 +133,7 @@ class _AgeColumnState extends State<AgeColumn> {
         // ),
         ScreenGoToNextPageRow("This will be shown on your profile!", "", () {
           Provider.of<FirstScreenStateProviders>(context, listen: false)
-              .setisAgeSubmittedValue = true;
+              .setNextScreenActive();
           Provider.of<Profile>(context, listen: false).setAge =
               "$_day-$_month-$_year";
           // Provider.of<Profile>(context, listen: false).createUserAPI();

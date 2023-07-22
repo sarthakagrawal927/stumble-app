@@ -12,6 +12,20 @@ import 'package:video_player/video_player.dart';
 import '../widgets/new_account_screen_widgets/first_screen_column_widget.dart';
 import '../widgets/new_account_screen_widgets/name_column_widget.dart';
 
+final screenWidgets = {
+  ScreenMode.landing: (deviceSize) => FirstScreenColumn(deviceSize),
+  ScreenMode.phoneNumberInput: (deviceSize) =>
+      PhoneNumberColumnWidget(deviceSize),
+  ScreenMode.otpInput: (deviceSize) => OTPScreenColumn(deviceSize),
+  ScreenMode.nameInput: (deviceSize) => NameColumn(deviceSize),
+  ScreenMode.ageInput: (deviceSize) => AgeColumn(deviceSize),
+  ScreenMode.genderInput: (deviceSize) => GenderColumn(deviceSize),
+  ScreenMode.photoAdditionInput: (deviceSize) =>
+      PhotoAdditionColumn(deviceSize),
+  ScreenMode.promptAdditionInput: (deviceSize) =>
+      PromptAdditionColumn(deviceSize),
+};
+
 class AuthScreen extends StatefulWidget {
   static const routeName = '/auth';
   const AuthScreen({super.key});
@@ -45,22 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    bool isUseMobileNumberButtonClicked =
-        Provider.of<FirstScreenStateProviders>(context)
-            .getUseMobileNumberButtonClickedValue;
-    bool isPhoneNumberSubmitted =
-        Provider.of<FirstScreenStateProviders>(context)
-            .getIsPhoneNumberSubmittedValue;
-    bool isOTPSubmitted =
-        Provider.of<FirstScreenStateProviders>(context).getisOTPSubmittedValue;
-    bool isNameSubmitted =
-        Provider.of<FirstScreenStateProviders>(context).getisNameSubmittedValue;
-    bool isAgeSubmitted =
-        Provider.of<FirstScreenStateProviders>(context).getisAgeSubmittedValue;
-    bool isGenderSubmitted = Provider.of<FirstScreenStateProviders>(context)
-        .getisGenderSubmittedValue;
-    bool isFirstPhotoSubmitted = Provider.of<FirstScreenStateProviders>(context)
-        .getisFirstPhotoSubmittedValue;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
@@ -76,29 +75,19 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
             ),
           ),
-          Column(
-            children: [
+          Consumer<FirstScreenStateProviders>(
+              builder: (context, firstScreenStateProviders, _) {
+            var activeScreen =
+                firstScreenStateProviders.getActiveScreenModeValue;
+            return Column(children: [
               SizedBox(
                 height: deviceSize.height,
                 width: deviceSize.width,
-                child: !isUseMobileNumberButtonClicked
-                    ? FirstScreenColumn(deviceSize)
-                    : !isPhoneNumberSubmitted
-                        ? PhoneNumberColumnWidget(deviceSize)
-                        : !isOTPSubmitted
-                            ? OTPScreenColumn(deviceSize)
-                            : !isNameSubmitted
-                                ? NameColumn(deviceSize)
-                                : !isAgeSubmitted
-                                    ? AgeColumn(deviceSize)
-                                    : !isGenderSubmitted
-                                        ? GenderColumn(deviceSize)
-                                        : !isFirstPhotoSubmitted
-                                            ? PhotoAdditionColumn(deviceSize)
-                                            : PromptAdditionColumn(deviceSize),
+                child: screenWidgets[activeScreen]?.call(deviceSize) ??
+                    FirstScreenColumn(deviceSize),
               ),
-            ],
-          ),
+            ]);
+          })
         ],
       ),
     );
