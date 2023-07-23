@@ -10,6 +10,8 @@ enum Swipe { left, right, none }
 
 enum SwipeType { swipe, comment, nicheSelection }
 
+const authKey = "authToken";
+
 Color backgroundColor = const Color.fromRGBO(102, 52, 127, 1);
 
 Color widgetColor = const Color.fromRGBO(158, 71, 132, 1);

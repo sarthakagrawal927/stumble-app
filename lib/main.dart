@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
             Theme.of(context).textTheme,
           ),
         ),
-        home: const AuthScreen(),
+        home: const SwipingScreen(),
         routes: {
           AuthScreen.routeName: (context) => const AuthScreen(),
           SwipingScreen.routeName: (context) => const SwipingScreen(),

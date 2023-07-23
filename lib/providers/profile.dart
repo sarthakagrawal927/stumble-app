@@ -207,18 +207,18 @@ class Profile with ChangeNotifier {
   }
 
   List<dynamic> getLikedListOfProfiles() {
-    getProfilesWhoCurrentUserHasLikedAPI();
+    // getProfilesWhoCurrentUserHasLikedAPI();
     return likedListOfProfilesForCurrentUser;
   }
 
   List<dynamic> getStumbledOntoMeListOfProfiles() {
-    getProfilesWhichHaveLikedCurrentUserAPI();
+    // getProfilesWhichHaveLikedCurrentUserAPI();
     return admirerListOfProfilesForCurrentUser;
   }
 
   List<Profile> get getCurrentListOfCachedStumbles {
     if (currentListOfStumblesForCurrentUser.isEmpty) {
-      getPotentialStumblesFromBackend();
+      // getPotentialStumblesFromBackend();
       if (currentListOfStumblesForCurrentUser.isEmpty) {
         currentListOfStumblesForCurrentUser = constantListOfStumbles;
       }

@@ -1,3 +1,7 @@
+import 'package:dating_made_better/global_store.dart';
+import 'package:dating_made_better/screens/login_or_signup_screen.dart';
+import 'package:dating_made_better/utils/call_api.dart';
+import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +22,25 @@ class SwipingScreen extends StatefulWidget {
 
 class _SwipingScreenState extends State<SwipingScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  Future<String?> _setUserAuthToken() async {
+    var authToken = await readSecureData(authKey);
+    AppConstants.token = authToken ?? "";
+    await getUserApi();
+    return authToken;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setUserAuthToken().then((token) {
+      if (AppConstants.token.isEmpty) {
+        Future.delayed(const Duration(milliseconds: 100), () {
+          Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
