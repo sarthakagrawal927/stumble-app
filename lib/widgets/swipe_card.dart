@@ -46,7 +46,7 @@ class SwipeCard extends StatelessWidget {
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    profile.isVerified
+                    profile.photoVerified
                         ? const Icon(Icons.verified_sharp, color: Colors.blue)
                         : const Icon(
                             Icons.verified_outlined,
@@ -92,13 +92,13 @@ class SwipeCard extends StatelessWidget {
                       left: MediaQuery.of(context).size.width / 32,
                       right: MediaQuery.of(context).size.width / 32,
                     ),
-                    child: const SingleChildScrollView(
+                    child: SingleChildScrollView(
                       child: Text(
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white70,
                         ),
-                        "f1; I'm a real nerd about it. I'm also into software, as you can see by these ginormous specs I'm wearing.",
+                        profile.conversationStarter,
                       ),
                     ),
                   ),
@@ -175,7 +175,9 @@ class SwipeCard extends StatelessWidget {
       color: Theme.of(context).colorScheme.secondary,
       image: DecorationImage(
         fit: BoxFit.cover,
-        image: NetworkImage(profile.firstImageUrl.path),
+        image: NetworkImage(profile.photos.isNotEmpty
+            ? profile.photos[0].path
+            : "https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg"),
       ),
     );
   }

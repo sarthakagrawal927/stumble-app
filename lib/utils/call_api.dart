@@ -31,21 +31,32 @@ enum ApiType {
   sendOtp,
   verifyOtp,
   upsertUser,
+  findStumbles,
 }
 
 const apiList = {
   ApiType.sendOtp: "/api/v1/user/send_otp",
   ApiType.verifyOtp: "/api/v1/user/verify_otp",
   ApiType.upsertUser: "/api/v1/user",
+  ApiType.findStumbles: "/api/v1/activity/find",
 };
 
 String getApiEndpoint(ApiType apiType) {
   return apiList[apiType]!;
 }
 
+String getUrlFromQueryParams(queryParams) {
+  queryParams ??= {};
+  if (queryParams!.isEmpty) {
+    return '';
+  }
+  return "?${queryParams.entries.map((e) => '${e.key}=${e.value}').join('&')}";
+}
+
 Future<Map<String, dynamic>> callAPI(
   String reqUrl, {
   bodyParams = Null,
+  queryParams,
   HttpMethods method = HttpMethods.get,
   headers = defaultHeaders,
 }) async {
@@ -57,13 +68,18 @@ Future<Map<String, dynamic>> callAPI(
             headers: {HttpHeaders.authorizationHeader: AppConstants.token},
           )
         : _chuckerHttpClient.get(
-            Uri.parse(baseURL + reqUrl),
+            Uri.parse(baseURL + reqUrl + getUrlFromQueryParams(queryParams)),
             headers: {
               ...headers,
-              HttpHeaders.authorizationHeader: AppConstants.token
+              HttpHeaders.authorizationHeader: AppConstants.token.isEmpty
+                  ? await readSecureData(authKey) ?? ""
+                  : AppConstants.token,
             },
           ));
     if (response.statusCode != HttpStatus.ok) {
+      if (response.statusCode == HttpStatus.notFound) {
+        // direct to login screen
+      }
       throw Exception('Failed to load data!, ${response.statusCode}');
     }
     final decodedResponse = jsonDecode(response.body);
@@ -104,7 +120,14 @@ Future<void> upsertUserApi(Map<String, dynamic> bodyParams) async {
 }
 
 Future<void> getUserApi() async {
-  var response = await callAPI(getApiEndpoint(ApiType.upsertUser),
+  var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
       method: HttpMethods.get);
-  AppConstants.user = response;
+  AppConstants.user = data;
+}
+
+Future<List<dynamic>> getPotentialStumblesApi() async {
+  var data = await callAPI(getApiEndpoint(ApiType.findStumbles),
+      method: HttpMethods.get);
+  debugPrint(data.toString());
+  return data["stumbles"];
 }

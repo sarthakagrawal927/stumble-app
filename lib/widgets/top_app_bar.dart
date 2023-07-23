@@ -23,7 +23,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             // Call location API here.
           },
-          child: Icon(
+          child: const Icon(
             Icons.navigation_sharp,
             color: headingColor,
           ),
@@ -73,7 +73,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Navigator.pushNamed(context, FiltersScreen.routeName);
               }
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.menu,
               color: topAppBarColor,
             ),
@@ -83,7 +83,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: Padding(
           padding:
               EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
-          child: Text(
+          child: const Text(
             'Stumble!',
             style: TextStyle(
               fontSize: 25,

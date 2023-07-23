@@ -1,9 +1,15 @@
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../providers/profile.dart';
 import './draggable_swipe_card.dart';
+
+Future<List<Profile>> _getStumbles() async {
+  var profiles = await getPotentialStumblesApi();
+  debugPrint(profiles.length.toString());
+  return profiles.map<Profile>((e) => Profile.fromJson(e)).toList();
+}
 
 // ignore: must_be_immutable
 class CardsStackWidget extends StatefulWidget with ChangeNotifier {
@@ -16,7 +22,7 @@ class CardsStackWidget extends StatefulWidget with ChangeNotifier {
 class _CardsStackWidgetState extends State<CardsStackWidget>
     with SingleTickerProviderStateMixin {
   List<Profile> undoListOfProfiles = [];
-  List<dynamic> dragabbleItems = [];
+  List<dynamic> draggableItems = [];
   late final AnimationController _animationController;
 
   @override
@@ -28,19 +34,26 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
     );
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        dragabbleItems.removeLast();
+        draggableItems.removeLast();
         _animationController.reset();
         swipeNotifier.value = Swipe.none;
       }
     });
+    if (draggableItems.isEmpty) {
+      _getStumbles().then((values) {
+        values = values;
+        debugPrint(values.runtimeType.toString());
+        setState(() {
+          draggableItems = values;
+        });
+      });
+    }
   }
 
   ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
 
   @override
   Widget build(BuildContext context) {
-    dragabbleItems =
-        Provider.of<Profile>(context).getCurrentListOfCachedStumbles;
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -51,9 +64,9 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
             builder: (context, swipe, _) => Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
-              children: List.generate(dragabbleItems.length, (index) {
+              children: List.generate(draggableItems.length, (index) {
                 return DragWidget(
-                  profile: dragabbleItems[index],
+                  profile: draggableItems[index],
                   index: index,
                   swipeNotifier: swipeNotifier,
                 );
@@ -79,7 +92,7 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
             },
             onAccept: (int index) {
               setState(() {
-                dragabbleItems.removeAt(index);
+                draggableItems.removeAt(index);
               });
             },
           ),

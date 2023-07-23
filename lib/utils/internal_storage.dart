@@ -5,12 +5,14 @@ const storage = FlutterSecureStorage();
 
 // Write value
 Future<void> writeSecureData(String key, String value) async {
-  final writeData = await storage.write(key: key, value: value);
-  return writeData;
+  await storage.write(key: key, value: value);
 }
 
 // Read value
 Future<String?> readSecureData(String key) async {
-  final readData = await storage.read(key: key);
-  return readData;
+  return await storage.read(key: key);
+}
+
+Future<void> deleteSecureData(String key) async {
+  await storage.delete(key: key);
 }

@@ -41,7 +41,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 32,
             ),
-            child: Text(
+            child: const Text(
               textAlign: TextAlign.start,
               'Do you have a preference for the genders shown to you?',
               style: TextStyle(
@@ -77,7 +77,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 32,
             ),
-            child: Text(
+            child: const Text(
               textAlign: TextAlign.start,
               'Do you have a preference for the age of people you want to meet?',
               style: TextStyle(

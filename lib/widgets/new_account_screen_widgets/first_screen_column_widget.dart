@@ -53,10 +53,8 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
         ),
         ElevatedButton(
           onPressed: () {
-            setState(() {
-              Provider.of<FirstScreenStateProviders>(context, listen: false)
-                  .setNextScreenActive();
-            });
+            Provider.of<FirstScreenStateProviders>(context, listen: false)
+                .setNextScreenActive();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color.fromRGBO(230, 230, 250, 0.5),

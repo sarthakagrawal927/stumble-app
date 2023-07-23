@@ -47,7 +47,7 @@ class _NewMessageState extends State<NewMessage> {
                 color: whiteColor,
               ),
               cursorColor: whiteColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Send a message!',
                 labelStyle: TextStyle(color: backgroundColor),
               ),

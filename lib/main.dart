@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
@@ -32,16 +30,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: FirstScreenStateProviders()),
         ChangeNotifierProvider.value(
           value: Profile(
-            id: "",
+            id: 0,
             name: "",
             phoneNumber: "",
             birthDate: "",
-            conversationStarterPrompt: "",
+            conversationStarter: "",
             gender: Gender.woman,
-            isVerified: false,
-            firstImageUrl: File(""),
-            secondImageUrl: File(""),
-            thirdImageUrl: File(""),
+            photoVerified: false,
             nicheFilterSelected: false,
             genderPreferences: [],
             ageRangePreference: const RangeValues(18, 40),

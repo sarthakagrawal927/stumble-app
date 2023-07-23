@@ -11,16 +11,15 @@ import 'package:path/path.dart';
 import '../constants.dart';
 
 class Profile with ChangeNotifier {
-  String id;
+  int id;
   String name;
   String phoneNumber;
+  int age;
   Gender gender;
   String birthDate;
-  File firstImageUrl = File("");
-  File secondImageUrl = File("");
-  File thirdImageUrl = File("");
-  bool isVerified;
-  String conversationStarterPrompt;
+  List<File> photos = [];
+  bool photoVerified;
+  String conversationStarter;
   bool nicheFilterSelected;
   RangeValues ageRangePreference;
   List<Gender> genderPreferences;
@@ -29,17 +28,16 @@ class Profile with ChangeNotifier {
   Profile({
     required this.id,
     required this.name,
-    required this.phoneNumber,
+    this.phoneNumber = "",
     required this.gender,
-    required this.birthDate,
-    required this.isVerified,
-    required this.firstImageUrl,
-    required this.secondImageUrl,
-    required this.thirdImageUrl,
-    required this.conversationStarterPrompt,
-    required this.nicheFilterSelected,
-    required this.ageRangePreference,
-    required this.genderPreferences,
+    this.age = 22,
+    this.photos = const [],
+    this.birthDate = "",
+    this.photoVerified = true,
+    this.conversationStarter = "Hi there, I am on Stumble!",
+    this.nicheFilterSelected = false,
+    this.ageRangePreference = const RangeValues(18, 30),
+    this.genderPreferences = const [Gender.man],
   });
 
   final url = 'http://192.168.1.3:8080';
@@ -71,22 +69,22 @@ class Profile with ChangeNotifier {
   }
 
   set setProfilePrompt(String conversationStarterPromptInput) {
-    conversationStarterPrompt = conversationStarterPromptInput;
+    conversationStarter = conversationStarterPromptInput;
     notifyListeners();
   }
 
   set setFirstImage(File firstImageFile) {
-    firstImageUrl = firstImageFile;
+    photos[0] = firstImageFile;
     notifyListeners();
   }
 
   set setSecondImage(File secondImageFile) {
-    secondImageUrl = secondImageFile;
+    photos[1] = secondImageFile;
     notifyListeners();
   }
 
   set setThirdImage(File thirdImageFile) {
-    thirdImageUrl = thirdImageFile;
+    photos[2] = thirdImageFile;
     notifyListeners();
   }
 
@@ -116,27 +114,27 @@ class Profile with ChangeNotifier {
   }
 
   File get getFirstImageUrl {
-    return firstImageUrl;
+    return photos[0];
   }
 
   File get getSecondImageUrl {
-    return secondImageUrl;
+    return photos[0];
   }
 
   File get getThirdImageUrl {
-    return thirdImageUrl;
+    return photos[0];
   }
 
   bool isFirstImagePresent() {
-    return firstImageUrl.isAbsolute && firstImageUrl != File("");
+    return photos[0].isAbsolute && photos[0] != File("");
   }
 
   bool isSecondImagePresent() {
-    return secondImageUrl.isAbsolute && secondImageUrl != File("");
+    return photos.length > 1 && photos[1].isAbsolute && photos[1] != File("");
   }
 
   bool isThirdImagePresent() {
-    return thirdImageUrl.isAbsolute && thirdImageUrl.path.isNotEmpty;
+    return photos.length > 2 && photos[2].isAbsolute && photos[2] != File("");
   }
 
   Set<Profile> undoListOfProfilesForCurrentUser = {};
@@ -207,23 +205,11 @@ class Profile with ChangeNotifier {
   }
 
   List<dynamic> getLikedListOfProfiles() {
-    // getProfilesWhoCurrentUserHasLikedAPI();
     return likedListOfProfilesForCurrentUser;
   }
 
   List<dynamic> getStumbledOntoMeListOfProfiles() {
-    // getProfilesWhichHaveLikedCurrentUserAPI();
     return admirerListOfProfilesForCurrentUser;
-  }
-
-  List<Profile> get getCurrentListOfCachedStumbles {
-    if (currentListOfStumblesForCurrentUser.isEmpty) {
-      // getPotentialStumblesFromBackend();
-      if (currentListOfStumblesForCurrentUser.isEmpty) {
-        currentListOfStumblesForCurrentUser = constantListOfStumbles;
-      }
-    }
-    return currentListOfStumblesForCurrentUser;
   }
 
   // INTEGRATION APIs
@@ -234,16 +220,9 @@ class Profile with ChangeNotifier {
         "name": name,
         "phone": phoneNumber,
         "dob": birthDate,
-        "gender": gender == Gender.man
-            ? "1"
-            : gender == Gender.woman
-                ? "2"
-                : "3",
-        "conversation_starter": conversationStarterPrompt,
-        // "photo_verified": isVerified,
-        // 'firstImageUrl': firstImageUrl,
-        // 'secondImageUrl': secondImageUrl,
-        // 'thirdImageUrl': thirdImageUrl,
+        "gender": (gender.index + 1).toString(),
+        "conversation_starter": conversationStarter,
+        // "photoVerified": photoVerified,
         // "target_age": [ageRangePreference.start, ageRangePreference.end],
         // "photos": [],
         // "target_gender": genderPreferences.toString(),
@@ -422,11 +401,7 @@ class Profile with ChangeNotifier {
   Future<void> uploadPhotosAPI(int imageNumber) async {
     final urlToCallUploadPicsAPI = '$url/api/v1/user/upload';
 
-    final File fileToSendToBackend = imageNumber == 1
-        ? firstImageUrl
-        : imageNumber == 2
-            ? secondImageUrl
-            : thirdImageUrl;
+    final File fileToSendToBackend = photos[imageNumber];
 
     try {
       final stream = http.ByteStream(fileToSendToBackend.openRead());
@@ -446,5 +421,16 @@ class Profile with ChangeNotifier {
     } catch (error) {
       rethrow;
     }
+  }
+
+  static fromJson(profile) {
+    return Profile(
+      id: profile["id"],
+      name: profile["name"],
+      gender: Gender.values[profile["gender"]],
+      conversationStarter: profile["conversation_starter"],
+      age: profile["age"] ?? 22,
+      photoVerified: profile["photo_verified"],
+    );
   }
 }

@@ -13,7 +13,7 @@ class AskMeAboutTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
+        const Text(
           'Few things you should come talk to me about!',
           textAlign: TextAlign.start,
           style: TextStyle(
@@ -28,7 +28,7 @@ class AskMeAboutTextField extends StatelessWidget {
         ),
         SingleChildScrollView(
           child: TextFormField(
-            style: TextStyle(
+            style: const TextStyle(
               color: whiteColor,
               fontSize: 20,
               backgroundColor: widgetColor,
