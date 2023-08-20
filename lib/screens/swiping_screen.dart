@@ -22,6 +22,66 @@ Future<String?> _setUserAuthToken() async {
   return authToken;
 }
 
+enum DropDownOptions {
+  liked,
+  stumbledOntoMe,
+}
+
+class DropdownOptionVal {
+  final String label;
+  final DropDownOptions value;
+  final String blankScreenMessage;
+  final Future<List<MiniProfile>> Function() getActivities;
+
+  DropdownOptionVal(
+      this.label, this.value, this.blankScreenMessage, this.getActivities);
+}
+
+class MiniProfile {
+  final int id;
+  final String name;
+  final int? age;
+  final bool? photoVerified;
+  final String? photo;
+  final Gender? gender;
+
+  MiniProfile(
+      {required this.id,
+      required this.name,
+      this.age,
+      this.photoVerified,
+      this.photo,
+      this.gender});
+
+  static fromJson(profile) {
+    return MiniProfile(
+      id: profile["id"],
+      name: profile["name"],
+      age: profile["age"] ?? 22,
+      gender: Gender.values[profile["gender"]],
+      photoVerified: profile["photo_verified"],
+      photo: profile["photo"],
+    );
+  }
+}
+
+final Map<DropDownOptions, DropdownOptionVal> dropDownOptions = {
+  DropDownOptions.liked: DropdownOptionVal('I want to stumble into',
+      DropDownOptions.liked, "Like someone", _getActivities),
+  DropDownOptions.stumbledOntoMe: DropdownOptionVal('Stumbled onto me',
+      DropDownOptions.stumbledOntoMe, "No one likes you", _getActivities2),
+};
+
+Future<List<MiniProfile>> _getActivities() async {
+  var profiles = await getPeopleILiked();
+  return profiles.map<MiniProfile>((e) => MiniProfile.fromJson(e)).toList();
+}
+
+Future<List<MiniProfile>> _getActivities2() async {
+  var profiles = await getPeopleWhoLikedMe();
+  return profiles.map<MiniProfile>((e) => MiniProfile.fromJson(e)).toList();
+}
+
 class SwipingScreen extends StatefulWidget {
   static const routeName = '/swiping-screen';
 
@@ -48,18 +108,12 @@ class _SwipingScreenState extends State<SwipingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> likedListOfProfiles =
-        Provider.of<Profile>(context, listen: false).getLikedListOfProfiles();
-    List<dynamic> stumbledOntoMeListOfProfiles =
-        Provider.of<Profile>(context, listen: false)
-            .getStumbledOntoMeListOfProfiles();
-
-    BoxDecoration imageBoxWidget(BuildContext context, int index) {
+    BoxDecoration imageBoxWidget(BuildContext context, MiniProfile profile) {
       return BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(likedListOfProfiles[index].getFirstImageUrl.path),
+          image: NetworkImage(profile.photo ?? defaultBackupImage),
         ),
       );
     }
@@ -92,153 +146,108 @@ class _SwipingScreenState extends State<SwipingScreen> {
                 dropdownColor: topAppBarColor,
                 items: [
                   DropdownMenuItem(
-                    value: 'I want to stumble into',
+                    value: dropDownOptions[DropDownOptions.liked]!.value,
                     child: Row(
-                      children: const [
-                        Icon(
+                      children: [
+                        const Icon(
                           Icons.filter_list_rounded,
                           color: whiteColor,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
-                          'I want to stumble into',
-                          style: TextStyle(color: whiteColor),
+                          dropDownOptions[DropDownOptions.liked]!.label,
+                          style: const TextStyle(color: whiteColor),
                         ),
                       ],
                     ),
                   ),
                   DropdownMenuItem(
-                    value: 'Stumbled onto me',
+                    value:
+                        dropDownOptions[DropDownOptions.stumbledOntoMe]!.value,
                     child: Row(
-                      children: const [
-                        Icon(
+                      children: [
+                        const Icon(
                           Icons.exit_to_app,
                           color: whiteColor,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
-                          'Stumbled onto me',
-                          style: TextStyle(color: whiteColor),
+                          dropDownOptions[DropDownOptions.stumbledOntoMe]!
+                              .label,
+                          style: const TextStyle(color: whiteColor),
                         ),
                       ],
                     ),
                   ),
                 ],
-                onChanged: (itemIdentifier) {
-                  if (itemIdentifier == 'I want to stumble into') {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return likedListOfProfiles.isNotEmpty
-                            ? Dialog(
-                                backgroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40)),
-                                elevation: 16,
-                                child: GridView.builder(
-                                  itemCount: likedListOfProfiles.length,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Dialog(
-                                          backgroundColor: Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(40)),
-                                          elevation: 16,
-                                          child: Container(),
-                                        );
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.all(
-                                            MediaQuery.of(context).size.height /
-                                                64),
-                                        alignment: Alignment.bottomLeft,
-                                        decoration:
-                                            imageBoxWidget(context, index),
+                onChanged: (itemIdentifier) async {
+                  dropDownOptions[itemIdentifier]!
+                      .getActivities()
+                      .then((value) => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return value.isNotEmpty
+                                  ? Dialog(
+                                      backgroundColor: Colors.black,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(40)),
+                                      elevation: 16,
+                                      child: GridView.builder(
+                                        itemCount: value.length,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2),
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              Dialog(
+                                                backgroundColor: Colors.black,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            40)),
+                                                elevation: 16,
+                                                child: Container(),
+                                              );
+                                            },
+                                            child: Container(
+                                              margin: EdgeInsets.all(
+                                                  MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      64),
+                                              alignment: Alignment.bottomLeft,
+                                              decoration: imageBoxWidget(
+                                                  context, value[index]),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  : Dialog(
+                                      backgroundColor: Colors.black,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(40)),
+                                      elevation: 16,
+                                      child: Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            dropDownOptions[itemIdentifier]!
+                                                .blankScreenMessage,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     );
-                                  },
-                                ),
-                              )
-                            : Dialog(
-                                backgroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40)),
-                                elevation: 16,
-                                child: const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Keep stumbling!',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                      },
-                    );
-                  } else if (itemIdentifier == 'Stumbled onto me') {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return stumbledOntoMeListOfProfiles.isNotEmpty
-                            ? Dialog(
-                                backgroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40)),
-                                elevation: 16,
-                                child: GridView.builder(
-                                  itemCount:
-                                      stumbledOntoMeListOfProfiles.length,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2),
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        margin: EdgeInsets.all(
-                                            MediaQuery.of(context).size.height /
-                                                64),
-                                        alignment: Alignment.bottomLeft,
-                                        decoration:
-                                            imageBoxWidget(context, index),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : Dialog(
-                                backgroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                elevation: 16,
-                                child: const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'We\'re certain your stumblers are on their way!',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                      },
-                    );
-                  }
+                            },
+                          ));
                 },
                 icon: const Icon(
                   Icons.menu,

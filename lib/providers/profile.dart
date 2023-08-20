@@ -126,7 +126,7 @@ class Profile with ChangeNotifier {
   }
 
   bool isFirstImagePresent() {
-    return photos[0].isAbsolute && photos[0] != File("");
+    return photos.isNotEmpty && photos[0].isAbsolute && photos[0] != File("");
   }
 
   bool isSecondImagePresent() {
@@ -164,10 +164,15 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeLikedProfiles(Profile profile) {
-    //Change this later
-    currentListOfStumblesForCurrentUser.remove(profile);
-    notifyListeners();
+  Future<void> addActivityOnLike(Profile profile, Swipe action) {
+    if (action == Swipe.none) return Future.value();
+    Map<String, dynamic> bodyParams = {
+      'targetId': profile.id,
+      'status': action == Swipe.right
+          ? activityValue[ActivityType.like]
+          : activityValue[ActivityType.dislike],
+    };
+    return addActivityOnProfileApi(bodyParams);
   }
 
   void removeLikedProfilesWhenNicheButtonIsClicked(Profile profile,

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
-const String baseURL = 'http://192.168.1.3:8080';
+const String baseURL = 'http://192.168.29.191:8080';
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
 final logger = Logger();
 
@@ -32,6 +32,9 @@ enum ApiType {
   verifyOtp,
   upsertUser,
   findStumbles,
+  addActivity,
+  getILiked,
+  getLikedBy
 }
 
 const apiList = {
@@ -39,6 +42,9 @@ const apiList = {
   ApiType.verifyOtp: "/api/v1/user/verify_otp",
   ApiType.upsertUser: "/api/v1/user",
   ApiType.findStumbles: "/api/v1/activity/find",
+  ApiType.addActivity: "/api/v1/activity",
+  ApiType.getILiked: "/api/v1/activity?status=1",
+  ApiType.getLikedBy: "/api/v1/activity/liked_by",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -64,8 +70,11 @@ Future<Map<String, dynamic>> callAPI(
     final response = await (method == HttpMethods.post
         ? _chuckerHttpClient.post(
             Uri.parse(baseURL + reqUrl),
-            body: bodyParams,
-            headers: {HttpHeaders.authorizationHeader: AppConstants.token},
+            body: json.encode(bodyParams),
+            headers: {
+              HttpHeaders.authorizationHeader: AppConstants.token,
+              HttpHeaders.contentTypeHeader: 'application/json',
+            },
           )
         : _chuckerHttpClient.get(
             Uri.parse(baseURL + reqUrl + getUrlFromQueryParams(queryParams)),
@@ -130,4 +139,26 @@ Future<List<dynamic>> getPotentialStumblesApi() async {
       method: HttpMethods.get);
   debugPrint(data.toString());
   return data["stumbles"];
+}
+
+Future<void> addActivityOnProfileApi(Map<String, dynamic> bodyParams) async {
+  await callAPI(
+    getApiEndpoint(ApiType.addActivity),
+    method: HttpMethods.post,
+    bodyParams: bodyParams,
+  );
+}
+
+Future<List<dynamic>> getPeopleILiked() async {
+  var data =
+      await callAPI(getApiEndpoint(ApiType.getILiked), method: HttpMethods.get);
+  debugPrint(data.toString());
+  return data["activities"];
+}
+
+Future<List<dynamic>> getPeopleWhoLikedMe() async {
+  var data = await callAPI(getApiEndpoint(ApiType.getLikedBy),
+      method: HttpMethods.get);
+  debugPrint(data.toString());
+  return data["activities"];
 }
