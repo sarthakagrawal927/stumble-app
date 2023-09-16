@@ -77,13 +77,13 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           Consumer<FirstScreenStateProviders>(
               builder: (context, firstScreenStateProviders, _) {
-            var activeScreen =
-                firstScreenStateProviders.getActiveScreenModeValue;
             return Column(children: [
               SizedBox(
                 height: deviceSize.height,
                 width: deviceSize.width,
-                child: screenWidgets[activeScreen]?.call(deviceSize) ??
+                child: screenWidgets[
+                            firstScreenStateProviders.getActiveScreenModeValue]
+                        ?.call(deviceSize) ??
                     FirstScreenColumn(deviceSize),
               ),
             ]);

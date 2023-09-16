@@ -1,5 +1,3 @@
-import 'package:dating_made_better/global_store.dart';
-import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,17 +8,6 @@ import '../providers/profile.dart';
 import '../widgets/bottom_app_bar.dart';
 import '../widgets/cards_stack_widget.dart';
 import '../widgets/swipe_screen_background.dart';
-
-Future<String?> _setUserAuthToken() async {
-  var authToken = await readSecureData(authKey);
-  AppConstants.token = authToken ?? "";
-  try {
-    await getUserApi();
-  } catch (e) {
-    debugPrint(e.toString());
-  }
-  return authToken;
-}
 
 enum DropDownOptions {
   liked,
@@ -97,13 +84,6 @@ class _SwipingScreenState extends State<SwipingScreen> {
   @override
   void initState() {
     super.initState();
-    _setUserAuthToken().then((token) {
-      if (AppConstants.token.isEmpty) {
-        Future.delayed(const Duration(milliseconds: 100), () {
-          Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
-        });
-      }
-    });
   }
 
   @override

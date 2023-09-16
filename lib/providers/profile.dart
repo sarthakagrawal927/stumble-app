@@ -31,7 +31,6 @@ class Profile with ChangeNotifier {
     this.phoneNumber = "",
     required this.gender,
     this.age = 22,
-    this.photos = const [],
     this.birthDate = "",
     this.photoVerified = true,
     this.conversationStarter = "Hi there, I am on Stumble!",
@@ -74,17 +73,17 @@ class Profile with ChangeNotifier {
   }
 
   set setFirstImage(File firstImageFile) {
-    photos[0] = firstImageFile;
+    photos.add(firstImageFile);
     notifyListeners();
   }
 
   set setSecondImage(File secondImageFile) {
-    photos[1] = secondImageFile;
+    photos.add(secondImageFile);
     notifyListeners();
   }
 
   set setThirdImage(File thirdImageFile) {
-    photos[2] = thirdImageFile;
+    photos.add(thirdImageFile);
     notifyListeners();
   }
 

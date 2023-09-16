@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
-const String baseURL = 'http://192.168.29.191:8080';
+const String baseURL = 'http://192.168.1.5:8080';
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
 final logger = Logger();
 
@@ -128,10 +128,14 @@ Future<void> upsertUserApi(Map<String, dynamic> bodyParams) async {
       bodyParams: bodyParams, method: HttpMethods.post);
 }
 
-Future<void> getUserApi() async {
+Future<dynamic> getUserApi() async {
+  var authToken = await readSecureData(authKey);
+  AppConstants.token = authToken ?? "";
   var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
       method: HttpMethods.get);
   AppConstants.user = data;
+  await writeSecureData("user", jsonEncode(data));
+  return data;
 }
 
 Future<List<dynamic>> getPotentialStumblesApi() async {

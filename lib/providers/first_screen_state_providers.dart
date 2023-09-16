@@ -9,10 +9,14 @@ enum ScreenMode {
   genderInput,
   photoAdditionInput,
   promptAdditionInput,
+  swipingScreen
 }
 
 class FirstScreenStateProviders extends ChangeNotifier {
   static var activeScreenMode = ScreenMode.landing;
+  FirstScreenStateProviders(ScreenMode fromParentActiveScreenMode) {
+    activeScreenMode = fromParentActiveScreenMode;
+  }
 
   setNextScreenActive() {
     activeScreenMode = ScreenMode.values[activeScreenMode.index + 1];
