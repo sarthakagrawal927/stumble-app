@@ -12,10 +12,12 @@ class DragWidget extends StatefulWidget {
     required this.profile,
     required this.index,
     required this.swipeNotifier,
+    required this.onSwipe,
   }) : super(key: key);
   final Profile profile;
   final int index;
   final ValueNotifier<Swipe> swipeNotifier;
+  final Function onSwipe;
 
   @override
   State<DragWidget> createState() => _DragWidgetState();
@@ -23,6 +25,17 @@ class DragWidget extends StatefulWidget {
 
 class _DragWidgetState extends State<DragWidget> {
   ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
+
+  void handleActivityOnProfile([String? compliment]) {
+    if (compliment != null) {
+      swipeNotifier.value = Swipe.right;
+    }
+    if (swipeNotifier.value == Swipe.none) return;
+    Provider.of<Profile>(context, listen: false)
+        .addActivityOnLike(widget.profile, swipeNotifier.value, compliment);
+    widget.onSwipe(widget.profile);
+    swipeNotifier.value = Swipe.none;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +56,10 @@ class _DragWidgetState extends State<DragWidget> {
                     : const AlwaysStoppedAnimation(0),
                 child: Stack(
                   children: [
-                    SwipeCard(profile: widget.profile),
+                    SwipeCard(
+                      profile: widget.profile,
+                      onSwipe: handleActivityOnProfile,
+                    ),
                     swipe != Swipe.none
                         ? swipe == Swipe.right
                             ? Positioned(
@@ -90,17 +106,15 @@ class _DragWidgetState extends State<DragWidget> {
           }
         },
         onDragEnd: (drag) {
-          Provider.of<Profile>(context, listen: false)
-              .addActivityOnLike(widget.profile, swipeNotifier.value);
-
-          swipeNotifier.value = Swipe.none;
+          handleActivityOnProfile();
         },
 
         childWhenDragging: Container(
           color: Colors.transparent,
         ),
 
-        child: SwipeCard(profile: widget.profile),
+        child: SwipeCard(
+            profile: widget.profile, onSwipe: handleActivityOnProfile),
       ),
     );
   }

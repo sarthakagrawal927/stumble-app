@@ -1,13 +1,10 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/profile.dart';
 
 class CommentFeatureWidget extends StatelessWidget {
-  const CommentFeatureWidget(this.widget, this.profile, {super.key});
+  const CommentFeatureWidget(this.widget, this.onSwipe, {super.key});
   final Widget widget;
-  final Profile profile;
+  final Function onSwipe;
 
   @override
   Widget build(BuildContext context) {
@@ -70,16 +67,7 @@ class CommentFeatureWidget extends StatelessWidget {
                           iconSize: 60,
                           icon: const Icon(Icons.arrow_circle_right_sharp),
                           onPressed: () {
-                            Provider.of<Profile>(context, listen: false)
-                                .setLikedListOfProfiles = profile;
-                            Provider.of<Profile>(context, listen: false)
-                                .removeLikedProfilesWhenNicheButtonIsClicked(
-                                    profile,
-                                    widget,
-                                    commentOnWidget,
-                                    "",
-                                    SwipeType.comment);
-
+                            onSwipe(commentOnWidget);
                             Navigator.of(context, rootNavigator: true).pop("");
                           },
                         ),

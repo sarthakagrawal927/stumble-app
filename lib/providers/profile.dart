@@ -164,13 +164,14 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addActivityOnLike(Profile profile, Swipe action) {
-    if (action == Swipe.none) return Future.value();
+  Future<void> addActivityOnLike(Profile profile, Swipe action,
+      [String? comment]) {
     Map<String, dynamic> bodyParams = {
       'targetId': profile.id,
       'status': action == Swipe.right
           ? activityValue[ActivityType.like]
           : activityValue[ActivityType.dislike],
+      'compliment': comment ?? '',
     };
     return addActivityOnProfileApi(bodyParams);
   }

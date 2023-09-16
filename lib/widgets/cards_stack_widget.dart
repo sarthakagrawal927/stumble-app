@@ -50,6 +50,12 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
     }
   }
 
+  void removeProfileOnSwipe(profile) {
+    setState(() {
+      draggableItems.removeLast();
+    });
+  }
+
   ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
 
   @override
@@ -69,6 +75,7 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
                   profile: draggableItems[index],
                   index: index,
                   swipeNotifier: swipeNotifier,
+                  onSwipe: removeProfileOnSwipe,
                 );
               }),
             ),
@@ -89,11 +96,6 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
                   color: Colors.transparent,
                 ),
               );
-            },
-            onAccept: (int index) {
-              setState(() {
-                draggableItems.removeAt(index);
-              });
             },
           ),
         ),

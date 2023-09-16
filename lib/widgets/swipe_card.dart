@@ -6,8 +6,14 @@ import 'package:provider/provider.dart';
 import '../providers/profile.dart';
 
 class SwipeCard extends StatelessWidget {
-  const SwipeCard({Key? key, required this.profile}) : super(key: key);
+  const SwipeCard({Key? key, required this.profile, required this.onSwipe})
+      : super(key: key);
   final Profile profile;
+  final Function onSwipe;
+
+  Widget getCommentFeatureWidget(Widget childComponent) {
+    return CommentFeatureWidget(childComponent, onSwipe);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,7 @@ class SwipeCard extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          CommentFeatureWidget(
+          getCommentFeatureWidget(
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.395,
               width: double.infinity,
@@ -56,13 +62,12 @@ class SwipeCard extends StatelessWidget {
                 ),
               ),
             ),
-            profile,
           ),
           Container(
             color: backgroundColor,
             height: MediaQuery.of(context).size.height / 24,
           ),
-          CommentFeatureWidget(
+          getCommentFeatureWidget(
             Container(
               color: backgroundColor,
               child: Column(
@@ -105,13 +110,12 @@ class SwipeCard extends StatelessWidget {
                 ],
               ),
             ),
-            profile,
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
             color: backgroundColor,
           ),
-          CommentFeatureWidget(
+          getCommentFeatureWidget(
             Container(
               color: backgroundColor,
               height: MediaQuery.of(context).size.height * 0.3,
@@ -119,13 +123,12 @@ class SwipeCard extends StatelessWidget {
                   alignment: Alignment.bottomLeft,
                   decoration: imageBoxWidget(context, 1)),
             ),
-            profile,
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
             color: backgroundColor,
           ),
-          CommentFeatureWidget(
+          getCommentFeatureWidget(
             Container(
               color: backgroundColor,
               height: MediaQuery.of(context).size.height * 0.3,
@@ -133,7 +136,6 @@ class SwipeCard extends StatelessWidget {
                   alignment: Alignment.bottomLeft,
                   decoration: imageBoxWidget(context, 2)),
             ),
-            profile,
           ),
           Container(
             height: MediaQuery.of(context).size.height / 16,
