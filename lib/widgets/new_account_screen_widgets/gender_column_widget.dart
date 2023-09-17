@@ -58,7 +58,6 @@ class _GenderColumnState extends State<GenderColumn> {
                 .setNextScreenActive();
             Provider.of<Profile>(context, listen: false).setGender =
                 _gender as Gender;
-            //Provider.of<Profile>(context, listen: false).createUserAPI();
           },
         )
       ],

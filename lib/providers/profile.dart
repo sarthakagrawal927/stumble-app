@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/global_store.dart';
-import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
@@ -138,7 +137,7 @@ class Profile with ChangeNotifier {
 
   Set<Profile> undoListOfProfilesForCurrentUser = {};
   List<Profile> currentListOfStumblesForCurrentUser = [];
-  List<dynamic> currentListOfMatchesForCurrentUser = [];
+
   List<dynamic> likedListOfProfilesForCurrentUser = [];
   List<dynamic> admirerListOfProfilesForCurrentUser = [];
   List<dynamic> threadsListForCurrentUser = [];
@@ -163,18 +162,6 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addActivityOnLike(Profile profile, Swipe action,
-      [String? comment]) {
-    Map<String, dynamic> bodyParams = {
-      'targetId': profile.id,
-      'status': action == Swipe.right
-          ? activityValue[ActivityType.like]
-          : activityValue[ActivityType.dislike],
-      'compliment': comment ?? '',
-    };
-    return addActivityOnProfileApi(bodyParams);
-  }
-
   void removeLikedProfilesWhenNicheButtonIsClicked(Profile profile,
       Widget widget, String comment, String preference, SwipeType swipeType) {
     if (swipeType == SwipeType.swipe) {
@@ -186,11 +173,6 @@ class Profile with ChangeNotifier {
       // Add code for storing nicheValue
       currentListOfStumblesForCurrentUser.remove(profile);
     }
-    notifyListeners();
-  }
-
-  set setUndoListOfProfiles(Profile profile) {
-    undoListOfProfilesForCurrentUser.add(profile);
     notifyListeners();
   }
 
@@ -209,71 +191,7 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  List<dynamic> getLikedListOfProfiles() {
-    return likedListOfProfilesForCurrentUser;
-  }
-
-  List<dynamic> getStumbledOntoMeListOfProfiles() {
-    return admirerListOfProfilesForCurrentUser;
-  }
-
   // INTEGRATION APIs
-
-  Future<void> createUserAPI() async {
-    try {
-      upsertUserApi({
-        "name": name,
-        "phone": phoneNumber,
-        "dob": birthDate,
-        "gender": (gender.index + 1).toString(),
-        "conversation_starter": conversationStarter,
-        // "photoVerified": photoVerified,
-        // "target_age": [ageRangePreference.start, ageRangePreference.end],
-        // "photos": [],
-        // "target_gender": genderPreferences.toString(),
-      });
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<void> getProfilesWhichHaveLikedCurrentUserAPI() async {
-    final urlToCallGetProfilesWhichBeenHaveLikedByCurrentUserFromBackend =
-        '$url/api/v1/activity/liked_by';
-    try {
-      final response = await _chuckerHttpClient.get(
-          Uri.parse(
-              urlToCallGetProfilesWhichBeenHaveLikedByCurrentUserFromBackend),
-          headers: {'Authorization': bearerToken});
-      final decodedResponseFromBackend = jsonDecode(response.body);
-      logger.i("Data of users who liked current user: ${response.body}");
-
-      admirerListOfProfilesForCurrentUser =
-          decodedResponseFromBackend['data'] as List;
-      notifyListeners();
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<void> getThreadsAPI() async {
-    final urlToCallGetThreadsFromBackend = '$url/api/v1/chat/threads';
-    try {
-      final response = await _chuckerHttpClient.get(
-          Uri.parse(urlToCallGetThreadsFromBackend),
-          headers: {'Authorization': bearerToken});
-
-      final decodedResponseFromBackend = jsonDecode(response.body);
-      final data = decodedResponseFromBackend['data'] as List;
-      logger.i("Data of threads: $data");
-
-      threadsListForCurrentUser = data;
-      notifyListeners();
-    } catch (error) {
-      rethrow;
-    }
-  }
-
   Future<void> getMessagesAPI(String threadId) async {
     currentThreadId = threadId;
     final urlToCallGetMessagesFromBackend =
@@ -327,77 +245,6 @@ class Profile with ChangeNotifier {
         'Authorization': bearerToken
       });
       logger.i("Data of delete message: ${response.body}");
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<Profile> getSingleUserAPI(int userIdToGetProfileOf) async {
-    final urlToCallGetSingleUserAPI =
-        '$url/api/v1/user?user_id=$userIdToGetProfileOf';
-    try {
-      final response = await _chuckerHttpClient.get(
-          Uri.parse(urlToCallGetSingleUserAPI),
-          headers: {'Authorization': bearerToken});
-      final decodedResponseFromBackend = jsonDecode(response.body);
-      final data = decodedResponseFromBackend['data'] as Profile;
-      logger.i("Data of single user: $data");
-
-      return data;
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<void> getStumbleMatchesFromBackend() async {
-    final urlToCallGetStumbleMatchesFromBackendAPI =
-        '$url/api/v1/activity?status=69';
-    try {
-      final response = await _chuckerHttpClient.get(
-          Uri.parse(urlToCallGetStumbleMatchesFromBackendAPI),
-          headers: {'Authorization': bearerToken});
-      final decodedResponseFromBackend = jsonDecode(response.body);
-      final data = decodedResponseFromBackend['data'] as List;
-      logger.i("Data of matches: $data");
-
-      currentListOfMatchesForCurrentUser = data;
-      notifyListeners();
-      return;
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<void> getProfilesWhoCurrentUserHasLikedAPI() async {
-    final urlToCallGetProfilesWhoHaveLikedCurrentUserFromBackendAPI =
-        '$url/api/v1/activity?status=1';
-    try {
-      final response = await _chuckerHttpClient.get(
-          Uri.parse(urlToCallGetProfilesWhoHaveLikedCurrentUserFromBackendAPI),
-          headers: {'Authorization': bearerToken});
-      final decodedResponseFromBackend = jsonDecode(response.body);
-      logger.i("Data of profiles liked by user: $decodedResponseFromBackend");
-
-      likedListOfProfilesForCurrentUser =
-          decodedResponseFromBackend['data'] as List;
-      notifyListeners();
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<void> getPotentialStumblesFromBackend() async {
-    final urlToCallGetPotentialStumblesFromBackendAPI =
-        '$url/api/v1/activity/find';
-    try {
-      final response = await _chuckerHttpClient.get(
-          Uri.parse(urlToCallGetPotentialStumblesFromBackendAPI),
-          headers: {'Authorization': bearerToken});
-      final decodedResponseFromBackend = jsonDecode(response.body);
-      logger.i("Data of stumbles: $decodedResponseFromBackend");
-
-      currentListOfStumblesForCurrentUser =
-          decodedResponseFromBackend['data'] as List<Profile>;
     } catch (error) {
       rethrow;
     }

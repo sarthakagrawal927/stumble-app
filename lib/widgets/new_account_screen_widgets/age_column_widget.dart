@@ -136,7 +136,6 @@ class _AgeColumnState extends State<AgeColumn> {
               .setNextScreenActive();
           Provider.of<Profile>(context, listen: false).setAge =
               "$_day-$_month-$_year";
-          // Provider.of<Profile>(context, listen: false).createUserAPI();
         }),
       ],
     );

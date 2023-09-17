@@ -107,7 +107,6 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
                   .setNextScreenActive();
               Provider.of<Profile>(context, listen: false).setPhoneNumber =
                   phoneNumberValue;
-              //Provider.of<Profile>(context, listen: false).createUserAPI();
             });
           },
           style: ElevatedButton.styleFrom(

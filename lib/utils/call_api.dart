@@ -34,7 +34,8 @@ enum ApiType {
   findStumbles,
   addActivity,
   getILiked,
-  getLikedBy
+  getLikedBy,
+  getMatches,
 }
 
 const apiList = {
@@ -44,6 +45,7 @@ const apiList = {
   ApiType.findStumbles: "/api/v1/activity/find",
   ApiType.addActivity: "/api/v1/activity",
   ApiType.getILiked: "/api/v1/activity?status=1",
+  ApiType.getMatches: "/api/v1/activity?status=69",
   ApiType.getLikedBy: "/api/v1/activity/liked_by",
 };
 
@@ -156,6 +158,13 @@ Future<void> addActivityOnProfileApi(Map<String, dynamic> bodyParams) async {
 Future<List<dynamic>> getPeopleILiked() async {
   var data =
       await callAPI(getApiEndpoint(ApiType.getILiked), method: HttpMethods.get);
+  debugPrint(data.toString());
+  return data["activities"];
+}
+
+Future<List<dynamic>> getMatches() async {
+  var data = await callAPI(getApiEndpoint(ApiType.getMatches),
+      method: HttpMethods.get);
   debugPrint(data.toString());
   return data["activities"];
 }

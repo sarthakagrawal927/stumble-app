@@ -1,11 +1,17 @@
+import 'package:dating_made_better/models/profile.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/matches_conversation_started_with.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
-import '../providers/profile.dart';
 import '../widgets/bottom_app_bar.dart';
 import '../widgets/top_app_bar.dart';
+
+Future<List<MiniProfile>> _getMatches() async {
+  var profiles = await getMatches();
+  debugPrint(profiles.length.toString());
+  return profiles.map<MiniProfile>((e) => MiniProfile.fromJson(e)).toList();
+}
 
 class MatchesAndChatsScreen extends StatefulWidget {
   static const routeName = '/matches-and-chats-screen';
@@ -17,11 +23,21 @@ class MatchesAndChatsScreen extends StatefulWidget {
 }
 
 class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
+  List<MiniProfile> listOfStumbleMatches = [];
+  List<MiniProfile> listOfMatchesConversationStartedWith = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getMatches().then((values) {
+      setState(() {
+        listOfStumbleMatches = values;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<dynamic> listOfStumbleMatches =
-        Provider.of<Profile>(context, listen: false)
-            .currentListOfMatchesForCurrentUser;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: const TopAppBar(),
@@ -44,16 +60,19 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
                         children: List.generate(listOfStumbleMatches.length,
                             (int index) {
                           return Container(
-                            margin: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width / 32,
-                              right: MediaQuery.of(context).size.width / 32,
-                            ),
-                            color: widgetColor,
-                            child:
-                                listOfStumbleMatches[index]['photos'][0] != null
-                                    ? (listOfStumbleMatches[index]['photos'][0])
-                                    : null,
-                          );
+                              margin: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width / 32,
+                                right: MediaQuery.of(context).size.width / 32,
+                              ),
+                              // color: widgetColor,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          listOfStumbleMatches[index].photo ??
+                                              defaultBackupImage))),
+                              child: Text(
+                                listOfStumbleMatches[index].name,
+                              ));
                         }),
                       ),
                     ),

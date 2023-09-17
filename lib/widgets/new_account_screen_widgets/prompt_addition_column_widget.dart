@@ -60,7 +60,6 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
           () {
             Provider.of<Profile>(context, listen: false).setProfilePrompt =
                 promptTextValue;
-            Provider.of<Profile>(context, listen: false).createUserAPI();
           },
         ),
       ],

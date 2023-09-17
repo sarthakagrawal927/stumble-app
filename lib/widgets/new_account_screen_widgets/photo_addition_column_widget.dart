@@ -77,7 +77,6 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
             Provider.of<Profile>(context, listen: false).uploadPhotosAPI(1);
             Provider.of<FirstScreenStateProviders>(context, listen: false)
                 .setNextScreenActive();
-            //Provider.of<Profile>(context, listen: false).createUserAPI();
           },
         ),
       ],
