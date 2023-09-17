@@ -10,8 +10,12 @@ class MessageBubble extends StatelessWidget {
   final int receiverId;
 
   @override
-  const MessageBubble(this.message, this.isMe, this.messageId, this.receiverId,
-      {required super.key});
+  const MessageBubble(
+      {required this.message,
+      required this.isMe,
+      required this.messageId,
+      required this.receiverId,
+      required super.key});
 
   @override
   Widget build(BuildContext context) {

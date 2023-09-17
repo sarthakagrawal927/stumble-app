@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/global_store.dart';
+import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -36,6 +37,9 @@ enum ApiType {
   getILiked,
   getLikedBy,
   getMatches,
+  getThreads,
+  getMessages,
+  addMessage
 }
 
 const apiList = {
@@ -47,6 +51,9 @@ const apiList = {
   ApiType.getILiked: "/api/v1/activity?status=1",
   ApiType.getMatches: "/api/v1/activity?status=69",
   ApiType.getLikedBy: "/api/v1/activity/liked_by",
+  ApiType.getThreads: "/api/v1/chat/threads",
+  ApiType.getMessages: "/api/v1/chat",
+  ApiType.addMessage: "/api/v1/chat",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -58,7 +65,9 @@ String getUrlFromQueryParams(queryParams) {
   if (queryParams!.isEmpty) {
     return '';
   }
-  return "?${queryParams.entries.map((e) => '${e.key}=${e.value}').join('&')}";
+  String queryString =
+      "?${queryParams.entries.map((e) => '${e.key}=${e.value}').join('&')}";
+  return queryString;
 }
 
 Future<Map<String, dynamic>> callAPI(
@@ -174,4 +183,34 @@ Future<List<dynamic>> getPeopleWhoLikedMe() async {
       method: HttpMethods.get);
   debugPrint(data.toString());
   return data["activities"];
+}
+
+Future<List<dynamic>> getThreads() async {
+  var data = await callAPI(getApiEndpoint(ApiType.getThreads),
+      method: HttpMethods.get);
+  debugPrint(data.toString());
+  return data["threads"];
+}
+
+Future<List<dynamic>> getChatMessages(String threadId) async {
+  var data = await callAPI(getApiEndpoint(ApiType.getMessages),
+      method: HttpMethods.get, queryParams: {"thread_id": threadId});
+  debugPrint(data.toString());
+  return data["messages"];
+}
+
+Future<ChatMessage> addChatMessage(
+  String threadId,
+  String message,
+  int receiverId,
+) async {
+  var data = await callAPI(getApiEndpoint(ApiType.addMessage),
+      method: HttpMethods.post,
+      bodyParams: {
+        'message': message,
+        'threadId': threadId,
+        'receiverId': receiverId
+      });
+  debugPrint(data.toString());
+  return ChatMessage.fromJson(data["message"]);
 }

@@ -1,15 +1,14 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/models/chat.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../providers/profile.dart';
 import '../../screens/individual_chats_screen.dart';
 import '../circle_avatar.dart';
 
 class ContainerOfMatchOverview extends StatefulWidget {
   const ContainerOfMatchOverview(this.threadDetails, {super.key});
 
-  final dynamic threadDetails;
+  final ChatThread threadDetails;
 
   @override
   State<ContainerOfMatchOverview> createState() =>
@@ -21,9 +20,8 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        Navigator.of(context).pushNamed(ChatScreen.routeName);
-        await Provider.of<Profile>(context, listen: false)
-            .getMessagesAPI(widget.threadDetails['thread_id']);
+        Navigator.of(context)
+            .pushNamed(ChatScreen.routeName, arguments: widget.threadDetails);
       },
       child: Container(
         color: Colors.black,
@@ -42,7 +40,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
             Column(
               children: [
                 Text(
-                  widget.threadDetails['name'],
+                  widget.threadDetails.name,
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

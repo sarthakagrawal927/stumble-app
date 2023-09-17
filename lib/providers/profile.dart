@@ -191,49 +191,7 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  // INTEGRATION APIs
-  Future<void> getMessagesAPI(String threadId) async {
-    currentThreadId = threadId;
-    final urlToCallGetMessagesFromBackend =
-        '$url/api/v1/chat?thread_id=$currentThreadId';
-    try {
-      final response = await _chuckerHttpClient.get(
-          Uri.parse(urlToCallGetMessagesFromBackend),
-          headers: {'Authorization': bearerToken});
-
-      final decodedResponseFromBackend = jsonDecode(response.body);
-      final data = decodedResponseFromBackend['data'] as List;
-      logger.i("Data of get message: $data");
-
-      messagesListForCorrespondingThread = data;
-      notifyListeners();
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<Map<String, dynamic>> addMessageAPI(
-      String message, int receiverId, String threadId) async {
-    final urlToCallAddMessageFromBackend = '$url/api/v1/chat';
-    try {
-      final response = await _chuckerHttpClient
-          .post(Uri.parse(urlToCallAddMessageFromBackend), body: {
-        'message': message,
-        'receiverId': receiverId.toString(),
-        'threadId': threadId
-      }, headers: {
-        'Authorization': bearerToken
-      });
-      final decodedResponseFromBackend = jsonDecode(response.body);
-      final data = decodedResponseFromBackend['data'] as Map<String, dynamic>;
-      logger.i("Data of add message: $data");
-
-      return data;
-    } catch (error) {
-      rethrow;
-    }
-  }
-
+  // INTEGRATION API
   Future<void> deleteMessageAPI(int messageId, int receiverId) async {
     final urlToCallDeleteMessageFromBackend = '$url/api/v1/chat/delete';
     try {

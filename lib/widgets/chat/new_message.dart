@@ -1,37 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../constants.dart';
-import '../../providers/profile.dart';
 
-class NewMessage extends StatefulWidget {
-  const NewMessage({super.key});
-
-  @override
-  State<NewMessage> createState() => _NewMessageState();
-}
-
-class _NewMessageState extends State<NewMessage> {
+class NewMessage extends StatelessWidget {
   String _enteredMessage = "";
-  String _threadId = "";
-  int _currentUser = -1;
+  final Future<void> Function(String) sendMessage;
+  NewMessage({required this.sendMessage, super.key});
+  // receive sendMessage function from caller
+
   final _controller = TextEditingController();
-  void _sendMessage() async {
-    FocusScope.of(context).unfocus();
-    _controller.clear();
-    Map<String, dynamic> response =
-        await Provider.of<Profile>(context, listen: false)
-            .addMessageAPI(_enteredMessage, _currentUser, _threadId);
-    // ignore: use_build_context_synchronously
-    Provider.of<Profile>(context, listen: false)
-        .addMessageToMessagesList(response);
-    _enteredMessage = "";
-  }
 
   @override
   Widget build(BuildContext context) {
-    _currentUser = Provider.of<Profile>(context, listen: false).currentUser;
-    _threadId = Provider.of<Profile>(context, listen: false).currentThreadId;
     return Container(
       color: const Color.fromRGBO(38, 41, 42, 1),
       margin: const EdgeInsets.only(
@@ -58,8 +38,10 @@ class _NewMessageState extends State<NewMessage> {
           ),
           IconButton(
             color: const Color.fromRGBO(38, 41, 42, 1),
-            onPressed: () {
-              _enteredMessage.trim().isEmpty ? null : _sendMessage();
+            onPressed: () async {
+              _enteredMessage.trim().isEmpty
+                  ? null
+                  : await sendMessage(_enteredMessage);
             },
             icon: const Icon(
               Icons.send,

@@ -1,3 +1,4 @@
+import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/matches_conversation_started_with.dart';
@@ -13,6 +14,12 @@ Future<List<MiniProfile>> _getMatches() async {
   return profiles.map<MiniProfile>((e) => MiniProfile.fromJson(e)).toList();
 }
 
+Future<List<ChatThread>> _getThreads() async {
+  var threads = await getThreads();
+  debugPrint(threads.length.toString());
+  return threads.map<ChatThread>((e) => ChatThread.fromJson(e)).toList();
+}
+
 class MatchesAndChatsScreen extends StatefulWidget {
   static const routeName = '/matches-and-chats-screen';
 
@@ -24,14 +31,18 @@ class MatchesAndChatsScreen extends StatefulWidget {
 
 class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
   List<MiniProfile> listOfStumbleMatches = [];
-  List<MiniProfile> listOfMatchesConversationStartedWith = [];
+  List<ChatThread> listOfMatchesConversationStartedWith = [];
 
   @override
   void initState() {
     super.initState();
-    _getMatches().then((values) {
+    Future<List<MiniProfile>> matchesFuture = _getMatches();
+    Future<List<ChatThread>> threadsFuture = _getThreads();
+
+    Future.wait([matchesFuture, threadsFuture]).then((List<dynamic> results) {
       setState(() {
-        listOfStumbleMatches = values;
+        listOfStumbleMatches = results[0] as List<MiniProfile>;
+        listOfMatchesConversationStartedWith = results[1] as List<ChatThread>;
       });
     });
   }
@@ -77,7 +88,8 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
                       ),
                     ),
                   ),
-                  const MatchesConversationStartedWith(),
+                  MatchesConversationStartedWith(
+                      listOfMatchesConversationStartedWith),
                 ],
               ),
             ),
