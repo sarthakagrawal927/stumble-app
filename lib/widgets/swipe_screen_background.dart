@@ -15,12 +15,6 @@ class BackgroudCurveWidget extends StatelessWidget {
             bottomRight: Radius.circular(64),
           ),
         ),
-        gradient: LinearGradient(
-          colors: <Color>[
-            Color.fromRGBO(102, 52, 127, 1),
-            Color.fromRGBO(102, 52, 127, 0.5),
-          ],
-        ),
       ),
       child: Container(),
     );

@@ -219,6 +219,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                 style: TextStyle(
                   fontSize: 25,
                   color: headingColor,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
             )),

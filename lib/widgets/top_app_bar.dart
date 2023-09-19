@@ -14,20 +14,6 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         MediaQuery.of(context).size.height / 16,
       ),
       child: AppBar(
-        leading: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            padding:
-                EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
-            backgroundColor: topAppBarColor,
-          ),
-          onPressed: () {
-            // Call location API here.
-          },
-          child: const Icon(
-            Icons.navigation_sharp,
-            color: headingColor,
-          ),
-        ),
         actions: [
           DropdownButton(
             dropdownColor: backgroundColor,
@@ -75,7 +61,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
             },
             icon: const Icon(
               Icons.menu,
-              color: topAppBarColor,
+              color: headingColor,
             ),
           ),
         ],
@@ -86,9 +72,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: const Text(
             'Stumble!',
             style: TextStyle(
-              fontSize: 25,
-              color: headingColor,
-            ),
+                fontSize: 25, color: headingColor, fontWeight: FontWeight.w900),
           ),
         ),
       ),
