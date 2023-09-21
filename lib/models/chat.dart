@@ -1,10 +1,12 @@
+import 'package:dating_made_better/constants.dart';
+
 class ChatThread {
   final String threadId;
   final int userId;
   final int chatterId;
   final int lastMsgId;
   final String name;
-  final String? displayPic;
+  final String displayPic;
   final String message;
   final DateTime createdAt;
 
@@ -14,20 +16,23 @@ class ChatThread {
       required this.chatterId,
       required this.lastMsgId,
       required this.name,
-      this.displayPic,
+      required this.displayPic,
       required this.message,
       required this.createdAt});
 
   static fromJson(dynamic thread) {
+    // {thread_id: 3f8e13a7-38d4-4ac2-9807-7f8b8d9f495e, user_id: 1600, chatter_id: 1604, last_msg_id: 20974, name: Sarthak6, display_pic: null, message: Hi 100, createdAt: 2023-09-21T17:50:02.705Z}
     return ChatThread(
       threadId: thread["thread_id"],
       userId: thread["user_id"],
       chatterId: thread["chatter_id"],
       lastMsgId: thread["last_msg_id"],
       name: thread["name"],
-      displayPic: thread["display_pic"],
-      message: thread["message"],
-      createdAt: DateTime.parse(thread["createdAt"]),
+      displayPic: thread["display_pic"] ?? defaultBackupImage,
+      message: thread["message"] ?? "",
+      createdAt: thread["createdAt"]
+          ? DateTime.parse(thread["createdAt"])
+          : DateTime.now(),
     );
   }
 }
