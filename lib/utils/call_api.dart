@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
-const String baseURL = 'http://192.168.1.5:8080';
+const String baseURL = 'https://stumbe.onrender.com';
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
 final logger = Logger();
 

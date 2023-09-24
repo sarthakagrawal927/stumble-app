@@ -21,7 +21,7 @@ class ChatThread {
       required this.createdAt});
 
   static fromJson(dynamic thread) {
-    // {thread_id: 3f8e13a7-38d4-4ac2-9807-7f8b8d9f495e, user_id: 1600, chatter_id: 1604, last_msg_id: 20974, name: Sarthak6, display_pic: null, message: Hi 100, createdAt: 2023-09-21T17:50:02.705Z}
+    // {"thread_id":"5a3a95b2-b468-47f6-9548-3f5ef77805e2","user_id":1,"chatter_id":2,"last_msg_id":1,"name":"Sarthak1","display_pic":null,"message":"Hi 0","createdAt":"2023-09-19T15:08:49.550Z"}
     return ChatThread(
       threadId: thread["thread_id"],
       userId: thread["user_id"],
@@ -30,9 +30,7 @@ class ChatThread {
       name: thread["name"],
       displayPic: thread["display_pic"] ?? defaultBackupImage,
       message: thread["message"] ?? "",
-      createdAt: thread["createdAt"]
-          ? DateTime.parse(thread["createdAt"])
-          : DateTime.now(),
+      createdAt: DateTime.parse(thread["createdAt"]),
     );
   }
 }
@@ -65,7 +63,7 @@ class ChatMessage {
       threadId: message["thread_id"],
       senderId: message["sender_id"],
       receiverId: message["receiver_id"],
-      replyMessageId: message["reply_message_id"],
+      replyMessageId: message["reply_message_id"] ?? 0,
       message: message["message"],
       status: message["status"],
       createdAt: DateTime.parse(message["createdAt"]),
