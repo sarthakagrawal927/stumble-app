@@ -26,25 +26,32 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
       child: Container(
         color: Colors.black,
         margin: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height / 32,
           left: MediaQuery.of(context).size.width / 24,
           right: MediaQuery.of(context).size.width / 32,
+        ),
+        padding: EdgeInsets.all(
+          MediaQuery.of(context).size.width / 32,
         ),
         child: Row(
           children: [
             // CircleAvatarWidget(threadDetails['display_pic']),
-            CircleAvatarWidget(defaultBackupImage),
+            CircleAvatarWidget(35, defaultBackupImage),
             SizedBox(
               width: MediaQuery.of(context).size.width / 24,
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.threadDetails.name,
                   style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white54),
+                      color: Colors.white70),
+                ),
+                Text(
+                  widget.threadDetails.message,
+                  style: const TextStyle(fontSize: 12.5, color: Colors.white54),
                 ),
               ],
             ),

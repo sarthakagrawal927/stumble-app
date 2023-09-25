@@ -1,8 +1,12 @@
+import 'dart:ui';
+
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/matches_conversation_started_with.dart';
+import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
@@ -54,46 +58,34 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
       appBar: const TopAppBar(),
       body: Container(
         color: backgroundColor,
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width / 5,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width / 32,
-                        bottom: MediaQuery.of(context).size.width / 32,
+        child: Expanded(
+          child: ListView(
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 5,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children:
+                      List.generate(listOfStumbleMatches.length, (int index) {
+                    return Container(
+                      margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height / 32,
+                        bottom: MediaQuery.of(context).size.height / 32,
+                        left: MediaQuery.of(context).size.width / 32,
+                        right: MediaQuery.of(context).size.width / 32,
                       ),
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: List.generate(listOfStumbleMatches.length,
-                            (int index) {
-                          return Container(
-                              margin: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width / 32,
-                                right: MediaQuery.of(context).size.width / 32,
-                              ),
-                              // color: widgetColor,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          listOfStumbleMatches[index].photo ??
-                                              defaultBackupImage))),
-                              child: Text(
-                                listOfStumbleMatches[index].name,
-                              ));
-                        }),
-                      ),
-                    ),
-                  ),
-                  MatchesConversationStartedWith(
-                      listOfMatchesConversationStartedWith),
-                ],
+                      child: CircleAvatarWidget(
+                          35,
+                          listOfStumbleMatches[index].photo ??
+                              defaultBackupImage),
+                    );
+                  }),
+                ),
               ),
-            ),
-          ],
+              MatchesConversationStartedWith(
+                  listOfMatchesConversationStartedWith),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: const BottomBar(currentScreen: "ChatScreen"),
