@@ -72,7 +72,7 @@ class _NameColumnState extends State<NameColumn> {
               ),
             ),
             keyboardType: TextInputType.name,
-            onSubmitted: (value) {
+            onChanged: (value) {
               setState(() {
                 _name = value;
               });

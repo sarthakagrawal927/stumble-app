@@ -34,6 +34,22 @@ class _AgeColumnState extends State<AgeColumn> {
     super.dispose();
   }
 
+  int findAge() {
+    int age = 0;
+    int currentYear = DateTime.now().year;
+    int currentMonth = DateTime.now().month;
+    int currentDate = DateTime.now().day;
+
+    age += currentYear - _year;
+    if (_month < currentMonth) {
+      age -= 1;
+    } else if (_month == currentMonth && _day > currentDate) {
+      age -= 1;
+    }
+
+    return age;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -134,8 +150,9 @@ class _AgeColumnState extends State<AgeColumn> {
         ScreenGoToNextPageRow("This will be shown on your profile!", "", () {
           Provider.of<FirstScreenStateProviders>(context, listen: false)
               .setNextScreenActive();
-          Provider.of<Profile>(context, listen: false).setAge =
+          Provider.of<Profile>(context, listen: false).setBirthDate =
               "$_day-$_month-$_year";
+          Provider.of<Profile>(context, listen: false).setAge = findAge();
         }),
       ],
     );

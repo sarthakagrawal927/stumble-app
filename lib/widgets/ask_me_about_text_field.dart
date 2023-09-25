@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class AskMeAboutTextField extends StatelessWidget {
-  const AskMeAboutTextField(this._conversationStarterFocusNode, this.ctx,
+  const AskMeAboutTextField(
+      this._conversationStarterFocusNode, this.ctx, this.currentValue,
       {super.key});
   final FocusNode _conversationStarterFocusNode;
   final BuildContext ctx;
+  final String currentValue;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class AskMeAboutTextField extends StatelessWidget {
               fontSize: 20,
               backgroundColor: widgetColor,
             ),
-            initialValue: '',
+            initialValue: currentValue,
             maxLines: 3,
             minLines: 1,
             keyboardAppearance: Brightness.dark,

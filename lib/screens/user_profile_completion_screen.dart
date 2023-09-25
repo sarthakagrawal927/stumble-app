@@ -21,7 +21,6 @@ class UserProfileCompletionScreen extends StatefulWidget {
 
 class _UserProfileCompletionScreenState
     extends State<UserProfileCompletionScreen> {
-  bool isProfileVerified = true;
   final _conversationStarterFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
 
@@ -77,6 +76,12 @@ class _UserProfileCompletionScreenState
 
   @override
   Widget build(BuildContext context) {
+    int profileCompletionPercentage =
+        Provider.of<Profile>(context).getPercentageOfProfileCompleted.toInt();
+    String conversationStarterPrompt =
+        Provider.of<Profile>(context).getConversationStarterPrompt;
+    bool isProfileVerified =
+        Provider.of<Profile>(context).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: const TopAppBar(),
@@ -111,10 +116,10 @@ class _UserProfileCompletionScreenState
                       Padding(
                         padding: EdgeInsets.only(
                             top: MediaQuery.of(context).size.width / 16),
-                        child: const Text(
+                        child: Text(
                           textAlign: TextAlign.start,
-                          '20%',
-                          style: TextStyle(
+                          "$profileCompletionPercentage%",
+                          style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -138,14 +143,14 @@ class _UserProfileCompletionScreenState
                     padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width / 16,
                         vertical: MediaQuery.of(context).size.width / 16),
-                    child: Column(
-                      children: <Widget>[
-                        const Icon(
-                          Icons.verified_sharp,
-                          color: Colors.blueAccent,
-                        ),
-                        isProfileVerified
-                            ? Padding(
+                    child: isProfileVerified
+                        ? Column(
+                            children: <Widget>[
+                              const Icon(
+                                Icons.verified_sharp,
+                                color: Colors.blueAccent,
+                              ),
+                              Padding(
                                 padding: EdgeInsets.only(
                                     top:
                                         MediaQuery.of(context).size.width / 20),
@@ -153,12 +158,20 @@ class _UserProfileCompletionScreenState
                                   'Verified',
                                   textAlign: TextAlign.end,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.blueAccent,
                                     fontSize: 15,
                                   ),
                                 ),
-                              )
-                            : Padding(
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: <Widget>[
+                              const Icon(
+                                Icons.verified_outlined,
+                                color: Colors.white,
+                              ),
+                              Padding(
                                 padding: EdgeInsets.only(
                                     top:
                                         MediaQuery.of(context).size.width / 20),
@@ -166,13 +179,13 @@ class _UserProfileCompletionScreenState
                                   'Verify my profile',
                                   textAlign: TextAlign.end,
                                   style: TextStyle(
-                                    color: Colors.blueAccent,
+                                    color: Colors.white,
                                     fontSize: 15,
                                   ),
                                 ),
                               ),
-                      ],
-                    ),
+                            ],
+                          ),
                   ),
                 ),
               ),
@@ -296,8 +309,8 @@ class _UserProfileCompletionScreenState
                   EdgeInsets.only(top: MediaQuery.of(context).size.width / 16),
               child: Form(
                   key: _form,
-                  child: AskMeAboutTextField(
-                      _conversationStarterFocusNode, context)),
+                  child: AskMeAboutTextField(_conversationStarterFocusNode,
+                      context, conversationStarterPrompt)),
             ),
           ),
         ],

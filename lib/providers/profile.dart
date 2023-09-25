@@ -23,6 +23,7 @@ class Profile with ChangeNotifier {
   RangeValues ageRangePreference;
   List<Gender> genderPreferences;
   String bearerToken = AppConstants.token;
+  double profileCompletionAmount = 0.0;
 
   Profile({
     required this.id,
@@ -38,7 +39,7 @@ class Profile with ChangeNotifier {
     this.genderPreferences = const [Gender.man],
   });
 
-  final url = 'http://192.168.1.3:8080';
+  final url = 'https://stumbe.onrender.com';
   final _chuckerHttpClient = ChuckerHttpClient(http.Client());
   int currentUser = -1;
   String currentThreadId = "";
@@ -48,6 +49,7 @@ class Profile with ChangeNotifier {
 
   set setName(String nameInput) {
     name = nameInput;
+    profileCompletionAmount += 1;
     notifyListeners();
   }
 
@@ -56,33 +58,44 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  set setAge(String birthDateInput) {
+  set setBirthDate(String birthDateInput) {
     birthDate = birthDateInput;
+    profileCompletionAmount += 1;
+    notifyListeners();
+  }
+
+  set setAge(int age) {
+    age = age;
     notifyListeners();
   }
 
   set setGender(Gender genderInput) {
     gender = genderInput;
+    profileCompletionAmount += 1;
     notifyListeners();
   }
 
   set setProfilePrompt(String conversationStarterPromptInput) {
     conversationStarter = conversationStarterPromptInput;
+    profileCompletionAmount += 1;
     notifyListeners();
   }
 
   set setFirstImage(File firstImageFile) {
     photos.add(firstImageFile);
+    profileCompletionAmount += 1;
     notifyListeners();
   }
 
   set setSecondImage(File secondImageFile) {
     photos.add(secondImageFile);
+    profileCompletionAmount += 1;
     notifyListeners();
   }
 
   set setThirdImage(File thirdImageFile) {
     photos.add(thirdImageFile);
+    profileCompletionAmount += 1;
     notifyListeners();
   }
 
@@ -103,12 +116,20 @@ class Profile with ChangeNotifier {
 
   // Getters
 
+  String get getName {
+    return name;
+  }
+
   int get getAge {
-    return 20;
+    return age;
   }
 
   String get getPhone {
     return phoneNumber;
+  }
+
+  bool get getPhotoVerificationStatus {
+    return photoVerified;
   }
 
   File get getFirstImageUrl {
@@ -121,6 +142,14 @@ class Profile with ChangeNotifier {
 
   File get getThirdImageUrl {
     return photos[0];
+  }
+
+  String get getConversationStarterPrompt {
+    return conversationStarter;
+  }
+
+  double get getPercentageOfProfileCompleted {
+    return profileCompletionAmount * 100 / 7;
   }
 
   bool isFirstImagePresent() {

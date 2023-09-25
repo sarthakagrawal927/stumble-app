@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 
+// ignore: must_be_immutable
 class NewMessage extends StatelessWidget {
   String _enteredMessage = "";
   final Future<void> Function(String) sendMessage;
