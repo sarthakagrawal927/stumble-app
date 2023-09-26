@@ -229,9 +229,10 @@ class _UserProfileCompletionScreenState
                         ),
                       ),
                       onPressed: () {},
-                      child: Image.file(
+                      child: Image.network(
                         Provider.of<Profile>(context, listen: false)
-                            .getFirstImageUrl,
+                            .getFirstImageUrl
+                            .path,
                         fit: BoxFit.fill,
                         width: double.infinity,
                         height: double.infinity,
@@ -252,9 +253,10 @@ class _UserProfileCompletionScreenState
                               getSecondImageFromGallery(context);
                             },
                             child: secondImageExists()
-                                ? Image.file(
+                                ? Image.network(
                                     Provider.of<Profile>(context, listen: false)
-                                        .getSecondImageUrl,
+                                        .getSecondImageUrl
+                                        .path,
                                     fit: BoxFit.fill,
                                     width: double.infinity,
                                     height: double.infinity,
@@ -276,9 +278,10 @@ class _UserProfileCompletionScreenState
                             ),
                             onPressed: getThirdImageFromGallery,
                             child: thirdImageExists()
-                                ? Image.file(
+                                ? Image.network(
                                     Provider.of<Profile>(context, listen: false)
-                                        .getThirdImageUrl,
+                                        .getThirdImageUrl
+                                        .path,
                                     fit: BoxFit.fill,
                                     width: double.infinity,
                                     height: double.infinity,

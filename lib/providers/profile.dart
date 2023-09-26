@@ -183,15 +183,15 @@ class Profile with ChangeNotifier {
   }
 
   bool isFirstImagePresent() {
-    return photos.isNotEmpty && photos[0].isAbsolute && photos[0] != File("");
+    return photos.isNotEmpty && photos[0] != File("");
   }
 
   bool isSecondImagePresent() {
-    return photos.length > 1 && photos[1].isAbsolute && photos[1] != File("");
+    return photos.length > 1 && photos[1] != File("");
   }
 
   bool isThirdImagePresent() {
-    return photos.length > 2 && photos[2].isAbsolute && photos[2] != File("");
+    return photos.length > 2 && photos[2] != File("");
   }
 
   Set<Profile> undoListOfProfilesForCurrentUser = {};
@@ -295,7 +295,8 @@ class Profile with ChangeNotifier {
   // "id":1598,"name":"sartjakl","phone":"+919792972971","dob":"2023-09-24T18:30:00.000Z","gender":0,"photos":["/data/user/0/com.example.dating_made_better/cache/614c25d7-f53c-4b63-a6a6-4d9a4b20b59d/Screenshot_20230926-165250.png"],"role":11,"phone_verified":true,"photo_verified":false,"conversation_starter":"dwqdqwd2","target_age":[],"target_gender":[1,2],"instagram_id":null,"snapchat_id":null,"twitter_id":null,"height":22,"interests":["dance","music","sports"],"voice_note":null,"workDesignation":"Software Engineer","workPlace":"Bangalore","education":"B.Tech","educationCompletionYear":2022,"languages":["english","hindi"],"religion":"hindu","createdAt":"2023-09-21T17:50:02.314Z","updatedAt":"2023-09-26T15:36:01.713Z"
   static fromJson(profile) {
     List<String> photoList = profile["photos"].cast<String>();
-    List<File> photoFileList = photoList.map((e) => File(e)).toList();
+    List<File> photoFileList =
+        photoList.map((e) => File(e.toString())).toList();
 
     return Profile(
       id: profile["id"],
