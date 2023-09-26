@@ -7,6 +7,7 @@ import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +119,7 @@ Future<Map<String, dynamic>> callAPI(
   }
 }
 
-Future<void> verifyOtpApi(String otpEntered, String phoneNumber) async {
+Future<Profile> verifyOtpApi(String otpEntered, String phoneNumber) async {
   final data = await callAPI(getApiEndpoint(ApiType.verifyOtp),
       bodyParams: {
         'otp': otpEntered,
@@ -126,8 +127,10 @@ Future<void> verifyOtpApi(String otpEntered, String phoneNumber) async {
       },
       method: HttpMethods.post);
   AppConstants.token = data[authKey];
+  AppConstants.user = data["user"];
   // add to storage
   await writeSecureData(authKey, AppConstants.token);
+  return Profile.fromJson(data);
 }
 
 Future<void> sendOtpApi(String phoneNumber) async {
@@ -143,14 +146,14 @@ Future<void> upsertUserApi(Map<String, dynamic> bodyParams) async {
       bodyParams: bodyParams, method: HttpMethods.post);
 }
 
-Future<dynamic> getUserApi() async {
+Future<Profile> getUserApi() async {
   var authToken = await readSecureData(authKey);
   AppConstants.token = authToken ?? "";
   var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
       method: HttpMethods.get);
   AppConstants.user = data;
   await writeSecureData("user", jsonEncode(data));
-  return data;
+  return Profile.fromJson(data);
 }
 
 Future<List<dynamic>> getPotentialStumblesApi() async {

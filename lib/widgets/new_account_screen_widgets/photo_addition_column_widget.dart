@@ -27,10 +27,11 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
+      imageUrl = File(pickedFile.path);
       List<String>? filePaths = await uploadPhotosAPI([File(pickedFile.path)]);
-      imageUrl = File(filePaths?.first ?? pickedFile.path);
       // ignore: use_build_context_synchronously
-      Provider.of<Profile>(context, listen: false).addImage = imageUrl;
+      Provider.of<Profile>(context, listen: false).addImage =
+          File(filePaths?.first ?? pickedFile.path);
     }
   }
 

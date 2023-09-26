@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,9 +34,11 @@ class _UserProfileCompletionScreenState
     if (pickedFile != null) {
       secondImageUrl = File(pickedFile.path);
       if (context.mounted) {
-        Provider.of<Profile>(context, listen: false).setSecondImage =
-            secondImageUrl;
-        // Provider.of<Profile>(context, listen: false).uploadPhotosAPI(2);
+        List<String>? filePaths =
+            await uploadPhotosAPI([File(pickedFile.path)]);
+        // ignore: use_build_context_synchronously
+        Provider.of<Profile>(context, listen: false).addImage =
+            File(filePaths?.first ?? pickedFile.path);
       }
     }
   }
@@ -47,9 +50,11 @@ class _UserProfileCompletionScreenState
     if (pickedFile != null) {
       thirdImageUrl = File(pickedFile.path);
       if (context.mounted) {
-        Provider.of<Profile>(context, listen: false).setThirdImage =
-            thirdImageUrl;
-        // Provider.of<Profile>(context, listen: false).uploadPhotosAPI(3);
+        List<String>? filePaths =
+            await uploadPhotosAPI([File(pickedFile.path)]);
+        // ignore: use_build_context_synchronously
+        Provider.of<Profile>(context, listen: false).addImage =
+            File(filePaths?.first ?? pickedFile.path);
       }
     }
   }
@@ -71,6 +76,7 @@ class _UserProfileCompletionScreenState
   @override
   void initState() {
     super.initState();
+    Provider.of<Profile>(context, listen: false).setEntireProfileForEdit();
   }
 
   @override
@@ -308,6 +314,27 @@ class _UserProfileCompletionScreenState
                     context,
                     conversationStarterPrompt),
               ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () async => {
+              await upsertUserApi({
+                "conversation_starter":
+                    Provider.of<Profile>(context, listen: false)
+                        .getConversationStarterPrompt,
+                "photos": Provider.of<Profile>(context, listen: false)
+                    .getPhotos
+                    .map((e) => e.path)
+                    .toList(),
+                "dob": Provider.of<Profile>(context, listen: false)
+                    .getBirthDate
+                    .toIso8601String()
+              })
+            },
+            child: const Padding(
+              padding: EdgeInsets.all(24),
+              key: Key("saveButton"),
+              child: Text("Save"),
             ),
           ),
         ],

@@ -44,8 +44,8 @@ class AskMeAboutTextField extends StatelessWidget {
             textInputAction: TextInputAction.next,
             cursorColor: whiteColor,
             onChanged: (newValue) => {
-              Provider.of<Profile>(context, listen: false).setProfilePrompt =
-                  newValue,
+              Provider.of<Profile>(context, listen: false)
+                  .setConversationStarter = newValue,
             },
             onEditingComplete: () =>
                 FocusScope.of(ctx).requestFocus(_conversationStarterFocusNode),

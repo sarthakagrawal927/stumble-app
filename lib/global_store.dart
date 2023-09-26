@@ -1,5 +1,5 @@
 // replace in time with some global state management
 class AppConstants {
   static String token = "";
-  static dynamic user = {};
+  static Map<String, dynamic> user = {};
 }

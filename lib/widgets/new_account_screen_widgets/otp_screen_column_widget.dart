@@ -1,5 +1,7 @@
 import 'package:dating_made_better/global_store.dart';
+import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
+import 'package:dating_made_better/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,8 +58,14 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
 
             setState(() {
               if (AppConstants.token.isNotEmpty) {
+                ScreenMode screenMode = getScreenMode();
+                if (screenMode == ScreenMode.swipingScreen) {
+                  // redirect to swiping screen
+                  Navigator.of(context)
+                      .pushReplacementNamed(SwipingScreen.routeName);
+                }
                 Provider.of<FirstScreenStateProviders>(context, listen: false)
-                    .setNextScreenActive();
+                    .setActiveScreenMode(screenMode);
               }
             });
           }, // end onSubmit

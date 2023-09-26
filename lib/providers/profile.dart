@@ -32,7 +32,7 @@ class Profile with ChangeNotifier {
     required this.gender,
     this.age = 22,
     DateTime? birthDate,
-    this.photos = const [],
+    required this.photos,
     this.photoVerified = true,
     this.conversationStarter = "Hi there, I am on Stumble!",
     this.nicheFilterSelected = false,
@@ -73,10 +73,15 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  set setProfilePrompt(String conversationStarterPromptInput) {
+  set setConversationStarter(String conversationStarterPromptInput) {
     conversationStarter = conversationStarterPromptInput;
     profileCompletionAmount += 1;
     // as this is the last screen need to call upsertUser
+    notifyListeners();
+  }
+
+  set setPhotos(List<File> photosInput) {
+    photos = photosInput;
     notifyListeners();
   }
 
@@ -139,16 +144,24 @@ class Profile with ChangeNotifier {
     return photoVerified;
   }
 
+  List<File> get getPhotos {
+    return photos;
+  }
+
+  DateTime get getBirthDate {
+    return birthDate;
+  }
+
   File get getFirstImageUrl {
-    return photos[0];
+    return isFirstImagePresent() ? photos[0] : File(defaultBackupImage);
   }
 
   File get getSecondImageUrl {
-    return photos[0];
+    return isSecondImagePresent() ? photos[1] : File(defaultBackupImage);
   }
 
   File get getThirdImageUrl {
-    return photos[0];
+    return isThirdImagePresent() ? photos[2] : File(defaultBackupImage);
   }
 
   String get getConversationStarterPrompt {
@@ -237,6 +250,21 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
+  void setEntireProfileForEdit() {
+    Profile fromConstants = Profile.fromJson(AppConstants.user);
+    name = fromConstants.name;
+    gender = fromConstants.gender;
+    birthDate = fromConstants.birthDate;
+    conversationStarter = fromConstants.conversationStarter;
+    photos = fromConstants.photos;
+    photoVerified = fromConstants.photoVerified;
+    age = fromConstants.age;
+    phoneNumber = fromConstants.phoneNumber;
+    profileCompletionAmount =
+        photos.length * 1.0 + conversationStarter.length > 0 ? 1.0 : 0.0;
+    // notifyListeners();
+  }
+
   // INTEGRATION API
   Future<void> deleteMessageAPI(int messageId, int receiverId) async {
     final urlToCallDeleteMessageFromBackend = '$url/api/v1/chat/delete';
@@ -264,15 +292,18 @@ class Profile with ChangeNotifier {
     });
   }
 
+  // "id":1598,"name":"sartjakl","phone":"+919792972971","dob":"2023-09-24T18:30:00.000Z","gender":0,"photos":["/data/user/0/com.example.dating_made_better/cache/614c25d7-f53c-4b63-a6a6-4d9a4b20b59d/Screenshot_20230926-165250.png"],"role":11,"phone_verified":true,"photo_verified":false,"conversation_starter":"dwqdqwd2","target_age":[],"target_gender":[1,2],"instagram_id":null,"snapchat_id":null,"twitter_id":null,"height":22,"interests":["dance","music","sports"],"voice_note":null,"workDesignation":"Software Engineer","workPlace":"Bangalore","education":"B.Tech","educationCompletionYear":2022,"languages":["english","hindi"],"religion":"hindu","createdAt":"2023-09-21T17:50:02.314Z","updatedAt":"2023-09-26T15:36:01.713Z"
   static fromJson(profile) {
+    List<String> photoList = profile["photos"].cast<String>();
+    List<File> photoFileList = photoList.map((e) => File(e)).toList();
+
     return Profile(
       id: profile["id"],
       name: profile["name"],
       gender: Gender.values[profile["gender"]],
       conversationStarter: profile["conversation_starter"],
-      age: profile["age"] ?? 22,
       photoVerified: profile["photo_verified"],
-      photos: profile["photos"] ?? [],
+      photos: photoFileList,
     );
   }
 }

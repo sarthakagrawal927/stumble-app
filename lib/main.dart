@@ -1,10 +1,9 @@
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/constants.dart';
-import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
-import 'package:dating_made_better/utils/general.dart';
+import 'package:dating_made_better/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -22,25 +21,6 @@ Future<void> _setUserAuthToken() async {
     await getUserApi();
   } catch (e) {
     debugPrint(e.toString());
-  }
-}
-
-ScreenMode getScreenMode() {
-  bool userIsEmpty = isNullEmptyOrFalse(AppConstants.user);
-  if (userIsEmpty) {
-    return ScreenMode.landing;
-  } else if (isNullEmptyOrFalse(AppConstants.user["name"])) {
-    return ScreenMode.nameInput;
-  } else if (isNullEmptyOrFalse(AppConstants.user["dob"])) {
-    return ScreenMode.ageInput;
-  } else if (isNullEmptyOrFalse(AppConstants.user['gender'])) {
-    return ScreenMode.genderInput;
-  } else if (isNullEmptyOrFalse(AppConstants.user['photos'])) {
-    return ScreenMode.photoAdditionInput;
-  } else if (isNullEmptyOrFalse(AppConstants.user['conversation_starter'])) {
-    return ScreenMode.promptAdditionInput;
-  } else {
-    return ScreenMode.swipingScreen;
   }
 }
 
@@ -79,6 +59,7 @@ class MyApp extends StatelessWidget {
             nicheFilterSelected: false,
             genderPreferences: [],
             ageRangePreference: const RangeValues(18, 40),
+            photos: [],
           ),
         ),
       ],

@@ -23,6 +23,11 @@ class FirstScreenStateProviders extends ChangeNotifier {
     notifyListeners();
   }
 
+  setActiveScreenMode(ScreenMode screenMode) {
+    activeScreenMode = screenMode;
+    notifyListeners();
+  }
+
   ScreenMode get getActiveScreenModeValue {
     return activeScreenMode;
   }

@@ -58,8 +58,8 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
           "This will be shown on your profile!",
           SwipingScreen.routeName,
           () async {
-            Provider.of<Profile>(context, listen: false).setProfilePrompt =
-                promptTextValue;
+            Provider.of<Profile>(context, listen: false)
+                .setConversationStarter = promptTextValue;
             await Provider.of<Profile>(context, listen: false).upsertUser();
           },
         ),
