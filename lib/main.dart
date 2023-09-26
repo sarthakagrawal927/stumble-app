@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
             id: 0,
             name: "",
             phoneNumber: "",
-            birthDate: "",
+            birthDate: DateTime.now(),
             conversationStarter: "",
             gender: Gender.woman,
             photoVerified: false,

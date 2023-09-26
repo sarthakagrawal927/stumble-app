@@ -15,7 +15,7 @@ class Profile with ChangeNotifier {
   String phoneNumber;
   int age;
   Gender gender;
-  String birthDate;
+  DateTime birthDate;
   List<File> photos = [];
   bool photoVerified;
   String conversationStarter;
@@ -25,19 +25,20 @@ class Profile with ChangeNotifier {
   String bearerToken = AppConstants.token;
   double profileCompletionAmount = 0.0;
 
+  // https://stackoverflow.com/questions/67126549/flutter-define-default-value-of-a-datetime-in-constructor
   Profile({
     required this.id,
     required this.name,
     this.phoneNumber = "",
     required this.gender,
     this.age = 22,
-    this.birthDate = "",
+    DateTime? birthDate,
     this.photoVerified = true,
     this.conversationStarter = "Hi there, I am on Stumble!",
     this.nicheFilterSelected = false,
     this.ageRangePreference = const RangeValues(18, 30),
     this.genderPreferences = const [Gender.man],
-  });
+  }) : birthDate = birthDate ?? DateTime.now();
 
   final url = 'https://stumbe.onrender.com';
   final _chuckerHttpClient = ChuckerHttpClient(http.Client());
@@ -57,7 +58,7 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  set setBirthDate(String birthDateInput) {
+  set setBirthDate(DateTime birthDateInput) {
     birthDate = birthDateInput;
     notifyListeners();
   }
