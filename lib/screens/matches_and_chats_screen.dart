@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/matches_conversation_started_with.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';

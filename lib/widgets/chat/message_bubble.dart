@@ -41,8 +41,8 @@ class MessageBubble extends StatelessWidget {
                     isMe ? const Radius.circular(12) : const Radius.circular(0),
               ),
               color: isMe
-                  ? Theme.of(context).colorScheme.secondary
-                  : Colors.redAccent,
+                  ? const Color.fromRGBO(28, 26, 26, 1)
+                  : const Color.fromRGBO(48, 48, 48, 1),
             ),
             width: 140,
             padding: const EdgeInsets.symmetric(
@@ -57,7 +57,7 @@ class MessageBubble extends StatelessWidget {
               message,
               style: TextStyle(
                 fontSize: 20,
-                color: isMe ? Colors.black87 : Colors.black12,
+                color: isMe ? Colors.white : Colors.white,
               ),
             ),
           ),

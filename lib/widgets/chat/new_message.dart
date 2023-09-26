@@ -43,6 +43,7 @@ class NewMessage extends StatelessWidget {
               _enteredMessage.trim().isEmpty
                   ? null
                   : await sendMessage(_enteredMessage);
+              FocusManager.instance.primaryFocus?.unfocus();
             },
             icon: const Icon(
               Icons.send,

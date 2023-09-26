@@ -5,6 +5,7 @@ import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
 
 Future<List<ChatMessage>> _getChatMessages(String threadId) async {
@@ -54,19 +55,17 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: const TopAppBar(),
-      body: Container(
-        color: Colors.white54,
-        child: Column(
-          children: [
-            Expanded(
-              child: ChatMessages(listOfChatMessages),
-            ),
-            NewMessage(
-              sendMessage: addNewMessage,
-            )
-          ],
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ChatMessages(listOfChatMessages),
+          ),
+          NewMessage(
+            sendMessage: addNewMessage,
+          )
+        ],
       ),
       bottomNavigationBar: const BottomBar(currentScreen: "ChatScreen"),
     );

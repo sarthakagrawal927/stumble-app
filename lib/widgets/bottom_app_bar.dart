@@ -29,7 +29,7 @@ class BottomBar extends StatelessWidget {
           iconButtonBasedOnCurrentScreen(
             const Icon(Icons.account_box_rounded),
             currentScreen == "UserProfileOverviewScreen"
-                ? headingColor
+                ? Colors.red
                 : whiteColor,
             context,
             currentScreen == "UserProfileOverviewScreen"
@@ -38,13 +38,13 @@ class BottomBar extends StatelessWidget {
           ),
           iconButtonBasedOnCurrentScreen(
             const Icon(Icons.favorite),
-            currentScreen == "SwipingScreen" ? headingColor : whiteColor,
+            currentScreen == "SwipingScreen" ? Colors.red : whiteColor,
             context,
             currentScreen == "SwipingScreen" ? "" : SwipingScreen.routeName,
           ),
           iconButtonBasedOnCurrentScreen(
             const Icon(Icons.chat_bubble_rounded),
-            currentScreen == "ChatScreen" ? headingColor : whiteColor,
+            currentScreen == "ChatScreen" ? Colors.red : whiteColor,
             context,
             currentScreen == "ChatScreen"
                 ? ""
