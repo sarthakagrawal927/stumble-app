@@ -13,11 +13,12 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  List<Gender> selectedGenders = [Gender.nonBinary, Gender.woman, Gender.man];
-  RangeValues _currentRangeValues = const RangeValues(18, 40);
-
   @override
   Widget build(BuildContext context) {
+    List<Gender> selectedGenders =
+        Provider.of<Profile>(context).getGenderPreferencesList;
+    RangeValues currentRangeValues =
+        Provider.of<Profile>(context).getAgeRangePreference;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -26,7 +27,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         title: const Text(
           'Filters',
           style: TextStyle(
-            color: Color.fromRGBO(231, 10, 95, 0.5),
+            color: Color.fromRGBO(231, 10, 95, 1),
           ),
         ),
         backgroundColor: backgroundColor,
@@ -45,7 +46,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               textAlign: TextAlign.start,
               'Do you have a preference for the genders shown to you?',
               style: TextStyle(
-                color: Colors.white70,
+                color: Colors.white,
                 backgroundColor: backgroundColor,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -60,9 +61,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
             color: widgetColor,
             child: Column(
               children: [
-                checkBoxListTileFunction('Nonbinary people', Gender.nonBinary),
-                checkBoxListTileFunction('Women', Gender.woman),
-                checkBoxListTileFunction('Men', Gender.man),
+                checkBoxListTileFunction(
+                    'Nonbinary people', Gender.nonBinary, selectedGenders),
+                checkBoxListTileFunction(
+                    'Women', Gender.woman, selectedGenders),
+                checkBoxListTileFunction('Men', Gender.man, selectedGenders),
               ],
             ),
           ),
@@ -81,7 +84,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               textAlign: TextAlign.start,
               'Do you have a preference for the age of people you want to meet?',
               style: TextStyle(
-                color: Colors.white70,
+                color: Colors.white,
                 backgroundColor: backgroundColor,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -100,42 +103,52 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   padding:
                       EdgeInsets.all(MediaQuery.of(context).size.height / 24),
                   child: Text(
-                    "Between ${_currentRangeValues.start.toInt()} and ${_currentRangeValues.end.toInt()}",
+                    "Between ${currentRangeValues.start.toInt()} and ${currentRangeValues.end.toInt()}",
                     style: const TextStyle(
-                      color: Colors.white54,
+                      color: Colors.white,
                       fontSize: 20,
                     ),
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height / 24),
                 RangeSlider(
-                  values: _currentRangeValues,
+                  activeColor: filterScreenTextColor,
+                  inactiveColor: Colors.white30,
+                  values: currentRangeValues,
                   max: 80,
                   min: 18,
                   divisions: 5,
                   labels: RangeLabels(
-                    _currentRangeValues.start.round().toString(),
-                    _currentRangeValues.end.round().toString(),
+                    currentRangeValues.start.round().toString(),
+                    currentRangeValues.end.round().toString(),
                   ),
                   onChanged: (RangeValues values) {
                     setState(() {
-                      _currentRangeValues = values;
+                      currentRangeValues = values;
                     });
                   },
                 ),
               ],
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Provider.of<Profile>(context, listen: false)
-                  .setAgeRangePreference = _currentRangeValues;
-              Provider.of<Profile>(context, listen: false).setGenderPreference =
-                  selectedGenders;
-            },
-            child: const Text(
-              "Save preferences!",
-              style: TextStyle(fontSize: 20, color: Colors.white54),
+          Container(
+            margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 16,
+                bottom: MediaQuery.of(context).size.height / 16),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: filterScreenTextColor),
+              onPressed: () {
+                Provider.of<Profile>(context, listen: false)
+                    .setAgeRangePreference = currentRangeValues;
+                Provider.of<Profile>(context, listen: false)
+                    .setGenderPreference = selectedGenders;
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                "Save preferences!",
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
             ),
           ),
         ],
@@ -144,12 +157,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
   }
 
   CheckboxListTile checkBoxListTileFunction(
-      final String text, final Gender gender) {
+      final String text, final Gender gender, List<Gender> selectedGenders) {
     return CheckboxListTile(
+      activeColor: filterScreenHeadingColor,
       title: Text(
         text,
         style: const TextStyle(
-          color: Colors.white54,
+          color: Colors.white70,
           fontSize: 20,
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import '../providers/profile.dart';
 
 class AskMeAboutTextField extends StatelessWidget {
   const AskMeAboutTextField(
@@ -41,10 +43,12 @@ class AskMeAboutTextField extends StatelessWidget {
             keyboardAppearance: Brightness.dark,
             textInputAction: TextInputAction.next,
             cursorColor: whiteColor,
-
-            onFieldSubmitted: (_) => {
-              FocusScope.of(ctx).requestFocus(_conversationStarterFocusNode)
+            onChanged: (newValue) => {
+              Provider.of<Profile>(context, listen: false).setProfilePrompt =
+                  newValue,
             },
+            onEditingComplete: () =>
+                FocusScope.of(ctx).requestFocus(_conversationStarterFocusNode),
             // Todo: onSaved and validations
           ),
         ),

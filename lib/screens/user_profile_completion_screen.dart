@@ -22,7 +22,6 @@ class UserProfileCompletionScreen extends StatefulWidget {
 class _UserProfileCompletionScreenState
     extends State<UserProfileCompletionScreen> {
   final _conversationStarterFocusNode = FocusNode();
-  final _form = GlobalKey<FormState>();
 
   File secondImageUrl = File("");
   File thirdImageUrl = File("");
@@ -307,10 +306,12 @@ class _UserProfileCompletionScreenState
             child: Padding(
               padding:
                   EdgeInsets.only(top: MediaQuery.of(context).size.width / 16),
-              child: Form(
-                  key: _form,
-                  child: AskMeAboutTextField(_conversationStarterFocusNode,
-                      context, conversationStarterPrompt)),
+              child: Consumer<Profile>(
+                builder: (context, value, child) => AskMeAboutTextField(
+                    _conversationStarterFocusNode,
+                    context,
+                    conversationStarterPrompt),
+              ),
             ),
           ),
         ],

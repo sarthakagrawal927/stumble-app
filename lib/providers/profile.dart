@@ -49,7 +49,6 @@ class Profile with ChangeNotifier {
 
   set setName(String nameInput) {
     name = nameInput;
-    profileCompletionAmount += 1;
     notifyListeners();
   }
 
@@ -60,7 +59,6 @@ class Profile with ChangeNotifier {
 
   set setBirthDate(String birthDateInput) {
     birthDate = birthDateInput;
-    profileCompletionAmount += 1;
     notifyListeners();
   }
 
@@ -71,7 +69,6 @@ class Profile with ChangeNotifier {
 
   set setGender(Gender genderInput) {
     gender = genderInput;
-    profileCompletionAmount += 1;
     notifyListeners();
   }
 
@@ -114,6 +111,14 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
+  set setVerificationStatus(bool currentStatus) {
+    setVerificationStatus = currentStatus;
+    if (currentStatus) {
+      profileCompletionAmount += 1;
+    }
+    notifyListeners();
+  }
+
   // Getters
 
   String get getName {
@@ -148,8 +153,18 @@ class Profile with ChangeNotifier {
     return conversationStarter;
   }
 
+  List<Gender> get getGenderPreferencesList {
+    return genderPreferences;
+  }
+
+  RangeValues get getAgeRangePreference {
+    return ageRangePreference;
+  }
+
   double get getPercentageOfProfileCompleted {
-    return profileCompletionAmount * 100 / 7;
+    profileCompletionAmount =
+        profileCompletionAmount > 5 ? 5 : profileCompletionAmount;
+    return profileCompletionAmount * 100 / 5;
   }
 
   bool isFirstImagePresent() {

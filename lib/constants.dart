@@ -18,6 +18,10 @@ const Color topAppBarColor = Color.fromRGBO(26, 26, 26, 0.5);
 
 const Color bottomAppBarColor = Color.fromRGBO(26, 26, 26, 1);
 
+const Color filterScreenTextColor = Color.fromRGBO(231, 10, 95, 0.5);
+
+const Color filterScreenHeadingColor = Color.fromRGBO(231, 10, 95, 0.75);
+
 const whiteColor = Color.fromRGBO(255, 254, 253, 1);
 
 enum ActivityType { like, dislike, match, unmatch }
