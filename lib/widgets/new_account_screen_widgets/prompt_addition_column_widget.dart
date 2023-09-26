@@ -57,9 +57,10 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
         ScreenGoToNextPageRow(
           "This will be shown on your profile!",
           SwipingScreen.routeName,
-          () {
+          () async {
             Provider.of<Profile>(context, listen: false).setProfilePrompt =
                 promptTextValue;
+            await Provider.of<Profile>(context, listen: false).upsertUser();
           },
         ),
       ],

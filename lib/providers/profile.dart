@@ -1,12 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/global_store.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
-import 'package:path/path.dart';
 import '../constants.dart';
 
 class Profile with ChangeNotifier {
@@ -33,6 +32,7 @@ class Profile with ChangeNotifier {
     required this.gender,
     this.age = 22,
     DateTime? birthDate,
+    this.photos = const [],
     this.photoVerified = true,
     this.conversationStarter = "Hi there, I am on Stumble!",
     this.nicheFilterSelected = false,
@@ -76,11 +76,12 @@ class Profile with ChangeNotifier {
   set setProfilePrompt(String conversationStarterPromptInput) {
     conversationStarter = conversationStarterPromptInput;
     profileCompletionAmount += 1;
+    // as this is the last screen need to call upsertUser
     notifyListeners();
   }
 
-  set setFirstImage(File firstImageFile) {
-    photos.add(firstImageFile);
+  set addImage(File firstImage) {
+    photos.add(firstImage);
     profileCompletionAmount += 1;
     notifyListeners();
   }
@@ -253,29 +254,14 @@ class Profile with ChangeNotifier {
     }
   }
 
-  Future<void> uploadPhotosAPI(int imageNumber) async {
-    final urlToCallUploadPicsAPI = '$url/api/v1/user/upload';
-
-    final File fileToSendToBackend = photos[imageNumber];
-
-    try {
-      final stream = http.ByteStream(fileToSendToBackend.openRead());
-      final length = await fileToSendToBackend.length();
-      final request =
-          http.MultipartRequest("POST", Uri.parse(urlToCallUploadPicsAPI));
-      final multipartFile = http.MultipartFile('file', stream, length,
-          filename: basename(fileToSendToBackend.path));
-      request.files.add(multipartFile);
-      final response = await request.send();
-      logger.i(response.statusCode);
-      response.stream.transform(utf8.decoder).listen((value) async {
-        logger.i(value);
-      });
-      // final decodedResponseFromBackend = jsonDecode(response.body);
-      // logger.i("Data of upload pics: " + decodedResponseFromBackend.toString());
-    } catch (error) {
-      rethrow;
-    }
+  Future<void> upsertUser() async {
+    var profile = await upsertUserApi({
+      "name": name,
+      "gender": gender.index,
+      "dob": birthDate.toIso8601String(),
+      "conversation_starter": conversationStarter,
+      "photos": photos.map((e) => e.path).toList(),
+    });
   }
 
   static fromJson(profile) {
@@ -286,6 +272,7 @@ class Profile with ChangeNotifier {
       conversationStarter: profile["conversation_starter"],
       age: profile["age"] ?? 22,
       photoVerified: profile["photo_verified"],
+      photos: profile["photos"] ?? [],
     );
   }
 }

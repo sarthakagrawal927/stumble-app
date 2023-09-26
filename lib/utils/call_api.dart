@@ -8,11 +8,13 @@ import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:http_parser/http_parser.dart';
 
-const String baseURL = 'https://stumbe.onrender.com';
+const String baseURL = 'http://192.168.1.5:8080';
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
 final logger = Logger();
 
@@ -39,7 +41,8 @@ enum ApiType {
   getMatches,
   getThreads,
   getMessages,
-  addMessage
+  addMessage,
+  uploadFile
 }
 
 const apiList = {
@@ -54,6 +57,7 @@ const apiList = {
   ApiType.getThreads: "/api/v1/chat/threads",
   ApiType.getMessages: "/api/v1/chat",
   ApiType.addMessage: "/api/v1/chat",
+  ApiType.uploadFile: "/api/v1/user/upload"
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -213,4 +217,57 @@ Future<ChatMessage> addChatMessage(
       });
   debugPrint(data.toString());
   return ChatMessage.fromJson(data["message"]);
+}
+
+Future<List<String>?> uploadPhotosAPI(List<File> photos) async {
+  try {
+    FormData formData = FormData.fromMap({
+      "photos": photos
+          .map((e) => MultipartFile.fromFileSync(e.path,
+              filename: e.path.split('/').last,
+              contentType: MediaType('image', 'png')))
+          .toList()
+    });
+    var dio = Dio();
+    dio.options.headers["Authorization"] = AppConstants.token;
+    dio.options.baseUrl = baseURL;
+
+    var response =
+        await dio.post(getApiEndpoint(ApiType.uploadFile), data: formData);
+    final data = response.data["data"] as Map<String, dynamic>;
+    return (data["filePaths"] as List<dynamic>).cast<String>();
+  } catch (err) {
+    debugPrint(err.toString());
+    rethrow;
+  }
+}
+
+/*
+  * @description: Uploads photos to the server, unused
+ */
+Future<List<String>> uploadPhotosAPI2(List<File> photos) async {
+  try {
+    var httpMultipartRequest = http.MultipartRequest(
+        "POST", Uri.parse(baseURL + getApiEndpoint(ApiType.uploadFile)));
+
+    for (var photo in photos) {
+      http.ByteStream byteStream = http.ByteStream((photo.openRead()));
+      httpMultipartRequest.files.add(http.MultipartFile(
+        'photos',
+        byteStream,
+        await photo.length(),
+        filename: photo.path.split("/").last,
+      ));
+    }
+
+    http.StreamedResponse response = await httpMultipartRequest.send();
+    debugPrint(response.toString());
+
+    response.stream.transform(utf8.decoder).listen((value) {
+      debugPrint(value);
+    });
+  } catch (err) {
+    debugPrint(err.toString());
+  }
+  return [""];
 }

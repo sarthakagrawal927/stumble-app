@@ -35,7 +35,7 @@ class _UserProfileCompletionScreenState
       if (context.mounted) {
         Provider.of<Profile>(context, listen: false).setSecondImage =
             secondImageUrl;
-        Provider.of<Profile>(context, listen: false).uploadPhotosAPI(2);
+        // Provider.of<Profile>(context, listen: false).uploadPhotosAPI(2);
       }
     }
   }
@@ -49,7 +49,7 @@ class _UserProfileCompletionScreenState
       if (context.mounted) {
         Provider.of<Profile>(context, listen: false).setThirdImage =
             thirdImageUrl;
-        Provider.of<Profile>(context, listen: false).uploadPhotosAPI(3);
+        // Provider.of<Profile>(context, listen: false).uploadPhotosAPI(3);
       }
     }
   }
@@ -244,10 +244,6 @@ class _UserProfileCompletionScreenState
                             ),
                             onPressed: () async {
                               getSecondImageFromGallery(context);
-                              Provider.of<Profile>(context, listen: false)
-                                  .setSecondImage = secondImageUrl;
-                              Provider.of<Profile>(context, listen: false)
-                                  .uploadPhotosAPI(2);
                             },
                             child: secondImageExists()
                                 ? Image.file(

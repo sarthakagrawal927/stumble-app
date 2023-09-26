@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -26,9 +27,10 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
-      imageUrl = File(pickedFile.path);
+      List<String>? filePaths = await uploadPhotosAPI([File(pickedFile.path)]);
+      imageUrl = File(filePaths?.first ?? pickedFile.path);
       // ignore: use_build_context_synchronously
-      Provider.of<Profile>(context, listen: false).setFirstImage = imageUrl;
+      Provider.of<Profile>(context, listen: false).addImage = imageUrl;
     }
   }
 
@@ -72,9 +74,6 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
           "This is displayed on your profile",
           "",
           () {
-            Provider.of<Profile>(context, listen: false).setFirstImage =
-                imageUrl;
-            Provider.of<Profile>(context, listen: false).uploadPhotosAPI(1);
             Provider.of<FirstScreenStateProviders>(context, listen: false)
                 .setNextScreenActive();
           },
