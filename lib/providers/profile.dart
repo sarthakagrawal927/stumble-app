@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import '../constants.dart';
 
+T? cast<T>(x) => x is T ? x : null;
+
 class Profile with ChangeNotifier {
   int id;
   String name;
@@ -283,28 +285,98 @@ class Profile with ChangeNotifier {
   }
 
   Future<void> upsertUser() async {
-    var profile = await upsertUserApi({
+    await upsertUserApi({
       "name": name,
       "gender": gender.index,
       "dob": birthDate.toIso8601String(),
       "conversation_starter": conversationStarter,
       "photos": photos.map((e) => e.path).toList(),
     });
+    setEntireProfileForEdit();
   }
 
-  // "id":1598,"name":"sartjakl","phone":"+919792972971","dob":"2023-09-24T18:30:00.000Z","gender":0,"photos":["/data/user/0/com.example.dating_made_better/cache/614c25d7-f53c-4b63-a6a6-4d9a4b20b59d/Screenshot_20230926-165250.png"],"role":11,"phone_verified":true,"photo_verified":false,"conversation_starter":"dwqdqwd2","target_age":[],"target_gender":[1,2],"instagram_id":null,"snapchat_id":null,"twitter_id":null,"height":22,"interests":["dance","music","sports"],"voice_note":null,"workDesignation":"Software Engineer","workPlace":"Bangalore","education":"B.Tech","educationCompletionYear":2022,"languages":["english","hindi"],"religion":"hindu","createdAt":"2023-09-21T17:50:02.314Z","updatedAt":"2023-09-26T15:36:01.713Z"
   static fromJson(profile) {
-    List<String> photoList = profile["photos"].cast<String>();
+    List<String> photoList =
+        profile[profileDBKeys[ProfileKeys.photos]].cast<String>();
     List<File> photoFileList =
         photoList.map((e) => File(e.toString())).toList();
 
     return Profile(
-      id: profile["id"],
-      name: profile["name"],
-      gender: Gender.values[profile["gender"]],
-      conversationStarter: profile["conversation_starter"],
-      photoVerified: profile["photo_verified"],
+      id: profile[profileDBKeys[ProfileKeys.id]],
+      name: profile[profileDBKeys[ProfileKeys.name]],
+      gender: Gender.values[profile[profileDBKeys[ProfileKeys.gender]]],
+      conversationStarter:
+          profile[profileDBKeys[ProfileKeys.conversationStarter]],
+      photoVerified: profile[profileDBKeys[ProfileKeys.photoVerified]],
       photos: photoFileList,
+      ageRangePreference: convertRangeValuesToInt(
+          cast<List<double>>(profile[profileDBKeys[ProfileKeys.targetAge]])),
+      genderPreferences: convertIntListToEnumList(
+          cast<List<int>>(profile[profileDBKeys[ProfileKeys.targetGender]])),
     );
   }
+}
+
+// "id":1598,"name":"sartjakl","phone":"+919792972971","dob":"2023-09-24T18:30:00.000Z","gender":0,"photos":["/data/user/0/com.example.dating_made_better/cache/614c25d7-f53c-4b63-a6a6-4d9a4b20b59d/Screenshot_20230926-165250.png"],"role":11,"phone_verified":true,"photo_verified":false,"conversation_starter":"dwqdqwd2","target_age":[],"target_gender":[1,2],"instagram_id":null,"snapchat_id":null,"twitter_id":null,"height":22,"interests":["dance","music","sports"],"voice_note":null,"workDesignation":"Software Engineer","workPlace":"Bangalore","education":"B.Tech","educationCompletionYear":2022,"languages":["english","hindi"],"religion":"hindu","createdAt":"2023-09-21T17:50:02.314Z","updatedAt":"2023-09-26T15:36:01.713Z"
+enum ProfileKeys {
+  id,
+  name,
+  phone,
+  dob,
+  gender,
+  photos,
+  role,
+  phoneVerified,
+  photoVerified,
+  conversationStarter,
+  targetAge,
+  targetGender,
+  instagramId,
+  snapchatId,
+  twitterId,
+  height,
+  interests,
+  voiceNote,
+  workDesignation,
+  workPlace,
+  education,
+  educationCompletionYear,
+  languages,
+  religion,
+}
+
+const profileDBKeys = {
+  ProfileKeys.id: "id",
+  ProfileKeys.name: "name",
+  ProfileKeys.phone: "phone",
+  ProfileKeys.dob: "dob",
+  ProfileKeys.gender: "gender",
+  ProfileKeys.photos: "photos",
+  ProfileKeys.role: "role",
+  ProfileKeys.phoneVerified: "phone_verified",
+  ProfileKeys.photoVerified: "photo_verified",
+  ProfileKeys.conversationStarter: "conversation_starter",
+  ProfileKeys.targetAge: "target_age",
+  ProfileKeys.targetGender: "target_gender"
+};
+
+RangeValues convertRangeValuesToInt(List<double>? intList) {
+  if (intList == null || intList.isEmpty) return const RangeValues(18, 30);
+  return RangeValues(intList[0], intList[1]);
+}
+
+List<Gender> convertIntListToEnumList(List<int>? intList) {
+  if (intList == null || intList.isEmpty) return [Gender.man, Gender.woman];
+  return intList.map((int value) {
+    switch (value) {
+      case 0:
+        return Gender.woman;
+      case 1:
+        return Gender.man;
+      case 2:
+        return Gender.nonBinary;
+      default:
+        throw ArgumentError('Invalid integer value: $value');
+    }
+  }).toList();
 }
