@@ -1,6 +1,7 @@
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
+import 'package:dating_made_better/widgets/location.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -227,8 +228,9 @@ class _SwipingScreenState extends State<SwipingScreen> {
       body: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [
-          const BackgroudCurveWidget(),
+          const BackgroundCurveWidget(),
           CardsStackWidget(),
+          const MyLocationComponent(),
         ],
       ),
       bottomNavigationBar: const BottomBar(currentScreen: "SwipingScreen"),

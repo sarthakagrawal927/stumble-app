@@ -43,7 +43,8 @@ enum ApiType {
   getThreads,
   getMessages,
   addMessage,
-  uploadFile
+  uploadFile,
+  activateUser,
 }
 
 const apiList = {
@@ -58,7 +59,8 @@ const apiList = {
   ApiType.getThreads: "/api/v1/chat/threads",
   ApiType.getMessages: "/api/v1/chat",
   ApiType.addMessage: "/api/v1/chat",
-  ApiType.uploadFile: "/api/v1/user/upload"
+  ApiType.uploadFile: "/api/v1/user/upload",
+  ApiType.activateUser: "/api/v1/user/activate",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -143,6 +145,11 @@ Future<void> sendOtpApi(String phoneNumber) async {
 
 Future<void> upsertUserApi(Map<String, dynamic> bodyParams) async {
   await callAPI(getApiEndpoint(ApiType.upsertUser),
+      bodyParams: bodyParams, method: HttpMethods.post);
+}
+
+Future<void> activateUserApi(Map<String, dynamic> bodyParams) async {
+  await callAPI(getApiEndpoint(ApiType.activateUser),
       bodyParams: bodyParams, method: HttpMethods.post);
 }
 

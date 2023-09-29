@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BackgroudCurveWidget extends StatelessWidget {
-  const BackgroudCurveWidget({Key? key}) : super(key: key);
+class BackgroundCurveWidget extends StatelessWidget {
+  const BackgroundCurveWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

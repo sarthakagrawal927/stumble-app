@@ -297,7 +297,7 @@ class Profile with ChangeNotifier {
 
   static fromJson(profile) {
     List<String> photoList =
-        profile[profileDBKeys[ProfileKeys.photos]].cast<String>();
+        cast<List<String>>(profile[profileDBKeys[ProfileKeys.photos]]) ?? [];
     List<File> photoFileList =
         photoList.map((e) => File(e.toString())).toList();
 

@@ -60,6 +60,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
           () async {
             Provider.of<Profile>(context, listen: false)
                 .setConversationStarter = promptTextValue;
+            Navigator.of(context).pushNamed(SwipingScreen.routeName);
             await Provider.of<Profile>(context, listen: false).upsertUser();
           },
         ),
