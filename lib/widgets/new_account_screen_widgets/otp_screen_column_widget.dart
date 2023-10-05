@@ -53,19 +53,19 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
           },
           //runs when every textfield is filled
           onSubmit: (String verificationCode) async {
-            await verifyOtpApi(verificationCode,
-                Provider.of<Profile>(context, listen: false).getPhone);
-
-            setState(() {
+            ScreenMode screenMode;
+            verifyOtpApi(verificationCode,
+                    Provider.of<Profile>(context, listen: false).getPhone)
+                .then((profile) {
+              screenMode = getScreenMode();
               if (AppConstants.token.isNotEmpty) {
-                ScreenMode screenMode = getScreenMode();
+                Provider.of<FirstScreenStateProviders>(context, listen: false)
+                    .setActiveScreenMode(screenMode);
                 if (screenMode == ScreenMode.swipingScreen) {
                   // redirect to swiping screen
                   Navigator.of(context)
                       .pushReplacementNamed(SwipingScreen.routeName);
                 }
-                Provider.of<FirstScreenStateProviders>(context, listen: false)
-                    .setActiveScreenMode(screenMode);
               }
             });
           }, // end onSubmit

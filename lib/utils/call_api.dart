@@ -15,7 +15,8 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:http_parser/http_parser.dart';
 
-const String baseURL = 'http://192.168.1.5:8080';
+const String baseURL = 'https://stumbe.onrender.com';
+// Sarthak Home: http://192.168.1.5:8080
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
 final logger = Logger();
 
