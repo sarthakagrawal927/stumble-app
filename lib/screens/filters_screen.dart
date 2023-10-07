@@ -92,44 +92,48 @@ class _FiltersScreenState extends State<FiltersScreen> {
               ),
             ),
           ),
-          Card(
-            margin: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 16,
-            ),
-            color: widgetColor,
-            child: Column(
-              children: [
-                Padding(
-                  padding:
-                      EdgeInsets.all(MediaQuery.of(context).size.height / 24),
-                  child: Text(
-                    "Between ${currentRangeValues.start.toInt()} and ${currentRangeValues.end.toInt()}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+          Consumer<Profile>(
+            builder: (context, value, child) => Card(
+              margin: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width / 16,
+                right: MediaQuery.of(context).size.width / 16,
+              ),
+              color: widgetColor,
+              child: Column(
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.all(MediaQuery.of(context).size.height / 24),
+                    child: Text(
+                      "Between ${currentRangeValues.start.toInt()} and ${currentRangeValues.end.toInt()}",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height / 24),
-                RangeSlider(
-                  activeColor: filterScreenTextColor,
-                  inactiveColor: Colors.white30,
-                  values: currentRangeValues,
-                  max: 80,
-                  min: 18,
-                  divisions: 5,
-                  labels: RangeLabels(
-                    currentRangeValues.start.round().toString(),
-                    currentRangeValues.end.round().toString(),
+                  SizedBox(height: MediaQuery.of(context).size.height / 24),
+                  RangeSlider(
+                    activeColor: filterScreenTextColor,
+                    inactiveColor: Colors.white30,
+                    values: currentRangeValues,
+                    max: 80,
+                    min: 18,
+                    divisions: 5,
+                    labels: RangeLabels(
+                      currentRangeValues.start.round().toString(),
+                      currentRangeValues.end.round().toString(),
+                    ),
+                    onChanged: (RangeValues values) {
+                      setState(() {
+                        currentRangeValues = values;
+                        Provider.of<Profile>(context, listen: false)
+                            .setAgeRangePreference = values;
+                      });
+                    },
                   ),
-                  onChanged: (RangeValues values) {
-                    setState(() {
-                      currentRangeValues = values;
-                    });
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Container(
@@ -147,7 +151,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     currentRangeValues.end.toInt()
                   ]
                 });
-                // Navigator.of(context).pop();
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pop();
               },
               child: const Text(
                 "Save preferences!",

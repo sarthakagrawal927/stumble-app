@@ -30,7 +30,7 @@ final Map<DropDownOptions, DropdownOptionVal> dropDownOptions = {
   DropDownOptions.liked: DropdownOptionVal('I want to stumble into',
       DropDownOptions.liked, "Like someone", _getActivities),
   DropDownOptions.stumbledOntoMe: DropdownOptionVal('Stumbled onto me',
-      DropDownOptions.stumbledOntoMe, "No one likes you", _getActivities2),
+      DropDownOptions.stumbledOntoMe, "No stumblers yet!", _getActivities2),
 };
 
 Future<List<MiniProfile>> _getActivities() async {

@@ -97,8 +97,8 @@ class _UserProfileCompletionScreenState
             children: [
               Card(
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width / 16,
-                  bottom: MediaQuery.of(context).size.width / 16,
+                  top: MediaQuery.of(context).size.width / 32,
+                  bottom: MediaQuery.of(context).size.width / 32,
                   left: MediaQuery.of(context).size.width / 16,
                   right: MediaQuery.of(context).size.width / 32,
                 ),
@@ -138,8 +138,8 @@ class _UserProfileCompletionScreenState
               Expanded(
                 child: Card(
                   margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width / 16,
-                    bottom: MediaQuery.of(context).size.width / 16,
+                    top: MediaQuery.of(context).size.width / 32,
+                    bottom: MediaQuery.of(context).size.width / 32,
                     left: MediaQuery.of(context).size.width / 32,
                     right: MediaQuery.of(context).size.width / 16,
                   ),
@@ -302,7 +302,7 @@ class _UserProfileCompletionScreenState
           const Divider(),
           Container(
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.width / 16,
+              top: MediaQuery.of(context).size.width / 32,
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 16,
             ),
@@ -310,7 +310,7 @@ class _UserProfileCompletionScreenState
             color: widgetColor,
             child: Padding(
               padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.width / 16),
+                  EdgeInsets.only(top: MediaQuery.of(context).size.width / 32),
               child: Consumer<Profile>(
                 builder: (context, value, child) => AskMeAboutTextField(
                     _conversationStarterFocusNode,
@@ -334,10 +334,20 @@ class _UserProfileCompletionScreenState
                     .toIso8601String()
               })
             },
-            child: const Padding(
-              padding: EdgeInsets.all(24),
-              key: Key("saveButton"),
-              child: Text("Save"),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              key: const Key("saveButton"),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: filterScreenTextColor),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  "Save",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+              ),
             ),
           ),
         ],
