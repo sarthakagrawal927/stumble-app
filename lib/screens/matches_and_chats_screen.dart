@@ -55,34 +55,38 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
       appBar: const TopAppBar(),
       body: Container(
         color: backgroundColor,
-        child: Expanded(
-          child: ListView(
-            children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 5,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children:
-                      List.generate(listOfStumbleMatches.length, (int index) {
-                    return Container(
-                      margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height / 32,
-                        bottom: MediaQuery.of(context).size.height / 32,
-                        left: MediaQuery.of(context).size.width / 32,
-                        right: MediaQuery.of(context).size.width / 32,
-                      ),
-                      child: CircleAvatarWidget(
-                          35,
-                          listOfStumbleMatches[index].photo ??
-                              defaultBackupImage),
-                    );
-                  }),
-                ),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 5,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(listOfStumbleMatches.length,
+                          (int index) {
+                        return Container(
+                          margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height / 32,
+                            bottom: MediaQuery.of(context).size.height / 32,
+                            left: MediaQuery.of(context).size.width / 32,
+                            right: MediaQuery.of(context).size.width / 32,
+                          ),
+                          child: CircleAvatarWidget(
+                              35,
+                              listOfStumbleMatches[index].photo ??
+                                  defaultBackupImage),
+                        );
+                      }),
+                    ),
+                  ),
+                  MatchesConversationStartedWith(
+                      listOfMatchesConversationStartedWith),
+                ],
               ),
-              MatchesConversationStartedWith(
-                  listOfMatchesConversationStartedWith),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: const BottomBar(currentScreen: "ChatScreen"),

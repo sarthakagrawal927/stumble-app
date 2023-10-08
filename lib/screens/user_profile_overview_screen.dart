@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
@@ -17,6 +19,7 @@ class UserProfileScreen extends StatelessWidget {
         Provider.of<Profile>(context).getPercentageOfProfileCompleted.toInt();
     String name = Provider.of<Profile>(context).getName;
     int age = Provider.of<Profile>(context).getAge;
+    List<File> photos = Provider.of<Profile>(context).getPhotos;
     bool isProfileVerified =
         Provider.of<Profile>(context).getPhotoVerificationStatus;
     return Scaffold(
@@ -37,13 +40,13 @@ class UserProfileScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const Center(
+                Center(
                   child: CircleAvatar(
                     maxRadius: 75,
                     minRadius: 75,
                     backgroundColor: Colors.transparent,
                     backgroundImage: NetworkImage(
-                      defaultBackupImage,
+                      photos.isNotEmpty ? photos[0].path : defaultBackupImage,
                     ),
                   ),
                 ),

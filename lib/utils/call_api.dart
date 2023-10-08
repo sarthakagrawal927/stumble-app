@@ -111,7 +111,7 @@ Future<Map<String, dynamic>> callAPI(
     }
     final decodedResponse = jsonDecode(response.body);
     logger.i(response.body);
-    final data = decodedResponse['data'] as Map<String, dynamic>;
+    final data = decodedResponse['data'] ?? {"": ""};
     return data;
   } catch (e) {
     debugPrint(e.toString());
@@ -121,7 +121,7 @@ Future<Map<String, dynamic>> callAPI(
   }
 }
 
-Future<Profile> verifyOtpApi(String otpEntered, String phoneNumber) async {
+Future<void> verifyOtpApi(String otpEntered, String phoneNumber) async {
   final data = await callAPI(getApiEndpoint(ApiType.verifyOtp),
       bodyParams: {
         'otp': otpEntered,
@@ -132,7 +132,6 @@ Future<Profile> verifyOtpApi(String otpEntered, String phoneNumber) async {
   AppConstants.user = data["user"];
   // add to storage
   await writeSecureData(authKey, AppConstants.token);
-  return Profile.fromJson(data);
 }
 
 Future<void> sendOtpApi(String phoneNumber) async {
