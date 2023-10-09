@@ -80,19 +80,22 @@ class _SwipingScreenState extends State<SwipingScreen> {
           MediaQuery.of(context).size.height / 16,
         ),
         child: AppBar(
-            leading: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 16),
-                backgroundColor: topAppBarColor,
-              ),
-              onPressed: () {
-                Provider.of<Profile>(context, listen: false)
-                    .setUndoListProfilesToFrontOfGetStumblesList();
-              },
-              child: const Icon(
-                Icons.undo_rounded,
-                color: headingColor,
+            leading: SizedBox(
+              width: MediaQuery.of(context).size.width / 10,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width / 16),
+                  backgroundColor: topAppBarColor,
+                ),
+                onPressed: () {
+                  Provider.of<Profile>(context, listen: false)
+                      .setUndoListProfilesToFrontOfGetStumblesList();
+                },
+                child: const Icon(
+                  Icons.undo_rounded,
+                  color: headingColor,
+                ),
               ),
             ),
             actions: [

@@ -97,8 +97,7 @@ class _UserProfileCompletionScreenState
             children: [
               Card(
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width / 32,
-                  bottom: MediaQuery.of(context).size.width / 32,
+                  top: MediaQuery.of(context).size.height / 64,
                   left: MediaQuery.of(context).size.width / 16,
                   right: MediaQuery.of(context).size.width / 32,
                 ),
@@ -138,8 +137,7 @@ class _UserProfileCompletionScreenState
               Expanded(
                 child: Card(
                   margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width / 32,
-                    bottom: MediaQuery.of(context).size.width / 32,
+                    top: MediaQuery.of(context).size.height / 64,
                     left: MediaQuery.of(context).size.width / 32,
                     right: MediaQuery.of(context).size.width / 16,
                   ),
@@ -302,7 +300,6 @@ class _UserProfileCompletionScreenState
           const Divider(),
           Container(
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.width / 32,
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 16,
             ),
@@ -319,33 +316,39 @@ class _UserProfileCompletionScreenState
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () async => {
-              await upsertUserApi({
-                "conversation_starter":
-                    Provider.of<Profile>(context, listen: false)
-                        .getConversationStarterPrompt,
-                "photos": Provider.of<Profile>(context, listen: false)
-                    .getPhotos
-                    .map((e) => e.path)
-                    .toList(),
-                "dob": Provider.of<Profile>(context, listen: false)
-                    .getBirthDate
-                    .toIso8601String()
-              })
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              key: const Key("saveButton"),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: filterScreenTextColor),
-                onPressed: () async {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  "Save",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+          Container(
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height / 64,
+            ),
+            child: GestureDetector(
+              onTap: () async => {
+                await upsertUserApi({
+                  "conversation_starter":
+                      Provider.of<Profile>(context, listen: false)
+                          .getConversationStarterPrompt,
+                  "photos": Provider.of<Profile>(context, listen: false)
+                      .getPhotos
+                      .map((e) => e.path)
+                      .toList(),
+                  "dob": Provider.of<Profile>(context, listen: false)
+                      .getBirthDate
+                      .toIso8601String()
+                })
+              },
+              child: Padding(
+                padding:
+                    EdgeInsets.all(MediaQuery.of(context).size.height / 64),
+                key: const Key("saveButton"),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: filterScreenTextColor),
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    "Save",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
                 ),
               ),
             ),
