@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 
 import '../constants.dart';
 import '../screens/filters_screen.dart';
+import '../utils/internal_storage.dart';
 
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TopAppBar({super.key});
@@ -53,8 +53,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
             ],
             onChanged: (itemIdentifier) {
               if (itemIdentifier == 'Logout') {
-                var logger = Logger();
-                logger.i("Need to add Logout mechanism here.");
+                deleteSecureData(authKey);
               } else if (itemIdentifier == 'Filters') {
                 Navigator.pushNamed(context, FiltersScreen.routeName);
               }

@@ -67,10 +67,10 @@ class _AuthScreenState extends State<AuthScreen> {
         children: <Widget>[
           SizedBox.expand(
             child: FittedBox(
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               child: SizedBox(
                 width: _videoPlayerController!.value.size.width,
-                height: _videoPlayerController!.value.size.height,
+                height: _videoPlayerController!.value.size.height / 1.25,
                 child: VideoPlayer(_videoPlayerController!),
               ),
             ),
