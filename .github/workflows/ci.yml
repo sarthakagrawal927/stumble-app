@@ -15,4 +15,4 @@ jobs:
       - name: Analyze Dart
         uses: zgosalvez/github-actions-analyze-dart@v2
         with:
-          fail-on-warnings: false
+          fail-on-warnings: true

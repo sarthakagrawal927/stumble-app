@@ -4,7 +4,7 @@ import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';  
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../providers/profile.dart';
