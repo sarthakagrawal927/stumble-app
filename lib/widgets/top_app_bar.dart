@@ -17,11 +17,11 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           DropdownButton(
             dropdownColor: backgroundColor,
-            items: [
+            items: const [
               DropdownMenuItem(
                 value: 'Filters',
                 child: Row(
-                  children: const [
+                  children: [
                     Icon(
                       Icons.filter_list_rounded,
                       color: whiteColor,
@@ -37,7 +37,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
               DropdownMenuItem(
                 value: 'Logout',
                 child: Row(
-                  children: const [
+                  children: [
                     Icon(
                       Icons.exit_to_app,
                       color: whiteColor,
