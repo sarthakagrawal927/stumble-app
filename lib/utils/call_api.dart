@@ -45,6 +45,8 @@ enum ApiType {
   addMessage,
   uploadFile,
   activateUser,
+  updateUserInterest,
+  updateIsNicheAlreadySelected,
 }
 
 const apiList = {
@@ -53,14 +55,16 @@ const apiList = {
   ApiType.upsertUser: "/api/v1/user",
   ApiType.findStumbles: "/api/v1/activity/find",
   ApiType.addActivity: "/api/v1/activity",
-  ApiType.getILiked: "/api/v1/activity?status=1",
-  ApiType.getMatches: "/api/v1/activity?status=69",
+  ApiType.getILiked: "/api/v1/activity?type=1",
+  ApiType.getMatches: "/api/v1/activity?type=69",
   ApiType.getLikedBy: "/api/v1/activity/liked_by",
   ApiType.getThreads: "/api/v1/chat/threads",
   ApiType.getMessages: "/api/v1/chat",
   ApiType.addMessage: "/api/v1/chat",
   ApiType.uploadFile: "/api/v1/user/upload",
   ApiType.activateUser: "/api/v1/user/activate",
+  ApiType.updateUserInterest: "/api/v1/activity/update_user_interest",
+  ApiType.updateIsNicheAlreadySelected: "/api/v1/chat/user_interest_for_thread",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -142,14 +146,36 @@ Future<void> sendOtpApi(String phoneNumber) async {
       method: HttpMethods.post);
 }
 
-Future<void> upsertUserApi(Map<String, dynamic> bodyParams) async {
-  await callAPI(getApiEndpoint(ApiType.upsertUser),
+Future<bool> upsertUserApi(Map<String, dynamic> bodyParams) async {
+  var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
       bodyParams: bodyParams, method: HttpMethods.post);
+  return data["is_platonic"];
 }
 
 Future<void> activateUserApi(Map<String, dynamic> bodyParams) async {
   await callAPI(getApiEndpoint(ApiType.activateUser),
       bodyParams: bodyParams, method: HttpMethods.post);
+}
+
+Future<bool> updateUserInterest(String threadId, int interest) async {
+  try {
+    var data = await callAPI(getApiEndpoint(ApiType.updateUserInterest),
+        method: HttpMethods.post,
+        bodyParams: {
+          'threadId': threadId,
+          'interest': interest,
+        });
+    return data["sameInterest"];
+    // ignore: empty_catches
+  } catch (error) {}
+  return false;
+}
+
+Future<bool> updateIsNicheAlreadySelected(String threadId) async {
+  var data = await callAPI(getApiEndpoint(ApiType.updateIsNicheAlreadySelected),
+      method: HttpMethods.get, queryParams: {"thread_id": threadId});
+  debugPrint(data.toString());
+  return data["lookingFor"] != null;
 }
 
 Future<Profile> getUserApi() async {

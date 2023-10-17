@@ -33,7 +33,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         ),
         backgroundColor: backgroundColor,
       ),
-      body: Column(
+      body: ListView(
         children: [
           Container(
             color: widgetColor,
@@ -69,9 +69,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 checkBoxListTileFunction('Men', Gender.man, selectedGenders),
               ],
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 16,
           ),
           Container(
             color: widgetColor,

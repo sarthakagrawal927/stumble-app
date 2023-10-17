@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
             conversationStarter: "",
             gender: Gender.woman,
             photoVerified: false,
-            nicheFilterSelected: false,
+            isPlatonic: true,
             genderPreferences: [],
             ageRangePreference: const RangeValues(18, 40),
             photos: [],

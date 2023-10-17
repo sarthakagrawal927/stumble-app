@@ -26,11 +26,19 @@ const whiteColor = Color.fromRGBO(255, 254, 253, 1);
 
 enum ActivityType { like, dislike, match, unmatch }
 
+enum InterestType { hookup, relationship, friendship }
+
 const activityValue = {
   ActivityType.like: 1,
   ActivityType.dislike: -1,
   ActivityType.match: 69,
   ActivityType.unmatch: 96,
+};
+
+const interestValue = {
+  InterestType.hookup: 1,
+  InterestType.relationship: 2,
+  InterestType.friendship: 3,
 };
 
 const defaultBackupImage =

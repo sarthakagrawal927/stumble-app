@@ -1,4 +1,6 @@
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -71,9 +73,29 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
             vertical: widget.deviceSize.height / 16,
             horizontal: widget.deviceSize.width / 16,
           ),
-          child: const Text(
-            "By signing up, you agree to our Terms. See how we use your data in our Privacy policy. We never post to facebook.",
-            style: TextStyle(fontSize: 15, color: Colors.white),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                const TextSpan(
+                  text: "By signing up, you agree to our ",
+                  style: TextStyle(fontSize: 15, color: Colors.white),
+                ),
+                TextSpan(
+                  text: 'Terms',
+                  style: const TextStyle(fontSize: 15, color: Colors.blue),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launchUrl(
+                          Uri.parse('https://www.getstumble.app/privacy/'));
+                    },
+                ),
+                const TextSpan(
+                  text:
+                      ". See how we use your data in our Privacy policy. We never post to facebook.",
+                  style: TextStyle(fontSize: 15, color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ),
       ],

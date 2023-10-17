@@ -141,32 +141,6 @@ class SwipeCard extends StatelessWidget {
             height: MediaQuery.of(context).size.height / 16,
             color: backgroundColor,
           ),
-          profile.nicheFilterSelected
-              ? Container(
-                  color: backgroundColor,
-                  child: Column(
-                    children: [
-                      ButtonToSelectUserDatingPreference(
-                          "A conversation for now!", profile),
-                      SizedBox(height: MediaQuery.of(context).size.height / 64),
-                      ButtonToSelectUserDatingPreference(
-                          "Looking to be friends.", profile),
-                      SizedBox(height: MediaQuery.of(context).size.height / 64),
-                      ButtonToSelectUserDatingPreference(
-                          "Relationship", profile),
-                      SizedBox(height: MediaQuery.of(context).size.height / 64),
-                      ButtonToSelectUserDatingPreference("Hookup", profile),
-                    ],
-                  ),
-                )
-              : Container(
-                  height: MediaQuery.of(context).size.height / 64,
-                  color: backgroundColor,
-                ),
-          Container(
-            height: MediaQuery.of(context).size.height / 32,
-            color: backgroundColor,
-          ),
         ],
       ),
     );

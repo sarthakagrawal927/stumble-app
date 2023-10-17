@@ -20,7 +20,8 @@ class Profile with ChangeNotifier {
   List<File> photos = [];
   bool photoVerified;
   String conversationStarter;
-  bool nicheFilterSelected;
+  bool isPlatonic;
+  bool isNicheFilterAlreadySelected;
   RangeValues ageRangePreference;
   List<Gender> genderPreferences;
   String bearerToken = AppConstants.token;
@@ -37,7 +38,8 @@ class Profile with ChangeNotifier {
     required this.photos,
     this.photoVerified = true,
     this.conversationStarter = "Hi there, I am on Stumble!",
-    this.nicheFilterSelected = false,
+    this.isPlatonic = false,
+    this.isNicheFilterAlreadySelected = false,
     this.ageRangePreference = const RangeValues(18, 30),
     this.genderPreferences = const [Gender.man],
   }) : birthDate = birthDate ?? DateTime.now();
@@ -75,6 +77,16 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
+  set setIfUserIsPlatonic(bool isPlatonic) {
+    isPlatonic = isPlatonic;
+    notifyListeners();
+  }
+
+  set setIfNicheFilterIsAlreadySelected(bool isNicheFilterAlreadySelected) {
+    isNicheFilterAlreadySelected = isNicheFilterAlreadySelected;
+    notifyListeners();
+  }
+
   set setConversationStarter(String conversationStarterPromptInput) {
     conversationStarter = conversationStarterPromptInput;
     profileCompletionAmount += 1;
@@ -102,11 +114,6 @@ class Profile with ChangeNotifier {
   set setThirdImage(File thirdImageFile) {
     photos.add(thirdImageFile);
     profileCompletionAmount += 1;
-    notifyListeners();
-  }
-
-  set setNicheFilterValue(bool isNicheFilterSelected) {
-    nicheFilterSelected = isNicheFilterSelected;
     notifyListeners();
   }
 
@@ -144,6 +151,14 @@ class Profile with ChangeNotifier {
 
   bool get getPhotoVerificationStatus {
     return photoVerified;
+  }
+
+  bool get getIfUserIsPlatonic {
+    return isPlatonic;
+  }
+
+  bool get getIfNicheFilterIsAlreadySelected {
+    return isNicheFilterAlreadySelected;
   }
 
   List<File> get getPhotos {
@@ -284,8 +299,8 @@ class Profile with ChangeNotifier {
     }
   }
 
-  Future<void> upsertUser() async {
-    await upsertUserApi({
+  Future<bool> upsertUser() async {
+    bool isPlatonic = await upsertUserApi({
       "name": name,
       "gender": gender.index,
       "dob": birthDate.toIso8601String(),
@@ -293,6 +308,7 @@ class Profile with ChangeNotifier {
       "photos": photos.map((e) => e.path).toList(),
     });
     setEntireProfileForEdit();
+    return isPlatonic;
   }
 
   static fromJson(profile) {
