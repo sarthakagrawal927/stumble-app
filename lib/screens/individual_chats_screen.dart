@@ -74,7 +74,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         child: AppBar(
           actions: [
-            if (isUserPlatonic) // Change back
+            if (!isUserPlatonic && !userHasSelectedANicheOption)
               DropdownButton(
                 onTap: () async {
                   await isNicheFilterAlreadySelected();
@@ -84,8 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       builder: (BuildContext context) {
                         return Dialog(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    20.0)), //this right here
+                                borderRadius: BorderRadius.circular(20.0)),
                             child: Container(
                               margin: EdgeInsets.symmetric(
                                   vertical:
