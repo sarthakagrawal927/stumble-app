@@ -48,10 +48,23 @@ class _AgeColumnState extends State<AgeColumn> {
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2001),
-                    //DateTime.now() - not to allow to choose before today.
-                    lastDate: DateTime.now(),
+                    firstDate: DateTime(
+                      DateTime.now().year - 70,
+                      DateTime.now().month,
+                      DateTime.now().day,
+                    ),
+                    initialDate: DateTime(
+                      DateTime.now().year - 20,
+                      DateTime.now().month,
+                      DateTime.now().day,
+                    ),
+                    lastDate: DateTime(
+                      DateTime.now().year - 18,
+                      DateTime.now().month,
+                      DateTime.now().day,
+                    ),
+                    //DateTime.now() - not to al
+                    //low to choose before today.
                     initialDatePickerMode: DatePickerMode.day,
                     initialEntryMode: DatePickerEntryMode.calendarOnly);
 
