@@ -320,9 +320,15 @@ class _UserProfileCompletionScreenState
             margin: EdgeInsets.only(
               top: MediaQuery.of(context).size.height / 64,
             ),
-            child: GestureDetector(
-              onTap: () async => {
-                await upsertUserApi({
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width / 16,
+              right: MediaQuery.of(context).size.width / 16,
+            ),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: filterScreenTextColor),
+              onPressed: () async {
+                upsertUserApi({
                   "conversation_starter":
                       Provider.of<Profile>(context, listen: false)
                           .getConversationStarterPrompt,
@@ -333,23 +339,16 @@ class _UserProfileCompletionScreenState
                   "dob": Provider.of<Profile>(context, listen: false)
                       .getBirthDate
                       .toIso8601String()
-                })
+                }).then((value) => {
+                      Navigator.of(context).pop(),
+                      Provider.of<Profile>(context, listen: false)
+                          .setEntireProfileForEdit(profile: value),
+                      debugPrint(value.toString())
+                    });
               },
-              child: Padding(
-                padding:
-                    EdgeInsets.all(MediaQuery.of(context).size.height / 64),
-                key: const Key("saveButton"),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: filterScreenTextColor),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    "Save",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                ),
+              child: const Text(
+                "Save",
+                style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
           ),

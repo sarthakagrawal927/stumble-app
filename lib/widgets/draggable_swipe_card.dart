@@ -10,7 +10,7 @@ Future<void> addActivityOnLike(Profile profile, Swipe action,
     [String? comment]) {
   Map<String, dynamic> bodyParams = {
     'targetId': profile.id,
-    'status': action == Swipe.right
+    'type': action == Swipe.right
         ? activityValue[ActivityType.like]
         : activityValue[ActivityType.dislike],
     'compliment': comment ?? '',

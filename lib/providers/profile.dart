@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import '../constants.dart';
 
@@ -21,7 +19,6 @@ class Profile with ChangeNotifier {
   bool photoVerified;
   String conversationStarter;
   bool isPlatonic;
-  bool isNicheFilterAlreadySelected;
   RangeValues ageRangePreference;
   List<Gender> genderPreferences;
   String bearerToken = AppConstants.token;
@@ -39,13 +36,10 @@ class Profile with ChangeNotifier {
     this.photoVerified = true,
     this.conversationStarter = "Hi there, I am on Stumble!",
     this.isPlatonic = false,
-    this.isNicheFilterAlreadySelected = false,
     this.ageRangePreference = const RangeValues(18, 30),
     this.genderPreferences = const [Gender.man],
   }) : birthDate = birthDate ?? DateTime.now();
 
-  final url = 'https://stumbe.onrender.com';
-  final _chuckerHttpClient = ChuckerHttpClient(http.Client());
   int currentUser = -1;
   String currentThreadId = "";
   var logger = Logger();
@@ -79,11 +73,6 @@ class Profile with ChangeNotifier {
 
   set setIfUserIsPlatonic(bool isPlatonic) {
     isPlatonic = isPlatonic;
-    notifyListeners();
-  }
-
-  set setIfNicheFilterIsAlreadySelected(bool isNicheFilterAlreadySelected) {
-    isNicheFilterAlreadySelected = isNicheFilterAlreadySelected;
     notifyListeners();
   }
 
@@ -155,10 +144,6 @@ class Profile with ChangeNotifier {
 
   bool get getIfUserIsPlatonic {
     return isPlatonic;
-  }
-
-  bool get getIfNicheFilterIsAlreadySelected {
-    return isNicheFilterAlreadySelected;
   }
 
   List<File> get getPhotos {
@@ -267,8 +252,8 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  void setEntireProfileForEdit() {
-    Profile fromConstants = Profile.fromJson(AppConstants.user);
+  setEntireProfileForEdit({Profile? profile}) {
+    Profile fromConstants = profile ?? Profile.fromJson(AppConstants.user);
     name = fromConstants.name;
     gender = fromConstants.gender;
     birthDate = fromConstants.birthDate;
@@ -277,43 +262,29 @@ class Profile with ChangeNotifier {
     photoVerified = fromConstants.photoVerified;
     age = fromConstants.age;
     phoneNumber = fromConstants.phoneNumber;
+    isPlatonic = fromConstants.isPlatonic;
     profileCompletionAmount =
         photos.length * 1.0 + conversationStarter.length > 0 ? 1.0 : 0.0;
-    // notifyListeners();
+    notifyListeners();
   }
 
-  // INTEGRATION API
-  Future<void> deleteMessageAPI(int messageId, int receiverId) async {
-    final urlToCallDeleteMessageFromBackend = '$url/api/v1/chat/delete';
-    try {
-      final response = await _chuckerHttpClient
-          .post(Uri.parse(urlToCallDeleteMessageFromBackend), body: {
-        'messageId': messageId.toString(),
-        'receiverId': receiverId.toString(),
-      }, headers: {
-        'Authorization': bearerToken
-      });
-      logger.i("Data of delete message: ${response.body}");
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<bool> upsertUser() async {
-    bool isPlatonic = await upsertUserApi({
+  Future<Profile> upsertUser() async {
+    Profile userProfile = await upsertUserApi({
       "name": name,
       "gender": gender.index,
       "dob": birthDate.toIso8601String(),
       "conversation_starter": conversationStarter,
       "photos": photos.map((e) => e.path).toList(),
     });
-    setEntireProfileForEdit();
-    return isPlatonic;
+    setEntireProfileForEdit(profile: userProfile);
+    return userProfile;
   }
 
   static fromJson(profile) {
-    List<String> photoList =
-        cast<List<String>>(profile[profileDBKeys[ProfileKeys.photos]]) ?? [];
+    List<dynamic> photoList = (profile[profileDBKeys[ProfileKeys.photos]] ?? [])
+        .where((element) => element is String)
+        .map((element) => element.toString())
+        .toList();
     List<File> photoFileList =
         photoList.map((e) => File(e.toString())).toList();
 

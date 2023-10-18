@@ -42,9 +42,11 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
       _getStumbles().then((values) {
         values = values;
         debugPrint(values.runtimeType.toString());
-        setState(() {
-          draggableItems = values;
-        });
+        if (mounted) {
+          setState(() {
+            draggableItems = values;
+          });
+        }
       });
     }
   }

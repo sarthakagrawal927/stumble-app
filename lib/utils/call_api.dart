@@ -146,10 +146,11 @@ Future<void> sendOtpApi(String phoneNumber) async {
       method: HttpMethods.post);
 }
 
-Future<bool> upsertUserApi(Map<String, dynamic> bodyParams) async {
+Future<Profile> upsertUserApi(Map<String, dynamic> bodyParams) async {
   var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
       bodyParams: bodyParams, method: HttpMethods.post);
-  return data["is_platonic"];
+  AppConstants.user = data;
+  return Profile.fromJson(data);
 }
 
 Future<void> activateUserApi(Map<String, dynamic> bodyParams) async {

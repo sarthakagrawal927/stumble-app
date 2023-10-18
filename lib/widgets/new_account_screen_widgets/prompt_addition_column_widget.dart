@@ -61,11 +61,11 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
             Provider.of<Profile>(context, listen: false)
                 .setConversationStarter = promptTextValue;
             Navigator.of(context).pushNamed(SwipingScreen.routeName);
-            bool isPlatonic =
-                await Provider.of<Profile>(context, listen: false).upsertUser();
             // ignore: use_build_context_synchronously
             Provider.of<Profile>(context, listen: false).setIfUserIsPlatonic =
-                isPlatonic;
+                (await Provider.of<Profile>(context, listen: false)
+                        .upsertUser())
+                    .isPlatonic;
           },
         ),
       ],
