@@ -79,7 +79,6 @@ class Profile with ChangeNotifier {
   set setConversationStarter(String conversationStarterPromptInput) {
     conversationStarter = conversationStarterPromptInput;
     profileCompletionAmount += 1;
-    // as this is the last screen need to call upsertUser
     notifyListeners();
   }
 

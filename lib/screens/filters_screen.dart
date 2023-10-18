@@ -141,15 +141,17 @@ class _FiltersScreenState extends State<FiltersScreen> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: filterScreenTextColor),
               onPressed: () async {
-                await upsertUserApi({
+                upsertUserApi({
                   "target_gender": selectedGenders.map((e) => e.index).toList(),
                   "target_age": [
                     currentRangeValues.start.toInt(),
                     currentRangeValues.end.toInt()
                   ]
-                });
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pop();
+                }).then((value) => {
+                      Provider.of<Profile>(context, listen: false)
+                          .setEntireProfileForEdit(profile: value),
+                      Navigator.of(context).pop()
+                    });
               },
               child: const Text(
                 "Save preferences!",

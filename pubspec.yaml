@@ -51,6 +51,9 @@ dependencies:
   dio: ^5.3.3
   http_parser: ^4.0.2
   location: ^5.0.3
+  firebase_core: ^2.18.0
+  firebase_analytics: ^10.6.0
+  firebase_crashlytics: ^3.4.0
 
 dev_dependencies:
   flutter_test:
