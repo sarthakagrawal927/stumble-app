@@ -17,9 +17,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
     List<Gender> selectedGenders =
-        Provider.of<Profile>(context).getGenderPreferencesList;
+        Provider.of<Profile>(context, listen: false).getGenderPreferencesList;
     RangeValues currentRangeValues =
-        Provider.of<Profile>(context).getAgeRangePreference;
+        Provider.of<Profile>(context, listen: false).getAgeRangePreference;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

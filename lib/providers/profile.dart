@@ -264,6 +264,8 @@ class Profile with ChangeNotifier {
     isPlatonic = fromConstants.isPlatonic;
     profileCompletionAmount =
         photos.length * 1.0 + conversationStarter.length > 0 ? 1.0 : 0.0;
+    genderPreferences = fromConstants.genderPreferences;
+    ageRangePreference = fromConstants.ageRangePreference;
     notifyListeners();
   }
 
@@ -287,6 +289,12 @@ class Profile with ChangeNotifier {
     List<File> photoFileList =
         photoList.map((e) => File(e.toString())).toList();
 
+    RangeValues targetAgeList = convertRangeValuesToInt(
+        cast<List<double>>(profile[profileDBKeys[ProfileKeys.targetAge]]));
+
+    List<Gender> targetGenderList = convertIntListToEnumList(
+        cast<List<int>>(profile[profileDBKeys[ProfileKeys.targetGender]]));
+
     return Profile(
       id: profile[profileDBKeys[ProfileKeys.id]],
       name: profile[profileDBKeys[ProfileKeys.name]],
@@ -296,10 +304,8 @@ class Profile with ChangeNotifier {
           profile[profileDBKeys[ProfileKeys.conversationStarter]] ?? "",
       photoVerified: profile[profileDBKeys[ProfileKeys.photoVerified]] ?? false,
       photos: photoFileList,
-      ageRangePreference: convertRangeValuesToInt(
-          cast<List<double>>(profile[profileDBKeys[ProfileKeys.targetAge]])),
-      genderPreferences: convertIntListToEnumList(
-          cast<List<int>>(profile[profileDBKeys[ProfileKeys.targetGender]])),
+      ageRangePreference: targetAgeList,
+      genderPreferences: targetGenderList,
     );
   }
 }
