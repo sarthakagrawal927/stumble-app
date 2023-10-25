@@ -56,7 +56,6 @@ class _UserProfileCompletionScreenState
   @override
   void initState() {
     super.initState();
-    Provider.of<Profile>(context, listen: false).setEntireProfileForEdit();
   }
 
   @override
