@@ -58,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> isNicheFilterAlreadySelected() async {
-    await updateIsNicheAlreadySelected(thread.threadId).then((value) {
+    await getIsNicheAlreadySelected(thread.threadId).then((value) {
       setState(() {
         userHasSelectedANicheOption = value;
       });

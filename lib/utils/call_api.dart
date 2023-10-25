@@ -42,11 +42,12 @@ enum ApiType {
   getMatches,
   getThreads,
   getMessages,
+  startConversation,
   addMessage,
   uploadFile,
   activateUser,
   updateUserInterest,
-  updateIsNicheAlreadySelected,
+  getIsNicheAlreadySelected,
 }
 
 const apiList = {
@@ -61,10 +62,11 @@ const apiList = {
   ApiType.getThreads: "/api/v1/chat/threads",
   ApiType.getMessages: "/api/v1/chat",
   ApiType.addMessage: "/api/v1/chat",
+  ApiType.startConversation: "/api/v1/chat/start_conversation",
   ApiType.uploadFile: "/api/v1/user/upload",
   ApiType.activateUser: "/api/v1/user/activate",
   ApiType.updateUserInterest: "/api/v1/activity/update_user_interest",
-  ApiType.updateIsNicheAlreadySelected: "/api/v1/chat/user_interest_for_thread",
+  ApiType.getIsNicheAlreadySelected: "/api/v1/chat/user_interest_for_thread",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -173,8 +175,8 @@ Future<bool> updateUserInterest(String threadId, int interest) async {
   return false;
 }
 
-Future<bool> updateIsNicheAlreadySelected(String threadId) async {
-  var data = await callAPI(getApiEndpoint(ApiType.updateIsNicheAlreadySelected),
+Future<bool> getIsNicheAlreadySelected(String threadId) async {
+  var data = await callAPI(getApiEndpoint(ApiType.getIsNicheAlreadySelected),
       method: HttpMethods.get, queryParams: {"thread_id": threadId});
   debugPrint(data.toString());
   return data["lookingFor"] != null;
@@ -252,8 +254,16 @@ Future<ChatMessage> addChatMessage(
         'threadId': threadId,
         'receiverId': receiverId
       });
-  debugPrint(data.toString());
   return ChatMessage.fromJson(data["message"]);
+}
+
+Future<ChatThread> startConversation(
+  int receiverId,
+) async {
+  var data = await callAPI(getApiEndpoint(ApiType.startConversation),
+      method: HttpMethods.post, bodyParams: {'receiverId': receiverId});
+
+  return ChatThread.fromJson(data["thread"]);
 }
 
 Future<List<String>?> uploadPhotosAPI(List<File> photos) async {
