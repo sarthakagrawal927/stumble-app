@@ -15,7 +15,6 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<Profile>(context).setEntireProfileForEdit();
     int profileCompletionPercentage =
         Provider.of<Profile>(context).getPercentageOfProfileCompleted.toInt();
     String name = Provider.of<Profile>(context).getName;
@@ -131,8 +130,8 @@ class UserProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar:
-          const BottomBar(currentScreen: "UserProfileOverviewScreen"),
+      bottomNavigationBar: const BottomBar(
+          currentScreen: BottomBarScreens.userProfileOverviewScreen),
     );
   }
 }

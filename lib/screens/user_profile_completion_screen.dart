@@ -24,31 +24,11 @@ class _UserProfileCompletionScreenState
     extends State<UserProfileCompletionScreen> {
   final _conversationStarterFocusNode = FocusNode();
 
-  File secondImageUrl = File("");
-  File thirdImageUrl = File("");
-
-  void getSecondImageFromGallery(BuildContext context) async {
+  void addImageFromGallery(BuildContext context) async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
-      secondImageUrl = File(pickedFile.path);
-      if (context.mounted) {
-        List<String>? filePaths =
-            await uploadPhotosAPI([File(pickedFile.path)]);
-        // ignore: use_build_context_synchronously
-        Provider.of<Profile>(context, listen: false).addImage =
-            File(filePaths?.first ?? pickedFile.path);
-      }
-    }
-  }
-
-  void getThirdImageFromGallery() async {
-    XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile != null) {
-      thirdImageUrl = File(pickedFile.path);
       if (context.mounted) {
         List<String>? filePaths =
             await uploadPhotosAPI([File(pickedFile.path)]);
@@ -248,7 +228,7 @@ class _UserProfileCompletionScreenState
                               ),
                             ),
                             onPressed: () async {
-                              getSecondImageFromGallery(context);
+                              addImageFromGallery(context);
                             },
                             child: secondImageExists()
                                 ? Image.network(
@@ -274,7 +254,9 @@ class _UserProfileCompletionScreenState
                                 (MediaQuery.of(context).size.height) / 8,
                               ),
                             ),
-                            onPressed: getThirdImageFromGallery,
+                            onPressed: () async {
+                              addImageFromGallery(context);
+                            },
                             child: thirdImageExists()
                                 ? Image.network(
                                     Provider.of<Profile>(context, listen: false)

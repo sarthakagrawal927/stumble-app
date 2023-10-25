@@ -89,7 +89,8 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomBar(currentScreen: "ChatScreen"),
+      bottomNavigationBar:
+          const BottomBar(currentScreen: BottomBarScreens.chatScreen),
     );
   }
 }

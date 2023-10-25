@@ -58,6 +58,9 @@ class _SwipingScreenState extends State<SwipingScreen> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () {
+      Provider.of<Profile>(context, listen: false).setEntireProfileForEdit();
+    });
   }
 
   @override
@@ -236,7 +239,8 @@ class _SwipingScreenState extends State<SwipingScreen> {
           const MyLocationComponent(),
         ],
       ),
-      bottomNavigationBar: const BottomBar(currentScreen: "SwipingScreen"),
+      bottomNavigationBar:
+          const BottomBar(currentScreen: BottomBarScreens.swipingScreen),
     );
   }
 }

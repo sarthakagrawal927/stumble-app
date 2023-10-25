@@ -10,9 +10,9 @@ import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
 
 Future<List<ChatMessage>> _getChatMessages(String threadId) async {
-  var threads = await getChatMessages(threadId);
-  debugPrint(threads.length.toString());
-  return threads.map<ChatMessage>((e) => ChatMessage.fromJson(e)).toList();
+  var messages = await getChatMessages(threadId);
+  debugPrint(messages.length.toString());
+  return messages.map<ChatMessage>((e) => ChatMessage.fromJson(e)).toList();
 }
 
 Future<ChatMessage> _addNewMessage(
@@ -33,16 +33,19 @@ class _ChatScreenState extends State<ChatScreen> {
   bool userHasSelectedANicheOption = false;
   late ChatThread thread;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void setChatState(context) {
     thread = (ModalRoute.of(context)?.settings.arguments) as ChatThread;
-
     _getChatMessages(thread.threadId).then((value) {
       setState(() {
         listOfChatMessages = value;
       });
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setChatState(context));
   }
 
   Future<void> addNewMessage(String message) async {
@@ -188,7 +191,8 @@ class _ChatScreenState extends State<ChatScreen> {
           )
         ],
       ),
-      bottomNavigationBar: const BottomBar(currentScreen: "ChatScreen"),
+      bottomNavigationBar:
+          const BottomBar(currentScreen: BottomBarScreens.chatScreen),
     );
   }
 
