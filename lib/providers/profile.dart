@@ -290,10 +290,11 @@ class Profile with ChangeNotifier {
     return Profile(
       id: profile[profileDBKeys[ProfileKeys.id]],
       name: profile[profileDBKeys[ProfileKeys.name]],
-      gender: Gender.values[profile[profileDBKeys[ProfileKeys.gender]]],
+      gender: Gender
+          .values[profile[profileDBKeys[ProfileKeys.gender]] ?? Gender.woman],
       conversationStarter:
-          profile[profileDBKeys[ProfileKeys.conversationStarter]],
-      photoVerified: profile[profileDBKeys[ProfileKeys.photoVerified]],
+          profile[profileDBKeys[ProfileKeys.conversationStarter]] ?? "",
+      photoVerified: profile[profileDBKeys[ProfileKeys.photoVerified]] ?? false,
       photos: photoFileList,
       ageRangePreference: convertRangeValuesToInt(
           cast<List<double>>(profile[profileDBKeys[ProfileKeys.targetAge]])),
