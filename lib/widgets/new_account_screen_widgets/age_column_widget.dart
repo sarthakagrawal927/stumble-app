@@ -40,9 +40,14 @@ class _AgeColumnState extends State<AgeColumn> {
               controller: dateInput,
               //editing controller of this TextField
               decoration: const InputDecoration(
-                  icon: Icon(Icons.calendar_today), //icon of text field
-                  labelText: "Enter Date" //label text of field
-                  ),
+                icon: Icon(Icons.calendar_today), //icon of text field
+                labelText: "Enter Date", //label text of field
+                labelStyle: TextStyle(
+                  color: Colors.white,
+                ),
+                iconColor: Colors.white,
+                fillColor: Colors.white,
+              ),
               readOnly: true,
               //set it true, so that user will not able to edit text
               onTap: () async {

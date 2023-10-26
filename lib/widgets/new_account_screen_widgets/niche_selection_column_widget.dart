@@ -32,7 +32,6 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
             ),
             color: Colors.transparent,
             child: CheckboxListTile(
-              activeColor: Colors.transparent,
               title: const Text(
                 'Non-platonic filters: ',
                 style: TextStyle(

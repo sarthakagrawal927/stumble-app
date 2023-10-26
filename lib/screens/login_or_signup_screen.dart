@@ -8,7 +8,6 @@ import 'package:dating_made_better/widgets/new_account_screen_widgets/photo_addi
 import 'package:dating_made_better/widgets/new_account_screen_widgets/prompt_addition_column_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
 
 import '../widgets/new_account_screen_widgets/first_screen_column_widget.dart';
 import '../widgets/new_account_screen_widgets/name_column_widget.dart';
@@ -36,63 +35,99 @@ class AuthScreen extends StatefulWidget {
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
-  VideoPlayerController? _videoPlayerController;
+class _AuthScreenState extends State<AuthScreen>
+    with SingleTickerProviderStateMixin {
   bool isButtonClicked = false;
+  late AnimationController _animationController;
+  late Animation<Alignment> _topAlignmentAnimation;
+  late Animation<Alignment> _bottomAlignmentAnimation;
 
   @override
   void initState() {
     super.initState();
     isButtonClicked = false;
-    _videoPlayerController =
-        VideoPlayerController.asset("assets/authScreen_secondVideo.mp4")
-          ..initialize().then((_) {
-            _videoPlayerController!.play();
-            _videoPlayerController!.setLooping(true);
-            setState(() {});
-          });
-  }
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 10));
+    _topAlignmentAnimation = TweenSequence<Alignment>([
+      TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(
+              begin: Alignment.topLeft, end: Alignment.topRight),
+          weight: 1),
+      TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(
+              begin: Alignment.topRight, end: Alignment.bottomRight),
+          weight: 1),
+      TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(
+              begin: Alignment.bottomRight, end: Alignment.bottomLeft),
+          weight: 1),
+      TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(
+              begin: Alignment.bottomLeft, end: Alignment.topLeft),
+          weight: 1)
+    ]).animate(_animationController);
 
-  @override
-  void dispose() {
-    super.dispose();
-    _videoPlayerController!.dispose();
+    _bottomAlignmentAnimation = TweenSequence<Alignment>([
+      TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(
+              begin: Alignment.bottomRight, end: Alignment.bottomLeft),
+          weight: 1),
+      TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(
+              begin: Alignment.bottomLeft, end: Alignment.topLeft),
+          weight: 1),
+      TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(
+              begin: Alignment.topLeft, end: Alignment.topRight),
+          weight: 1),
+      TweenSequenceItem<Alignment>(
+          tween: Tween<Alignment>(
+              begin: Alignment.topRight, end: Alignment.bottomRight),
+          weight: 1),
+    ]).animate(_animationController);
+
+    _animationController.repeat();
   }
 
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
-      body: Stack(
-        children: <Widget>[
-          SizedBox.expand(
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: SizedBox(
-                width: _videoPlayerController!.value.size.width,
-                height: _videoPlayerController!.value.size.height / 1.25,
-                child: VideoPlayer(_videoPlayerController!),
+      body: AnimatedBuilder(
+          animation: _animationController,
+          builder: (context, child) {
+            return Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: const [
+                    Color.fromRGBO(35, 16, 51, 1),
+                    Color.fromRGBO(16, 14, 29, 1),
+                  ],
+                  begin: _topAlignmentAnimation.value,
+                  end: _bottomAlignmentAnimation.value,
+                ),
               ),
-            ),
-          ),
-          Consumer<FirstScreenStateProviders>(
-              builder: (context, firstScreenStateProviders, _) {
-            return Column(children: [
-              SizedBox(
-                height: deviceSize.height,
-                width: deviceSize.width,
-                child: screenWidgets[
-                            firstScreenStateProviders.getActiveScreenModeValue]
-                        ?.call(deviceSize) ??
-                    FirstScreenColumn(deviceSize),
+              child: Stack(
+                children: <Widget>[
+                  Consumer<FirstScreenStateProviders>(
+                      builder: (context, firstScreenStateProviders, _) {
+                    return Column(children: [
+                      SizedBox(
+                        height: deviceSize.height,
+                        width: deviceSize.width,
+                        child: screenWidgets[firstScreenStateProviders
+                                    .getActiveScreenModeValue]
+                                ?.call(deviceSize) ??
+                            FirstScreenColumn(deviceSize),
+                      ),
+                    ]);
+                  })
+                ],
               ),
-            ]);
-          })
-        ],
-      ),
+            );
+          }),
     );
   }
 }
