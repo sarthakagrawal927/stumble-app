@@ -39,6 +39,10 @@ class _UserProfileCompletionScreenState
     }
   }
 
+  bool firstImageExists() {
+    return Provider.of<Profile>(context).isFirstImagePresent();
+  }
+
   bool secondImageExists() {
     return Provider.of<Profile>(context).isSecondImagePresent();
   }
@@ -205,15 +209,22 @@ class _UserProfileCompletionScreenState
                           (MediaQuery.of(context).size.height) / 4,
                         ),
                       ),
-                      onPressed: () {},
-                      child: Image.network(
-                        Provider.of<Profile>(context, listen: false)
-                            .getFirstImageUrl
-                            .path,
-                        fit: BoxFit.fill,
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
+                      onPressed: () async {
+                        addImageFromGallery(context);
+                      },
+                      child: firstImageExists()
+                          ? Image.network(
+                              Provider.of<Profile>(context, listen: false)
+                                  .getFirstImageUrl
+                                  .path,
+                              fit: BoxFit.fill,
+                              width: double.infinity,
+                              height: double.infinity,
+                            )
+                          : const Icon(
+                              Icons.camera,
+                              color: Colors.white70,
+                            ),
                     ),
                     Column(
                       children: [

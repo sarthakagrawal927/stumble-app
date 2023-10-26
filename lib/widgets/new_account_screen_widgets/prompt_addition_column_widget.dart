@@ -41,7 +41,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
                 color: whiteColor,
                 fontSize: 20,
               ),
-              initialValue: '...',
+              initialValue: '',
               maxLines: 3,
               minLines: 1,
               keyboardAppearance: Brightness.dark,

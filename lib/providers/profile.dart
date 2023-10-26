@@ -297,9 +297,9 @@ class Profile with ChangeNotifier {
 
     return Profile(
       id: profile[profileDBKeys[ProfileKeys.id]],
-      name: profile[profileDBKeys[ProfileKeys.name]],
-      gender: Gender
-          .values[profile[profileDBKeys[ProfileKeys.gender]] ?? Gender.woman],
+      name: profile[profileDBKeys[ProfileKeys.name]] ?? "",
+      gender: Gender.values[
+          profile[profileDBKeys[ProfileKeys.gender]] ?? Gender.woman.index],
       conversationStarter:
           profile[profileDBKeys[ProfileKeys.conversationStarter]] ?? "",
       photoVerified: profile[profileDBKeys[ProfileKeys.photoVerified]] ?? false,

@@ -37,7 +37,12 @@ class _AgeColumnState extends State<AgeColumn> {
             height: MediaQuery.of(context).size.width / 3,
             child: Center(
                 child: TextField(
+              cursorColor: Colors.white,
               controller: dateInput,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
               //editing controller of this TextField
               decoration: const InputDecoration(
                 icon: Icon(Icons.calendar_today), //icon of text field
@@ -78,7 +83,7 @@ class _AgeColumnState extends State<AgeColumn> {
                     birthDateInput = pickedDate;
                     dateInput.text = pickedDate.toString().substring(0, 10);
                   });
-                } else {}
+                }
               },
             ))),
         // ),
