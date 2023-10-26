@@ -31,6 +31,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
         ),
         SingleChildScrollView(
           child: Container(
+            color: const Color.fromRGBO(35, 16, 51, 1),
             margin: EdgeInsets.only(
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 16,
@@ -61,7 +62,11 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
             Provider.of<Profile>(context, listen: false)
                 .setConversationStarter = promptTextValue;
             Navigator.of(context).pushNamed(SwipingScreen.routeName);
-            await Provider.of<Profile>(context, listen: false).upsertUser();
+            // ignore: use_build_context_synchronously
+            Provider.of<Profile>(context, listen: false).setIfUserIsPlatonic =
+                (await Provider.of<Profile>(context, listen: false)
+                        .upsertUser())
+                    .isPlatonic;
           },
         ),
       ],

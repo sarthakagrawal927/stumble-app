@@ -24,13 +24,14 @@ class ChatThread {
     // {"thread_id":"5a3a95b2-b468-47f6-9548-3f5ef77805e2","user_id":1,"chatter_id":2,"last_msg_id":1,"name":"Sarthak1","display_pic":null,"message":"Hi 0","createdAt":"2023-09-19T15:08:49.550Z"}
     return ChatThread(
       threadId: thread["thread_id"],
-      userId: thread["user_id"],
-      chatterId: thread["chatter_id"],
-      lastMsgId: thread["last_msg_id"],
-      name: thread["name"],
+      userId: thread["user_id"] ?? 0,
+      chatterId: thread["chatter_id"] ?? 0,
+      lastMsgId: thread["last_msg_id"] ?? 0,
+      name: thread["name"] ?? "Ramesh",
       displayPic: thread["display_pic"] ?? defaultBackupImage,
       message: thread["message"] ?? "",
-      createdAt: DateTime.parse(thread["createdAt"]),
+      createdAt:
+          DateTime.parse(thread["createdAt"] ?? DateTime.now().toString()),
     );
   }
 }

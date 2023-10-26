@@ -24,15 +24,11 @@ class _UserProfileCompletionScreenState
     extends State<UserProfileCompletionScreen> {
   final _conversationStarterFocusNode = FocusNode();
 
-  File secondImageUrl = File("");
-  File thirdImageUrl = File("");
-
-  void getSecondImageFromGallery(BuildContext context) async {
+  void addImageFromGallery(BuildContext context) async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
-      secondImageUrl = File(pickedFile.path);
       if (context.mounted) {
         List<String>? filePaths =
             await uploadPhotosAPI([File(pickedFile.path)]);
@@ -43,20 +39,8 @@ class _UserProfileCompletionScreenState
     }
   }
 
-  void getThirdImageFromGallery() async {
-    XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile != null) {
-      thirdImageUrl = File(pickedFile.path);
-      if (context.mounted) {
-        List<String>? filePaths =
-            await uploadPhotosAPI([File(pickedFile.path)]);
-        // ignore: use_build_context_synchronously
-        Provider.of<Profile>(context, listen: false).addImage =
-            File(filePaths?.first ?? pickedFile.path);
-      }
-    }
+  bool firstImageExists() {
+    return Provider.of<Profile>(context).isFirstImagePresent();
   }
 
   bool secondImageExists() {
@@ -76,7 +60,6 @@ class _UserProfileCompletionScreenState
   @override
   void initState() {
     super.initState();
-    Provider.of<Profile>(context, listen: false).setEntireProfileForEdit();
   }
 
   @override
@@ -226,15 +209,22 @@ class _UserProfileCompletionScreenState
                           (MediaQuery.of(context).size.height) / 4,
                         ),
                       ),
-                      onPressed: () {},
-                      child: Image.network(
-                        Provider.of<Profile>(context, listen: false)
-                            .getFirstImageUrl
-                            .path,
-                        fit: BoxFit.fill,
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
+                      onPressed: () async {
+                        addImageFromGallery(context);
+                      },
+                      child: firstImageExists()
+                          ? Image.network(
+                              Provider.of<Profile>(context, listen: false)
+                                  .getFirstImageUrl
+                                  .path,
+                              fit: BoxFit.fill,
+                              width: double.infinity,
+                              height: double.infinity,
+                            )
+                          : const Icon(
+                              Icons.camera,
+                              color: Colors.white70,
+                            ),
                     ),
                     Column(
                       children: [
@@ -248,7 +238,7 @@ class _UserProfileCompletionScreenState
                               ),
                             ),
                             onPressed: () async {
-                              getSecondImageFromGallery(context);
+                              addImageFromGallery(context);
                             },
                             child: secondImageExists()
                                 ? Image.network(
@@ -274,7 +264,9 @@ class _UserProfileCompletionScreenState
                                 (MediaQuery.of(context).size.height) / 8,
                               ),
                             ),
-                            onPressed: getThirdImageFromGallery,
+                            onPressed: () async {
+                              addImageFromGallery(context);
+                            },
                             child: thirdImageExists()
                                 ? Image.network(
                                     Provider.of<Profile>(context, listen: false)
@@ -320,9 +312,15 @@ class _UserProfileCompletionScreenState
             margin: EdgeInsets.only(
               top: MediaQuery.of(context).size.height / 64,
             ),
-            child: GestureDetector(
-              onTap: () async => {
-                await upsertUserApi({
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width / 16,
+              right: MediaQuery.of(context).size.width / 16,
+            ),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: filterScreenTextColor),
+              onPressed: () async {
+                upsertUserApi({
                   "conversation_starter":
                       Provider.of<Profile>(context, listen: false)
                           .getConversationStarterPrompt,
@@ -333,23 +331,16 @@ class _UserProfileCompletionScreenState
                   "dob": Provider.of<Profile>(context, listen: false)
                       .getBirthDate
                       .toIso8601String()
-                })
+                }).then((value) => {
+                      Navigator.of(context).pop(),
+                      Provider.of<Profile>(context, listen: false)
+                          .setEntireProfileForEdit(profile: value),
+                      debugPrint(value.toString())
+                    });
               },
-              child: Padding(
-                padding:
-                    EdgeInsets.all(MediaQuery.of(context).size.height / 64),
-                key: const Key("saveButton"),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: filterScreenTextColor),
-                  onPressed: () async {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    "Save",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                ),
+              child: const Text(
+                "Save",
+                style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
           ),

@@ -61,6 +61,7 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
               if (AppConstants.token.isNotEmpty) {
                 Provider.of<FirstScreenStateProviders>(context, listen: false)
                     .setActiveScreenMode(screenMode);
+                Provider.of<Profile>(context).setEntireProfileForEdit();
                 if (screenMode == ScreenMode.swipingScreen) {
                   // redirect to swiping screen
                   Navigator.of(context)

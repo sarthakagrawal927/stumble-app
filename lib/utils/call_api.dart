@@ -42,9 +42,12 @@ enum ApiType {
   getMatches,
   getThreads,
   getMessages,
+  startConversation,
   addMessage,
   uploadFile,
   activateUser,
+  updateUserInterest,
+  getIsNicheAlreadySelected,
 }
 
 const apiList = {
@@ -53,14 +56,17 @@ const apiList = {
   ApiType.upsertUser: "/api/v1/user",
   ApiType.findStumbles: "/api/v1/activity/find",
   ApiType.addActivity: "/api/v1/activity",
-  ApiType.getILiked: "/api/v1/activity?status=1",
-  ApiType.getMatches: "/api/v1/activity?status=69",
+  ApiType.getILiked: "/api/v1/activity?type=1",
+  ApiType.getMatches: "/api/v1/activity?type=69",
   ApiType.getLikedBy: "/api/v1/activity/liked_by",
   ApiType.getThreads: "/api/v1/chat/threads",
   ApiType.getMessages: "/api/v1/chat",
   ApiType.addMessage: "/api/v1/chat",
+  ApiType.startConversation: "/api/v1/chat/start_conversation",
   ApiType.uploadFile: "/api/v1/user/upload",
   ApiType.activateUser: "/api/v1/user/activate",
+  ApiType.updateUserInterest: "/api/v1/activity/update_user_interest",
+  ApiType.getIsNicheAlreadySelected: "/api/v1/chat/user_interest_for_thread",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -121,7 +127,7 @@ Future<Map<String, dynamic>> callAPI(
   }
 }
 
-Future<void> verifyOtpApi(String otpEntered, String phoneNumber) async {
+Future<Profile> verifyOtpApi(String otpEntered, String phoneNumber) async {
   final data = await callAPI(getApiEndpoint(ApiType.verifyOtp),
       bodyParams: {
         'otp': otpEntered,
@@ -132,6 +138,7 @@ Future<void> verifyOtpApi(String otpEntered, String phoneNumber) async {
   AppConstants.user = data["user"];
   // add to storage
   await writeSecureData(authKey, AppConstants.token);
+  return Profile.fromJson(data);
 }
 
 Future<void> sendOtpApi(String phoneNumber) async {
@@ -142,14 +149,37 @@ Future<void> sendOtpApi(String phoneNumber) async {
       method: HttpMethods.post);
 }
 
-Future<void> upsertUserApi(Map<String, dynamic> bodyParams) async {
-  await callAPI(getApiEndpoint(ApiType.upsertUser),
+Future<Profile> upsertUserApi(Map<String, dynamic> bodyParams) async {
+  var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
       bodyParams: bodyParams, method: HttpMethods.post);
+  AppConstants.user = data;
+  return Profile.fromJson(data);
 }
 
 Future<void> activateUserApi(Map<String, dynamic> bodyParams) async {
   await callAPI(getApiEndpoint(ApiType.activateUser),
       bodyParams: bodyParams, method: HttpMethods.post);
+}
+
+Future<bool> updateUserInterest(String threadId, int interest) async {
+  try {
+    var data = await callAPI(getApiEndpoint(ApiType.updateUserInterest),
+        method: HttpMethods.post,
+        bodyParams: {
+          'threadId': threadId,
+          'interest': interest,
+        });
+    return data["sameInterest"];
+    // ignore: empty_catches
+  } catch (error) {}
+  return false;
+}
+
+Future<bool> getIsNicheAlreadySelected(String threadId) async {
+  var data = await callAPI(getApiEndpoint(ApiType.getIsNicheAlreadySelected),
+      method: HttpMethods.get, queryParams: {"thread_id": threadId});
+  debugPrint(data.toString());
+  return data["lookingFor"] != null;
 }
 
 Future<Profile> getUserApi() async {
@@ -224,8 +254,16 @@ Future<ChatMessage> addChatMessage(
         'threadId': threadId,
         'receiverId': receiverId
       });
-  debugPrint(data.toString());
   return ChatMessage.fromJson(data["message"]);
+}
+
+Future<ChatThread> startConversation(
+  int receiverId,
+) async {
+  var data = await callAPI(getApiEndpoint(ApiType.startConversation),
+      method: HttpMethods.post, bodyParams: {'receiverId': receiverId});
+
+  return ChatThread.fromJson(data["thread"]);
 }
 
 Future<List<String>?> uploadPhotosAPI(List<File> photos) async {

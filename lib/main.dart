@@ -1,9 +1,13 @@
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/firebase_options.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/helper.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +38,14 @@ Widget getScreen() {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _setUserAuthToken();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   ChuckerFlutter.showOnRelease = true;
   runApp(const MyApp());
 }
@@ -56,7 +68,7 @@ class MyApp extends StatelessWidget {
             conversationStarter: "",
             gender: Gender.woman,
             photoVerified: false,
-            nicheFilterSelected: false,
+            isPlatonic: true,
             genderPreferences: [],
             ageRangePreference: const RangeValues(18, 40),
             photos: [],

@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import '../constants.dart';
 
@@ -20,7 +18,7 @@ class Profile with ChangeNotifier {
   List<File> photos = [];
   bool photoVerified;
   String conversationStarter;
-  bool nicheFilterSelected;
+  bool isPlatonic;
   RangeValues ageRangePreference;
   List<Gender> genderPreferences;
   String bearerToken = AppConstants.token;
@@ -37,13 +35,11 @@ class Profile with ChangeNotifier {
     required this.photos,
     this.photoVerified = true,
     this.conversationStarter = "Hi there, I am on Stumble!",
-    this.nicheFilterSelected = false,
+    this.isPlatonic = false,
     this.ageRangePreference = const RangeValues(18, 30),
     this.genderPreferences = const [Gender.man],
   }) : birthDate = birthDate ?? DateTime.now();
 
-  final url = 'https://stumbe.onrender.com';
-  final _chuckerHttpClient = ChuckerHttpClient(http.Client());
   int currentUser = -1;
   String currentThreadId = "";
   var logger = Logger();
@@ -75,10 +71,14 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
+  set setIfUserIsPlatonic(bool isPlatonic) {
+    isPlatonic = isPlatonic;
+    notifyListeners();
+  }
+
   set setConversationStarter(String conversationStarterPromptInput) {
     conversationStarter = conversationStarterPromptInput;
     profileCompletionAmount += 1;
-    // as this is the last screen need to call upsertUser
     notifyListeners();
   }
 
@@ -102,11 +102,6 @@ class Profile with ChangeNotifier {
   set setThirdImage(File thirdImageFile) {
     photos.add(thirdImageFile);
     profileCompletionAmount += 1;
-    notifyListeners();
-  }
-
-  set setNicheFilterValue(bool isNicheFilterSelected) {
-    nicheFilterSelected = isNicheFilterSelected;
     notifyListeners();
   }
 
@@ -144,6 +139,10 @@ class Profile with ChangeNotifier {
 
   bool get getPhotoVerificationStatus {
     return photoVerified;
+  }
+
+  bool get getIfUserIsPlatonic {
+    return isPlatonic;
   }
 
   List<File> get getPhotos {
@@ -252,8 +251,8 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  void setEntireProfileForEdit() {
-    Profile fromConstants = Profile.fromJson(AppConstants.user);
+  setEntireProfileForEdit({Profile? profile}) {
+    Profile fromConstants = profile ?? Profile.fromJson(AppConstants.user);
     name = fromConstants.name;
     gender = fromConstants.gender;
     birthDate = fromConstants.birthDate;
@@ -262,57 +261,51 @@ class Profile with ChangeNotifier {
     photoVerified = fromConstants.photoVerified;
     age = fromConstants.age;
     phoneNumber = fromConstants.phoneNumber;
+    isPlatonic = fromConstants.isPlatonic;
     profileCompletionAmount =
         photos.length * 1.0 + conversationStarter.length > 0 ? 1.0 : 0.0;
-    // notifyListeners();
+    genderPreferences = fromConstants.genderPreferences;
+    ageRangePreference = fromConstants.ageRangePreference;
+    notifyListeners();
   }
 
-  // INTEGRATION API
-  Future<void> deleteMessageAPI(int messageId, int receiverId) async {
-    final urlToCallDeleteMessageFromBackend = '$url/api/v1/chat/delete';
-    try {
-      final response = await _chuckerHttpClient
-          .post(Uri.parse(urlToCallDeleteMessageFromBackend), body: {
-        'messageId': messageId.toString(),
-        'receiverId': receiverId.toString(),
-      }, headers: {
-        'Authorization': bearerToken
-      });
-      logger.i("Data of delete message: ${response.body}");
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<void> upsertUser() async {
-    await upsertUserApi({
+  Future<Profile> upsertUser() async {
+    Profile userProfile = await upsertUserApi({
       "name": name,
       "gender": gender.index,
       "dob": birthDate.toIso8601String(),
       "conversation_starter": conversationStarter,
       "photos": photos.map((e) => e.path).toList(),
     });
-    setEntireProfileForEdit();
+    setEntireProfileForEdit(profile: userProfile);
+    return userProfile;
   }
 
   static fromJson(profile) {
-    List<String> photoList =
-        cast<List<String>>(profile[profileDBKeys[ProfileKeys.photos]]) ?? [];
+    List<dynamic> photoList = (profile[profileDBKeys[ProfileKeys.photos]] ?? [])
+        .where((element) => element is String)
+        .map((element) => element.toString())
+        .toList();
     List<File> photoFileList =
         photoList.map((e) => File(e.toString())).toList();
 
+    RangeValues targetAgeList = convertRangeValuesToInt(
+        cast<List<double>>(profile[profileDBKeys[ProfileKeys.targetAge]]));
+
+    List<Gender> targetGenderList = convertIntListToEnumList(
+        cast<List<int>>(profile[profileDBKeys[ProfileKeys.targetGender]]));
+
     return Profile(
       id: profile[profileDBKeys[ProfileKeys.id]],
-      name: profile[profileDBKeys[ProfileKeys.name]],
-      gender: Gender.values[profile[profileDBKeys[ProfileKeys.gender]]],
+      name: profile[profileDBKeys[ProfileKeys.name]] ?? "",
+      gender: Gender.values[
+          profile[profileDBKeys[ProfileKeys.gender]] ?? Gender.woman.index],
       conversationStarter:
-          profile[profileDBKeys[ProfileKeys.conversationStarter]],
-      photoVerified: profile[profileDBKeys[ProfileKeys.photoVerified]],
+          profile[profileDBKeys[ProfileKeys.conversationStarter]] ?? "",
+      photoVerified: profile[profileDBKeys[ProfileKeys.photoVerified]] ?? false,
       photos: photoFileList,
-      ageRangePreference: convertRangeValuesToInt(
-          cast<List<double>>(profile[profileDBKeys[ProfileKeys.targetAge]])),
-      genderPreferences: convertIntListToEnumList(
-          cast<List<int>>(profile[profileDBKeys[ProfileKeys.targetGender]])),
+      ageRangePreference: targetAgeList,
+      genderPreferences: targetGenderList,
     );
   }
 }

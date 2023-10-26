@@ -17,9 +17,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
     List<Gender> selectedGenders =
-        Provider.of<Profile>(context).getGenderPreferencesList;
+        Provider.of<Profile>(context, listen: false).getGenderPreferencesList;
     RangeValues currentRangeValues =
-        Provider.of<Profile>(context).getAgeRangePreference;
+        Provider.of<Profile>(context, listen: false).getAgeRangePreference;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -33,7 +33,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         ),
         backgroundColor: backgroundColor,
       ),
-      body: Column(
+      body: ListView(
         children: [
           Container(
             color: widgetColor,
@@ -69,9 +69,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 checkBoxListTileFunction('Men', Gender.man, selectedGenders),
               ],
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 16,
           ),
           Container(
             color: widgetColor,
@@ -144,15 +141,17 @@ class _FiltersScreenState extends State<FiltersScreen> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: filterScreenTextColor),
               onPressed: () async {
-                await upsertUserApi({
+                upsertUserApi({
                   "target_gender": selectedGenders.map((e) => e.index).toList(),
                   "target_age": [
                     currentRangeValues.start.toInt(),
                     currentRangeValues.end.toInt()
                   ]
-                });
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pop();
+                }).then((value) => {
+                      Provider.of<Profile>(context, listen: false)
+                          .setEntireProfileForEdit(profile: value),
+                      Navigator.of(context).pop()
+                    });
               },
               child: const Text(
                 "Save preferences!",

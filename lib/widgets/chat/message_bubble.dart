@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../providers/profile.dart';
 
 class MessageBubble extends StatelessWidget {
   final String message;
@@ -23,12 +20,6 @@ class MessageBubble extends StatelessWidget {
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         GestureDetector(
-          onLongPress: () async {
-            Provider.of<Profile>(context, listen: false)
-                .deleteMessageFromMessagesList(messageId);
-            await Provider.of<Profile>(context, listen: false)
-                .deleteMessageAPI(messageId, receiverId);
-          },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(

@@ -37,21 +37,44 @@ class _AgeColumnState extends State<AgeColumn> {
             height: MediaQuery.of(context).size.width / 3,
             child: Center(
                 child: TextField(
+              cursorColor: Colors.white,
               controller: dateInput,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
               //editing controller of this TextField
               decoration: const InputDecoration(
-                  icon: Icon(Icons.calendar_today), //icon of text field
-                  labelText: "Enter Date" //label text of field
-                  ),
+                icon: Icon(Icons.calendar_today), //icon of text field
+                labelText: "Enter Date", //label text of field
+                labelStyle: TextStyle(
+                  color: Colors.white,
+                ),
+                iconColor: Colors.white,
+                fillColor: Colors.white,
+              ),
               readOnly: true,
               //set it true, so that user will not able to edit text
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(
                     context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2001),
-                    //DateTime.now() - not to allow to choose before today.
-                    lastDate: DateTime.now(),
+                    firstDate: DateTime(
+                      DateTime.now().year - 70,
+                      DateTime.now().month,
+                      DateTime.now().day,
+                    ),
+                    initialDate: DateTime(
+                      DateTime.now().year - 20,
+                      DateTime.now().month,
+                      DateTime.now().day,
+                    ),
+                    lastDate: DateTime(
+                      DateTime.now().year - 18,
+                      DateTime.now().month,
+                      DateTime.now().day,
+                    ),
+                    //DateTime.now() - not to al
+                    //low to choose before today.
                     initialDatePickerMode: DatePickerMode.day,
                     initialEntryMode: DatePickerEntryMode.calendarOnly);
 
@@ -60,7 +83,7 @@ class _AgeColumnState extends State<AgeColumn> {
                     birthDateInput = pickedDate;
                     dateInput.text = pickedDate.toString().substring(0, 10);
                   });
-                } else {}
+                }
               },
             ))),
         // ),

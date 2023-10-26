@@ -130,8 +130,8 @@ class UserProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar:
-          const BottomBar(currentScreen: "UserProfileOverviewScreen"),
+      bottomNavigationBar: const BottomBar(
+          currentScreen: BottomBarScreens.userProfileOverviewScreen),
     );
   }
 }
