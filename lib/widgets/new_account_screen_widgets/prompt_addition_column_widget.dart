@@ -31,7 +31,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
         ),
         SingleChildScrollView(
           child: Container(
-            color: Color.fromRGBO(35, 16, 51, 1),
+            color: const Color.fromRGBO(35, 16, 51, 1),
             margin: EdgeInsets.only(
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 16,
