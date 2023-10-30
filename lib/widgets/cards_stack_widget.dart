@@ -13,7 +13,7 @@ Future<List<Profile>> _getStumbles() async {
 
 // ignore: must_be_immutable
 class CardsStackWidget extends StatefulWidget with ChangeNotifier {
-  CardsStackWidget({Key? key}) : super(key: key);
+  CardsStackWidget({super.key});
 
   @override
   State<CardsStackWidget> createState() => _CardsStackWidgetState();

@@ -20,12 +20,12 @@ Future<void> addActivityOnLike(Profile profile, Swipe action,
 
 class DragWidget extends StatefulWidget {
   const DragWidget({
-    Key? key,
+    super.key,
     required this.profile,
     required this.index,
     required this.swipeNotifier,
     required this.onSwipe,
-  }) : super(key: key);
+  });
   final Profile profile;
   final int index;
   final ValueNotifier<Swipe> swipeNotifier;

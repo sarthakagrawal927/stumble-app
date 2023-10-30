@@ -6,8 +6,7 @@ import 'package:provider/provider.dart';
 import '../providers/profile.dart';
 
 class SwipeCard extends StatelessWidget {
-  const SwipeCard({Key? key, required this.profile, required this.onSwipe})
-      : super(key: key);
+  const SwipeCard({super.key, required this.profile, required this.onSwipe});
   final Profile profile;
   final Function onSwipe;
 

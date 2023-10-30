@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class TagWidgetForSwipeCards extends StatelessWidget {
   const TagWidgetForSwipeCards({
-    Key? key,
+    super.key,
     required this.text,
     required this.color,
-  }) : super(key: key);
+  });
   final String text;
   final Color color;
 
