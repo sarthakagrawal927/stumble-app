@@ -8,7 +8,7 @@ enum SwipeType { swipe, comment, nicheSelection }
 
 const authKey = "authToken";
 
-const Color backgroundColor = Color.fromRGBO(26, 26, 26, 0.75);
+const Color backgroundColor = Color.fromRGBO(26, 26, 26, 1);
 
 const Color widgetColor = Color.fromRGBO(26, 26, 26, 1);
 
@@ -46,6 +46,8 @@ enum BottomBarScreens {
   swipingScreen,
   chatScreen,
 }
+
+enum PhotoUploaderMode { singleUpload, multiUpload }
 
 const defaultBackupImage =
     "https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg";

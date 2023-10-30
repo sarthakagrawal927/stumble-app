@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:dating_made_better/utils/call_api.dart';
+import 'package:dating_made_better/widgets/common/photo_uploader.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -24,33 +22,6 @@ class _UserProfileCompletionScreenState
     extends State<UserProfileCompletionScreen> {
   final _conversationStarterFocusNode = FocusNode();
 
-  void addImageFromGallery(BuildContext context) async {
-    XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile != null) {
-      if (context.mounted) {
-        List<String>? filePaths =
-            await uploadPhotosAPI([File(pickedFile.path)]);
-        // ignore: use_build_context_synchronously
-        Provider.of<Profile>(context, listen: false).addImage =
-            File(filePaths?.first ?? pickedFile.path);
-      }
-    }
-  }
-
-  bool firstImageExists() {
-    return Provider.of<Profile>(context).isFirstImagePresent();
-  }
-
-  bool secondImageExists() {
-    return Provider.of<Profile>(context).isSecondImagePresent();
-  }
-
-  bool thirdImageExists() {
-    return Provider.of<Profile>(context).isThirdImagePresent();
-  }
-
   @override
   void dispose() {
     _conversationStarterFocusNode.dispose();
@@ -65,11 +36,14 @@ class _UserProfileCompletionScreenState
   @override
   Widget build(BuildContext context) {
     int profileCompletionPercentage =
-        Provider.of<Profile>(context).getPercentageOfProfileCompleted.toInt();
+        Provider.of<Profile>(context, listen: false)
+            .getPercentageOfProfileCompleted
+            .toInt();
     String conversationStarterPrompt =
-        Provider.of<Profile>(context).getConversationStarterPrompt;
+        Provider.of<Profile>(context, listen: false)
+            .getConversationStarterPrompt;
     bool isProfileVerified =
-        Provider.of<Profile>(context).getPhotoVerificationStatus;
+        Provider.of<Profile>(context, listen: false).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: const TopAppBar(),
@@ -199,93 +173,7 @@ class _UserProfileCompletionScreenState
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: widgetColor,
-                        fixedSize: Size(
-                          (MediaQuery.of(context).size.width) * 0.4375,
-                          (MediaQuery.of(context).size.height) / 4,
-                        ),
-                      ),
-                      onPressed: () async {
-                        addImageFromGallery(context);
-                      },
-                      child: firstImageExists()
-                          ? Image.network(
-                              Provider.of<Profile>(context, listen: false)
-                                  .getFirstImageUrl
-                                  .path,
-                              fit: BoxFit.fill,
-                              width: double.infinity,
-                              height: double.infinity,
-                            )
-                          : const Icon(
-                              Icons.camera,
-                              color: Colors.white70,
-                            ),
-                    ),
-                    Column(
-                      children: [
-                        Consumer<Profile>(
-                          builder: (context, value, child) => ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: widgetColor,
-                              fixedSize: Size(
-                                (MediaQuery.of(context).size.width) * 0.4375,
-                                (MediaQuery.of(context).size.height) / 8,
-                              ),
-                            ),
-                            onPressed: () async {
-                              addImageFromGallery(context);
-                            },
-                            child: secondImageExists()
-                                ? Image.network(
-                                    Provider.of<Profile>(context, listen: false)
-                                        .getSecondImageUrl
-                                        .path,
-                                    fit: BoxFit.fill,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                  )
-                                : const Icon(
-                                    Icons.camera,
-                                    color: Colors.white70,
-                                  ),
-                          ),
-                        ),
-                        Consumer<Profile>(
-                          builder: (context, value, child) => ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: widgetColor,
-                              fixedSize: Size(
-                                (MediaQuery.of(context).size.width) * 0.4375,
-                                (MediaQuery.of(context).size.height) / 8,
-                              ),
-                            ),
-                            onPressed: () async {
-                              addImageFromGallery(context);
-                            },
-                            child: thirdImageExists()
-                                ? Image.network(
-                                    Provider.of<Profile>(context, listen: false)
-                                        .getThirdImageUrl
-                                        .path,
-                                    fit: BoxFit.fill,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                  )
-                                : const Icon(
-                                    Icons.camera,
-                                    color: Colors.white,
-                                  ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                const PhotoUploader(PhotoUploaderMode.multiUpload),
               ],
             ),
           ),
@@ -331,12 +219,14 @@ class _UserProfileCompletionScreenState
                   "dob": Provider.of<Profile>(context, listen: false)
                       .getBirthDate
                       .toIso8601String()
-                }).then((value) => {
-                      Navigator.of(context).pop(),
-                      Provider.of<Profile>(context, listen: false)
-                          .setEntireProfileForEdit(profile: value),
-                      debugPrint(value.toString())
-                    });
+                }).then((value) {
+                  Provider.of<Profile>(context, listen: false)
+                      .setEntireProfileForEdit(profile: value);
+                  debugPrint(value.toString());
+                  Navigator.of(context).pop();
+                }).catchError((error) {
+                  debugPrint(error.toString());
+                });
               },
               child: const Text(
                 "Save",

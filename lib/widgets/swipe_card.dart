@@ -171,7 +171,7 @@ class ButtonToSelectUserDatingPreference extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: Size.fromHeight(MediaQuery.of(context).size.height / 16),
-        backgroundColor: const Color.fromRGBO(231, 10, 95, 0.5),
+        backgroundColor: const Color.fromRGBO(231, 10, 95, 1),
       ),
       onPressed: () {
         Provider.of<Profile>(context, listen: false)

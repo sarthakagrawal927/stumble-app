@@ -138,7 +138,7 @@ Future<Profile> verifyOtpApi(String otpEntered, String phoneNumber) async {
   AppConstants.user = data["user"];
   // add to storage
   await writeSecureData(authKey, AppConstants.token);
-  return Profile.fromJson(data);
+  return Profile.fromJson(data["user"]);
 }
 
 Future<void> sendOtpApi(String phoneNumber) async {
@@ -266,7 +266,7 @@ Future<ChatThread> startConversation(
   return ChatThread.fromJson(data["thread"]);
 }
 
-Future<List<String>?> uploadPhotosAPI(List<File> photos) async {
+Future<List<String>> uploadPhotosAPI(List<File> photos) async {
   try {
     FormData formData = FormData.fromMap({
       "photos": photos
