@@ -15,7 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:http_parser/http_parser.dart';
 
-const String baseURL = 'https://stumbe.onrender.com';
+const String baseURL = 'https://ipgtvmwff6.us-east-1.awsapprunner.com';
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
 final logger = Logger();
 
