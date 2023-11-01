@@ -289,11 +289,16 @@ class Profile with ChangeNotifier {
     List<File> photoFileList =
         photoList.map((e) => File(e.toString())).toList();
 
-    RangeValues targetAgeList = convertRangeValuesToInt(
-        cast<List<double>>(profile[profileDBKeys[ProfileKeys.targetAge]]));
+    List<dynamic> targetAgeListDynamic =
+        profile[profileDBKeys[ProfileKeys.targetAge]] ?? [18, 30];
+    RangeValues targetAgeList =
+        convertRangeValuesToInt(targetAgeListDynamic.cast<int>());
 
-    List<Gender> targetGenderList = convertIntListToEnumList(
-        cast<List<int>>(profile[profileDBKeys[ProfileKeys.targetGender]]));
+    List<dynamic> targetGenderListDynamic =
+        profile[profileDBKeys[ProfileKeys.targetGender]] ??
+            [Gender.woman.index, Gender.man.index];
+    List<Gender> targetGenderList =
+        convertIntListToEnumList(targetGenderListDynamic.cast<int>());
 
     return Profile(
       id: profile[profileDBKeys[ProfileKeys.id]],
@@ -355,9 +360,9 @@ const profileDBKeys = {
   ProfileKeys.targetGender: "target_gender"
 };
 
-RangeValues convertRangeValuesToInt(List<double>? intList) {
+RangeValues convertRangeValuesToInt(List<int>? intList) {
   if (intList == null || intList.isEmpty) return const RangeValues(18, 30);
-  return RangeValues(intList[0], intList[1]);
+  return RangeValues(intList[0].toDouble(), intList[1].toDouble());
 }
 
 List<Gender> convertIntListToEnumList(List<int>? intList) {

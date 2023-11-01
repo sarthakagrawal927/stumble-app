@@ -24,9 +24,12 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
       children: [
         const ScreenHeadingWidget("Add your first photo!"),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 5,
+          height: MediaQuery.of(context).size.height / 20,
         ),
-        const PhotoUploader(PhotoUploaderMode.singleUpload),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [PhotoUploader(PhotoUploaderMode.singleUpload)],
+        ),
         ScreenGoToNextPageRow(
           "This is displayed on your profile",
           "",
