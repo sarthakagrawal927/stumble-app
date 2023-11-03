@@ -1,4 +1,3 @@
-import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/models/chat.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +34,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
         child: Row(
           children: [
             // CircleAvatarWidget(threadDetails['display_pic']),
-            CircleAvatarWidget(35, defaultBackupImage),
+            CircleAvatarWidget(35, widget.threadDetails.displayPic),
             SizedBox(
               width: MediaQuery.of(context).size.width / 24,
             ),
