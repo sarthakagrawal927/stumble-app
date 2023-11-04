@@ -3,6 +3,7 @@ import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
+import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -168,16 +169,22 @@ class _ChatScreenState extends State<ChatScreen> {
               )
           ],
           backgroundColor: topAppBarColor,
-          title: Padding(
-            padding:
-                EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
-            child: const Text(
-              'Stumble!',
-              style: TextStyle(
-                  fontSize: 25,
-                  color: headingColor,
-                  fontWeight: FontWeight.w900),
-            ),
+          title: Row(
+            children: [
+              GestureDetector(child: CircleAvatarWidget(35, thread.displayPic), onTap: () {
+                
+              },),              Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 64),
+                child: const Text(
+                  'Stumble!',
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: headingColor,
+                      fontWeight: FontWeight.w900),
+                ),
+              ),
+            ],
           ),
         ),
       ),
