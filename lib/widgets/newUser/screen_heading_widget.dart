@@ -6,9 +6,11 @@ class ScreenHeadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool keyboardHidden = MediaQuery.of(context).viewInsets.bottom == 0;
     return Container(
       margin: EdgeInsets.symmetric(
-        vertical: MediaQuery.of(context).size.height / 8,
+        vertical:
+            MediaQuery.of(context).size.height / ((keyboardHidden ? 1 : 2) * 8),
         horizontal: MediaQuery.of(context).size.width / 8,
       ),
       padding: EdgeInsets.symmetric(

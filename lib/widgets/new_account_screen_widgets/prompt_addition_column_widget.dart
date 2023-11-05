@@ -44,6 +44,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
               initialValue: '',
               maxLines: 3,
               minLines: 1,
+              autofocus: true,
               keyboardAppearance: Brightness.dark,
               textInputAction: TextInputAction.next,
               cursorColor: whiteColor,

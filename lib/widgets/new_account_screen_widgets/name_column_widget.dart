@@ -72,6 +72,7 @@ class _NameColumnState extends State<NameColumn> {
               ),
             ),
             keyboardType: TextInputType.name,
+            autofocus: true,
             onChanged: (value) {
               setState(() {
                 _name = value;

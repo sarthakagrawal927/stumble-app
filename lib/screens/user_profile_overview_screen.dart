@@ -89,21 +89,15 @@ class UserProfileScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    isProfileVerified
-                        ? Container(
-                            color: widgetColor,
-                            child: const Icon(
-                              color: Colors.blueAccent,
-                              Icons.verified_rounded,
-                            ),
-                          )
-                        : Container(
-                            color: widgetColor,
-                            child: const Icon(
-                              color: Colors.blueAccent,
-                              Icons.verified_outlined,
-                            ),
-                          ),
+                    Container(
+                      color: widgetColor,
+                      child: Icon(
+                        color: Colors.blueAccent,
+                        isProfileVerified
+                            ? Icons.verified_rounded
+                            : Icons.verified_outlined,
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(
