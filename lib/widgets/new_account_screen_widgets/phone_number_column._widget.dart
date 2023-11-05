@@ -74,14 +74,21 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
                   onInputChanged: (PhoneNumber number) {
                     phoneNumberValue = number.phoneNumber!;
                   },
-                  onInputValidated: (bool value) {},
+                  onInputValidated: (bool isValidated) {
+                    if (isValidated) {
+                      // close keyboard
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    }
+                  },
                   selectorConfig: const SelectorConfig(
                     selectorType: PhoneInputSelectorType.DIALOG,
                   ),
                   ignoreBlank: false,
-                  autoValidateMode: AutovalidateMode.always,
+                  autoValidateMode: AutovalidateMode.onUserInteraction,
                   selectorTextStyle: const TextStyle(color: Colors.white),
                   initialValue: number,
+                  autoFocus: true,
+                  keyboardAction: TextInputAction.done,
                   textFieldController: controller,
                   textStyle: const TextStyle(color: Colors.white),
                   formatInput: true,
