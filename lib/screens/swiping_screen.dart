@@ -98,95 +98,119 @@ class _SwipingScreenState extends State<SwipingScreen> {
         ),
         child: AppBar(
             actions: [
-              DropdownButton(
-                dropdownColor: topAppBarColor,
-                items: dropDownOptionList
-                    .map((dropdownItem) => DropdownMenuItem(
-                          value: dropDownOptions[dropdownItem]!.value,
-                          child: Row(
-                            children: [
-                              dropDownOptions[dropdownItem]!.icon,
-                              const SizedBox(width: 4),
-                              Text(
-                                dropDownOptions[dropdownItem]!.label,
-                                style: const TextStyle(color: whiteColor),
-                              ),
-                            ],
+              DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  iconSize: 25,
+                  dropdownColor: topAppBarColor,
+                  items: [
+                    DropdownMenuItem(
+                      value: dropDownOptions[DropDownOptions.liked]!.value,
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.filter_list_rounded,
+                            color: whiteColor,
                           ),
-                        ))
-                    .toList(),
-                onChanged: (itemIdentifier) async {
-                  dropDownOptions[itemIdentifier]!
-                      .getActivities()
-                      .then((value) => showDialog(
-                            context: context,
-                            builder: (context) {
-                              return value.isNotEmpty
-                                  ? Dialog(
-                                      backgroundColor: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40)),
-                                      elevation: 16,
-                                      child: GridView.builder(
-                                        itemCount: value.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Dialog(
-                                                backgroundColor: Colors.black,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            40)),
-                                                elevation: 16,
-                                                child: Container(),
-                                              );
-                                            },
-                                            child: Container(
-                                              margin: EdgeInsets.all(
-                                                  MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      64),
-                                              alignment: Alignment.bottomLeft,
-                                              decoration: imageBoxWidget(
-                                                  context, value[index]),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    )
-                                  : Dialog(
-                                      backgroundColor: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40)),
-                                      elevation: 16,
-                                      child: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            dropDownOptions[itemIdentifier]!
-                                                .blankScreenMessage,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
+                          const SizedBox(width: 8),
+                          Text(
+                            dropDownOptions[DropDownOptions.liked]!.label,
+                            style: const TextStyle(color: whiteColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: dropDownOptions[DropDownOptions.stumbledOntoMe]!
+                          .value,
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.exit_to_app,
+                            color: whiteColor,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            dropDownOptions[DropDownOptions.stumbledOntoMe]!
+                                .label,
+                            style: const TextStyle(color: whiteColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                  onChanged: (itemIdentifier) async {
+                    dropDownOptions[itemIdentifier]!
+                        .getActivities()
+                        .then((value) => showDialog(
+                              context: context,
+                              builder: (context) {
+                                return value.isNotEmpty
+                                    ? Dialog(
+                                        backgroundColor: Colors.black,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40)),
+                                        elevation: 16,
+                                        child: GridView.builder(
+                                          itemCount: value.length,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                Dialog(
+                                                  backgroundColor: Colors.black,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              40)),
+                                                  elevation: 16,
+                                                  child: Container(),
+                                                );
+                                              },
+                                              child: Container(
+                                                margin: EdgeInsets.all(
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        64),
+                                                alignment: Alignment.bottomLeft,
+                                                decoration: imageBoxWidget(
+                                                    context, value[index]),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      )
+                                    : Dialog(
+                                        backgroundColor: Colors.black,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40)),
+                                        elevation: 16,
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              dropDownOptions[itemIdentifier]!
+                                                  .blankScreenMessage,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                            },
-                          ));
-                },
-                icon: const Icon(
-                  Icons.menu,
-                  color: headingColor,
+                                      );
+                              },
+                            ));
+                  },
+                  icon: const Icon(
+                    Icons.menu,
+                    color: headingColor,
+                  ),
                 ),
               ),
             ],
