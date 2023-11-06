@@ -15,52 +15,54 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: AppBar(
         actions: [
-          DropdownButton(
-            dropdownColor: backgroundColor,
-            items: const [
-              DropdownMenuItem(
-                value: 'Filters',
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.filter_list_rounded,
-                      color: whiteColor,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Filters',
-                      style: TextStyle(color: whiteColor),
-                    ),
-                  ],
+          DropdownButtonHideUnderline(
+            child: DropdownButton(
+              dropdownColor: backgroundColor,
+              items: const [
+                DropdownMenuItem(
+                  value: 'Filters',
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.filter_list_rounded,
+                        color: whiteColor,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Filters',
+                        style: TextStyle(color: whiteColor),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              DropdownMenuItem(
-                value: 'Logout',
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.exit_to_app,
-                      color: whiteColor,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Logout',
-                      style: TextStyle(color: whiteColor),
-                    ),
-                  ],
+                DropdownMenuItem(
+                  value: 'Logout',
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.exit_to_app,
+                        color: whiteColor,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Logout',
+                        style: TextStyle(color: whiteColor),
+                      ),
+                    ],
+                  ),
                 ),
+              ],
+              onChanged: (itemIdentifier) {
+                if (itemIdentifier == 'Logout') {
+                  deleteSecureData(authKey);
+                } else if (itemIdentifier == 'Filters') {
+                  Navigator.pushNamed(context, FiltersScreen.routeName);
+                }
+              },
+              icon: const Icon(
+                Icons.menu,
+                color: headingColor,
               ),
-            ],
-            onChanged: (itemIdentifier) {
-              if (itemIdentifier == 'Logout') {
-                deleteSecureData(authKey);
-              } else if (itemIdentifier == 'Filters') {
-                Navigator.pushNamed(context, FiltersScreen.routeName);
-              }
-            },
-            icon: const Icon(
-              Icons.menu,
-              color: headingColor,
             ),
           ),
         ],

@@ -52,7 +52,7 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: widgetColor,
       appBar: const TopAppBar(),
       body: Container(
         color: backgroundColor,

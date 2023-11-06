@@ -14,9 +14,9 @@ const Color widgetColor = Color.fromRGBO(26, 26, 26, 1);
 
 const Color headingColor = Color.fromRGBO(255, 254, 253, 1);
 
-const Color topAppBarColor = Color.fromRGBO(26, 26, 26, 0.5);
+const Color topAppBarColor = Colors.black54;
 
-const Color bottomAppBarColor = Color.fromRGBO(26, 26, 26, 1);
+const Color bottomAppBarColor = Colors.black54;
 
 const Color filterScreenTextColor = Color.fromRGBO(231, 10, 95, 0.5);
 
