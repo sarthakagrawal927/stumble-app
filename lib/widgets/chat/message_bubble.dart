@@ -4,6 +4,7 @@ class MessageBubble extends StatelessWidget {
   final String message;
   final bool isMe;
   final int messageId;
+  final DateTime messageTime;
   final int receiverId;
 
   @override
@@ -12,6 +13,7 @@ class MessageBubble extends StatelessWidget {
       required this.isMe,
       required this.messageId,
       required this.receiverId,
+      required this.messageTime,
       required super.key});
 
   @override

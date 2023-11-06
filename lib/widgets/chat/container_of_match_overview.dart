@@ -1,5 +1,6 @@
 import 'package:dating_made_better/models/chat.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../screens/individual_chats_screen.dart';
 import '../circle_avatar.dart';
@@ -18,9 +19,9 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        Navigator.of(context)
-            .pushNamed(ChatScreen.routeName, arguments: widget.threadDetails);
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ChatScreen(thread: widget.threadDetails)));
       },
       child: Container(
         color: Colors.black,
@@ -48,12 +49,30 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                       fontWeight: FontWeight.bold,
                       color: Colors.white70),
                 ),
-                Text(
-                  widget.threadDetails.message,
-                  style: const TextStyle(fontSize: 12.5, color: Colors.white54),
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width *
+                        0.65, // You can set a specific width here
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        widget.threadDetails.message,
+                        style: const TextStyle(
+                            fontSize: 12.5, color: Colors.white70),
+                      ),
+                      const Spacer(),
+                      Text(
+                          DateFormat('hh:mm MMM-dd')
+                              .format(widget.threadDetails.createdAt),
+                          style: const TextStyle(
+                              fontSize: 12.5, color: Colors.white70))
+                    ],
+                  ),
                 ),
               ],
             ),
+            // add time at end
           ],
         ),
       ),
