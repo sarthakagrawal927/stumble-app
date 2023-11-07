@@ -18,6 +18,19 @@ class ContainerOfMatchOverview extends StatefulWidget {
 class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
   @override
   Widget build(BuildContext context) {
+    Widget getStack(List<Widget> children) {
+      return Container(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width *
+              0.65, // You can set a specific width here
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: children,
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -42,35 +55,34 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.threadDetails.name,
-                  style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white70),
-                ),
-                Container(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width *
-                        0.65, // You can set a specific width here
+                getStack([
+                  Text(
+                    widget.threadDetails.name,
+                    style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white70),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          widget.threadDetails.message,
-                          style: const TextStyle(
-                              fontSize: 12.5, color: Colors.white70),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Text(beautifyTime(widget.threadDetails.lastMsgTime),
-                          style: const TextStyle(
-                              fontSize: 12.5, color: Colors.white30)),
-                    ],
+                  // add a red dot to show unread
+                  Text(
+                    widget.threadDetails.hasUnread ? "●" : "",
+                    style:
+                        const TextStyle(fontSize: 25, color: Colors.redAccent),
                   ),
-                ),
+                ]),
+                getStack([
+                  Flexible(
+                    child: Text(
+                      widget.threadDetails.message,
+                      style: const TextStyle(
+                          fontSize: 12.5, color: Colors.white70),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Text(beautifyTime(widget.threadDetails.lastMsgTime),
+                      style: const TextStyle(
+                          fontSize: 12.5, color: Colors.white30)),
+                ]),
               ],
             ),
             // add time at end

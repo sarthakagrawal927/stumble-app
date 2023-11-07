@@ -41,13 +41,16 @@ class NewMessage extends StatelessWidget {
           IconButton(
             color: const Color.fromRGBO(38, 41, 42, 1),
             onPressed: () async {
-              if (isLoading) return;
+              if (isLoading || _enteredMessage.trim().isEmpty) return;
               isLoading = true;
-              _enteredMessage.trim().isEmpty
-                  ? null
-                  : await sendMessage(_enteredMessage);
-              FocusManager.instance.primaryFocus?.unfocus();
-              isLoading = false;
+              try {
+                await sendMessage(_enteredMessage);
+              } catch (err) {
+                debugPrint(err.toString());
+              } finally {
+                isLoading = false;
+                FocusManager.instance.primaryFocus?.unfocus();
+              }
             },
             icon: const Icon(
               Icons.send,

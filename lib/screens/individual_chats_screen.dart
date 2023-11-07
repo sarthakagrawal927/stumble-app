@@ -55,6 +55,8 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         listOfChatMessages.add(value);
       });
+    }).catchError((err) {
+      throw err;
     });
   }
 
