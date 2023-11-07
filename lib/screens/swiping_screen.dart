@@ -3,6 +3,7 @@ import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:dating_made_better/widgets/location.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -219,11 +220,11 @@ class _SwipingScreenState extends State<SwipingScreen> {
               onTap: () {
                 deleteSecureData(authKey);
               },
-              child: const Text(
+              child: Text(
                 textAlign: TextAlign.center,
                 'Stumble!',
-                style: TextStyle(
-                  fontSize: 25,
+                style: GoogleFonts.sacramento(
+                  fontSize: 35.0,
                   color: headingColor,
                   fontWeight: FontWeight.w900,
                 ),

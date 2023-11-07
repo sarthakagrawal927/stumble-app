@@ -5,6 +5,7 @@ import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -183,12 +184,13 @@ class _ChatScreenState extends State<ChatScreen> {
               Padding(
                 padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width / 64),
-                child: const Text(
+                child: Text(
                   'Stumble!',
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: headingColor,
-                      fontWeight: FontWeight.w900),
+                  style: GoogleFonts.sacramento(
+                    fontSize: 35.0,
+                    color: headingColor,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
             ],

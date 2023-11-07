@@ -1,5 +1,6 @@
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 import '../providers/profile.dart';
@@ -23,6 +24,7 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
     with SingleTickerProviderStateMixin {
   List<dynamic> draggableItems = [];
   late final AnimationController _animationController;
+  bool _draggableItemsListPopulated = false;
 
   @override
   void initState() {
@@ -45,6 +47,7 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
         if (mounted) {
           setState(() {
             draggableItems = values;
+            _draggableItemsListPopulated = true;
           });
         }
       });
@@ -71,14 +74,39 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
             builder: (context, swipe, _) => Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
-              children: List.generate(draggableItems.length, (index) {
-                return DragWidget(
-                  profile: draggableItems[index],
-                  index: index,
-                  swipeNotifier: swipeNotifier,
-                  onSwipe: removeProfileOnSwipe,
-                );
-              }),
+              children: _draggableItemsListPopulated && draggableItems.isEmpty
+                  ? List.generate(
+                      1,
+                      (index) {
+                        return Center(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: MediaQuery.of(context).size.height / 8,
+                              horizontal: MediaQuery.of(context).size.width / 8,
+                            ),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              "No nearby stumblers to 'stumble' upon at the moment.",
+                              style: GoogleFonts.sacramento(
+                                color: Colors.white,
+                                fontSize: 40,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    )
+                  : List.generate(
+                      draggableItems.length,
+                      (index) {
+                        return DragWidget(
+                          profile: draggableItems[index],
+                          index: index,
+                          swipeNotifier: swipeNotifier,
+                          onSwipe: removeProfileOnSwipe,
+                        );
+                      },
+                    ),
             ),
           ),
         ),

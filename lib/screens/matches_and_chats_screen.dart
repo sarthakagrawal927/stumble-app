@@ -5,6 +5,7 @@ import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/matches_conversation_started_with.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
@@ -34,6 +35,7 @@ class MatchesAndChatsScreen extends StatefulWidget {
 class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
   List<MiniProfile> listOfStumbleMatches = [];
   List<ChatThread> listOfMatchesConversationStartedWith = [];
+  bool _listsPopulated = false;
 
   @override
   void initState() {
@@ -45,6 +47,7 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
       setState(() {
         listOfStumbleMatches = results[0] as List<MiniProfile>;
         listOfMatchesConversationStartedWith = results[1] as List<ChatThread>;
+        _listsPopulated = true;
       });
     });
   }
@@ -56,47 +59,72 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
       appBar: const TopAppBar(),
       body: Container(
         color: backgroundColor,
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 5,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(listOfStumbleMatches.length,
-                          (int index) {
-                        return GestureDetector(
-                          child: Container(
-                            margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height / 32,
-                              bottom: MediaQuery.of(context).size.height / 32,
-                              left: MediaQuery.of(context).size.width / 32,
-                              right: MediaQuery.of(context).size.width / 32,
-                            ),
-                            child: CircleAvatarWidget(
-                                MediaQuery.of(context).size.width / 12,
-                                listOfStumbleMatches[index].photo ??
-                                    defaultBackupImage),
-                          ),
-                          onTap: () async => {
-                            startConversation(listOfStumbleMatches[index].id)
-                                .then((chatThread) => Navigator.of(context)
-                                    .pushNamed(ChatScreen.routeName,
-                                        arguments: chatThread))
-                          },
-                        );
-                      }),
+        child: _listsPopulated &&
+                listOfStumbleMatches.isEmpty &&
+                listOfMatchesConversationStartedWith.isEmpty
+            ? Center(
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height / 8,
+                    horizontal: MediaQuery.of(context).size.width / 8,
+                  ),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    "You haven't 'Stumbled' into anyone yet; keep swiping!",
+                    style: GoogleFonts.sacramento(
+                      color: Colors.white,
+                      fontSize: 40,
                     ),
                   ),
-                  MatchesConversationStartedWith(
-                      listOfMatchesConversationStartedWith),
+                ),
+              )
+            : Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: <Widget>[
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 5,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: List.generate(listOfStumbleMatches.length,
+                                (int index) {
+                              return GestureDetector(
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                    top:
+                                        MediaQuery.of(context).size.height / 32,
+                                    bottom:
+                                        MediaQuery.of(context).size.height / 32,
+                                    left:
+                                        MediaQuery.of(context).size.width / 32,
+                                    right:
+                                        MediaQuery.of(context).size.width / 32,
+                                  ),
+                                  child: CircleAvatarWidget(
+                                      MediaQuery.of(context).size.width / 12,
+                                      listOfStumbleMatches[index].photo ??
+                                          defaultBackupImage),
+                                ),
+                                onTap: () async => {
+                                  startConversation(
+                                          listOfStumbleMatches[index].id)
+                                      .then((chatThread) =>
+                                          Navigator.of(context).pushNamed(
+                                              ChatScreen.routeName,
+                                              arguments: chatThread))
+                                },
+                              );
+                            }),
+                          ),
+                        ),
+                        MatchesConversationStartedWith(
+                            listOfMatchesConversationStartedWith),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
       ),
       bottomNavigationBar:
           const BottomBar(currentScreen: BottomBarScreens.chatScreen),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 import '../screens/filters_screen.dart';
@@ -70,10 +71,13 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: Padding(
           padding:
               EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
-          child: const Text(
+          child: Text(
             'Stumble!',
-            style: TextStyle(
-                fontSize: 25, color: headingColor, fontWeight: FontWeight.w900),
+            style: GoogleFonts.sacramento(
+              fontSize: 35.0,
+              color: headingColor,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
       ),
