@@ -67,7 +67,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                       ),
                       Text(
                           DateFormat('hh:mm MMM-dd')
-                              .format(widget.threadDetails.createdAt),
+                              .format(widget.threadDetails.lastMsgTime),
                           style: const TextStyle(
                               fontSize: 12.5, color: Colors.white30)),
                     ],
