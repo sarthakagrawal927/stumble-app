@@ -1,6 +1,6 @@
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/utils/general.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../screens/individual_chats_screen.dart';
 import '../circle_avatar.dart';
@@ -65,9 +65,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Text(
-                          DateFormat('hh:mm MMM-dd')
-                              .format(widget.threadDetails.lastMsgTime),
+                      Text(beautifyTime(widget.threadDetails.lastMsgTime),
                           style: const TextStyle(
                               fontSize: 12.5, color: Colors.white30)),
                     ],
