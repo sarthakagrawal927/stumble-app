@@ -179,12 +179,15 @@ class _ChatScreenState extends State<ChatScreen> {
               Padding(
                 padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width / 64),
-                child: Text(
-                  widget.thread.name,
-                  style: const TextStyle(
-                      fontSize: 25,
-                      color: headingColor,
-                      fontWeight: FontWeight.w900),
+                child: Flexible(
+                  child: Text(
+                    widget.thread.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 25,
+                        color: headingColor,
+                        fontWeight: FontWeight.w900),
+                  ),
                 ),
               ),
             ],

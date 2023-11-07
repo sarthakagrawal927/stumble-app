@@ -55,18 +55,21 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                         0.65, // You can set a specific width here
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.threadDetails.message,
-                        style: const TextStyle(
-                            fontSize: 12.5, color: Colors.white70),
+                      Flexible(
+                        child: Text(
+                          widget.threadDetails.message,
+                          style: const TextStyle(
+                              fontSize: 12.5, color: Colors.white70),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      const Spacer(),
                       Text(
                           DateFormat('hh:mm MMM-dd')
                               .format(widget.threadDetails.createdAt),
                           style: const TextStyle(
-                              fontSize: 12.5, color: Colors.white70))
+                              fontSize: 12.5, color: Colors.white30)),
                     ],
                   ),
                 ),
