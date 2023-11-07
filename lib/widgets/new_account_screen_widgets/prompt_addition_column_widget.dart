@@ -58,16 +58,18 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
         ),
         ScreenGoToNextPageRow(
           "This will be shown on your profile!",
-          SwipingScreen.routeName,
+          "",
           () async {
-            Provider.of<Profile>(context, listen: false)
-                .setConversationStarter = promptTextValue;
-            Navigator.of(context).pushNamed(SwipingScreen.routeName);
-            // ignore: use_build_context_synchronously
-            Provider.of<Profile>(context, listen: false).setIfUserIsPlatonic =
-                (await Provider.of<Profile>(context, listen: false)
-                        .upsertUser())
-                    .isPlatonic;
+            if (promptTextValue != "") {
+              Provider.of<Profile>(context, listen: false)
+                  .setConversationStarter = promptTextValue;
+              Navigator.of(context).pushNamed(SwipingScreen.routeName);
+              // ignore: use_build_context_synchronously
+              Provider.of<Profile>(context, listen: false).setIfUserIsPlatonic =
+                  (await Provider.of<Profile>(context, listen: false)
+                          .upsertUser())
+                      .isPlatonic;
+            }
           },
         ),
       ],

@@ -17,6 +17,8 @@ class PhoneNumberColumnWidget extends StatefulWidget {
 }
 
 class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
+  bool _phoneNumberValidated = false;
+
   void getPhoneNumber(String phoneNumber) async {
     PhoneNumber number =
         await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'IN');
@@ -78,6 +80,9 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
                     if (isValidated) {
                       // close keyboard
                       FocusScope.of(context).requestFocus(FocusNode());
+                      setState(() {
+                        _phoneNumberValidated = true;
+                      });
                     }
                   },
                   selectorConfig: const SelectorConfig(
@@ -88,6 +93,7 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
                   selectorTextStyle: const TextStyle(color: Colors.white),
                   initialValue: number,
                   autoFocus: true,
+                  hintText: "",
                   keyboardAction: TextInputAction.done,
                   textFieldController: controller,
                   textStyle: const TextStyle(color: Colors.white),
@@ -108,13 +114,15 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
         ),
         ElevatedButton(
           onPressed: () {
-            sendOtpApi(phoneNumberValue);
-            setState(() {
-              Provider.of<FirstScreenStateProviders>(context, listen: false)
-                  .setNextScreenActive();
-              Provider.of<Profile>(context, listen: false).setPhoneNumber =
-                  phoneNumberValue;
-            });
+            if (_phoneNumberValidated) {
+              sendOtpApi(phoneNumberValue);
+              setState(() {
+                Provider.of<FirstScreenStateProviders>(context, listen: false)
+                    .setNextScreenActive();
+                Provider.of<Profile>(context, listen: false).setPhoneNumber =
+                    phoneNumberValue;
+              });
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color.fromRGBO(230, 230, 250, 0.5),

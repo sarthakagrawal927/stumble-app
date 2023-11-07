@@ -19,6 +19,7 @@ class AgeColumn extends StatefulWidget {
 class _AgeColumnState extends State<AgeColumn> {
   final TextEditingController dateInput = TextEditingController();
   DateTime birthDateInput = DateTime.now();
+  DateTime? pickedDate;
 
   @override
   void dispose() {
@@ -56,7 +57,7 @@ class _AgeColumnState extends State<AgeColumn> {
               readOnly: true,
               //set it true, so that user will not able to edit text
               onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
+                pickedDate = await showDatePicker(
                     context: context,
                     firstDate: DateTime(
                       DateTime.now().year - 70,
@@ -80,7 +81,7 @@ class _AgeColumnState extends State<AgeColumn> {
 
                 if (pickedDate != null) {
                   setState(() {
-                    birthDateInput = pickedDate;
+                    birthDateInput = pickedDate!;
                     dateInput.text = pickedDate.toString().substring(0, 10);
                   });
                 }
@@ -88,12 +89,14 @@ class _AgeColumnState extends State<AgeColumn> {
             ))),
         // ),
         ScreenGoToNextPageRow("This will be shown on your profile!", "", () {
-          Provider.of<FirstScreenStateProviders>(context, listen: false)
-              .setNextScreenActive();
-          Provider.of<Profile>(context, listen: false).setBirthDate =
-              birthDateInput;
-          Provider.of<Profile>(context, listen: false).setAge =
-              AgeCalculator.age(birthDateInput).years;
+          if (pickedDate != null) {
+            Provider.of<FirstScreenStateProviders>(context, listen: false)
+                .setNextScreenActive();
+            Provider.of<Profile>(context, listen: false).setBirthDate =
+                birthDateInput;
+            Provider.of<Profile>(context, listen: false).setAge =
+                AgeCalculator.age(birthDateInput).years;
+          }
         }),
       ],
     );

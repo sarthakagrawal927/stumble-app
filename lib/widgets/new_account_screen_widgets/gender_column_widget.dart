@@ -17,8 +17,7 @@ class GenderColumn extends StatefulWidget {
 }
 
 class _GenderColumnState extends State<GenderColumn> {
-  Gender? _gender = Gender.woman;
-
+  Gender? _gender;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,10 +53,12 @@ class _GenderColumnState extends State<GenderColumn> {
           "This will be shown on your profile!",
           "",
           () {
-            Provider.of<FirstScreenStateProviders>(context, listen: false)
-                .setNextScreenActive();
-            Provider.of<Profile>(context, listen: false).setGender =
-                _gender as Gender;
+            if (_gender != null) {
+              Provider.of<FirstScreenStateProviders>(context, listen: false)
+                  .setNextScreenActive();
+              Provider.of<Profile>(context, listen: false).setGender =
+                  _gender as Gender;
+            }
           },
         )
       ],

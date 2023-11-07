@@ -43,7 +43,11 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
           height: widget.deviceSize.height / 4,
         ),
         OtpTextField(
+          textStyle: const TextStyle(
+            color: Colors.white,
+          ),
           numberOfFields: 6,
+          fillColor: Colors.white,
           borderColor: const Color(0xFF512DA8),
           //set to true to show as box or false to show as dash
           showFieldAsBox: true,

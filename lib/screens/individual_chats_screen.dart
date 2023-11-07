@@ -170,10 +170,15 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
           backgroundColor: topAppBarColor,
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               GestureDetector(
-                child: CircleAvatarWidget(35, thread.displayPic),
+                child: CircleAvatarWidget(
+                    MediaQuery.of(context).size.height / 40, thread.displayPic),
                 onTap: () {},
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 32,
               ),
               Padding(
                 padding: EdgeInsets.only(

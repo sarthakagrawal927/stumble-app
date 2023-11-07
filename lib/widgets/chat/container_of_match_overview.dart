@@ -15,6 +15,11 @@ class ContainerOfMatchOverview extends StatefulWidget {
 }
 
 class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
+  String messageToDisplay(String message) {
+    if (message.length < 40) return message;
+    return "${message.substring(0, 37)}...";
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -34,7 +39,8 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
         child: Row(
           children: [
             // CircleAvatarWidget(threadDetails['display_pic']),
-            CircleAvatarWidget(35, widget.threadDetails.displayPic),
+            CircleAvatarWidget(MediaQuery.of(context).size.height / 32,
+                widget.threadDetails.displayPic),
             SizedBox(
               width: MediaQuery.of(context).size.width / 24,
             ),
@@ -49,7 +55,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                       color: Colors.white70),
                 ),
                 Text(
-                  widget.threadDetails.message,
+                  messageToDisplay(widget.threadDetails.message),
                   style: const TextStyle(fontSize: 12.5, color: Colors.white54),
                 ),
               ],

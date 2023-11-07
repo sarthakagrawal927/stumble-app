@@ -19,7 +19,7 @@ class NameColumn extends StatefulWidget {
 
 class _NameColumnState extends State<NameColumn> {
   final nameTextBoxController = TextEditingController();
-  String _name = "LMAO";
+  String _name = "";
 
   @override
   void dispose() {
@@ -64,7 +64,10 @@ class _NameColumnState extends State<NameColumn> {
               fontSize: 35,
             ),
             decoration: InputDecoration(
-              border: const OutlineInputBorder(),
+              border: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                color: Colors.white,
+              )),
               labelText: 'Name',
               labelStyle: GoogleFonts.lato(
                 fontSize: 25,
@@ -84,9 +87,11 @@ class _NameColumnState extends State<NameColumn> {
           "This will be shown on your profile!",
           "",
           () {
-            Provider.of<FirstScreenStateProviders>(context, listen: false)
-                .setNextScreenActive();
-            Provider.of<Profile>(context, listen: false).setName = _name;
+            if (_name != "") {
+              Provider.of<FirstScreenStateProviders>(context, listen: false)
+                  .setNextScreenActive();
+              Provider.of<Profile>(context, listen: false).setName = _name;
+            }
           },
         )
       ],

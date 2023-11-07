@@ -76,7 +76,7 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
                               right: MediaQuery.of(context).size.width / 32,
                             ),
                             child: CircleAvatarWidget(
-                                35,
+                                MediaQuery.of(context).size.width / 12,
                                 listOfStumbleMatches[index].photo ??
                                     defaultBackupImage),
                           ),

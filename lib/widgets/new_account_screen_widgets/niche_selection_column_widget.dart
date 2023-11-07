@@ -31,20 +31,23 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
               top: MediaQuery.of(context).size.height / 6,
             ),
             color: Colors.transparent,
-            child: CheckboxListTile(
-              title: const Text(
-                'Non-platonic filters: ',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+            child: Theme(
+              data: ThemeData(unselectedWidgetColor: Colors.white),
+              child: CheckboxListTile(
+                title: const Text(
+                  'Non-platonic filters: ',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
                 ),
+                value: isUserPlatonic,
+                onChanged: (_) {
+                  setState(() {
+                    isUserPlatonic = !isUserPlatonic;
+                  });
+                },
               ),
-              value: isUserPlatonic,
-              onChanged: (_) {
-                setState(() {
-                  isUserPlatonic = !isUserPlatonic;
-                });
-              },
             ),
           ),
         ),
