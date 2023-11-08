@@ -4,6 +4,7 @@ import 'package:dating_made_better/widgets/common/photo_uploader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/profile.dart';
 import '../newUser/screen_go_to_next_page_row.dart';
 import '../newUser/screen_heading_widget.dart';
 
@@ -34,8 +35,11 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
           "This is displayed on your profile",
           "",
           () {
-            Provider.of<FirstScreenStateProviders>(context, listen: false)
-                .setNextScreenActive();
+            if (Provider.of<Profile>(context, listen: false)
+                .isFirstImagePresent()) {
+              Provider.of<FirstScreenStateProviders>(context, listen: false)
+                  .setNextScreenActive();
+            }
           },
         ),
       ],
