@@ -5,6 +5,7 @@ import '../../constants.dart';
 // ignore: must_be_immutable
 class NewMessage extends StatelessWidget {
   String _enteredMessage = "";
+  bool isLoading = false;
   final Future<void> Function(String) sendMessage;
   NewMessage({required this.sendMessage, super.key});
   // receive sendMessage function from caller
@@ -40,10 +41,16 @@ class NewMessage extends StatelessWidget {
           IconButton(
             color: const Color.fromRGBO(38, 41, 42, 1),
             onPressed: () async {
-              _enteredMessage.trim().isEmpty
-                  ? null
-                  : await sendMessage(_enteredMessage);
-              FocusManager.instance.primaryFocus?.unfocus();
+              if (isLoading || _enteredMessage.trim().isEmpty) return;
+              isLoading = true;
+              try {
+                await sendMessage(_enteredMessage);
+              } catch (err) {
+                debugPrint(err.toString());
+              } finally {
+                isLoading = false;
+                FocusManager.instance.primaryFocus?.unfocus();
+              }
             },
             icon: const Icon(
               Icons.send,

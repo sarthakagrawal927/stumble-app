@@ -1,4 +1,5 @@
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/utils/general.dart';
 import 'package:flutter/material.dart';
 
 import '../../screens/individual_chats_screen.dart';
@@ -15,17 +16,25 @@ class ContainerOfMatchOverview extends StatefulWidget {
 }
 
 class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
-  String messageToDisplay(String message) {
-    if (message.length < 40) return message;
-    return "${message.substring(0, 37)}...";
-  }
-
   @override
   Widget build(BuildContext context) {
+    Widget getStack(List<Widget> children) {
+      return Container(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width *
+              0.65, // You can set a specific width here
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: children,
+        ),
+      );
+    }
+
     return GestureDetector(
-      onTap: () async {
-        Navigator.of(context)
-            .pushNamed(ChatScreen.routeName, arguments: widget.threadDetails);
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ChatScreen(thread: widget.threadDetails)));
       },
       child: Container(
         color: Colors.black,
@@ -47,19 +56,37 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.threadDetails.name,
-                  style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white70),
-                ),
-                Text(
-                  messageToDisplay(widget.threadDetails.message),
-                  style: const TextStyle(fontSize: 12.5, color: Colors.white54),
-                ),
+                getStack([
+                  Text(
+                    widget.threadDetails.name,
+                    style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white70),
+                  ),
+                  // add a red dot to show unread
+                  Text(
+                    widget.threadDetails.hasUnread ? "●" : "",
+                    style:
+                        const TextStyle(fontSize: 25, color: Colors.redAccent),
+                  ),
+                ]),
+                getStack([
+                  Flexible(
+                    child: Text(
+                      widget.threadDetails.message,
+                      style: const TextStyle(
+                          fontSize: 12.5, color: Colors.white70),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Text(beautifyTime(widget.threadDetails.lastMsgTime),
+                      style: const TextStyle(
+                          fontSize: 12.5, color: Colors.white30)),
+                ]),
               ],
             ),
+            // add time at end
           ],
         ),
       ),

@@ -22,6 +22,7 @@ class ChatMessages extends StatelessWidget {
             key: ValueKey(
               listOfChatMessages[index].id,
             ),
+            messageTime: listOfChatMessages[index].createdAt,
           )),
       itemCount: listOfChatMessages.length,
     );

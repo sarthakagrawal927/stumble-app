@@ -109,10 +109,11 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
                                 onTap: () async => {
                                   startConversation(
                                           listOfStumbleMatches[index].id)
-                                      .then((chatThread) =>
-                                          Navigator.of(context).pushNamed(
-                                              ChatScreen.routeName,
-                                              arguments: chatThread))
+                                      .then((chatThread) => Navigator.of(
+                                              context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => ChatScreen(
+                                                  thread: chatThread)))),
                                 },
                               );
                             }),

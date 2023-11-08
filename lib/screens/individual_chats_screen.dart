@@ -24,7 +24,8 @@ Future<ChatMessage> _addNewMessage(
 
 class ChatScreen extends StatefulWidget {
   static const routeName = '/chat-screen';
-  const ChatScreen({super.key});
+  final ChatThread thread;
+  const ChatScreen({super.key, required this.thread});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -33,11 +34,9 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   List<ChatMessage> listOfChatMessages = [];
   bool userHasSelectedANicheOption = false;
-  late ChatThread thread;
 
   void setChatState(context) {
-    thread = (ModalRoute.of(context)?.settings.arguments) as ChatThread;
-    _getChatMessages(thread.threadId).then((value) {
+    _getChatMessages(widget.thread.threadId).then((value) {
       setState(() {
         listOfChatMessages = value;
       });
@@ -51,16 +50,19 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> addNewMessage(String message) async {
-    await _addNewMessage(thread.threadId, message, thread.chatterId)
+    await _addNewMessage(
+            widget.thread.threadId, message, widget.thread.chatterId)
         .then((value) {
       setState(() {
         listOfChatMessages.add(value);
       });
+    }).catchError((err) {
+      throw err;
     });
   }
 
   Future<void> isNicheFilterAlreadySelected() async {
-    await getIsNicheAlreadySelected(thread.threadId).then((value) {
+    await getIsNicheAlreadySelected(widget.thread.threadId).then((value) {
       setState(() {
         userHasSelectedANicheOption = value;
       });
@@ -141,14 +143,15 @@ class _ChatScreenState extends State<ChatScreen> {
                     bool isSelectionSame = false;
                     if (itemIdentifier == "Just a conversation") {
                       isSelectionSame = await updateUserInterest(
-                          thread.threadId,
+                          widget.thread.threadId,
                           interestValue[InterestType.friendship]!);
                     } else if (itemIdentifier == "Hookup") {
                       isSelectionSame = await updateUserInterest(
-                          thread.threadId, interestValue[InterestType.hookup]!);
+                          widget.thread.threadId,
+                          interestValue[InterestType.hookup]!);
                     } else if (itemIdentifier == "Relationship") {
                       isSelectionSame = await updateUserInterest(
-                          thread.threadId,
+                          widget.thread.threadId,
                           interestValue[InterestType.relationship]!);
                     }
                     await isNicheFilterAlreadySelected();
@@ -175,7 +178,8 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               GestureDetector(
                 child: CircleAvatarWidget(
-                    MediaQuery.of(context).size.height / 40, thread.displayPic),
+                    MediaQuery.of(context).size.height / 40,
+                    widget.thread.displayPic),
                 onTap: () {},
               ),
               SizedBox(
@@ -184,12 +188,14 @@ class _ChatScreenState extends State<ChatScreen> {
               Padding(
                 padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width / 64),
-                child: Text(
-                  'Stumble!',
-                  style: GoogleFonts.sacramento(
-                    fontSize: 35.0,
-                    color: headingColor,
-                    fontWeight: FontWeight.w900,
+                child: Flexible(
+                  child: Text(
+                    widget.thread.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.sacramento(
+                        fontSize: 35,
+                        color: headingColor,
+                        fontWeight: FontWeight.w900),
                   ),
                 ),
               ),

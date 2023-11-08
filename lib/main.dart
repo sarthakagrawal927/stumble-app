@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 
 import './providers/profile.dart';
 import 'screens/login_or_signup_screen.dart';
-import 'screens/individual_chats_screen.dart';
 import './screens/filters_screen.dart';
 import './screens/swiping_screen.dart';
 import './screens/user_profile_completion_screen.dart';
@@ -91,7 +90,7 @@ class MyApp extends StatelessWidget {
           UserProfileScreen.routeName: (context) => const UserProfileScreen(),
           UserProfileCompletionScreen.routeName: (context) =>
               const UserProfileCompletionScreen(),
-          ChatScreen.routeName: (context) => const ChatScreen(),
+          // ChatScreen.routeName: (context) => const ChatScreen(),
           MatchesAndChatsScreen.routeName: (context) =>
               const MatchesAndChatsScreen(),
           FiltersScreen.routeName: (context) => const FiltersScreen(),
