@@ -81,7 +81,8 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         child: AppBar(
           actions: [
-            if (!isUserPlatonic && !userHasSelectedANicheOption)
+            if (!isUserPlatonic &&
+                !userHasSelectedANicheOption) // Neither user should be platonic condition.
               DropdownButton(
                 onTap: () async {
                   await isNicheFilterAlreadySelected();
@@ -108,7 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                           hintText: 'About these options:'),
                                     ),
                                     Text(
-                                        "These options are the niche feature of our app when it comes to non-platonic relationships. You can choose what you want with each individual. NOTE: Be rest-assured, your selected option would not be shown to the other person; until and unless, they have selected the same option. This is done to minimize the fear of judgement people may have before selecting an option.")
+                                        "These options are the niche feature of our app when it comes to non-platonic relationships. You can choose what you want with each individual. NOTE: Be rest-assured, your selected option would not be shown to the other person; until and unless, they have selected the SAME option. This is done to minimize the fear of judgement people may have before selecting an option.")
                                   ],
                                 ),
                               ),
@@ -160,8 +161,22 @@ class _ChatScreenState extends State<ChatScreen> {
                       showGeneralDialog(
                         context: context,
                         pageBuilder: (context, animation, secondaryAnimation) =>
-                            const Text(
-                                "You both have the same reasons for stumbling onto one another!"),
+                            Center(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: MediaQuery.of(context).size.height / 8,
+                              horizontal: MediaQuery.of(context).size.width / 8,
+                            ),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              "You both have the same reasons for stumbling onto one another!",
+                              style: GoogleFonts.sacramento(
+                                color: Colors.white,
+                                fontSize: 40,
+                              ),
+                            ),
+                          ),
+                        ),
                       );
                     }
                   }
