@@ -36,7 +36,7 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
           "",
           () {
             if (Provider.of<Profile>(context, listen: false)
-                .isFirstImagePresent()) {
+                .isImageAtPosPresent(1)) {
               Provider.of<FirstScreenStateProviders>(context, listen: false)
                   .setNextScreenActive();
             }

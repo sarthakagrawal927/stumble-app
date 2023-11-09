@@ -17,85 +17,76 @@ class PhotoUploader extends StatefulWidget {
 
 class _PhotoUploaderState extends State<PhotoUploader> {
   PhotoUploaderMode get mode => widget.mode;
+  int isLoading = 0;
 
-  void addImageFromGallery() async {
+  void addImageFromGallery([int imagePos = 1]) async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
       uploadPhotosAPI([File(pickedFile.path)]).then((filePaths) {
-        Provider.of<Profile>(context, listen: false).addImage =
-            File(filePaths.first);
+        Provider.of<Profile>(context, listen: false).setImageAtPosition(
+          File(filePaths[0]),
+          imagePos,
+        );
       }).catchError((error) {
         debugPrint(error.toString());
       });
     }
   }
 
-  bool thirdImageExists() {
-    return Provider.of<Profile>(context).isThirdImagePresent();
-  }
-
-  bool firstImageExists() {
-    return Provider.of<Profile>(context).isFirstImagePresent();
-  }
-
-  bool secondImageExists() {
-    return Provider.of<Profile>(context).isSecondImagePresent();
-  }
-
-  String getFirstImageFilePath() {
-    return Provider.of<Profile>(context).getFirstImageUrl.path;
-  }
-
-  String getSecondImageFilePath() {
-    return Provider.of<Profile>(context).getSecondImageUrl.path;
-  }
-
-  String getThirdImageFilePath() {
-    return Provider.of<Profile>(context).getThirdImageUrl.path;
-  }
-
-  Widget imageHandler(doesImageExist, String imagePath,
-          {double heightMultiplier = 1 / 8, double widthMultiplier = 0.4}) =>
-      Consumer<Profile>(
-        builder: (context, value, child) => ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: widgetColor,
-            fixedSize: Size(
-              (MediaQuery.of(context).size.width) * widthMultiplier,
-              (MediaQuery.of(context).size.height) * heightMultiplier,
-            ),
+  Widget imageHandler(int imagePos,
+      {double heightMultiplier = 1 / 8, double widthMultiplier = 0.4}) {
+    bool doesImageExist =
+        Provider.of<Profile>(context).isImageAtPosPresent(imagePos);
+    String imagePath =
+        Provider.of<Profile>(context).getImageAtPos(imagePos).path;
+    return Consumer<Profile>(
+      builder: (context, value, child) => ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: widgetColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-          onPressed: addImageFromGallery,
-          child: doesImageExist()
-              ? Image.network(
-                  imagePath,
-                  fit: BoxFit.fill,
-                  width: double.infinity,
-                  height: double.infinity,
-                )
-              : const Icon(
-                  Icons.camera,
-                  color: Colors.white,
-                ),
+          padding: EdgeInsets.zero,
+          fixedSize: Size(
+            (MediaQuery.of(context).size.width) * widthMultiplier,
+            (MediaQuery.of(context).size.height) * heightMultiplier,
+          ),
         ),
-      );
+        onPressed: () async => addImageFromGallery(imagePos),
+        child: doesImageExist
+            ? Image.network(
+                imagePath,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              )
+            : const Icon(
+                Icons.camera,
+                color: Colors.white,
+              ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     bool isSingleUpload = mode == PhotoUploaderMode.singleUpload;
     return Row(children: [
-      imageHandler(firstImageExists, getFirstImageFilePath(),
+      imageHandler(1,
           heightMultiplier: isSingleUpload ? 0.4 : 0.25,
           widthMultiplier: isSingleUpload ? 0.85 : 0.4),
-      if (!isSingleUpload)
+      if (!isSingleUpload) ...[
+        const Spacer(),
         Column(
           children: [
-            imageHandler(secondImageExists, getSecondImageFilePath()),
-            imageHandler(thirdImageExists, getThirdImageFilePath()),
+            imageHandler(2),
+            const SizedBox(height: 10),
+            imageHandler(3),
           ],
         )
+      ]
     ]);
   }
 }

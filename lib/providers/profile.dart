@@ -82,26 +82,14 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  set setPhotos(List<File> photosInput) {
-    photos = photosInput;
-    notifyListeners();
-  }
-
-  set addImage(File firstImage) {
-    photos.add(firstImage);
-    profileCompletionAmount += 1;
-    notifyListeners();
-  }
-
-  set setSecondImage(File secondImageFile) {
-    photos.add(secondImageFile);
-    profileCompletionAmount += 1;
-    notifyListeners();
-  }
-
-  set setThirdImage(File thirdImageFile) {
-    photos.add(thirdImageFile);
-    profileCompletionAmount += 1;
+  setImageAtPosition(File image, [int position = 1]) {
+    if (photos.length < position) {
+      photos.add(image);
+      profileCompletionAmount += 1;
+    } else {
+      var idx = position - 1;
+      photos[idx] = image;
+    }
     notifyListeners();
   }
 
@@ -153,16 +141,10 @@ class Profile with ChangeNotifier {
     return birthDate;
   }
 
-  File get getFirstImageUrl {
-    return isFirstImagePresent() ? photos[0] : File(defaultBackupImage);
-  }
-
-  File get getSecondImageUrl {
-    return isSecondImagePresent() ? photos[1] : File(defaultBackupImage);
-  }
-
-  File get getThirdImageUrl {
-    return isThirdImagePresent() ? photos[2] : File(defaultBackupImage);
+  File getImageAtPos(int position) {
+    return isImageAtPosPresent(position)
+        ? photos[position - 1]
+        : File(defaultBackupImage);
   }
 
   String get getConversationStarterPrompt {
@@ -183,16 +165,9 @@ class Profile with ChangeNotifier {
     return profileCompletionAmount * 100 / 5;
   }
 
-  bool isFirstImagePresent() {
-    return photos.isNotEmpty && photos[0] != File("");
-  }
-
-  bool isSecondImagePresent() {
-    return photos.length > 1 && photos[1] != File("");
-  }
-
-  bool isThirdImagePresent() {
-    return photos.length > 2 && photos[2] != File("");
+  // 1,2,3
+  bool isImageAtPosPresent(int position) {
+    return photos.length >= position && photos[position - 1] != File("");
   }
 
   Set<Profile> undoListOfProfilesForCurrentUser = {};
