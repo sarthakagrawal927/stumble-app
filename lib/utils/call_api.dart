@@ -47,7 +47,6 @@ enum ApiType {
   uploadFile,
   activateUser,
   updateUserInterest,
-  getIsNicheAlreadySelected,
 }
 
 const apiList = {
@@ -66,7 +65,6 @@ const apiList = {
   ApiType.uploadFile: "/api/v1/user/upload",
   ApiType.activateUser: "/api/v1/user/activate",
   ApiType.updateUserInterest: "/api/v1/activity/update_user_interest",
-  ApiType.getIsNicheAlreadySelected: "/api/v1/chat/user_interest_for_thread",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -175,13 +173,6 @@ Future<bool> updateUserInterest(String threadId, int interest) async {
   return false;
 }
 
-Future<bool> getIsNicheAlreadySelected(String threadId) async {
-  var data = await callAPI(getApiEndpoint(ApiType.getIsNicheAlreadySelected),
-      method: HttpMethods.get, queryParams: {"thread_id": threadId});
-  debugPrint(data.toString());
-  return data["lookingFor"] != null;
-}
-
 Future<Profile> getUserApi() async {
   var authToken = await readSecureData(authKey);
   AppConstants.token = authToken ?? "";
@@ -235,11 +226,11 @@ Future<List<dynamic>> getThreads() async {
   return data["threads"];
 }
 
-Future<List<dynamic>> getChatMessages(String threadId) async {
+Future<Map<String, dynamic>> getChatMessages(String threadId) async {
   var data = await callAPI(getApiEndpoint(ApiType.getMessages),
       method: HttpMethods.get, queryParams: {"thread_id": threadId});
   debugPrint(data.toString());
-  return data["messages"];
+  return data;
 }
 
 Future<ChatMessage> addChatMessage(

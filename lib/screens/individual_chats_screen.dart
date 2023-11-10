@@ -1,20 +1,49 @@
 import 'package:dating_made_better/models/chat.dart';
-import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
 
-Future<List<ChatMessage>> _getChatMessages(String threadId) async {
-  var messages = await getChatMessages(threadId);
-  debugPrint(messages.length.toString());
-  return messages.map<ChatMessage>((e) => ChatMessage.fromJson(e)).toList();
+const interestToLabel = {
+  InterestType.friendship: "Just a conversation",
+  InterestType.hookup: "Hookup",
+  InterestType.relationship: "Relationship",
+};
+
+var labelToInterest = {
+  interestToLabel[InterestType.friendship]: InterestType.friendship,
+  interestToLabel[InterestType.hookup]: InterestType.hookup,
+  interestToLabel[InterestType.relationship]: InterestType.relationship,
+};
+
+class ChatApiResponse {
+  final List<ChatMessage> messages;
+  final bool lookingForSame;
+  final bool showLookingForOption;
+  final InterestType? lookingFor;
+
+  ChatApiResponse(this.messages, this.lookingFor, this.showLookingForOption,
+      this.lookingForSame);
+}
+
+Future<ChatApiResponse> _getChatMessages(String threadId) async {
+  var apiResponse = await getChatMessages(threadId);
+  var messages = apiResponse['messages'] as List<dynamic>;
+  int? lookingFor = apiResponse["lookingFor"];
+  InterestType? lookingForInterest = lookingFor != null
+      ? InterestType.values.firstWhere((e) => (e.index + 1) == lookingFor,
+          orElse: () => InterestType.friendship)
+      : null;
+  return ChatApiResponse(
+      messages.map<ChatMessage>((e) => ChatMessage.fromJson(e)).toList(),
+      lookingForInterest,
+      apiResponse["showLookingForOption"],
+      apiResponse["lookingForSame"]);
 }
 
 Future<ChatMessage> _addNewMessage(
@@ -33,12 +62,19 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   List<ChatMessage> listOfChatMessages = [];
+  bool showLookingForOption = false;
+  bool lookingForSame = false;
+  late InterestType? lookingFor;
+
   bool userHasSelectedANicheOption = false;
 
   void setChatState(context) {
     _getChatMessages(widget.thread.threadId).then((value) {
       setState(() {
-        listOfChatMessages = value;
+        listOfChatMessages = value.messages;
+        showLookingForOption = value.showLookingForOption;
+        lookingForSame = value.lookingForSame;
+        lookingFor = value.lookingFor;
       });
     });
   }
@@ -46,7 +82,6 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    isNicheFilterAlreadySelected();
     WidgetsBinding.instance.addPostFrameCallback((_) => setChatState(context));
   }
 
@@ -62,18 +97,8 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  Future<void> isNicheFilterAlreadySelected() async {
-    await getIsNicheAlreadySelected(widget.thread.threadId).then((value) {
-      setState(() {
-        userHasSelectedANicheOption = value;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    bool isUserPlatonic =
-        Provider.of<Profile>(context, listen: false).getIfUserIsPlatonic;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: PreferredSize(
@@ -82,13 +107,12 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         child: AppBar(
           actions: [
-            if (!isUserPlatonic &&
-                !userHasSelectedANicheOption) // Neither user should be platonic condition.
+            if (showLookingForOption)
               DropdownButtonHideUnderline(
                 child: DropdownButton(
                   style: const TextStyle(color: Colors.blue),
-                  onTap: () async {
-                    // ignore: use_build_context_synchronously
+                  onTap: () {
+                    // Show only once for every user, using localStorage
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -146,57 +170,58 @@ class _ChatScreenState extends State<ChatScreen> {
                         });
                   },
                   dropdownColor: backgroundColor,
-                  items: [
-                    nicheSelectedOption("Just a conversation"),
-                    nicheSelectedOption("Relationship"),
-                    nicheSelectedOption("Hookup"),
-                  ],
+                  items: labelToInterest.entries
+                      .map((e) => nicheSelectedOption(e.value))
+                      .toList(),
                   onChanged: (itemIdentifier) async {
-                    bool isSelectionSame = true;
-                    if (itemIdentifier == "Just a conversation") {
-                      isSelectionSame = await updateUserInterest(
-                          widget.thread.threadId,
-                          interestValue[InterestType.friendship]!);
-                    } else if (itemIdentifier == "Hookup") {
-                      isSelectionSame = await updateUserInterest(
-                          widget.thread.threadId,
-                          interestValue[InterestType.hookup]!);
-                    } else if (itemIdentifier == "Relationship") {
-                      isSelectionSame = await updateUserInterest(
-                          widget.thread.threadId,
-                          interestValue[InterestType.relationship]!);
-                    }
-                    await isNicheFilterAlreadySelected();
-                    if (isSelectionSame) {
-                      // ignore: use_build_context_synchronously
-                      showGeneralDialog(
-                        barrierColor: topAppBarColor,
-                        context: context,
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            Center(
-                          child: Container(
-                            color: widgetColor,
-                            margin: EdgeInsets.symmetric(
-                              vertical: MediaQuery.of(context).size.height / 8,
-                              horizontal: MediaQuery.of(context).size.width / 8,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DefaultTextStyle(
-                                style: GoogleFonts.sacramento(
-                                  color: Colors.white70,
-                                  fontSize: 30,
-                                ),
-                                child: const Text(
-                                  textAlign: TextAlign.center,
-                                  "You both have the same reasons for 'Stumbling' onto one another!",
+                    InterestType interest = labelToInterest[itemIdentifier]!;
+                    updateUserInterest(
+                            widget.thread.threadId, interestValue[interest]!)
+                        .then((sameInterest) {
+                      if (sameInterest) {
+                        String interestLabel = interestToLabel[interest]!;
+                        setState(() {
+                          lookingForSame = true;
+                          lookingFor = interest;
+                          showLookingForOption = false;
+                        });
+                        // ignore: use_build_context_synchronously
+                        showGeneralDialog(
+                          barrierColor: topAppBarColor,
+                          context: context,
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  Center(
+                            child: Container(
+                              color: widgetColor,
+                              margin: EdgeInsets.symmetric(
+                                vertical:
+                                    MediaQuery.of(context).size.height / 8,
+                                horizontal:
+                                    MediaQuery.of(context).size.width / 8,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DefaultTextStyle(
+                                  style: GoogleFonts.sacramento(
+                                    color: Colors.white70,
+                                    fontSize: 30,
+                                  ),
+                                  child: Text(
+                                    textAlign: TextAlign.center,
+                                    'You both have the same reason $interestLabel for "Stumbling" onto one another!',
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    }
+                        );
+                      } else {
+                        setState(() {
+                          showLookingForOption = false;
+                        });
+                      }
+                    });
                   },
                   icon: const Icon(
                     Icons.menu,
@@ -226,7 +251,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     widget.thread.name,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.sacramento(
-                        fontSize: 35,
+                        fontSize: 25,
                         color: headingColor,
                         fontWeight: FontWeight.w900),
                   ),
@@ -238,6 +263,11 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
+          if (lookingForSame)
+            Text(
+              'Looking for same: ${interestToLabel[lookingFor]}',
+              style: const TextStyle(color: whiteColor),
+            ),
           Expanded(
             child: ChatMessages(listOfChatMessages),
           ),
@@ -251,11 +281,12 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  DropdownMenuItem<String> nicheSelectedOption(final String selectedOption) {
+  DropdownMenuItem<String> nicheSelectedOption(
+      final InterestType selectedOption) {
     return DropdownMenuItem(
-      value: selectedOption,
+      value: interestToLabel[selectedOption],
       child: Text(
-        selectedOption,
+        interestToLabel[selectedOption]!,
         style: const TextStyle(color: whiteColor),
       ),
     );
