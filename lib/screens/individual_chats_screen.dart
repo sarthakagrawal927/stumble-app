@@ -46,6 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+    isNicheFilterAlreadySelected();
     WidgetsBinding.instance.addPostFrameCallback((_) => setChatState(context));
   }
 
@@ -83,65 +84,75 @@ class _ChatScreenState extends State<ChatScreen> {
           actions: [
             if (!isUserPlatonic &&
                 !userHasSelectedANicheOption) // Neither user should be platonic condition.
-              DropdownButton(
-                onTap: () async {
-                  await isNicheFilterAlreadySelected();
-                  // ignore: use_build_context_synchronously
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                  vertical:
-                                      MediaQuery.of(context).size.height / 4,
-                                  horizontal:
-                                      MediaQuery.of(context).size.width / 12),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: ListView(
-                                  children: const [
-                                    TextField(
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'About these options:'),
+              DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  style: const TextStyle(color: Colors.blue),
+                  onTap: () async {
+                    // ignore: use_build_context_synchronously
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Center(
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.5,
+                              width: MediaQuery.of(context).size.width,
+                              child: Dialog(
+                                  backgroundColor: widgetColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  child: Center(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  64,
+                                              horizontal: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  12),
+                                          child: Text(
+                                            'About these options:',
+                                            style: GoogleFonts.sacramento(
+                                                fontSize: 35,
+                                                color: headingColor,
+                                                fontWeight: FontWeight.w900),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  64,
+                                              horizontal: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  12),
+                                          child: const Text(
+                                            "Our app offers unique features for non-platonic relationships, allowing you to privately select preferences for each individual. Rest assured, your choices remain confidential unless both parties select the same option, reducing fear of judgment during the selection process.",
+                                            style:
+                                                TextStyle(color: headingColor),
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    Text(
-                                        "These options are the niche feature of our app when it comes to non-platonic relationships. You can choose what you want with each individual. NOTE: Be rest-assured, your selected option would not be shown to the other person; until and unless, they have selected the SAME option. This is done to minimize the fear of judgement people may have before selecting an option.")
-                                  ],
-                                ),
-                              ),
-                            ));
-                      });
-                },
-                dropdownColor: backgroundColor,
-                items: [
-                  nicheSelectedOption("Just a conversation"),
-                  nicheSelectedOption("Relationship"),
-                  nicheSelectedOption("Hookup"),
-                ],
-                onChanged: (itemIdentifier) async {
-                  if (userHasSelectedANicheOption) {
-                    Center(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: MediaQuery.of(context).size.width / 6,
-                            vertical: MediaQuery.of(context).size.width / 8),
-                        child: const Dialog(
-                          child: Text(
-                            "You have already selected an option!",
-                            style: TextStyle(
-                                color: Colors.white,
-                                backgroundColor: widgetColor,
-                                fontSize: 15),
-                          ),
-                        ),
-                      ),
-                    );
-                  } else {
-                    bool isSelectionSame = false;
+                                  )),
+                            ),
+                          );
+                        });
+                  },
+                  dropdownColor: backgroundColor,
+                  items: [
+                    nicheSelectedOption("Just a conversation"),
+                    nicheSelectedOption("Relationship"),
+                    nicheSelectedOption("Hookup"),
+                  ],
+                  onChanged: (itemIdentifier) async {
+                    bool isSelectionSame = true;
                     if (itemIdentifier == "Just a conversation") {
                       isSelectionSame = await updateUserInterest(
                           widget.thread.threadId,
@@ -159,31 +170,38 @@ class _ChatScreenState extends State<ChatScreen> {
                     if (isSelectionSame) {
                       // ignore: use_build_context_synchronously
                       showGeneralDialog(
+                        barrierColor: topAppBarColor,
                         context: context,
                         pageBuilder: (context, animation, secondaryAnimation) =>
                             Center(
                           child: Container(
+                            color: widgetColor,
                             margin: EdgeInsets.symmetric(
                               vertical: MediaQuery.of(context).size.height / 8,
                               horizontal: MediaQuery.of(context).size.width / 8,
                             ),
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              "You both have the same reasons for stumbling onto one another!",
-                              style: GoogleFonts.sacramento(
-                                color: Colors.white,
-                                fontSize: 40,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: DefaultTextStyle(
+                                style: GoogleFonts.sacramento(
+                                  color: Colors.white70,
+                                  fontSize: 30,
+                                ),
+                                child: const Text(
+                                  textAlign: TextAlign.center,
+                                  "You both have the same reasons for 'Stumbling' onto one another!",
+                                ),
                               ),
                             ),
                           ),
                         ),
                       );
                     }
-                  }
-                },
-                icon: const Icon(
-                  Icons.menu,
-                  color: headingColor,
+                  },
+                  icon: const Icon(
+                    Icons.menu,
+                    color: headingColor,
+                  ),
                 ),
               )
           ],
@@ -236,13 +254,9 @@ class _ChatScreenState extends State<ChatScreen> {
   DropdownMenuItem<String> nicheSelectedOption(final String selectedOption) {
     return DropdownMenuItem(
       value: selectedOption,
-      child: Row(
-        children: [
-          Text(
-            selectedOption,
-            style: const TextStyle(color: whiteColor),
-          ),
-        ],
+      child: Text(
+        selectedOption,
+        style: const TextStyle(color: whiteColor),
       ),
     );
   }

@@ -29,7 +29,7 @@ class ChatThread {
       userId: thread["user_id"] ?? 0,
       chatterId: thread["chatter_id"] ?? 0,
       lastMsgId: thread["last_msg_id"] ?? 0,
-      name: thread["name"] ?? "Ramesh",
+      name: thread["name"] ?? " ",
       displayPic: thread["display_pic"] ?? defaultBackupImage,
       message: thread["message"] ?? "",
       lastMsgTime:
