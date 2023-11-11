@@ -59,7 +59,7 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
                 .setNextScreenActive();
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromRGBO(230, 230, 250, 0.5),
+            backgroundColor: Colors.white,
             minimumSize: Size(
                 widget.deviceSize.width / 2, widget.deviceSize.height / 16),
           ),
@@ -86,7 +86,7 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       launchUrl(
-                          Uri.parse('https://www.getstumble.app/privacy/'));
+                          Uri.parse('https://www.getstumble.app/privacy'));
                     },
                 ),
                 const TextSpan(
