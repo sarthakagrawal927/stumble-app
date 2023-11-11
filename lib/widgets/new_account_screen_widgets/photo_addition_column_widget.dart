@@ -1,6 +1,7 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/widgets/common/photo_uploader.dart';
+import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,11 +36,12 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
           "This is displayed on your profile",
           "",
           () {
-            if (Provider.of<Profile>(context, listen: false)
-                .isImageAtPosPresent(1)) {
+            handleSnackBarIfInputNotFilled(
+                Provider.of<Profile>(context, listen: false)
+                    .isImageAtPosPresent(1), () async {
               Provider.of<FirstScreenStateProviders>(context, listen: false)
                   .setNextScreenActive();
-            }
+            }, context, valueToFill: "photo");
           },
         ),
       ],

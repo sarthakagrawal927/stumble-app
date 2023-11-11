@@ -125,7 +125,7 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromRGBO(230, 230, 250, 0.5),
+            backgroundColor: Colors.white,
             minimumSize: Size(
                 widget.deviceSize.width / 2, widget.deviceSize.height / 16),
           ),

@@ -1,3 +1,4 @@
+import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,12 +54,12 @@ class _GenderColumnState extends State<GenderColumn> {
           "This will be shown on your profile!",
           "",
           () {
-            if (_gender != null) {
+            handleSnackBarIfInputNotFilled(_gender != null, () async {
               Provider.of<FirstScreenStateProviders>(context, listen: false)
                   .setNextScreenActive();
               Provider.of<Profile>(context, listen: false).setGender =
                   _gender as Gender;
-            }
+            }, context, valueToFill: "gender");
           },
         )
       ],

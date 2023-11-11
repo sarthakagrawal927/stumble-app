@@ -1,3 +1,4 @@
+import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,16 +61,16 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
           "This will be shown on your profile!",
           "",
           () async {
-            if (promptTextValue != "") {
+            handleSnackBarIfInputNotFilled(promptTextValue != "", () async {
               Provider.of<Profile>(context, listen: false)
                   .setConversationStarter = promptTextValue;
-              Navigator.of(context).pushNamed(SwipingScreen.routeName);
-              // ignore: use_build_context_synchronously
-              Provider.of<Profile>(context, listen: false).setIfUserIsPlatonic =
-                  (await Provider.of<Profile>(context, listen: false)
-                          .upsertUser())
-                      .isPlatonic;
-            }
+              Provider.of<Profile>(context, listen: false)
+                  .upsertUserOnboarding()
+                  .then((value) {
+                Navigator.of(context).pushNamed(SwipingScreen.routeName);
+              });
+            }, context, valueToFill: "prompt");
+            if (promptTextValue != "") {}
           },
         ),
       ],

@@ -1,5 +1,6 @@
 import 'package:age_calculator/age_calculator.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +24,8 @@ class _AgeColumnState extends State<AgeColumn> {
 
   @override
   void dispose() {
-    super.dispose();
     dateInput.dispose();
+    super.dispose();
   }
 
   @override
@@ -89,14 +90,14 @@ class _AgeColumnState extends State<AgeColumn> {
             ))),
         // ),
         ScreenGoToNextPageRow("This will be shown on your profile!", "", () {
-          if (pickedDate != null) {
+          handleSnackBarIfInputNotFilled(pickedDate != null, () async {
             Provider.of<FirstScreenStateProviders>(context, listen: false)
                 .setNextScreenActive();
             Provider.of<Profile>(context, listen: false).setBirthDate =
                 birthDateInput;
             Provider.of<Profile>(context, listen: false).setAge =
                 AgeCalculator.age(birthDateInput).years;
-          }
+          }, context, valueToFill: "date of birth");
         }),
       ],
     );
