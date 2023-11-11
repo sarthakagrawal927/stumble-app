@@ -1,7 +1,6 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/widgets/comment_feature_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../providers/profile.dart';
 
@@ -153,43 +152,6 @@ class SwipeCard extends StatelessWidget {
         image: NetworkImage(profile.photos.isNotEmpty
             ? profile.photos[0].path
             : defaultBackupImage),
-      ),
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class ButtonToSelectUserDatingPreference extends StatelessWidget {
-  String preference;
-  Profile profile;
-  ButtonToSelectUserDatingPreference(this.preference, this.profile,
-      {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        minimumSize: Size.fromHeight(MediaQuery.of(context).size.height / 16),
-        backgroundColor: const Color.fromRGBO(231, 10, 95, 1),
-      ),
-      onPressed: () {
-        Provider.of<Profile>(context, listen: false)
-            .removeLikedProfilesWhenNicheButtonIsClicked(
-          profile,
-          Container(),
-          "",
-          preference,
-          SwipeType.nicheSelection,
-        );
-        Provider.of<Profile>(context, listen: false).setLikedListOfProfiles =
-            profile;
-      },
-      child: Text(
-        preference,
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 25,
-        ),
       ),
     );
   }

@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import '../constants.dart';
 
-T? cast<T>(x) => x is T ? x : null;
-
 class Profile with ChangeNotifier {
   int id;
   String name;
@@ -168,62 +166,6 @@ class Profile with ChangeNotifier {
   // 1,2,3
   bool isImageAtPosPresent(int position) {
     return photos.length >= position && photos[position - 1] != File("");
-  }
-
-  Set<Profile> undoListOfProfilesForCurrentUser = {};
-  List<Profile> currentListOfStumblesForCurrentUser = [];
-
-  List<dynamic> likedListOfProfilesForCurrentUser = [];
-  List<dynamic> admirerListOfProfilesForCurrentUser = [];
-  List<dynamic> threadsListForCurrentUser = [];
-  List<dynamic> messagesListForCorrespondingThread = [];
-
-  List<dynamic> get getMessagesList {
-    return messagesListForCorrespondingThread;
-  }
-
-  void addMessageToMessagesList(var message) {
-    messagesListForCorrespondingThread.add(message);
-    notifyListeners();
-  }
-
-  void deleteMessageFromMessagesList(int messageId) {
-    for (var messageObject in messagesListForCorrespondingThread) {
-      if (messageObject['id'] == messageId) {
-        messagesListForCorrespondingThread.remove(messageObject);
-        break;
-      }
-    }
-    notifyListeners();
-  }
-
-  void removeLikedProfilesWhenNicheButtonIsClicked(Profile profile,
-      Widget widget, String comment, String preference, SwipeType swipeType) {
-    if (swipeType == SwipeType.swipe) {
-      currentListOfStumblesForCurrentUser.remove(profile);
-    } else if (swipeType == SwipeType.comment) {
-      // Add code for storing comment.
-      currentListOfStumblesForCurrentUser.remove(profile);
-    } else if (swipeType == SwipeType.nicheSelection) {
-      // Add code for storing nicheValue
-      currentListOfStumblesForCurrentUser.remove(profile);
-    }
-    notifyListeners();
-  }
-
-  void setUndoListProfilesToFrontOfGetStumblesList() {
-    if (undoListOfProfilesForCurrentUser.isNotEmpty) {
-      currentListOfStumblesForCurrentUser
-          .add(undoListOfProfilesForCurrentUser.last);
-      undoListOfProfilesForCurrentUser
-          .remove(undoListOfProfilesForCurrentUser.last);
-    }
-    notifyListeners();
-  }
-
-  set setLikedListOfProfiles(Profile profile) {
-    likedListOfProfilesForCurrentUser.add(profile);
-    notifyListeners();
   }
 
   setEntireProfileForEdit({Profile? profile}) {
