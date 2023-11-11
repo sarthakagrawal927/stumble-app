@@ -66,9 +66,9 @@ class _GenderColumnState extends State<GenderColumn> {
     );
   }
 
-  ListTile genderListTile(String text, Gender gender, BuildContext context) {
-    return ListTile(
-      iconColor: Colors.white,
+  RadioListTile genderListTile(
+      String text, Gender gender, BuildContext context) {
+    return RadioListTile<Gender>(
       tileColor: Colors.white,
       title: Text(
         text,
@@ -77,18 +77,15 @@ class _GenderColumnState extends State<GenderColumn> {
           color: Colors.white,
         ),
       ),
-      leading: Radio<Gender>(
-        fillColor: MaterialStateColor.resolveWith((states) => whiteColor),
-        value: gender,
-        groupValue: _gender,
-        onChanged: (Gender? value) {
-          setState(() {
-            _gender = value;
-            Provider.of<Profile>(context, listen: false).setGender =
-                _gender as Gender;
-          });
-        },
-      ),
+      onChanged: (Gender? value) {
+        setState(() {
+          _gender = value;
+          Provider.of<Profile>(context, listen: false).setGender =
+              _gender as Gender;
+        });
+      },
+      value: gender,
+      groupValue: _gender,
     );
   }
 }
