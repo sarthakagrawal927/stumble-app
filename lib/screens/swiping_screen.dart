@@ -1,6 +1,5 @@
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
-import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:dating_made_better/widgets/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -216,18 +215,13 @@ class _SwipingScreenState extends State<SwipingScreen> {
               ),
             ],
             backgroundColor: topAppBarColor,
-            title: GestureDetector(
-              onTap: () {
-                deleteSecureData(authKey);
-              },
-              child: Text(
-                textAlign: TextAlign.center,
-                'Stumble!',
-                style: GoogleFonts.sacramento(
-                  fontSize: 35.0,
-                  color: headingColor,
-                  fontWeight: FontWeight.w900,
-                ),
+            title: Text(
+              textAlign: TextAlign.center,
+              'Stumble!',
+              style: GoogleFonts.sacramento(
+                fontSize: 35.0,
+                color: headingColor,
+                fontWeight: FontWeight.w900,
               ),
             )),
       ),

@@ -1,3 +1,4 @@
+import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -53,9 +54,10 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ],
-              onChanged: (itemIdentifier) {
+              onChanged: (itemIdentifier) async {
                 if (itemIdentifier == 'Logout') {
-                  deleteSecureData(authKey);
+                  deleteSecureData(authKey).then((value) =>
+                      Navigator.pushNamed(context, AuthScreen.routeName));
                 } else if (itemIdentifier == 'Filters') {
                   Navigator.pushNamed(context, FiltersScreen.routeName);
                 }
