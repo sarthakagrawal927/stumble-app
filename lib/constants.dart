@@ -8,6 +8,8 @@ enum SwipeType { swipe, comment, nicheSelection }
 
 const authKey = "authToken";
 
+enum ModelOpened { userInterestInfoTeaching }
+
 const Color backgroundColor = Color.fromRGBO(26, 26, 26, 1);
 
 const Color widgetColor = Color.fromRGBO(26, 26, 26, 1);

@@ -3,6 +3,7 @@ import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
+import 'package:dating_made_better/widgets/common/info_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -111,63 +112,9 @@ class _ChatScreenState extends State<ChatScreen> {
               DropdownButtonHideUnderline(
                 child: DropdownButton(
                   style: const TextStyle(color: Colors.blue),
-                  onTap: () {
-                    // Show only once for every user, using localStorage
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Center(
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.5,
-                              width: MediaQuery.of(context).size.width,
-                              child: Dialog(
-                                  backgroundColor: widgetColor,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  child: Center(
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  64,
-                                              horizontal: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  12),
-                                          child: Text(
-                                            'About these options:',
-                                            style: GoogleFonts.sacramento(
-                                                fontSize: 35,
-                                                color: headingColor,
-                                                fontWeight: FontWeight.w900),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  64,
-                                              horizontal: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  12),
-                                          child: const Text(
-                                            "Our app offers unique features for non-platonic relationships, allowing you to privately select preferences for each individual. Rest assured, your choices remain confidential unless both parties select the same option, reducing fear of judgment during the selection process.",
-                                            style:
-                                                TextStyle(color: headingColor),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )),
-                            ),
-                          );
-                        });
+                  onTap: () async {
+                    await showModelIfNotShown(
+                        context, ModelOpened.userInterestInfoTeaching);
                   },
                   dropdownColor: backgroundColor,
                   items: labelToInterest.entries
