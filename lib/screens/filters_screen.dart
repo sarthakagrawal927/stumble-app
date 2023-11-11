@@ -1,5 +1,4 @@
 import 'package:dating_made_better/providers/profile.dart';
-import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -141,17 +140,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: filterScreenTextColor),
               onPressed: () async {
-                upsertUserApi({
+                Provider.of<Profile>(context, listen: false).upsertUser({
                   "target_gender": selectedGenders.map((e) => e.index).toList(),
                   "target_age": [
                     currentRangeValues.start.toInt(),
                     currentRangeValues.end.toInt()
                   ]
-                }).then((value) => {
-                      Provider.of<Profile>(context, listen: false)
-                          .setEntireProfileForEdit(profile: value),
-                      Navigator.of(context).pop()
-                    });
+                }).then((value) => {Navigator.of(context).pop()});
               },
               child: const Text(
                 "Save preferences!",

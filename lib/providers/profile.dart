@@ -186,15 +186,21 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Profile> upsertUser() async {
-    Profile userProfile = await upsertUserApi({
+  Future<Profile> upsertUser(Map<String, dynamic> bodyParams) async {
+    Profile userProfile = await upsertUserApi(bodyParams);
+    setEntireProfileForEdit(profile: userProfile);
+    return userProfile;
+  }
+
+  Future<Profile> upsertUserOnboarding() async {
+    Profile userProfile = await upsertUser({
       "name": name,
       "gender": gender.index,
       "dob": birthDate.toIso8601String(),
       "conversation_starter": conversationStarter,
       "photos": photos.map((e) => e.path).toList(),
+      "is_platonic": isPlatonic,
     });
-    setEntireProfileForEdit(profile: userProfile);
     return userProfile;
   }
 

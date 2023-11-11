@@ -1,4 +1,3 @@
-import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/common/photo_uploader.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -208,7 +207,7 @@ class _UserProfileCompletionScreenState
               style: ElevatedButton.styleFrom(
                   backgroundColor: filterScreenTextColor),
               onPressed: () async {
-                upsertUserApi({
+                Provider.of<Profile>(context, listen: false).upsertUser({
                   "conversation_starter":
                       Provider.of<Profile>(context, listen: false)
                           .getConversationStarterPrompt,
@@ -220,9 +219,6 @@ class _UserProfileCompletionScreenState
                       .getBirthDate
                       .toIso8601String()
                 }).then((value) {
-                  Provider.of<Profile>(context, listen: false)
-                      .setEntireProfileForEdit(profile: value);
-                  debugPrint(value.toString());
                   Navigator.of(context).pop();
                 }).catchError((error) {
                   debugPrint(error.toString());
