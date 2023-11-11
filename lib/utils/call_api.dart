@@ -173,9 +173,12 @@ Future<bool> updateUserInterest(String threadId, int interest) async {
   return false;
 }
 
-Future<Profile> getUserApi() async {
+Future<Profile?> getUserApi() async {
   var authToken = await readSecureData(authKey);
   AppConstants.token = authToken ?? "";
+  if (AppConstants.token.isEmpty) {
+    return null;
+  }
   var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
       method: HttpMethods.get);
   AppConstants.user = data;
