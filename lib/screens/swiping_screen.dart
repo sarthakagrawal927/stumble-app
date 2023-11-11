@@ -29,22 +29,28 @@ class DropdownOptionVal {
 
 final Map<DropDownOptions, DropdownOptionVal> dropDownOptions = {
   DropDownOptions.liked: DropdownOptionVal(
-      'I want to stumble into',
+      'I wanna stumble into',
       DropDownOptions.liked,
       "Like someone",
       _getPeopleWhoLiked,
-      const Icon(Icons.filter_list_rounded, color: Colors.white, size: 24)),
+      const Icon(
+        Icons.filter_list_rounded,
+        color: Colors.white,
+      )),
   DropDownOptions.stumbledOntoMe: DropdownOptionVal(
       'Stumbled onto me',
       DropDownOptions.stumbledOntoMe,
       "No stumblers yet!",
       _getPeopleWhoLikedMe,
-      const Icon(Icons.favorite, color: Colors.white, size: 24)),
+      const Icon(
+        Icons.favorite,
+        color: Colors.white,
+      )),
 };
 
 final dropDownOptionList = [
-  DropDownOptions.liked,
-  DropDownOptions.stumbledOntoMe,
+  dropDownOptions[DropDownOptions.liked],
+  dropDownOptions[DropDownOptions.stumbledOntoMe],
 ];
 
 Future<List<MiniProfile>> _getPeopleWhoLiked() async {
@@ -102,42 +108,25 @@ class _SwipingScreenState extends State<SwipingScreen> {
                 child: DropdownButton(
                   iconSize: 25,
                   dropdownColor: topAppBarColor,
-                  items: [
-                    DropdownMenuItem(
-                      value: dropDownOptions[DropDownOptions.liked]!.value,
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.filter_list_rounded,
-                            color: whiteColor,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            dropDownOptions[DropDownOptions.liked]!.label,
-                            style: const TextStyle(color: whiteColor),
-                          ),
-                        ],
-                      ),
-                    ),
-                    DropdownMenuItem(
-                      value: dropDownOptions[DropDownOptions.stumbledOntoMe]!
-                          .value,
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.exit_to_app,
-                            color: whiteColor,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            dropDownOptions[DropDownOptions.stumbledOntoMe]!
-                                .label,
-                            style: const TextStyle(color: whiteColor),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  items: dropDownOptionList
+                      .map((e) => DropdownMenuItem(
+                            alignment: Alignment.center,
+                            value: e!.value,
+                            child: Row(
+                              children: [
+                                e.icon,
+                                const SizedBox(width: 8),
+                                Text(
+                                  e.label,
+                                  style: const TextStyle(
+                                    color: whiteColor,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ))
+                      .toList(),
                   onChanged: (itemIdentifier) async {
                     dropDownOptions[itemIdentifier]!
                         .getActivities()

@@ -27,7 +27,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
         title: const Text(
           'Filters',
           style: TextStyle(
-            color: Color.fromRGBO(231, 10, 95, 1),
+            color: filterScreenHeadingColor,
           ),
         ),
         backgroundColor: backgroundColor,
@@ -136,6 +136,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
             margin: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height / 16,
                 bottom: MediaQuery.of(context).size.height / 16),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 6),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: filterScreenTextColor),

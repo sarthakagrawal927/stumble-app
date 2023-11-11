@@ -6,6 +6,24 @@ import '../constants.dart';
 import '../screens/filters_screen.dart';
 import '../utils/internal_storage.dart';
 
+enum DropdownOptions {
+  filters,
+  logout,
+}
+
+class DropdownOptionVal {
+  final String value;
+  final IconData icon;
+  final DropdownOptions dropdownOption;
+
+  DropdownOptionVal(this.value, this.icon, this.dropdownOption);
+}
+
+var defaultDropdownOptions = [
+  DropdownOptionVal("Logout", Icons.exit_to_app, DropdownOptions.logout),
+  DropdownOptionVal("Filters", Icons.filter_list, DropdownOptions.filters),
+];
+
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TopAppBar({super.key});
 
@@ -19,41 +37,21 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           DropdownButtonHideUnderline(
             child: DropdownButton(
+              enableFeedback: true,
               dropdownColor: backgroundColor,
-              items: const [
-                DropdownMenuItem(
-                  value: 'Filters',
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.filter_list_rounded,
-                        color: whiteColor,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        'Filters',
-                        style: TextStyle(color: whiteColor),
-                      ),
-                    ],
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: 'Logout',
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.exit_to_app,
-                        color: whiteColor,
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        'Logout',
-                        style: TextStyle(color: whiteColor),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              items: defaultDropdownOptions
+                  .map((e) => DropdownMenuItem(
+                        value: e.value,
+                        child: Row(
+                          children: [
+                            Icon(e.icon, color: whiteColor),
+                            const SizedBox(width: 8),
+                            Text(e.value,
+                                style: const TextStyle(color: whiteColor)),
+                          ],
+                        ),
+                      ))
+                  .toList(),
               onChanged: (itemIdentifier) async {
                 if (itemIdentifier == 'Logout') {
                   deleteSecureData(authKey).then((value) =>
@@ -71,8 +69,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
         backgroundColor: topAppBarColor,
         title: Padding(
-          padding:
-              EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
+          padding: const EdgeInsets.only(left: 4),
           child: Text(
             'Stumble!',
             style: GoogleFonts.sacramento(
