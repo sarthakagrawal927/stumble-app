@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -65,7 +66,7 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
           ),
           child: const Text(
             "Use mobile number",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20, color: filterScreenHeadingColor),
           ),
         ),
         Padding(

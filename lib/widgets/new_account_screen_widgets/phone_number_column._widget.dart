@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -131,7 +132,7 @@ class _PhoneNumberColumnWidget extends State<PhoneNumberColumnWidget> {
           ),
           child: const Text(
             "Send OTP",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20, color: filterScreenHeadingColor),
           ),
         ),
       ],
