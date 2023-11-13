@@ -57,12 +57,15 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 getStack([
-                  Text(
-                    widget.threadDetails.name,
-                    style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white70),
+                  Flexible(
+                    child: Text(
+                      widget.threadDetails.name,
+                      style: const TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white70),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   // add a red dot to show unread
                   Text(

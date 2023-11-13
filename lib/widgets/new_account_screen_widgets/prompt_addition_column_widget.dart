@@ -19,10 +19,17 @@ class PromptAdditionColumn extends StatefulWidget {
 
 class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
   String promptTextValue = "";
+  FocusNode textFieldFocusNode = FocusNode();
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    textFieldFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // List<File> imageUrls =
-    //     Provider.of<Profile>(context, listen: false).getImageUrls;
     return Column(
       children: [
         const ScreenHeadingWidget(
@@ -45,14 +52,15 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
               initialValue: '',
               maxLines: 3,
               minLines: 1,
+              focusNode: textFieldFocusNode,
               autofocus: true,
               keyboardAppearance: Brightness.dark,
               textInputAction: TextInputAction.next,
               cursorColor: whiteColor,
-              onChanged: (value) => {
+              onChanged: (value) {
                 setState(() {
                   promptTextValue = value;
-                }),
+                });
               },
             ),
           ),
@@ -64,13 +72,15 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
             handleSnackBarIfInputNotFilled(promptTextValue != "", () async {
               Provider.of<Profile>(context, listen: false)
                   .setConversationStarter = promptTextValue;
+              if (isLoading) return;
+              isLoading = true;
               Provider.of<Profile>(context, listen: false)
                   .upsertUserOnboarding()
                   .then((value) {
+                isLoading = false;
                 Navigator.of(context).pushNamed(SwipingScreen.routeName);
               });
             }, context, valueToFill: "prompt");
-            if (promptTextValue != "") {}
           },
         ),
       ],
