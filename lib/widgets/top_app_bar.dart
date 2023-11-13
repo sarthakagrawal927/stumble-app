@@ -1,6 +1,8 @@
+import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../screens/filters_screen.dart';
@@ -54,8 +56,12 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                   .toList(),
               onChanged: (itemIdentifier) async {
                 if (itemIdentifier == 'Logout') {
-                  deleteSecureData(authKey).then((value) =>
-                      Navigator.pushNamed(context, AuthScreen.routeName));
+                  deleteSecureData(authKey).then((value) {
+                    Provider.of<FirstScreenStateProviders>(context,
+                            listen: false)
+                        .setActiveScreenMode(ScreenMode.landing);
+                    Navigator.pushNamed(context, AuthScreen.routeName);
+                  });
                 } else if (itemIdentifier == 'Filters') {
                   Navigator.pushNamed(context, FiltersScreen.routeName);
                 }

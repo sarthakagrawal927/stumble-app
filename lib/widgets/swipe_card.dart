@@ -31,17 +31,19 @@ class SwipeCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(
-                          MediaQuery.of(context).size.width / 32),
-                      child: Text(
-                        "${profile.name}, ",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
+                        padding: EdgeInsets.all(
+                            MediaQuery.of(context).size.width / 32),
+                        child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Text(
+                              "${profile.name}, ",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 35,
+                                fontWeight: FontWeight.w900,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ))),
                     Text(
                       profile.getAge.toString(),
                       style: const TextStyle(
