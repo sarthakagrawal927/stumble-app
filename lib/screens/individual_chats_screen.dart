@@ -190,20 +190,16 @@ class _ChatScreenState extends State<ChatScreen> {
               SizedBox(
                 width: MediaQuery.of(context).size.width / 32,
               ),
-              Padding(
-                  padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 64),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 3,
-                    child: Text(
-                      widget.thread.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.sacramento(
-                          fontSize: 25,
-                          color: headingColor,
-                          fontWeight: FontWeight.w900),
-                    ),
-                  )),
+              Flexible(
+                child: Text(
+                  widget.thread.name,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.sacramento(
+                      fontSize: 25,
+                      color: headingColor,
+                      fontWeight: FontWeight.w900),
+                ),
+              ),
             ],
           ),
         ),
