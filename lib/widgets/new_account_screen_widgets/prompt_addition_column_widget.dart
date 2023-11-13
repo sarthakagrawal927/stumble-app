@@ -49,7 +49,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
               keyboardAppearance: Brightness.dark,
               textInputAction: TextInputAction.next,
               cursorColor: whiteColor,
-              onFieldSubmitted: (value) => {
+              onChanged: (value) => {
                 setState(() {
                   promptTextValue = value;
                 }),
