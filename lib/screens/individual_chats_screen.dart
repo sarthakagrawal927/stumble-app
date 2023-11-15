@@ -111,6 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
             if (showLookingForOption)
               DropdownButtonHideUnderline(
                 child: DropdownButton(
+                  iconSize: MediaQuery.of(context).size.width / 16,
                   style: const TextStyle(color: Colors.blue),
                   onTap: () async {
                     await showModelIfNotShown(
@@ -198,7 +199,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       widget.thread.name,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.sacramento(
-                          fontSize: 25,
+                          fontSize: MediaQuery.of(context).size.width / 16,
                           color: headingColor,
                           fontWeight: FontWeight.w900),
                     ),

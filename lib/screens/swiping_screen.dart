@@ -106,7 +106,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
             actions: [
               DropdownButtonHideUnderline(
                 child: DropdownButton(
-                  iconSize: 25,
+                  iconSize: MediaQuery.of(context).size.width / 16,
                   dropdownColor: topAppBarColor,
                   items: dropDownOptionList
                       .map((e) => DropdownMenuItem(
@@ -208,7 +208,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
               textAlign: TextAlign.center,
               'Stumble!',
               style: GoogleFonts.sacramento(
-                fontSize: 35.0,
+                fontSize: MediaQuery.of(context).size.width / 12,
                 color: headingColor,
                 fontWeight: FontWeight.w900,
               ),

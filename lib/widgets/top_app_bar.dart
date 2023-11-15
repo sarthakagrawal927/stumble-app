@@ -39,6 +39,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           DropdownButtonHideUnderline(
             child: DropdownButton(
+              iconSize: MediaQuery.of(context).size.width / 14,
               enableFeedback: true,
               dropdownColor: backgroundColor,
               items: defaultDropdownOptions
@@ -79,7 +80,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Text(
             'Stumble!',
             style: GoogleFonts.sacramento(
-              fontSize: 35.0,
+              fontSize: MediaQuery.of(context).size.width / 14,
               color: headingColor,
               fontWeight: FontWeight.w900,
             ),
