@@ -30,6 +30,7 @@ class NewMessage extends StatelessWidget {
                 if (value!.contains("\n")) {
                   DoNothingAction;
                 }
+                return null;
               }),
               maxLines: null,
               style: const TextStyle(
