@@ -23,15 +23,22 @@ class NewMessage extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: TextField(
+            child: TextFormField(
               controller: _controller,
+              autovalidateMode: AutovalidateMode.always,
+              validator: ((value) {
+                if (value!.contains("\n")) {
+                  DoNothingAction;
+                }
+              }),
+              maxLines: null,
               style: const TextStyle(
                 color: whiteColor,
               ),
               cursorColor: whiteColor,
               decoration: const InputDecoration(
                 labelText: 'Send a message!',
-                labelStyle: TextStyle(color: backgroundColor),
+                labelStyle: TextStyle(color: Colors.white),
               ),
               onChanged: (value) {
                 _enteredMessage = value.toString();

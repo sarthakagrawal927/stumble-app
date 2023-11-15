@@ -126,7 +126,6 @@ class _ChatScreenState extends State<ChatScreen> {
                             widget.thread.threadId, interestValue[interest]!)
                         .then((sameInterest) {
                       if (sameInterest) {
-                        String interestLabel = interestToLabel[interest]!;
                         setState(() {
                           lookingForSame = true;
                           lookingFor = interest;
@@ -154,9 +153,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                     color: Colors.white70,
                                     fontSize: 30,
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     textAlign: TextAlign.center,
-                                    'You both have the same reason $interestLabel for "Stumbling" onto one another!',
+                                    'You both have the same reason for "Stumbling" onto one another!',
                                   ),
                                 ),
                               ),
