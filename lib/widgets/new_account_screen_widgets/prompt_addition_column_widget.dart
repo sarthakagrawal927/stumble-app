@@ -32,8 +32,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const ScreenHeadingWidget(
-            "Tell people somethings that you're interested in!"),
+        const ScreenHeadingWidget("What fascinates or interests or you?!"),
         SizedBox(
           height: MediaQuery.of(context).size.height / 7,
         ),

@@ -18,7 +18,7 @@ class AskMeAboutTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Text(
-          'Few things you should come talk to me about!',
+          'What fascinates or interests or you?!',
           textAlign: TextAlign.start,
           style: TextStyle(
             backgroundColor: widgetColor,
