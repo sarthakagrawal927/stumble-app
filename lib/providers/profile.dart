@@ -34,8 +34,8 @@ class Profile with ChangeNotifier {
     this.photoVerified = true,
     this.conversationStarter = "Hi there, I am on Stumble!",
     this.isPlatonic = false,
-    this.ageRangePreference = const RangeValues(18, 30),
-    this.genderPreferences = const [Gender.man],
+    this.ageRangePreference = const RangeValues(18, 50),
+    this.genderPreferences = const [Gender.man, Gender.nonBinary, Gender.woman],
   }) : birthDate = birthDate ?? DateTime.now();
 
   int currentUser = -1;

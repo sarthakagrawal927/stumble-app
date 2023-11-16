@@ -211,9 +211,20 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           if (lookingForSame)
-            Text(
-              'Looking for same: ${interestToLabel[lookingFor]}',
-              style: const TextStyle(color: whiteColor),
+            Container(
+              color: topAppBarColor,
+              margin: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height / 64,
+                horizontal: MediaQuery.of(context).size.width / 64,
+              ),
+              padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height / 64,
+                horizontal: MediaQuery.of(context).size.width / 64,
+              ),
+              child: Text(
+                'Looking for same: ${interestToLabel[lookingFor]}',
+                style: const TextStyle(color: whiteColor),
+              ),
             ),
           Expanded(
             child: ChatMessages(listOfChatMessages),

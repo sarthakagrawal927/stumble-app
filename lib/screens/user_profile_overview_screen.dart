@@ -32,7 +32,7 @@ class UserProfileScreen extends StatelessWidget {
               horizontal: MediaQuery.of(context).size.width / 16,
               vertical: MediaQuery.of(context).size.height / 32,
             ),
-            color: widgetColor,
+            color: topAppBarColor,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,

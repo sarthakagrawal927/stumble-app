@@ -27,10 +27,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
         title: const Text(
           'Filters',
           style: TextStyle(
-            color: filterScreenHeadingColor,
+            color: headingColor,
           ),
         ),
-        backgroundColor: backgroundColor,
+        backgroundColor: topAppBarColor,
       ),
       body: ListView(
         children: [
@@ -115,7 +115,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     values: currentRangeValues,
                     max: 80,
                     min: 18,
-                    divisions: 5,
                     labels: RangeLabels(
                       currentRangeValues.start.round().toString(),
                       currentRangeValues.end.round().toString(),

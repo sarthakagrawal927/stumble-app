@@ -33,9 +33,8 @@ class MessageBubble extends StatelessWidget {
                 bottomRight:
                     isMe ? const Radius.circular(12) : const Radius.circular(0),
               ),
-              color: isMe
-                  ? const Color.fromRGBO(28, 26, 26, 1)
-                  : const Color.fromRGBO(48, 48, 48, 1),
+              color:
+                  isMe ? Colors.black26 : const Color.fromRGBO(48, 48, 48, 1),
             ),
             width: 140,
             padding: const EdgeInsets.symmetric(
