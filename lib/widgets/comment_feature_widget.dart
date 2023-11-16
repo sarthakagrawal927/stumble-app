@@ -80,7 +80,7 @@ class CommentFeatureWidget extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.comment_rounded),
-            iconSize: MediaQuery.of(context).size.width / 12,
+            iconSize: MediaQuery.of(context).size.width / 14,
             color: headingColor,
           ),
         )

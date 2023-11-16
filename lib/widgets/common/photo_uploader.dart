@@ -44,7 +44,7 @@ class _PhotoUploaderState extends State<PhotoUploader> {
     return Consumer<Profile>(
       builder: (context, value, child) => ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: widgetColor,
+          backgroundColor: topAppBarColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

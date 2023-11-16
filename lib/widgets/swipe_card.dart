@@ -26,39 +26,47 @@ class SwipeCard extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.395,
               width: double.infinity,
               child: Container(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.bottomLeft,
                 decoration: imageBoxWidget(context, 0),
-                child: Row(
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.all(
-                            MediaQuery.of(context).size.width / 32),
-                        child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Text(
-                              "${profile.name}, ",
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 35,
-                                fontWeight: FontWeight.w900,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ))),
-                    Text(
-                      profile.getAge.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 35,
-                        fontWeight: FontWeight.w900,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 32,
+                    right: MediaQuery.of(context).size.width / 32,
+                    bottom: MediaQuery.of(context).size.width / 32,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${profile.name}, ",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width / 16,
+                          fontWeight: FontWeight.w900,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    profile.photoVerified
-                        ? const Icon(Icons.verified_sharp, color: Colors.blue)
-                        : const Icon(
-                            Icons.verified_outlined,
-                            color: Colors.white,
-                          ),
-                  ],
+                      Text(
+                        "${profile.getAge} ",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: MediaQuery.of(context).size.width / 16,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      profile.photoVerified
+                          ? Icon(
+                              Icons.verified_sharp,
+                              color: Colors.blue,
+                              size: MediaQuery.of(context).size.width / 16,
+                            )
+                          : Icon(
+                              Icons.verified_outlined,
+                              color: Colors.white,
+                              size: MediaQuery.of(context).size.width / 16,
+                            ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -72,18 +80,18 @@ class SwipeCard extends StatelessWidget {
               color: backgroundColor,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    height: MediaQuery.of(context).size.height / 32,
+                    height: MediaQuery.of(context).size.height / 16,
                     padding: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width / 32),
-                    child: const Text(
+                    child: Text(
                       'Talk to me about',
                       style: TextStyle(
                         color: Colors.white70,
                         fontWeight: FontWeight.bold,
-                        fontSize: 25,
+                        fontSize: MediaQuery.of(context).size.height / 32,
                       ),
                     ),
                   ),
@@ -99,8 +107,8 @@ class SwipeCard extends StatelessWidget {
                     ),
                     child: SingleChildScrollView(
                       child: Text(
-                        style: const TextStyle(
-                          fontSize: 20,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.height / 48,
                           color: Colors.white70,
                         ),
                         profile.conversationStarter,
@@ -148,7 +156,7 @@ class SwipeCard extends StatelessWidget {
 
   BoxDecoration imageBoxWidget(BuildContext context, int index) {
     return BoxDecoration(
-      color: Theme.of(context).colorScheme.secondary,
+      color: backgroundColor,
       image: DecorationImage(
         fit: BoxFit.cover,
         image: NetworkImage(profile.photos.isNotEmpty

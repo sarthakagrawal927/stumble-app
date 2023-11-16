@@ -164,7 +164,7 @@ class _UserProfileCompletionScreenState
                       EdgeInsets.all(MediaQuery.of(context).size.width / 16),
                   child: const Text(
                     textAlign: TextAlign.start,
-                    'Your pretty face!',
+                    'Your photos',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
