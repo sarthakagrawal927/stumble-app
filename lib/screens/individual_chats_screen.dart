@@ -183,7 +183,7 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               GestureDetector(
                 child: CircleAvatarWidget(
-                    MediaQuery.of(context).size.height / 40,
+                    MediaQuery.of(context).size.width / 24,
                     widget.thread.displayPic),
                 onTap: () {},
               ),
@@ -194,7 +194,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   padding: EdgeInsets.only(
                       left: MediaQuery.of(context).size.width / 64),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 3,
+                    width: MediaQuery.of(context).size.width / 4,
                     child: Text(
                       widget.thread.name,
                       overflow: TextOverflow.ellipsis,
