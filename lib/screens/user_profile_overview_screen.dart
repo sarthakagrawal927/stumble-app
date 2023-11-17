@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
@@ -45,7 +46,7 @@ class UserProfileScreen extends StatelessWidget {
                     maxRadius: 75,
                     minRadius: 75,
                     backgroundColor: Colors.transparent,
-                    backgroundImage: NetworkImage(
+                    backgroundImage: CachedNetworkImageProvider(
                       photos.isNotEmpty ? photos[0].path : defaultBackupImage,
                     ),
                   ),

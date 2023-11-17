@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/widgets/comment_feature_widget.dart';
 import 'package:flutter/material.dart';
@@ -159,7 +160,7 @@ class SwipeCard extends StatelessWidget {
       color: backgroundColor,
       image: DecorationImage(
         fit: BoxFit.cover,
-        image: NetworkImage(profile.photos.isNotEmpty
+        image: CachedNetworkImageProvider(profile.photos.isNotEmpty
             ? profile.photos[0].path
             : defaultBackupImage),
       ),

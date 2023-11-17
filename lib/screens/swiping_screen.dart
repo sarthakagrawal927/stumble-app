@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/location.dart';
@@ -90,7 +91,8 @@ class _SwipingScreenState extends State<SwipingScreen> {
         color: Theme.of(context).colorScheme.secondary,
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(profile.photo ?? defaultBackupImage),
+          image:
+              CachedNetworkImageProvider(profile.photo ?? defaultBackupImage),
         ),
       );
     }
