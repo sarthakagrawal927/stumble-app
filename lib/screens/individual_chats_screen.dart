@@ -1,4 +1,5 @@
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
@@ -177,6 +178,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               )
           ],
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            // temporary solution until proper global state management is implemented
+            onPressed: () => Navigator.of(context)
+                .pushNamed(MatchesAndChatsScreen.routeName),
+          ),
           backgroundColor: topAppBarColor,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
