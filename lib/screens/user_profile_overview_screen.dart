@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
+import 'package:dating_made_better/widgets/common/profile_modal.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,12 +44,28 @@ class UserProfileScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Center(
-                  child: CircleAvatar(
-                    maxRadius: 75,
-                    minRadius: 75,
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: CachedNetworkImageProvider(
-                      photos.isNotEmpty ? photos[0].path : defaultBackupImage,
+                  child: GestureDetector(
+                    onDoubleTap: () => DoNothingAction(),
+                    onTap: () async {
+                      Profile profile;
+                      profile =
+                          await getUserApi().then((value) => profile = value!);
+
+                      // ignore: use_build_context_synchronously
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return ProfileModal(profile: profile);
+                        },
+                      );
+                    },
+                    child: CircleAvatar(
+                      maxRadius: 75,
+                      minRadius: 75,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: CachedNetworkImageProvider(
+                        photos.isNotEmpty ? photos[0].path : defaultBackupImage,
+                      ),
                     ),
                   ),
                 ),

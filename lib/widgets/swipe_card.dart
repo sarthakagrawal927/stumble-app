@@ -35,37 +35,26 @@ class SwipeCard extends StatelessWidget {
                     right: MediaQuery.of(context).size.width / 32,
                     bottom: MediaQuery.of(context).size.width / 32,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "${profile.name}, ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width / 16,
-                          fontWeight: FontWeight.w900,
-                        ),
-                        overflow: TextOverflow.ellipsis,
+                      profile.isPlatonic
+                          ? platonicIconWidget(
+                              context, Icons.favorite_border_outlined)
+                          : platonicIconWidget(context, Icons.favorite_sharp),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          userInformationOnImage(context, profile.getName),
+                          userInformationOnImage(
+                              context, profile.getAge.toString()),
+                          profile.photoVerified
+                              ? verificationIconWidget(
+                                  context, Icons.verified_sharp, Colors.blue)
+                              : verificationIconWidget(context,
+                                  Icons.verified_outlined, Colors.white),
+                        ],
                       ),
-                      Text(
-                        "${profile.getAge} ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width / 16,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      profile.photoVerified
-                          ? Icon(
-                              Icons.verified_sharp,
-                              color: Colors.blue,
-                              size: MediaQuery.of(context).size.width / 16,
-                            )
-                          : Icon(
-                              Icons.verified_outlined,
-                              color: Colors.white,
-                              size: MediaQuery.of(context).size.width / 16,
-                            ),
                     ],
                   ),
                 ),
@@ -128,6 +117,42 @@ class SwipeCard extends StatelessWidget {
           if (profile.getPhotos.length > 2) photoWidget(context, 2),
         ],
       ),
+    );
+  }
+
+  Icon verificationIconWidget(
+      BuildContext context, IconData icon, Color color) {
+    return Icon(
+      icon,
+      color: color,
+      size: MediaQuery.of(context).size.width / 16,
+    );
+  }
+
+  Container platonicIconWidget(BuildContext context, IconData icon) {
+    return Container(
+      margin: EdgeInsets.only(
+        top: MediaQuery.of(context).size.height / 64,
+        left: MediaQuery.of(context).size.width / 64,
+      ),
+      alignment: Alignment.topLeft,
+      child: Icon(
+        icon,
+        color: const Color.fromARGB(255, 223, 111, 103),
+        size: MediaQuery.of(context).size.width / 8,
+      ),
+    );
+  }
+
+  Text userInformationOnImage(BuildContext context, String textToDisplay) {
+    return Text(
+      "$textToDisplay, ",
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: MediaQuery.of(context).size.width / 16,
+        fontWeight: FontWeight.w900,
+      ),
+      overflow: TextOverflow.ellipsis,
     );
   }
 

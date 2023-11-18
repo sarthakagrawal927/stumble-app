@@ -29,6 +29,7 @@ class _StumbledOntoMeScreenState extends State<StumbledOntoMeScreen> {
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
+            onDoubleTap: () => DoNothingAction(),
             onTap: () async {
               Profile profile;
               profile = await getUserApi(listOfProfiles[index].id)

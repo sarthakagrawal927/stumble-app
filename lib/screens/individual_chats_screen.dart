@@ -1,10 +1,12 @@
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:dating_made_better/widgets/common/info_dialog_widget.dart';
+import 'package:dating_made_better/widgets/common/profile_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -189,10 +191,23 @@ class _ChatScreenState extends State<ChatScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               GestureDetector(
+                onDoubleTap: () => DoNothingAction(),
+                onTap: () async {
+                  Profile profile;
+                  profile = await getUserApi(widget.thread.chatterId)
+                      .then((value) => profile = value!);
+
+                  // ignore: use_build_context_synchronously
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return ProfileModal(profile: profile);
+                    },
+                  );
+                },
                 child: CircleAvatarWidget(
                     MediaQuery.of(context).size.width / 24,
                     widget.thread.displayPic),
-                onTap: () {},
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 32,

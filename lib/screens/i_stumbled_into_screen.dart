@@ -29,11 +29,12 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
+            onDoubleTap: () => DoNothingAction(),
             onTap: () async {
               Profile profile;
               profile = await getUserApi(listOfProfiles[index].id)
                   .then((value) => profile = value!);
-                  
+
               // ignore: use_build_context_synchronously
               showModalBottomSheet(
                 context: context,
