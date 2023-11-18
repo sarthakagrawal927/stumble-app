@@ -9,7 +9,7 @@ class ChatThread {
   final String displayPic;
   final String message;
   final bool hasUnread;
-  final DateTime lastMsgTime;
+  final DateTime? lastMsgTime;
 
   ChatThread(
       {required this.threadId,
@@ -20,7 +20,7 @@ class ChatThread {
       required this.displayPic,
       required this.message,
       required this.hasUnread,
-      required this.lastMsgTime});
+      this.lastMsgTime});
 
   static fromJson(dynamic thread) {
     // {"thread_id":"5a3a95b2-b468-47f6-9548-3f5ef77805e2","user_id":1,"chatter_id":2,"last_msg_id":1,"name":"Sarthak1","display_pic":null,"message":"Hi 0","createdAt":"2023-09-19T15:08:49.550Z"}
@@ -32,8 +32,9 @@ class ChatThread {
       name: thread["name"] ?? " ",
       displayPic: thread["display_pic"] ?? defaultBackupImage,
       message: thread["message"] ?? "",
-      lastMsgTime:
-          DateTime.parse(thread["last_msg_time"] ?? DateTime.now().toString()),
+      lastMsgTime: thread["last_msg_time"] != null
+          ? DateTime.parse(thread["last_msg_time"])
+          : null,
       hasUnread: thread["has_unread"] == 1 ? true : false,
     );
   }

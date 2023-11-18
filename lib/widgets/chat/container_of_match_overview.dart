@@ -16,21 +16,22 @@ class ContainerOfMatchOverview extends StatefulWidget {
 }
 
 class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
+  Widget getStack(List<Widget> children) {
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width *
+            0.75, // You can set a specific width here
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: children,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget getStack(List<Widget> children) {
-      return Container(
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width *
-              0.65, // You can set a specific width here
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: children,
-        ),
-      );
-    }
-
+    bool hasConversationStarted = widget.threadDetails.lastMsgTime != null;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -38,10 +39,6 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
       },
       child: Container(
         color: Colors.black,
-        margin: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width / 24,
-          right: MediaQuery.of(context).size.width / 32,
-        ),
         padding: EdgeInsets.all(
           MediaQuery.of(context).size.width / 32,
         ),
@@ -69,7 +66,9 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                   ),
                   // add a red dot to show unread
                   Text(
-                    widget.threadDetails.hasUnread ? "●" : "",
+                    widget.threadDetails.hasUnread || !hasConversationStarted
+                        ? "●"
+                        : "",
                     style:
                         const TextStyle(fontSize: 25, color: Colors.redAccent),
                   ),
@@ -77,13 +76,26 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                 getStack([
                   Flexible(
                     child: Text(
-                      widget.threadDetails.message,
-                      style: const TextStyle(
-                          fontSize: 12.5, color: Colors.white70),
+                      hasConversationStarted
+                          ? widget.threadDetails.message
+                          : "Conversation not started yet",
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        color: Colors.white70,
+                        fontStyle: hasConversationStarted
+                            ? FontStyle.normal
+                            : FontStyle.italic,
+                      ),
                       overflow: TextOverflow.ellipsis,
+
+                      // italics if hasConversationStarted
                     ),
                   ),
-                  Text(beautifyTime(widget.threadDetails.lastMsgTime),
+                  Text(
+                      hasConversationStarted
+                          ? beautifyTime(
+                              widget.threadDetails.lastMsgTime as DateTime)
+                          : "",
                       style: const TextStyle(
                           fontSize: 12.5, color: Colors.white30)),
                 ]),
