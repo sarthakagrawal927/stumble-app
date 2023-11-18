@@ -2,7 +2,9 @@ import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/firebase_options.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/screens/i_stumbled_into_screen.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
+import 'package:dating_made_better/screens/stumbled_onto_me_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/helper.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -94,6 +96,10 @@ class MyApp extends StatelessWidget {
           MatchesAndChatsScreen.routeName: (context) =>
               const MatchesAndChatsScreen(),
           FiltersScreen.routeName: (context) => const FiltersScreen(),
+          StumbledOntoMeScreen.routeName: (context) =>
+              const StumbledOntoMeScreen(),
+          IStumbledIntoScreen.routeName: (context) =>
+              const IStumbledIntoScreen(),
         },
       ),
     );

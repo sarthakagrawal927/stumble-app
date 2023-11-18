@@ -35,6 +35,7 @@ enum ApiType {
   sendOtp,
   verifyOtp,
   upsertUser,
+  getProfile,
   findStumbles,
   addActivity,
   getILiked,
@@ -53,6 +54,7 @@ const apiList = {
   ApiType.sendOtp: "/api/v1/user/send_otp",
   ApiType.verifyOtp: "/api/v1/user/verify_otp",
   ApiType.upsertUser: "/api/v1/user",
+  ApiType.getProfile: "/api/v1/user?user_id=",
   ApiType.findStumbles: "/api/v1/activity/find",
   ApiType.addActivity: "/api/v1/activity",
   ApiType.getILiked: "/api/v1/activity?type=1",
@@ -173,14 +175,18 @@ Future<bool> updateUserInterest(String threadId, int interest) async {
   return false;
 }
 
-Future<Profile?> getUserApi() async {
-  var authToken = await readSecureData(authKey);
-  AppConstants.token = authToken ?? "";
-  if (AppConstants.token.isEmpty) {
-    return null;
+Future<Profile?> getUserApi([int? profileId]) async {
+  if (profileId == null) {
+    var authToken = await readSecureData(authKey);
+    AppConstants.token = authToken ?? "";
+    if (AppConstants.token.isEmpty) {
+      return null;
+    }
   }
-  var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
-      method: HttpMethods.get);
+  var data = await callAPI(
+    getApiEndpoint(ApiType.getProfile) + profileId.toString(),
+    method: HttpMethods.get,
+  );
   AppConstants.user = data;
   await writeSecureData("user", jsonEncode(data));
   return Profile.fromJson(data);

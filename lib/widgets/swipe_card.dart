@@ -123,34 +123,30 @@ class SwipeCard extends StatelessWidget {
             height: MediaQuery.of(context).size.height / 16,
             color: backgroundColor,
           ),
-          getCommentFeatureWidget(
-            Container(
-              color: backgroundColor,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: Container(
-                  alignment: Alignment.bottomLeft,
-                  decoration: imageBoxWidget(context, 1)),
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height / 16,
-            color: backgroundColor,
-          ),
-          getCommentFeatureWidget(
-            Container(
-              color: backgroundColor,
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: Container(
-                  alignment: Alignment.bottomLeft,
-                  decoration: imageBoxWidget(context, 2)),
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height / 16,
-            color: backgroundColor,
-          ),
+          if (profile.getPhotos.length > 1) photoWidget(context, 1),
+          if (profile.getPhotos.length > 2) photoWidget(context, 2),
         ],
       ),
+    );
+  }
+
+  Widget photoWidget(BuildContext context, int index) {
+    return Column(
+      children: [
+        getCommentFeatureWidget(
+          Container(
+            color: backgroundColor,
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Container(
+                alignment: Alignment.bottomLeft,
+                decoration: imageBoxWidget(context, index)),
+          ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height / 16,
+          color: backgroundColor,
+        ),
+      ],
     );
   }
 
@@ -160,7 +156,7 @@ class SwipeCard extends StatelessWidget {
       image: DecorationImage(
         fit: BoxFit.cover,
         image: NetworkImage(profile.photos.isNotEmpty
-            ? profile.photos[0].path
+            ? profile.photos[index].path
             : defaultBackupImage),
       ),
     );
