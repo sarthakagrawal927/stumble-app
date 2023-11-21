@@ -12,7 +12,20 @@
           "package_name": "com.example.dating_made_better"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "607423363774-ult85f2f4usm8pvd5342qe3oi05930k7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dating_made_better",
+            "certificate_hash": "6fc8bfae80c150309de8d7099e6b7826f3ed6906"
+          }
+        },
+        {
+          "client_id": "607423363774-h936q9n64u5tnh2ojros3rrebbe3red8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAPctRQlnbFKXNflUCWxZBV07DKZxChemI"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607423363774-h936q9n64u5tnh2ojros3rrebbe3red8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607423363774-q81st831f7inqmvu2kkdu7f99ld9cees.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.stumbleApp"
+              }
+            }
+          ]
         }
       }
     }
