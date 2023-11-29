@@ -40,6 +40,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
           MediaQuery.of(context).size.height / 16,
         ),
         child: AppBar(
+            automaticallyImplyLeading: false,
             actions: [
               DropdownButtonHideUnderline(
                 child: DropdownButton(
@@ -79,13 +80,17 @@ class _SwipingScreenState extends State<SwipingScreen> {
               ),
             ],
             backgroundColor: topAppBarColor,
-            title: Text(
-              textAlign: TextAlign.center,
-              'Stumble!',
-              style: GoogleFonts.sacramento(
-                fontSize: MediaQuery.of(context).size.width / 12,
-                color: headingColor,
-                fontWeight: FontWeight.w900,
+            title: Padding(
+              padding:
+                  EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
+              child: Text(
+                textAlign: TextAlign.center,
+                'Stumble!',
+                style: GoogleFonts.sacramento(
+                  fontSize: MediaQuery.of(context).size.width / 14,
+                  color: headingColor,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             )),
       ),

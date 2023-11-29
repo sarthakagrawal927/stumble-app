@@ -22,6 +22,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          // temporary solution until proper global state management is implemented
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        automaticallyImplyLeading: false,
         centerTitle: true,
         actions: const [],
         title: const Text(

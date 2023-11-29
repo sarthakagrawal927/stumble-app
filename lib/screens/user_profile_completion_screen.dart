@@ -1,3 +1,4 @@
+import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:dating_made_better/widgets/common/photo_uploader.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,9 @@ class _UserProfileCompletionScreenState
         Provider.of<Profile>(context, listen: false).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: const TopAppBar(),
+      appBar: TopAppBar(
+        routeName: UserProfileScreen.routeName,
+      ),
       body: ListView(
         children: <Widget>[
           Row(

@@ -16,6 +16,12 @@ class MessageBubble extends StatelessWidget {
       required this.messageTime,
       required super.key});
 
+  String getTimeOfMessage(DateTime messageTime) {
+    String hoursValue = messageTime.hour.toString().padLeft(2, '0');
+    String minutesValue = messageTime.minute.toString().padLeft(2, '0');
+    return "$hoursValue:$minutesValue";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -45,12 +51,28 @@ class MessageBubble extends StatelessWidget {
               vertical: 4,
               horizontal: 8,
             ),
-            child: Text(
-              message,
-              style: TextStyle(
-                fontSize: 20,
-                color: isMe ? Colors.white : Colors.white,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  message,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: isMe ? Colors.white : Colors.white,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    textAlign: TextAlign.end,
+                    getTimeOfMessage(messageTime),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: isMe ? Colors.white : Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

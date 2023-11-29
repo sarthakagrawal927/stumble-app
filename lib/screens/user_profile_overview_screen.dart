@@ -27,7 +27,9 @@ class UserProfileScreen extends StatelessWidget {
         Provider.of<Profile>(context).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: const TopAppBar(),
+      appBar: TopAppBar(
+        routeName: "",
+      ),
       body: Column(
         children: <Widget>[
           Card(

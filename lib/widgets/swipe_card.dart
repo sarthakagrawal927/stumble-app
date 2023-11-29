@@ -16,107 +16,112 @@ class SwipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width * 0.8,
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          getCommentFeatureWidget(
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.395,
-              width: double.infinity,
-              child: Container(
-                alignment: Alignment.bottomLeft,
-                decoration: imageBoxWidget(context, 0),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 32,
-                    right: MediaQuery.of(context).size.width / 32,
-                    bottom: MediaQuery.of(context).size.width / 32,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      profile.isPlatonic
-                          ? platonicIconWidget(
-                              context, Icons.favorite_border_outlined)
-                          : platonicIconWidget(context, Icons.favorite_sharp),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+    return Stack(
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width * 0.825,
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              getCommentFeatureWidget(
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.395,
+                  width: double.infinity,
+                  child: Container(
+                    alignment: Alignment.bottomLeft,
+                    decoration: imageBoxWidget(context, 0),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 32,
+                        right: MediaQuery.of(context).size.width / 32,
+                        bottom: MediaQuery.of(context).size.width / 32,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          userInformationOnImage(context, profile.getName),
-                          userInformationOnImage(
-                              context, profile.getAge.toString()),
-                          profile.photoVerified
-                              ? verificationIconWidget(
-                                  context, Icons.verified_sharp, Colors.blue)
-                              : verificationIconWidget(context,
-                                  Icons.verified_outlined, Colors.white),
+                          profile.isPlatonic
+                              ? platonicIconWidget(
+                                  context, Icons.favorite_border_outlined)
+                              : platonicIconWidget(
+                                  context, Icons.favorite_sharp),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              userInformationOnImage(context, profile.getName),
+                              userInformationOnImage(
+                                  context, profile.getAge.toString()),
+                              profile.photoVerified
+                                  ? verificationIconWidget(context,
+                                      Icons.verified_sharp, Colors.blue)
+                                  : verificationIconWidget(context,
+                                      Icons.verified_outlined, Colors.white),
+                            ],
+                          ),
                         ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                color: backgroundColor,
+                height: MediaQuery.of(context).size.height / 24,
+              ),
+              getCommentFeatureWidget(
+                Container(
+                  color: backgroundColor,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        height: MediaQuery.of(context).size.height / 16,
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width / 32),
+                        child: Text(
+                          'Talk to me about',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.height / 32,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 32,
+                        color: backgroundColor,
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.235,
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 32,
+                          right: MediaQuery.of(context).size.width / 32,
+                        ),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height / 48,
+                              color: Colors.white70,
+                            ),
+                            profile.conversationStarter,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ),
-          ),
-          Container(
-            color: backgroundColor,
-            height: MediaQuery.of(context).size.height / 24,
-          ),
-          getCommentFeatureWidget(
-            Container(
-              color: backgroundColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery.of(context).size.height / 16,
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 32),
-                    child: Text(
-                      'Talk to me about',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.height / 32,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height / 32,
-                    color: backgroundColor,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.235,
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 32,
-                      right: MediaQuery.of(context).size.width / 32,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Text(
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.height / 48,
-                          color: Colors.white70,
-                        ),
-                        profile.conversationStarter,
-                      ),
-                    ),
-                  ),
-                ],
+              Container(
+                height: MediaQuery.of(context).size.height / 16,
+                color: backgroundColor,
               ),
-            ),
+              if (profile.getPhotos.length > 1) photoWidget(context, 1),
+              if (profile.getPhotos.length > 2) photoWidget(context, 2),
+            ],
           ),
-          Container(
-            height: MediaQuery.of(context).size.height / 16,
-            color: backgroundColor,
-          ),
-          if (profile.getPhotos.length > 1) photoWidget(context, 1),
-          if (profile.getPhotos.length > 2) photoWidget(context, 2),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
