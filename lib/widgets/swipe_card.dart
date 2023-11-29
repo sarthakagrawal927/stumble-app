@@ -10,8 +10,8 @@ class SwipeCard extends StatelessWidget {
   final Profile profile;
   final Function onSwipe;
 
-  Widget getCommentFeatureWidget(Widget childComponent) {
-    return CommentFeatureWidget(childComponent, onSwipe);
+  Widget getCommentFeatureWidget(Widget childComponent, bool isImage) {
+    return CommentFeatureWidget(childComponent, onSwipe, isImage);
   }
 
   @override
@@ -63,6 +63,7 @@ class SwipeCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                true,
               ),
               Container(
                 color: backgroundColor,
@@ -111,6 +112,7 @@ class SwipeCard extends StatelessWidget {
                     ],
                   ),
                 ),
+                false,
               ),
               Container(
                 height: MediaQuery.of(context).size.height / 16,
@@ -172,6 +174,7 @@ class SwipeCard extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 decoration: imageBoxWidget(context, index)),
           ),
+          true,
         ),
         Container(
           height: MediaQuery.of(context).size.height / 16,
