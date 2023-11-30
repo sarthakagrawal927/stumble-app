@@ -67,6 +67,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   List<ChatMessage> listOfChatMessages = [];
   bool showLookingForOption = false;
+  Color showLookingForOptionColor = topAppBarColor;
   bool lookingForSame = false;
   late InterestType? lookingFor;
 
@@ -77,6 +78,7 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         listOfChatMessages = value.messages;
         showLookingForOption = value.showLookingForOption;
+        showLookingForOptionColor = Colors.red;
         lookingForSame = value.lookingForSame;
         lookingFor = value.lookingFor;
       });
@@ -110,122 +112,137 @@ class _ChatScreenState extends State<ChatScreen> {
           MediaQuery.of(context).size.height / 16,
         ),
         child: AppBar(
-          actions: [
-            if (showLookingForOption)
-              DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  iconSize: MediaQuery.of(context).size.width / 16,
-                  style: const TextStyle(color: Colors.blue),
-                  onTap: () async {
-                    await showModelIfNotShown(
-                        context, ModelOpened.userInterestInfoTeaching);
-                  },
-                  dropdownColor: backgroundColor,
-                  items: labelToInterest.entries
-                      .map((e) => nicheSelectedOption(e.value))
-                      .toList(),
-                  onChanged: (itemIdentifier) async {
-                    InterestType interest = labelToInterest[itemIdentifier]!;
-                    updateUserInterest(
-                            widget.thread.threadId, interestValue[interest]!)
-                        .then((sameInterest) {
-                      if (sameInterest) {
-                        setState(() {
-                          lookingForSame = true;
-                          lookingFor = interest;
-                          showLookingForOption = false;
-                        });
-                        // ignore: use_build_context_synchronously
-                        showGeneralDialog(
-                          barrierColor: topAppBarColor,
-                          context: context,
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  Center(
-                            child: Container(
-                              color: widgetColor,
-                              margin: EdgeInsets.symmetric(
-                                vertical:
-                                    MediaQuery.of(context).size.height / 8,
-                                horizontal:
-                                    MediaQuery.of(context).size.width / 8,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DefaultTextStyle(
-                                  style: GoogleFonts.sacramento(
-                                    color: Colors.white70,
-                                    fontSize: 30,
-                                  ),
-                                  child: const Text(
-                                    textAlign: TextAlign.center,
-                                    'You both have the same reason for "Stumbling" onto one another!',
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      } else {
-                        setState(() {
-                          showLookingForOption = false;
-                        });
-                      }
-                    });
-                  },
-                  icon: const Icon(
-                    Icons.menu,
-                    color: headingColor,
-                  ),
-                ),
-              )
-          ],
+          automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             // temporary solution until proper global state management is implemented
             onPressed: () => Navigator.of(context)
                 .pushNamed(MatchesAndChatsScreen.routeName),
           ),
           backgroundColor: topAppBarColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          title: Stack(
+            alignment: AlignmentDirectional.center,
             children: [
-              GestureDetector(
-                onDoubleTap: () => DoNothingAction(),
-                onTap: () async {
-                  Profile profile;
-                  profile = await getUserApi(widget.thread.chatterId)
-                      .then((value) => profile = value!);
-
-                  // ignore: use_build_context_synchronously
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return ProfileModal(profile: profile);
-                    },
-                  );
-                },
-                child: CircleAvatarWidget(
-                    MediaQuery.of(context).size.width / 24,
-                    widget.thread.displayPic),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 32,
-              ),
-              Padding(
-                  padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 64),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 4,
-                    child: Text(
-                      widget.thread.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.sacramento(
-                          fontSize: MediaQuery.of(context).size.width / 16,
-                          color: headingColor,
-                          fontWeight: FontWeight.w900),
+              showLookingForOption
+                  ? Positioned(
+                      left: 0,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          onTap: () async {
+                            await showModelIfNotShown(
+                                context, ModelOpened.userInterestInfoTeaching);
+                          },
+                          dropdownColor: backgroundColor,
+                          items: labelToInterest.entries
+                              .map((e) => nicheSelectedOption(e.value))
+                              .toList(),
+                          onChanged: (itemIdentifier) async {
+                            InterestType interest =
+                                labelToInterest[itemIdentifier]!;
+                            updateUserInterest(widget.thread.threadId,
+                                    interestValue[interest]!)
+                                .then((sameInterest) {
+                              if (sameInterest) {
+                                setState(() {
+                                  lookingForSame = true;
+                                  lookingFor = interest;
+                                  showLookingForOption = false;
+                                });
+                                // ignore: use_build_context_synchronously
+                                showGeneralDialog(
+                                  barrierColor: topAppBarColor,
+                                  context: context,
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      Center(
+                                    child: Container(
+                                      color: widgetColor,
+                                      margin: EdgeInsets.symmetric(
+                                        vertical:
+                                            MediaQuery.of(context).size.height /
+                                                8,
+                                        horizontal:
+                                            MediaQuery.of(context).size.width /
+                                                8,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: DefaultTextStyle(
+                                          style: GoogleFonts.sacramento(
+                                            color: Colors.white70,
+                                            fontSize: 30,
+                                          ),
+                                          child: const Text(
+                                            textAlign: TextAlign.center,
+                                            'You both have the same reason for "Stumbling" onto one another!',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                setState(() {
+                                  showLookingForOption = false;
+                                });
+                              }
+                            });
+                          },
+                          icon: Icon(
+                            Icons.visibility,
+                            size: MediaQuery.of(context).size.width / 12,
+                            color: headingColor,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Icon(
+                      Icons.visibility_off,
+                      size: MediaQuery.of(context).size.width / 12,
+                      color: showLookingForOptionColor,
                     ),
-                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onDoubleTap: () => DoNothingAction(),
+                    onTap: () async {
+                      Profile profile;
+                      profile = await getUserApi(widget.thread.chatterId)
+                          .then((value) => profile = value!);
+
+                      // ignore: use_build_context_synchronously
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return ProfileModal(profile: profile);
+                        },
+                      );
+                    },
+                    child: CircleAvatarWidget(
+                        MediaQuery.of(context).size.width / 24,
+                        widget.thread.displayPic),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 32,
+                  ),
+                  const Spacer(),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 64),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 4,
+                        child: Text(
+                          widget.thread.name.split(" ").first,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.sacramento(
+                              fontSize: MediaQuery.of(context).size.width / 16,
+                              color: headingColor,
+                              fontWeight: FontWeight.w900),
+                        ),
+                      )),
+                ],
+              ),
             ],
           ),
         ),

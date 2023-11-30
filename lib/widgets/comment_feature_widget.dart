@@ -2,9 +2,11 @@ import 'package:dating_made_better/constants.dart';
 import 'package:flutter/material.dart';
 
 class CommentFeatureWidget extends StatelessWidget {
-  const CommentFeatureWidget(this.widget, this.onSwipe, {super.key});
+  const CommentFeatureWidget(this.widget, this.onSwipe, this.isImage,
+      {super.key});
   final Widget widget;
   final Function onSwipe;
+  final bool isImage;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,10 @@ class CommentFeatureWidget extends StatelessWidget {
             onPressed: () {
               showDialog(
                 context: context,
+                barrierColor: Colors.transparent.withOpacity(0.925),
                 builder: (context) {
                   return Dialog(
-                    backgroundColor: Colors.white38,
+                    backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40)),
                     elevation: 16,
@@ -28,24 +31,24 @@ class CommentFeatureWidget extends StatelessWidget {
                       shrinkWrap: true,
                       children: <Widget>[
                         SizedBox(
-                            height: MediaQuery.of(context).size.height / 12),
-                        const Center(
-                          child: Text(
-                            'Leave a comment!',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                            ),
-                          ),
+                          height: MediaQuery.of(context).size.height / 4,
+                          width: MediaQuery.of(context).size.width * 0.825,
+                          child: !isImage
+                              ? ListView(
+                                  shrinkWrap: true,
+                                  children: [widget],
+                                )
+                              : widget,
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 12),
+                        Container(
+                          height: MediaQuery.of(context).size.height / 64,
+                          color: Colors.transparent.withOpacity(0.925),
+                        ),
                         Padding(
                           padding: EdgeInsets.all(
                               MediaQuery.of(context).size.width / 12),
                           child: TextField(
-                            maxLines: 3,
+                            maxLines: 2,
                             minLines: 1,
                             cursorColor: Colors.black,
                             autocorrect: true,
@@ -61,18 +64,30 @@ class CommentFeatureWidget extends StatelessWidget {
                             },
                           ),
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 12),
-                        IconButton(
-                          iconSize: 60,
-                          icon: const Icon(Icons.arrow_circle_right_sharp),
-                          onPressed: () {
-                            onSwipe(commentOnWidget);
-                            Navigator.of(context, rootNavigator: true).pop("");
-                          },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            IconButton(
+                              iconSize: MediaQuery.of(context).size.width / 10,
+                              icon: const Icon(
+                                Icons.check,
+                              ),
+                              onPressed: () {
+                                onSwipe(commentOnWidget);
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop("");
+                              },
+                            ),
+                            IconButton(
+                              iconSize: MediaQuery.of(context).size.width / 10,
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop("");
+                              },
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height / 12),
                       ],
                     ),
                   );
@@ -80,7 +95,7 @@ class CommentFeatureWidget extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.comment_rounded),
-            iconSize: MediaQuery.of(context).size.width / 14,
+            iconSize: MediaQuery.of(context).size.width / 12,
             color: headingColor,
           ),
         )
