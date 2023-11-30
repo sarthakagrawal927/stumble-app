@@ -12,3 +12,6 @@ dart analyze .
 ## Todo:
 - Replace global constants with proper stage management.
 - Do not allow the user to go to next screen in onboarding without filling previous screen.
+
+iOS Push Notifications:
+xcrun simctl push booted com.example.stumbleApp sample_ios.json

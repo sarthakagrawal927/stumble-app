@@ -1,8 +1,11 @@
 import 'package:dating_made_better/stumbles_list_constants.dart';
 import 'package:dating_made_better/widgets/location.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:dating_made_better/utils/internal_storage.dart';
 
 import '../constants.dart';
 import '../providers/profile.dart';
@@ -19,13 +22,48 @@ class SwipingScreen extends StatefulWidget {
   State<SwipingScreen> createState() => _SwipingScreenState();
 }
 
+// save the token below to the database
+Future<void> saveTokenToDatabase(String? token, [String? apnsToken]) async {
+  writeSecureData('fb_token', token ?? '');
+  writeSecureData('apns_token', apnsToken ?? '');
+}
+
 class _SwipingScreenState extends State<SwipingScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  void setupPushNotifications() async {
+    final isNotificationSetForDevice = await readSecureData(
+      'fb_token',
+    );
+
+    final fcm = FirebaseMessaging.instance;
+
+    await fcm.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    if (isNotificationSetForDevice == '') {
+      final token = await fcm.getToken();
+      String? apnsToken;
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+      }
+      await saveTokenToDatabase(token, apnsToken);
+    }
+    FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToDatabase);
+  }
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
+      setupPushNotifications();
       Provider.of<Profile>(context, listen: false).setEntireProfileForEdit();
     });
   }

@@ -1,33 +1,47 @@
 import 'dart:async';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 
-Location? location;
-Timer? timer;
+Future<Position> determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
 
-const int frequencyTimer = 5;
-
-Future<bool> setupLocation() async {
-  location ??= Location();
-  location?.enableBackgroundMode(enable: true);
-
-  var serviceEnabled = await location!.serviceEnabled();
+  // Test if location services are enabled.
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
-    serviceEnabled = await location!.requestService();
-    if (!serviceEnabled) {
-      return false;
+    // Location services are not enabled don't continue
+    // accessing the position and request users of the
+    // App to enable the location services.
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      // Permissions are denied, next time you could try
+      // requesting permissions again (this is also where
+      // Android's shouldShowRequestPermissionRationale
+      // returned true. According to Android guidelines
+      // your App should show an explanatory UI now.
+      await Geolocator.openAppSettings();
+      await Geolocator.openLocationSettings();
+      return Future.error('Location permissions are denied');
     }
   }
 
-  var permissionGranted = await location!.hasPermission();
-  if (permissionGranted == PermissionStatus.denied) {
-    permissionGranted = await location!.requestPermission();
-    if (permissionGranted != PermissionStatus.granted) {
-      return false;
-    }
+  if (permission == LocationPermission.deniedForever) {
+    // Permissions are denied forever, handle appropriately.
+    return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.');
   }
-  return true;
+
+  // When we reach here, permissions are granted and we can
+  // continue accessing the position of the device.
+  return await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
 }
 
 class MyLocationComponent extends StatefulWidget {
@@ -40,25 +54,34 @@ class MyLocationComponent extends StatefulWidget {
 }
 
 class _MyLocationComponent extends State<MyLocationComponent> {
+  bool isLocationWorking = true;
   @override
   void initState() {
     super.initState();
-    setupLocation();
     _callActivateUser();
-    // WidgetsBinding.instance.addPostFrameCallback((_) => _callActivateUser());
   }
 
   _callActivateUser() async {
-    var locationData = await location!.getLocation();
-    var bodyParams = {
-      "lat": locationData.latitude,
-      "lng": locationData.longitude
-    };
-    await activateUserApi(bodyParams);
+    try {
+      var locationData = await determinePosition();
+      var bodyParams = {
+        "lat": locationData.latitude,
+        "lng": locationData.longitude
+      };
+      await activateUserApi(bodyParams);
+    } catch (e) {
+      setState(() {
+        isLocationWorking = false;
+      });
+      debugPrint(e.toString());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!isLocationWorking) {
+      showSnackBar(context, "Please enable location services to use the app");
+    }
     return const SizedBox.shrink();
   }
 }
