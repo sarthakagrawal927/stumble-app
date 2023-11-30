@@ -1,6 +1,6 @@
 import 'package:dating_made_better/stumbles_list_constants.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/location.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -23,9 +23,9 @@ class SwipingScreen extends StatefulWidget {
 }
 
 // save the token below to the database
-Future<void> saveTokenToDatabase(String? token, [String? apnsToken]) async {
-  writeSecureData('fb_token', token ?? '');
-  writeSecureData('apns_token', apnsToken ?? '');
+Future<void> saveTokenToDatabase(String token) async {
+  writeSecureData('fb_token', token);
+  await addDevice(token);
 }
 
 class _SwipingScreenState extends State<SwipingScreen> {
@@ -50,11 +50,8 @@ class _SwipingScreenState extends State<SwipingScreen> {
 
     if (isNotificationSetForDevice == '') {
       final token = await fcm.getToken();
-      String? apnsToken;
-      if (defaultTargetPlatform == TargetPlatform.iOS) {
-        apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-      }
-      await saveTokenToDatabase(token, apnsToken);
+      if (token!.isEmpty) return;
+      await saveTokenToDatabase(token);
     }
     FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToDatabase);
   }

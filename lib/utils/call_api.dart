@@ -16,8 +16,12 @@ import 'package:logger/logger.dart';
 import 'package:http_parser/http_parser.dart';
 
 const String baseURL = 'https://ipgtvmwff6.us-east-1.awsapprunner.com';
+// local: http://192.168.1.4:8080
+// prod: https://ipgtvmwff6.us-east-1.awsapprunner.com
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
 final logger = Logger();
+
+final os = Platform.isAndroid ? '1' : '2';
 
 enum HttpMethods {
   post,
@@ -48,6 +52,7 @@ enum ApiType {
   uploadFile,
   activateUser,
   updateUserInterest,
+  addDevice,
 }
 
 const apiList = {
@@ -67,6 +72,7 @@ const apiList = {
   ApiType.uploadFile: "/api/v1/user/upload",
   ApiType.activateUser: "/api/v1/user/activate",
   ApiType.updateUserInterest: "/api/v1/activity/update_user_interest",
+  ApiType.addDevice: "/api/v1/user/device",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -93,7 +99,7 @@ Future<Map<String, dynamic>> callAPI(
   try {
     final response = await (method == HttpMethods.post
         ? _chuckerHttpClient.post(
-            Uri.parse(baseURL + reqUrl),
+            Uri.parse("$baseURL$reqUrl?os=$os"),
             body: json.encode(bodyParams),
             headers: {
               HttpHeaders.authorizationHeader: AppConstants.token,
@@ -184,7 +190,8 @@ Future<Profile?> getUserApi([int? profileId]) async {
     }
   }
   var data = await callAPI(
-    getApiEndpoint(ApiType.getProfile) + profileId.toString(),
+    getApiEndpoint(ApiType.getProfile) +
+        (profileId != null ? profileId.toString() : ""),
     method: HttpMethods.get,
   );
   AppConstants.user = data;
@@ -264,6 +271,11 @@ Future<ChatThread> startConversation(
       method: HttpMethods.post, bodyParams: {'receiverId': receiverId});
 
   return ChatThread.fromJson(data["thread"]);
+}
+
+Future<void> addDevice(String deviceToken) async {
+  await callAPI(getApiEndpoint(ApiType.addDevice),
+      method: HttpMethods.post, bodyParams: {'fcmToken': deviceToken});
 }
 
 Future<List<String>> uploadPhotosAPI(List<File> photos) async {
