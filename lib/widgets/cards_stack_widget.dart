@@ -2,7 +2,6 @@ import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../constants.dart';
 import '../providers/profile.dart';
 import './draggable_swipe_card.dart';
 
@@ -37,7 +36,6 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
       if (status == AnimationStatus.completed) {
         draggableItems.removeLast();
         _animationController.reset();
-        swipeNotifier.value = Swipe.none;
       }
     });
     if (draggableItems.isEmpty) {
@@ -54,13 +52,11 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
     }
   }
 
-  void removeProfileOnSwipe(profile) {
+  void removeProfileOnSwipe() {
     setState(() {
       draggableItems.removeLast();
     });
   }
-
-  ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
 
   @override
   Widget build(BuildContext context) {
@@ -69,45 +65,41 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: ValueListenableBuilder(
-            valueListenable: swipeNotifier,
-            builder: (context, swipe, _) => Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
-              children: _draggableItemsListPopulated && draggableItems.isEmpty
-                  ? List.generate(
-                      1,
-                      (index) {
-                        return Center(
-                          child: Container(
-                            margin: EdgeInsets.symmetric(
-                              vertical: MediaQuery.of(context).size.height / 8,
-                              horizontal: MediaQuery.of(context).size.width / 8,
-                            ),
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              "No nearby stumblers to 'stumble' upon at the moment.",
-                              style: GoogleFonts.sacramento(
-                                color: Colors.white,
-                                fontSize: 40,
-                              ),
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: _draggableItemsListPopulated && draggableItems.isEmpty
+                ? List.generate(
+                    1,
+                    (index) {
+                      return Center(
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            vertical: MediaQuery.of(context).size.height / 8,
+                            horizontal: MediaQuery.of(context).size.width / 8,
+                          ),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            "No nearby stumblers to 'stumble' upon at the moment.",
+                            style: GoogleFonts.sacramento(
+                              color: Colors.white,
+                              fontSize: 40,
                             ),
                           ),
-                        );
-                      },
-                    )
-                  : List.generate(
-                      draggableItems.length,
-                      (index) {
-                        return DragWidget(
-                          profile: draggableItems[index],
-                          index: index,
-                          swipeNotifier: swipeNotifier,
-                          onSwipe: removeProfileOnSwipe,
-                        );
-                      },
-                    ),
-            ),
+                        ),
+                      );
+                    },
+                  )
+                : List.generate(
+                    draggableItems.length,
+                    (index) {
+                      return DragWidget(
+                        profile: draggableItems[index],
+                        index: index,
+                        onSwipe: removeProfileOnSwipe,
+                      );
+                    },
+                  ),
           ),
         ),
         Positioned(

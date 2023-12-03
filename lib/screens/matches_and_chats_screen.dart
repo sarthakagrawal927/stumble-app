@@ -56,7 +56,9 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: widgetColor,
-      appBar: const TopAppBar(),
+      appBar: TopAppBar(
+        routeName: "",
+      ),
       body: Container(
         color: backgroundColor,
         child: _listsPopulated &&

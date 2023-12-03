@@ -1,11 +1,13 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/providers/profile.dart';
+import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/stumbles_list_constants.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/common/profile_modal.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class IStumbledIntoScreen extends StatefulWidget {
   static const routeName = '/i-stumbled-into-screen';
@@ -22,35 +24,47 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
         ModalRoute.of(context)!.settings.arguments as List<MiniProfile>;
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: const TopAppBar(),
-      body: GridView.builder(
-        itemCount: listOfProfiles.length,
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onDoubleTap: () => DoNothingAction(),
-            onTap: () async {
-              Profile profile;
-              profile = await getUserApi(listOfProfiles[index].id)
-                  .then((value) => profile = value!);
-
-              // ignore: use_build_context_synchronously
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return ProfileModal(profile: profile);
-                },
-              );
-            },
-            child: Container(
-              margin: EdgeInsets.all(MediaQuery.of(context).size.height / 64),
-              alignment: Alignment.bottomLeft,
-              decoration: imageBoxWidget(context, listOfProfiles[index]),
-            ),
-          );
-        },
+      appBar: TopAppBar(
+        routeName: SwipingScreen.routeName,
       ),
+      body: listOfProfiles.isNotEmpty
+          ? GridView.builder(
+              itemCount: listOfProfiles.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2),
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onDoubleTap: () => DoNothingAction(),
+                  onTap: () async {
+                    Profile profile;
+                    profile = await getUserApi(listOfProfiles[index].id)
+                        .then((value) => profile = value!);
+
+                    // ignore: use_build_context_synchronously
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return ProfileModal(profile: profile);
+                      },
+                    );
+                  },
+                  child: Container(
+                    margin:
+                        EdgeInsets.all(MediaQuery.of(context).size.height / 64),
+                    alignment: Alignment.bottomLeft,
+                    decoration: imageBoxWidget(context, listOfProfiles[index]),
+                  ),
+                );
+              },
+            )
+          : Text(
+              textAlign: TextAlign.center,
+              "No nearby stumblers to 'stumble' upon at the moment.",
+              style: GoogleFonts.sacramento(
+                color: Colors.white,
+                fontSize: 40,
+              ),
+            ),
     );
   }
 }

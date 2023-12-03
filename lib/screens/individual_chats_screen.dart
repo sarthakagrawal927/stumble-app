@@ -1,5 +1,4 @@
 import 'package:dating_made_better/models/chat.dart';
-import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
@@ -67,7 +66,9 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   List<ChatMessage> listOfChatMessages = [];
   bool showLookingForOption = false;
+  Color showLookingForOptionColor = topAppBarColor;
   bool lookingForSame = false;
+  bool profileLoading = false;
   late InterestType? lookingFor;
 
   bool userHasSelectedANicheOption = false;
@@ -77,6 +78,7 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         listOfChatMessages = value.messages;
         showLookingForOption = value.showLookingForOption;
+        showLookingForOptionColor = Colors.red;
         lookingForSame = value.lookingForSame;
         lookingFor = value.lookingFor;
       });
@@ -105,129 +107,126 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(
-          MediaQuery.of(context).size.height / 16,
+      appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height / 12,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          // temporary solution until proper global state management is implemented
+          onPressed: () =>
+              Navigator.of(context).pushNamed(MatchesAndChatsScreen.routeName),
         ),
-        child: AppBar(
-          actions: [
-            if (showLookingForOption)
-              DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  iconSize: MediaQuery.of(context).size.width / 16,
-                  style: const TextStyle(color: Colors.blue),
-                  onTap: () async {
-                    await showModelIfNotShown(
-                        context, ModelOpened.userInterestInfoTeaching);
-                  },
-                  dropdownColor: backgroundColor,
-                  items: labelToInterest.entries
-                      .map((e) => nicheSelectedOption(e.value))
-                      .toList(),
-                  onChanged: (itemIdentifier) async {
-                    InterestType interest = labelToInterest[itemIdentifier]!;
-                    updateUserInterest(
-                            widget.thread.threadId, interestValue[interest]!)
-                        .then((sameInterest) {
-                      if (sameInterest) {
-                        setState(() {
-                          lookingForSame = true;
-                          lookingFor = interest;
-                          showLookingForOption = false;
-                        });
-                        // ignore: use_build_context_synchronously
-                        showGeneralDialog(
-                          barrierColor: topAppBarColor,
+        backgroundColor: topAppBarColor,
+        title: Row(
+          children: [
+            GestureDetector(
+              onDoubleTap: () => DoNothingAction(),
+              onTap: () async {
+                if (profileLoading) return;
+                profileLoading = true;
+                await getUserApi(widget.thread.chatterId)
+                    .then((value) => showModalBottomSheet(
                           context: context,
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  Center(
-                            child: Container(
-                              color: widgetColor,
-                              margin: EdgeInsets.symmetric(
-                                vertical:
-                                    MediaQuery.of(context).size.height / 8,
-                                horizontal:
-                                    MediaQuery.of(context).size.width / 8,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: DefaultTextStyle(
-                                  style: GoogleFonts.sacramento(
-                                    color: Colors.white70,
-                                    fontSize: 30,
+                          builder: (context) {
+                            return ProfileModal(profile: value!);
+                          },
+                        ));
+                profileLoading = false;
+              },
+              child: CircleAvatarWidget(MediaQuery.of(context).size.width / 24,
+                  widget.thread.displayPic),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 64,
+            ),
+            Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 64),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 4,
+                  child: Text(
+                    widget.thread.name.split(" ").first,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.sacramento(
+                        fontSize: MediaQuery.of(context).size.width / 16,
+                        color: headingColor,
+                        fontWeight: FontWeight.w900),
+                  ),
+                )),
+            const Spacer(),
+            showLookingForOption
+                ? DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      onTap: () async {
+                        await showModelIfNotShown(
+                            context, ModelOpened.userInterestInfoTeaching);
+                      },
+                      dropdownColor: backgroundColor,
+                      items: labelToInterest.entries
+                          .map((e) => nicheSelectedOption(e.value))
+                          .toList(),
+                      onChanged: (itemIdentifier) async {
+                        InterestType interest =
+                            labelToInterest[itemIdentifier]!;
+                        updateUserInterest(widget.thread.threadId,
+                                interestValue[interest]!)
+                            .then((sameInterest) {
+                          if (sameInterest) {
+                            setState(() {
+                              lookingForSame = true;
+                              lookingFor = interest;
+                              showLookingForOption = false;
+                            });
+                            showGeneralDialog(
+                              barrierColor: topAppBarColor,
+                              context: context,
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      Center(
+                                child: Container(
+                                  color: widgetColor,
+                                  margin: EdgeInsets.symmetric(
+                                    vertical:
+                                        MediaQuery.of(context).size.height / 8,
+                                    horizontal:
+                                        MediaQuery.of(context).size.width / 8,
                                   ),
-                                  child: const Text(
-                                    textAlign: TextAlign.center,
-                                    'You both have the same reason for "Stumbling" onto one another!',
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: DefaultTextStyle(
+                                      style: GoogleFonts.sacramento(
+                                        color: Colors.white70,
+                                        fontSize: 30,
+                                      ),
+                                      child: const Text(
+                                        textAlign: TextAlign.center,
+                                        'You both have the same reason for "Stumbling" onto one another!',
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      } else {
-                        setState(() {
-                          showLookingForOption = false;
+                            );
+                          } else {
+                            setState(() {
+                              showLookingForOption = false;
+                            });
+                          }
                         });
-                      }
-                    });
-                  },
-                  icon: const Icon(
-                    Icons.menu,
-                    color: headingColor,
-                  ),
-                ),
-              )
-          ],
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            // temporary solution until proper global state management is implemented
-            onPressed: () => Navigator.of(context)
-                .pushNamed(MatchesAndChatsScreen.routeName),
-          ),
-          backgroundColor: topAppBarColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onDoubleTap: () => DoNothingAction(),
-                onTap: () async {
-                  Profile profile;
-                  profile = await getUserApi(widget.thread.chatterId)
-                      .then((value) => profile = value!);
-
-                  // ignore: use_build_context_synchronously
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return ProfileModal(profile: profile);
-                    },
-                  );
-                },
-                child: CircleAvatarWidget(
-                    MediaQuery.of(context).size.width / 24,
-                    widget.thread.displayPic),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 32,
-              ),
-              Padding(
-                  padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 64),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 4,
-                    child: Text(
-                      widget.thread.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.sacramento(
-                          fontSize: MediaQuery.of(context).size.width / 16,
-                          color: headingColor,
-                          fontWeight: FontWeight.w900),
+                      },
+                      icon: Icon(
+                        Icons.visibility,
+                        size: MediaQuery.of(context).size.width / 12,
+                        color: headingColor,
+                      ),
                     ),
-                  )),
-            ],
-          ),
+                  )
+                : Icon(
+                    Icons.visibility_off,
+                    size: MediaQuery.of(context).size.width / 12,
+                    color: showLookingForOptionColor,
+                  ),
+          ],
         ),
       ),
       body: Column(

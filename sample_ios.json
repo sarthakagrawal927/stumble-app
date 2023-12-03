@@ -1,0 +1,8 @@
+{
+  "aps": {
+    "alert": {
+      "title": "Game Request",
+      "body": "Bob wants to play poker"
+    }
+  }
+}

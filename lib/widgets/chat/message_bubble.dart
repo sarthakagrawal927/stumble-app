@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dating_made_better/utils/general.dart';
 
 class MessageBubble extends StatelessWidget {
   final String message;
@@ -45,12 +46,28 @@ class MessageBubble extends StatelessWidget {
               vertical: 4,
               horizontal: 8,
             ),
-            child: Text(
-              message,
-              style: TextStyle(
-                fontSize: 20,
-                color: isMe ? Colors.white : Colors.white,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  message,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: isMe ? Colors.white : Colors.white,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    textAlign: TextAlign.end,
+                    beautifyTime(messageTime),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: isMe ? Colors.white : Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

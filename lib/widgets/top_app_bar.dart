@@ -26,8 +26,10 @@ var defaultDropdownOptions = [
   DropdownOptionVal("Filters", Icons.filter_list, DropdownOptions.filters),
 ];
 
+// ignore: must_be_immutable
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TopAppBar({super.key});
+  String routeName;
+  TopAppBar({required this.routeName, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,15 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         MediaQuery.of(context).size.height / 16,
       ),
       child: AppBar(
+        automaticallyImplyLeading: false,
+        leading: routeName != ""
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                // temporary solution until proper global state management is implemented
+                onPressed: () =>
+                    Navigator.of(context).pushReplacementNamed(routeName),
+              )
+            : null,
         actions: [
           DropdownButtonHideUnderline(
             child: DropdownButton(
@@ -76,7 +87,8 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
         backgroundColor: topAppBarColor,
         title: Padding(
-          padding: const EdgeInsets.only(left: 4),
+          padding:
+              EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
           child: Text(
             'Stumble!',
             style: GoogleFonts.sacramento(
