@@ -5,13 +5,11 @@ import '../constants.dart';
 import '../providers/profile.dart';
 import '../../widgets/swipe_card.dart';
 
-Future<void> addActivityOnLike(Profile profile, Swipe action,
+Future<void> addActivityOnLike(Profile profile, ActivityType activity,
     [String? comment]) {
   Map<String, dynamic> bodyParams = {
     'targetId': profile.id,
-    'type': action == Swipe.right
-        ? activityValue[ActivityType.like]
-        : activityValue[ActivityType.dislike],
+    'type': activityValue[activity],
     'compliment': comment ?? '',
   };
   return addActivityOnProfileApi(bodyParams);
@@ -22,12 +20,11 @@ class DragWidget extends StatefulWidget {
     super.key,
     required this.profile,
     required this.index,
-    required this.swipeNotifier,
     required this.onSwipe,
   });
   final Profile profile;
   final int index;
-  final ValueNotifier<Swipe> swipeNotifier;
+
   final Function onSwipe;
 
   @override
@@ -35,18 +32,10 @@ class DragWidget extends StatefulWidget {
 }
 
 class _DragWidgetState extends State<DragWidget> {
-  ValueNotifier<Swipe> swipeNotifier = ValueNotifier(Swipe.none);
-  void handleActivityOnProfile([String? compliment, bool? leftSwipeClicked]) {
-    if (compliment != null) {
-      swipeNotifier.value = Swipe.right;
-    }
-    if (leftSwipeClicked == true) {
-      swipeNotifier.value = Swipe.left;
-    }
-    if (swipeNotifier.value == Swipe.none) return;
-    addActivityOnLike(widget.profile, swipeNotifier.value, compliment);
-    widget.onSwipe(widget.profile);
-    swipeNotifier.value = Swipe.none;
+  Future<void> handleActivityOnProfile(ActivityType activity,
+      [String? compliment]) async {
+    widget.onSwipe();
+    await addActivityOnLike(widget.profile, activity, compliment);
   }
 
   @override
@@ -63,8 +52,10 @@ class _DragWidgetState extends State<DragWidget> {
                   shape: const CircleBorder(eccentricity: 0.0),
                   alignment: Alignment.bottomLeft,
                   backgroundColor: backgroundColor),
-              onPressed: () {
-                handleActivityOnProfile(null, true);
+              onPressed: () async {
+                await handleActivityOnProfile(
+                  ActivityType.dislike,
+                );
               },
               child: Icon(Icons.cancel,
                   size: MediaQuery.of(context).size.width / 6),

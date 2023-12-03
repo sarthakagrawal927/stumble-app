@@ -8,7 +8,7 @@ import '../providers/profile.dart';
 class SwipeCard extends StatelessWidget {
   const SwipeCard({super.key, required this.profile, required this.onSwipe});
   final Profile profile;
-  final Function onSwipe;
+  final Function(ActivityType activity, [String? compliment]) onSwipe;
 
   Widget getCommentFeatureWidget(Widget childComponent, bool isImage) {
     return CommentFeatureWidget(childComponent, onSwipe, isImage);

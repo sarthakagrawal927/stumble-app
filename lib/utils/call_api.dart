@@ -194,8 +194,11 @@ Future<Profile?> getUserApi([int? profileId]) async {
         (profileId != null ? profileId.toString() : ""),
     method: HttpMethods.get,
   );
-  AppConstants.user = data;
-  await writeSecureData("user", jsonEncode(data));
+
+  if (profileId == null) {
+    AppConstants.user = data;
+    await writeSecureData("user", jsonEncode(data));
+  }
   return Profile.fromJson(data);
 }
 

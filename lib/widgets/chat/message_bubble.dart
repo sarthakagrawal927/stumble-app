@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dating_made_better/utils/general.dart';
 
 class MessageBubble extends StatelessWidget {
   final String message;
@@ -15,12 +16,6 @@ class MessageBubble extends StatelessWidget {
       required this.receiverId,
       required this.messageTime,
       required super.key});
-
-  String getTimeOfMessage(DateTime messageTime) {
-    String hoursValue = messageTime.hour.toString().padLeft(2, '0');
-    String minutesValue = messageTime.minute.toString().padLeft(2, '0');
-    return "$hoursValue:$minutesValue";
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +60,7 @@ class MessageBubble extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: Text(
                     textAlign: TextAlign.end,
-                    getTimeOfMessage(messageTime),
+                    beautifyTime(messageTime),
                     style: TextStyle(
                       fontSize: 10,
                       color: isMe ? Colors.white : Colors.white,

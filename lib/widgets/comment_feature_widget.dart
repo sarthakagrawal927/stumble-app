@@ -5,7 +5,7 @@ class CommentFeatureWidget extends StatelessWidget {
   const CommentFeatureWidget(this.widget, this.onSwipe, this.isImage,
       {super.key});
   final Widget widget;
-  final Function onSwipe;
+  final Function(ActivityType activity, [String? compliment]) onSwipe;
   final bool isImage;
 
   @override
@@ -73,7 +73,7 @@ class CommentFeatureWidget extends StatelessWidget {
                                 Icons.check,
                               ),
                               onPressed: () {
-                                onSwipe(commentOnWidget);
+                                onSwipe(ActivityType.like, commentOnWidget);
                                 Navigator.of(context, rootNavigator: true)
                                     .pop("");
                               },

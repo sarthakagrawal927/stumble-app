@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 
 enum Gender { woman, man, nonBinary }
 
-enum Swipe { left, right, none }
-
-enum SwipeType { swipe, comment, nicheSelection }
-
 const authKey = "authToken";
 
 enum ModelOpened { userInterestInfoTeaching }
