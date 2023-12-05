@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:dating_made_better/constants.dart';
-import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/hooks/index.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class FirstScreenColumn extends StatefulWidget {
@@ -23,17 +23,15 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
-      'https://www.googleapis.com/auth/user.phonenumbers.read	',
+      'https://www.googleapis.com/auth/user.phonenumbers.read',
     ],
   );
 
   Future<void> _handleSignIn() async {
     try {
-      var something = await _googleSignIn.signIn();
-      debugPrint("something");
-      print(something);
+      await _googleSignIn.signIn();
     } catch (error) {
-      print(error);
+      debugPrint(error.toString());
     }
   }
 
@@ -42,18 +40,14 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
     super.initState();
     _googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount? account) async {
-      // In mobile, being authenticated means being authorized...
-      bool isAuthorized = account != null;
-
-      print(account);
-      print(isAuthorized);
-
-      // Now that we know that the user can access the required scopes, the app
-      // can call the REST API.
-      if (isAuthorized) {
-        // unawaited(_handleGetContact(account!));
+      if (account != null) {
+        await verifyGoogleAuth(account).then((profile) {
+          handleSignInComplete(context);
+        });
       }
     });
+    // TODO: Enable once testing is done
+    // _googleSignIn.signInSilently();
   }
 
   @override
@@ -96,8 +90,6 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
         ElevatedButton(
           onPressed: () async {
             await _handleSignIn();
-            Provider.of<FirstScreenStateProviders>(context, listen: false)
-                .setNextScreenActive();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,

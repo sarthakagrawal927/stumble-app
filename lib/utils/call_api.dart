@@ -11,6 +11,7 @@ import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:http_parser/http_parser.dart';
@@ -38,6 +39,7 @@ const Map<String, String> defaultHeaders = {
 enum ApiType {
   sendOtp,
   verifyOtp,
+  googleAuth,
   upsertUser,
   getProfile,
   findStumbles,
@@ -58,6 +60,7 @@ enum ApiType {
 const apiList = {
   ApiType.sendOtp: "/api/v1/user/send_otp",
   ApiType.verifyOtp: "/api/v1/user/verify_otp",
+  ApiType.googleAuth: "/api/v1/user/google_auth",
   ApiType.upsertUser: "/api/v1/user",
   ApiType.getProfile: "/api/v1/user?user_id=",
   ApiType.findStumbles: "/api/v1/activity/find",
@@ -138,6 +141,21 @@ Future<Profile> verifyOtpApi(String otpEntered, String phoneNumber) async {
       bodyParams: {
         'otp': otpEntered,
         'phone': phoneNumber,
+      },
+      method: HttpMethods.post);
+  AppConstants.token = data[authKey];
+  AppConstants.user = data["user"];
+  // add to storage
+  await writeSecureData(authKey, AppConstants.token);
+  return Profile.fromJson(data["user"]);
+}
+
+Future<Profile> verifyGoogleAuth(GoogleSignInAccount account) async {
+  final data = await callAPI(getApiEndpoint(ApiType.googleAuth),
+      bodyParams: {
+        'email': account.email,
+        'serverAuthCode': account.serverAuthCode,
+        'id': account.id
       },
       method: HttpMethods.post);
   AppConstants.token = data[authKey];

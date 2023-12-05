@@ -1,13 +1,10 @@
-import 'package:dating_made_better/global_store.dart';
-import 'package:dating_made_better/screens/swiping_screen.dart';
+import 'package:dating_made_better/hooks/index.dart';
 import 'package:dating_made_better/utils/call_api.dart';
-import 'package:dating_made_better/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/first_screen_state_providers.dart';
 import '../../providers/profile.dart';
 
 // ignore: must_be_immutable
@@ -57,22 +54,10 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
           },
           //runs when every textfield is filled
           onSubmit: (String verificationCode) async {
-            ScreenMode screenMode;
             verifyOtpApi(verificationCode,
                     Provider.of<Profile>(context, listen: false).getPhone)
                 .then((profile) {
-              screenMode = getScreenMode();
-              if (AppConstants.token.isNotEmpty) {
-                Provider.of<FirstScreenStateProviders>(context, listen: false)
-                    .setActiveScreenMode(screenMode);
-                Provider.of<Profile>(context, listen: false)
-                    .setEntireProfileForEdit();
-                if (screenMode == ScreenMode.swipingScreen) {
-                  // redirect to swiping screen
-                  Navigator.of(context)
-                      .pushReplacementNamed(SwipingScreen.routeName);
-                }
-              }
+              handleSignInComplete(context);
             });
           }, // end onSubmit
         ),
