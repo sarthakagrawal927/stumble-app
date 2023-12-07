@@ -15,6 +15,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 const String baseURL = 'https://ipgtvmwff6.us-east-1.awsapprunner.com';
 // local: http://192.168.1.4:8080
@@ -40,6 +41,7 @@ enum ApiType {
   sendOtp,
   verifyOtp,
   googleAuth,
+  appleAuth,
   upsertUser,
   getProfile,
   findStumbles,
@@ -61,6 +63,7 @@ const apiList = {
   ApiType.sendOtp: "/api/v1/user/send_otp",
   ApiType.verifyOtp: "/api/v1/user/verify_otp",
   ApiType.googleAuth: "/api/v1/user/google_auth",
+  ApiType.appleAuth: "/api/v1/user/apple_auth",
   ApiType.upsertUser: "/api/v1/user",
   ApiType.getProfile: "/api/v1/user?user_id=",
   ApiType.findStumbles: "/api/v1/activity/find",
@@ -151,11 +154,30 @@ Future<Profile> verifyOtpApi(String otpEntered, String phoneNumber) async {
 }
 
 Future<Profile> verifyGoogleAuth(GoogleSignInAccount account) async {
+  final authHeadersResult = await account.authHeaders;
+  final authenticationResult = await account.authentication;
+
   final data = await callAPI(getApiEndpoint(ApiType.googleAuth),
       bodyParams: {
         'email': account.email,
-        'serverAuthCode': account.serverAuthCode,
-        'id': account.id
+        'id': account.id,
+        'bearerToken': authHeadersResult["Authorization"],
+      },
+      method: HttpMethods.post);
+  AppConstants.token = data[authKey];
+  AppConstants.user = data["user"];
+  // add to storage
+  await writeSecureData(authKey, AppConstants.token);
+  return Profile.fromJson(data["user"]);
+}
+
+Future<Profile> verifyAppleAuth(
+    AuthorizationCredentialAppleID appleAuthId) async {
+  final data = await callAPI(getApiEndpoint(ApiType.appleAuth),
+      bodyParams: {
+        "jwt": appleAuthId.identityToken,
+        "userIdentifier": appleAuthId.userIdentifier,
+        "authCode": appleAuthId.authorizationCode,
       },
       method: HttpMethods.post);
   AppConstants.token = data[authKey];
@@ -174,10 +196,14 @@ Future<void> sendOtpApi(String phoneNumber) async {
 }
 
 Future<Profile> upsertUserApi(Map<String, dynamic> bodyParams) async {
-  var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
-      bodyParams: bodyParams, method: HttpMethods.post);
-  AppConstants.user = data;
-  return Profile.fromJson(data);
+  try {
+    var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
+        bodyParams: bodyParams, method: HttpMethods.post);
+    AppConstants.user = data;
+    return Profile.fromJson(data);
+  } catch (err) {
+    rethrow;
+  }
 }
 
 Future<void> activateUserApi(Map<String, dynamic> bodyParams) async {

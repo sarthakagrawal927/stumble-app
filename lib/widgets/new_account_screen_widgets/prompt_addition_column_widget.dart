@@ -1,3 +1,4 @@
+import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -73,12 +74,18 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
                   .setConversationStarter = promptTextValue;
               if (isLoading) return;
               isLoading = true;
-              Provider.of<Profile>(context, listen: false)
-                  .upsertUserOnboarding()
-                  .then((value) {
+              try {
+                Provider.of<Profile>(context, listen: false)
+                    .upsertUserOnboarding()
+                    .then((value) {
+                  Navigator.of(context).pushNamed(SwipingScreen.routeName);
+                });
+              } catch (e) {
+                // redirect to login screen
+                Navigator.of(context).pushNamed(AuthScreen.routeName);
+              } finally {
                 isLoading = false;
-                Navigator.of(context).pushNamed(SwipingScreen.routeName);
-              });
+              }
             }, context, valueToFill: "prompt");
           },
         ),

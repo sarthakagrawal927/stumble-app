@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/hooks/index.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
@@ -29,7 +31,20 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
 
   Future<void> _handleSignIn() async {
     try {
-      await _googleSignIn.signIn();
+      // check platform use apple for ios
+      if (Platform.isAndroid) {
+        await _googleSignIn.signIn();
+      } else if (Platform.isIOS) {
+        final credential = await SignInWithApple.getAppleIDCredential(
+          scopes: [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+        );
+
+        verifyAppleAuth(credential)
+            .then((value) => handleSignInComplete(context));
+      }
     } catch (error) {
       debugPrint(error.toString());
     }
@@ -46,7 +61,6 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
         });
       }
     });
-    // TODO: Enable once testing is done
     // _googleSignIn.signInSilently();
   }
 
@@ -96,9 +110,10 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
             minimumSize: Size(
                 widget.deviceSize.width / 2, widget.deviceSize.height / 16),
           ),
-          child: const Text(
-            "Use mobile number",
-            style: TextStyle(fontSize: 20, color: filterScreenHeadingColor),
+          child: Text(
+            "Sign in with ${Platform.isAndroid ? 'Google' : 'Apple'}",
+            style:
+                const TextStyle(fontSize: 20, color: filterScreenHeadingColor),
           ),
         ),
         Padding(

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/utils/call_api.dart';
+import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import '../constants.dart';
@@ -187,13 +188,20 @@ class Profile with ChangeNotifier {
   }
 
   Future<Profile> upsertUser(Map<String, dynamic> bodyParams) async {
-    Profile userProfile = await upsertUserApi(bodyParams);
-    setEntireProfileForEdit(profile: userProfile);
-    return userProfile;
+    try {
+      Profile userProfile = await upsertUserApi(bodyParams);
+      setEntireProfileForEdit(profile: userProfile);
+      return userProfile;
+    } catch (e) {
+      // clear authToken
+      await deleteSecureData(authKey);
+      logger.e(e);
+      rethrow;
+    }
   }
 
   Future<Profile> upsertUserOnboarding() async {
-    Profile userProfile = await upsertUser({
+    return upsertUser({
       "name": name,
       "gender": gender.index,
       "dob": birthDate.toIso8601String(),
@@ -201,7 +209,6 @@ class Profile with ChangeNotifier {
       "photos": photos.map((e) => e.path).toList(),
       "is_platonic": isPlatonic,
     });
-    return userProfile;
   }
 
   static fromJson(profile) {

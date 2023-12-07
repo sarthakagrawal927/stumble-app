@@ -56,6 +56,7 @@ dependencies:
   cached_network_image: ^3.3.0
   geolocator: ^10.1.0
   google_sign_in: ^6.1.6
+  sign_in_with_apple: ^5.0.0
 
 dev_dependencies:
   flutter_test:

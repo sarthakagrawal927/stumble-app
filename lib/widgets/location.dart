@@ -80,7 +80,15 @@ class _MyLocationComponent extends State<MyLocationComponent> {
   @override
   Widget build(BuildContext context) {
     if (!isLocationWorking) {
-      showSnackBar(context, "Please enable location services to use the app");
+      return Center(
+        child: Container(
+          color: Colors.green,
+          child: const Text(
+            'Location not working',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
     }
     return const SizedBox.shrink();
   }
