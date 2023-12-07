@@ -7,8 +7,16 @@ Date: 13th Nov'23
 - Onboarding screen proper flow
 - Image picker revamp
 
-## 1.0.07
+## 1.0.7
 Date: 13th Nov'23
 - Fix bug with logout
 - Fix bug with finishing user onboarding
 - Fix bug with length of names
+
+## 1.0.9(8)
+Date: 8th Dec'23
+- Notifications
+- Google & Apple auth
+- Beautify Chat Screen
+- Remove matches list & swipe on profile
+- Fix misc bugs
