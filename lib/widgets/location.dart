@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 
 Future<Position> determinePosition() async {
   bool serviceEnabled;

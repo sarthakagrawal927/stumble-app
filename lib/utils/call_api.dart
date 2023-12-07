@@ -17,7 +17,7 @@ import 'package:logger/logger.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-const String baseURL = 'https://ipgtvmwff6.us-east-1.awsapprunner.com';
+const String baseURL = 'http://192.168.1.4:8080';
 // local: http://192.168.1.4:8080
 // prod: https://ipgtvmwff6.us-east-1.awsapprunner.com
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
@@ -154,14 +154,13 @@ Future<Profile> verifyOtpApi(String otpEntered, String phoneNumber) async {
 }
 
 Future<Profile> verifyGoogleAuth(GoogleSignInAccount account) async {
-  final authHeadersResult = await account.authHeaders;
   final authenticationResult = await account.authentication;
 
   final data = await callAPI(getApiEndpoint(ApiType.googleAuth),
       bodyParams: {
-        'email': account.email,
-        'id': account.id,
-        'bearerToken': authHeadersResult["Authorization"],
+        'jwt': authenticationResult.idToken,
+        'userIdentifier': account.id,
+        'authCode': authenticationResult.accessToken,
       },
       method: HttpMethods.post);
   AppConstants.token = data[authKey];
