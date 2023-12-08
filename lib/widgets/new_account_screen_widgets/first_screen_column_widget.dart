@@ -23,10 +23,7 @@ class FirstScreenColumn extends StatefulWidget {
 
 class _FirstScreenColumnState extends State<FirstScreenColumn> {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/user.phonenumbers.read',
-    ],
+    scopes: ['email'],
   );
 
   Future<void> _handleSignIn() async {
