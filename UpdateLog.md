@@ -20,3 +20,7 @@ Date: 8th Dec'23
 - Beautify Chat Screen
 - Remove matches list & swipe on profile
 - Fix misc bugs
+
+## 1.0.10
+Date: 11th Dec'23
+- Fix google auth by adding release signing key
