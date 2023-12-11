@@ -16,114 +16,114 @@ class SwipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width * 0.825,
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              getCommentFeatureWidget(
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.395,
-                  width: double.infinity,
-                  child: Container(
-                    alignment: Alignment.bottomLeft,
-                    decoration: imageBoxWidget(context, 0),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width / 32,
-                        right: MediaQuery.of(context).size.width / 32,
-                        bottom: MediaQuery.of(context).size.width / 32,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          profile.isPlatonic
-                              ? platonicIconWidget(
-                                  context, Icons.favorite_border_outlined)
-                              : platonicIconWidget(
-                                  context, Icons.favorite_sharp),
-                          Row(
+    return Container(
+      color: backgroundColor,
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width * 0.94,
+      child: ListView(
+        shrinkWrap: true,
+        children: [
+          getCommentFeatureWidget(
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.6,
+              width: double.infinity,
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                decoration: imageBoxWidget(context, 0),
+                child: Padding(
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width / 32,
+                      right: MediaQuery.of(context).size.width / 32,
+                      bottom: MediaQuery.of(context).size.width / 32,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               userInformationOnImage(context, profile.getName),
                               userInformationOnImage(
-                                  context, profile.getAge.toString()),
+                                  context, profile.getAge.toString(), false),
                               profile.photoVerified
                                   ? verificationIconWidget(context,
                                       Icons.verified_sharp, Colors.blue)
                                   : verificationIconWidget(context,
-                                      Icons.verified_outlined, Colors.white),
-                            ],
-                          ),
-                        ],
-                      ),
+                                      Icons.verified_outlined, Colors.white)
+                            ]),
+                        profile.getBadgeLabel.isNotEmpty
+                            ? Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Badge(
+                                  isLabelVisible: false,
+                                  child: Text(
+                                    profile.getBadgeLabel,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width /
+                                              32,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                      ],
+                    )),
+              ),
+            ),
+            true,
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height / 24,
+          ),
+          getCommentFeatureWidget(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height / 16,
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width / 32),
+                  child: Text(
+                    'Talk to me about',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontWeight: FontWeight.bold,
+                      fontSize: MediaQuery.of(context).size.height / 32,
                     ),
                   ),
                 ),
-                true,
-              ),
-              Container(
-                color: backgroundColor,
-                height: MediaQuery.of(context).size.height / 24,
-              ),
-              getCommentFeatureWidget(
                 Container(
-                  color: backgroundColor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        height: MediaQuery.of(context).size.height / 16,
-                        padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 32),
-                        child: Text(
-                          'Talk to me about',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.height / 32,
-                          ),
-                        ),
+                  height: MediaQuery.of(context).size.height * 0.235,
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 32,
+                    right: MediaQuery.of(context).size.width / 32,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Text(
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.height / 48,
+                        color: Colors.white70,
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height / 32,
-                        color: backgroundColor,
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.235,
-                        padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 32,
-                          right: MediaQuery.of(context).size.width / 32,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Text(
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.height / 48,
-                              color: Colors.white70,
-                            ),
-                            profile.conversationStarter,
-                          ),
-                        ),
-                      ),
-                    ],
+                      profile.conversationStarter,
+                    ),
                   ),
                 ),
-                false,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 16,
-                color: backgroundColor,
-              ),
-              if (profile.getPhotos.length > 1) photoWidget(context, 1),
-              if (profile.getPhotos.length > 2) photoWidget(context, 2),
-            ],
+              ],
+            ),
+            false,
           ),
-        ),
-      ],
+          Container(
+            height: MediaQuery.of(context).size.height / 16,
+            color: backgroundColor,
+          ),
+          if (profile.getPhotos.length > 1) photoWidget(context, 1),
+          if (profile.getPhotos.length > 2) photoWidget(context, 2),
+        ],
+      ),
     );
   }
 
@@ -151,9 +151,10 @@ class SwipeCard extends StatelessWidget {
     );
   }
 
-  Text userInformationOnImage(BuildContext context, String textToDisplay) {
+  Text userInformationOnImage(BuildContext context, String textToDisplay,
+      [bool addComma = true]) {
     return Text(
-      "$textToDisplay, ",
+      "$textToDisplay ${addComma ? ',' : ''} ",
       style: TextStyle(
         color: Colors.white,
         fontSize: MediaQuery.of(context).size.width / 16,
@@ -186,7 +187,6 @@ class SwipeCard extends StatelessWidget {
 
   BoxDecoration imageBoxWidget(BuildContext context, int index) {
     return BoxDecoration(
-      color: backgroundColor,
       image: DecorationImage(
         fit: BoxFit.cover,
         image: CachedNetworkImageProvider(profile.photos.isNotEmpty

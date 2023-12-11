@@ -48,7 +48,8 @@ class _SwipingScreenState extends State<SwipingScreen> {
       sound: true,
     );
 
-    if (isNotificationSetForDevice == '') {
+    if (isNotificationSetForDevice == null ||
+        isNotificationSetForDevice == '') {
       final token = await fcm.getToken();
       if (token!.isEmpty) return;
       await saveTokenToDatabase(token);

@@ -21,41 +21,32 @@ class CardsStackWidget extends StatefulWidget with ChangeNotifier {
 
 class _CardsStackWidgetState extends State<CardsStackWidget>
     with SingleTickerProviderStateMixin {
-  List<dynamic> draggableItems = [];
-  late final AnimationController _animationController;
-  bool _draggableItemsListPopulated = false;
+  List<Profile> draggableItems = [];
+  bool hasMore = true;
+
+  fetchAndSetStumbles() {
+    _getStumbles().then((values) {
+      debugPrint(values.runtimeType.toString());
+      setState(() {
+        draggableItems = [...draggableItems, ...values];
+        hasMore = values.isNotEmpty;
+      });
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
-    _animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        draggableItems.removeLast();
-        _animationController.reset();
-      }
-    });
-    if (draggableItems.isEmpty) {
-      _getStumbles().then((values) {
-        values = values;
-        debugPrint(values.runtimeType.toString());
-        if (mounted) {
-          setState(() {
-            draggableItems = values;
-            _draggableItemsListPopulated = true;
-          });
-        }
-      });
-    }
+    fetchAndSetStumbles();
   }
 
   void removeProfileOnSwipe() {
     setState(() {
       draggableItems.removeLast();
     });
+    if (draggableItems.length < 5 && hasMore) {
+      fetchAndSetStumbles();
+    }
   }
 
   @override
@@ -65,42 +56,30 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: _draggableItemsListPopulated && draggableItems.isEmpty
-                ? List.generate(
-                    1,
-                    (index) {
-                      return Center(
-                        child: Container(
-                          margin: EdgeInsets.symmetric(
-                            vertical: MediaQuery.of(context).size.height / 8,
-                            horizontal: MediaQuery.of(context).size.width / 8,
-                          ),
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            "No nearby stumblers to 'stumble' upon at the moment.",
-                            style: GoogleFonts.sacramento(
-                              color: Colors.white,
-                              fontSize: 40,
-                            ),
+          child: Container(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              child: draggableItems.isEmpty
+                  ? Center(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.height / 8,
+                          horizontal: MediaQuery.of(context).size.width / 8,
+                        ),
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          "No nearby stumblers to 'stumble' upon at the moment.",
+                          style: GoogleFonts.sacramento(
+                            color: Colors.white,
+                            fontSize: 40,
                           ),
                         ),
-                      );
-                    },
-                  )
-                : List.generate(
-                    draggableItems.length,
-                    (index) {
-                      return DragWidget(
-                        profile: draggableItems[index],
-                        index: index,
-                        onSwipe: removeProfileOnSwipe,
-                      );
-                    },
-                  ),
-          ),
+                      ),
+                    )
+                  : DragWidget(
+                      profile: draggableItems.last,
+                      onSwipe: removeProfileOnSwipe,
+                    )),
         ),
         Positioned(
           left: 0,

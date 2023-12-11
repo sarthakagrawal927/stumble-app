@@ -22,6 +22,7 @@ class Profile with ChangeNotifier {
   List<Gender> genderPreferences;
   String bearerToken = AppConstants.token;
   double profileCompletionAmount = 0.0;
+  String badgeLabel = "";
 
   // https://stackoverflow.com/questions/67126549/flutter-define-default-value-of-a-datetime-in-constructor
   Profile({
@@ -37,6 +38,7 @@ class Profile with ChangeNotifier {
     this.isPlatonic = false,
     this.ageRangePreference = const RangeValues(18, 50),
     this.genderPreferences = const [Gender.man, Gender.nonBinary, Gender.woman],
+    this.badgeLabel = "",
   }) : birthDate = birthDate ?? DateTime.now();
 
   int currentUser = -1;
@@ -118,6 +120,10 @@ class Profile with ChangeNotifier {
 
   int get getAge {
     return age;
+  }
+
+  String get getBadgeLabel {
+    return badgeLabel;
   }
 
   String get getPhone {
@@ -242,6 +248,7 @@ class Profile with ChangeNotifier {
       age: profile[profileDBKeys[ProfileKeys.age]] ?? 23,
       ageRangePreference: targetAgeList,
       genderPreferences: targetGenderList,
+      badgeLabel: profile[profileDBKeys[ProfileKeys.badgeLabel]] ?? "",
     );
   }
 }
@@ -273,6 +280,7 @@ enum ProfileKeys {
   educationCompletionYear,
   languages,
   religion,
+  badgeLabel,
 }
 
 const profileDBKeys = {
@@ -287,7 +295,8 @@ const profileDBKeys = {
   ProfileKeys.photoVerified: "photo_verified",
   ProfileKeys.conversationStarter: "conversation_starter",
   ProfileKeys.targetAge: "target_age",
-  ProfileKeys.targetGender: "target_gender"
+  ProfileKeys.targetGender: "target_gender",
+  ProfileKeys.badgeLabel: "badge_label",
 };
 
 RangeValues convertRangeValuesToInt(List<int>? intList) {
