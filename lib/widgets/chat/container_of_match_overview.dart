@@ -53,26 +53,52 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getStack([
-                  Flexible(
-                    child: Text(
-                      widget.threadDetails.name,
-                      style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white70),
-                      overflow: TextOverflow.ellipsis,
+                getStack(
+                  [
+                    Flexible(
+                      child: Text(
+                        widget.threadDetails.name,
+                        style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white70),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  // add a red dot to show unread
-                  Text(
-                    widget.threadDetails.hasUnread || !hasConversationStarted
-                        ? "●"
-                        : "",
-                    style:
-                        const TextStyle(fontSize: 25, color: Colors.redAccent),
-                  ),
-                ]),
+                    // add a red dot to show unread
+                    hasConversationStarted && widget.threadDetails.yourMove
+                        ? Container(
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.of(context).size.width / 32,
+                                vertical:
+                                    MediaQuery.of(context).size.height / 32,
+                              ),
+                              child: const Text(
+                                "your move!",
+                                style: TextStyle(
+                                  backgroundColor: Colors.redAccent,
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          )
+                        : const Text(
+                            "●",
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.greenAccent,
+                            ),
+                          ),
+                  ],
+                ),
                 getStack([
                   Flexible(
                     child: Text(

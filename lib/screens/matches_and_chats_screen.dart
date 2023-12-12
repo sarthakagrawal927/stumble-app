@@ -83,48 +83,8 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
             : Column(
                 children: [
                   Expanded(
-                    child: ListView(
-                      children: <Widget>[
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 5,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: List.generate(listOfStumbleMatches.length,
-                                (int index) {
-                              return GestureDetector(
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                    top:
-                                        MediaQuery.of(context).size.height / 32,
-                                    bottom:
-                                        MediaQuery.of(context).size.height / 32,
-                                    left:
-                                        MediaQuery.of(context).size.width / 32,
-                                    right:
-                                        MediaQuery.of(context).size.width / 32,
-                                  ),
-                                  child: CircleAvatarWidget(
-                                      MediaQuery.of(context).size.width / 12,
-                                      listOfStumbleMatches[index].photo ??
-                                          defaultBackupImage),
-                                ),
-                                onTap: () async => {
-                                  startConversation(
-                                          listOfStumbleMatches[index].id)
-                                      .then((chatThread) => Navigator.of(
-                                              context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) => ChatScreen(
-                                                  thread: chatThread)))),
-                                },
-                              );
-                            }),
-                          ),
-                        ),
-                        MatchesConversationStartedWith(
-                            listOfMatchesConversationStartedWith),
-                      ],
-                    ),
+                    child: MatchesConversationStartedWith(
+                        listOfMatchesConversationStartedWith),
                   ),
                 ],
               ),

@@ -8,7 +8,8 @@ class ChatThread {
   final String name;
   final String displayPic;
   final String message;
-  final bool hasUnread;
+  final bool hasUserUnread;
+  final bool yourMove;
   final DateTime? lastMsgTime;
 
   ChatThread(
@@ -19,7 +20,8 @@ class ChatThread {
       required this.name,
       required this.displayPic,
       required this.message,
-      required this.hasUnread,
+      required this.hasUserUnread,
+      required this.yourMove,
       this.lastMsgTime});
 
   static fromJson(dynamic thread) {
@@ -35,7 +37,8 @@ class ChatThread {
       lastMsgTime: thread["last_msg_time"] != null
           ? DateTime.parse(thread["last_msg_time"])
           : null,
-      hasUnread: thread["has_unread"] == 1 ? true : false,
+      hasUserUnread: thread["has_user_unread"] == 1 ? true : false,
+      yourMove: thread["your_move"] == 1 ? true : false,
     );
   }
 }
