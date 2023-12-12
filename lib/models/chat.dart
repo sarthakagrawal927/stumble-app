@@ -37,7 +37,7 @@ class ChatThread {
       lastMsgTime: thread["last_msg_time"] != null
           ? DateTime.parse(thread["last_msg_time"])
           : null,
-      hasUserUnread: thread["has_user_unread"] == 1 ? true : false,
+      hasUserUnread: thread["user_has_unread"] == 1 ? true : false,
       yourMove: thread["your_move"] == 1 ? true : false,
     );
   }

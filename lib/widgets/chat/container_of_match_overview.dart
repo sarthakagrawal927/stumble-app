@@ -90,13 +90,16 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                               ),
                             ),
                           )
-                        : const Text(
-                            "●",
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.greenAccent,
-                            ),
-                          ),
+                        : hasConversationStarted &&
+                                widget.threadDetails.hasUserUnread
+                            ? const Text(
+                                "●",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.greenAccent,
+                                ),
+                              )
+                            : Container(),
                   ],
                 ),
                 getStack([

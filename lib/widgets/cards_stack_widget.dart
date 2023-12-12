@@ -27,10 +27,12 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
   fetchAndSetStumbles() {
     _getStumbles().then((values) {
       debugPrint(values.runtimeType.toString());
-      setState(() {
-        draggableItems = [...draggableItems, ...values];
-        hasMore = values.isNotEmpty;
-      });
+      if (mounted) {
+        setState(() {
+          draggableItems = [...draggableItems, ...values];
+          hasMore = values.isNotEmpty;
+        });
+      }
     });
   }
 
@@ -40,12 +42,12 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
     fetchAndSetStumbles();
   }
 
-  void removeProfileOnSwipe() {
+  void removeProfileOnSwipe() async {
     setState(() {
       draggableItems.removeLast();
     });
-    if (draggableItems.length < 5 && hasMore) {
-      fetchAndSetStumbles();
+    if (draggableItems.length < 2 && hasMore) {
+      await fetchAndSetStumbles();
     }
   }
 
