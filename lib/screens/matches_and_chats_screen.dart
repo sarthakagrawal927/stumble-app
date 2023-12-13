@@ -10,9 +10,10 @@ import '../widgets/bottom_app_bar.dart';
 import '../widgets/top_app_bar.dart';
 
 Future<List<MiniProfile>> _getMatches() async {
-  var profiles = await getMatches();
-  debugPrint(profiles.length.toString());
-  return profiles.map<MiniProfile>((e) => MiniProfile.fromJson(e)).toList();
+  // var profiles = await getMatches();
+  // debugPrint(profiles.length.toString());
+  return [];
+  // return profiles.map<MiniProfile>((e) => MiniProfile.fromJson(e)).toList();
 }
 
 Future<List<ChatThread>> _getThreads() async {

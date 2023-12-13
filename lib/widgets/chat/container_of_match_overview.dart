@@ -66,37 +66,43 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                       ),
                     ),
                     // add a red dot to show unread
-                    hasConversationStarted && widget.threadDetails.yourMove
-                        ? Container(
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal:
-                                    MediaQuery.of(context).size.width / 32,
-                                vertical:
-                                    MediaQuery.of(context).size.height / 32,
-                              ),
-                              child: const Text(
-                                "your move!",
-                                style: TextStyle(
-                                  backgroundColor: Colors.redAccent,
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                ),
-                              ),
+                    hasConversationStarted && widget.threadDetails.hasUserUnread
+                        ? const Text(
+                            "●",
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.greenAccent,
                             ),
                           )
                         : hasConversationStarted &&
-                                widget.threadDetails.hasUserUnread
-                            ? const Text(
-                                "●",
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  color: Colors.greenAccent,
+                                widget.threadDetails.yourMove
+                            ? Container(
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                child: Badge(
+                                  isLabelVisible: false,
+                                  backgroundColor: Colors.white,
+                                  padding: const EdgeInsets.all(10),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(200),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "Your Move",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               )
                             : Container(),
