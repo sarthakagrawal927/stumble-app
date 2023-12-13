@@ -5,12 +5,20 @@ import 'package:flutter/material.dart';
 
 import '../providers/profile.dart';
 
+void doNothing(ActivityType act, [String? compliment]) {}
+
 class SwipeCard extends StatelessWidget {
-  const SwipeCard({super.key, required this.profile, required this.onSwipe});
+  const SwipeCard(
+      {super.key,
+      required this.profile,
+      this.onSwipe = doNothing,
+      this.isModalMode = false});
   final Profile profile;
+  final bool isModalMode;
   final Function(ActivityType activity, [String? compliment]) onSwipe;
 
   Widget getCommentFeatureWidget(Widget childComponent, bool isImage) {
+    if (isModalMode) return childComponent;
     return CommentFeatureWidget(childComponent, onSwipe, isImage);
   }
 
@@ -19,13 +27,14 @@ class SwipeCard extends StatelessWidget {
     return Container(
       color: backgroundColor,
       height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width * 0.94,
+      width: MediaQuery.of(context).size.width * (isModalMode ? 0.85 : 0.94),
       child: ListView(
         shrinkWrap: true,
         children: [
           getCommentFeatureWidget(
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.6,
+              height: MediaQuery.of(context).size.height *
+                  (isModalMode ? 0.4 : 0.6),
               width: double.infinity,
               child: Container(
                 alignment: Alignment.bottomLeft,

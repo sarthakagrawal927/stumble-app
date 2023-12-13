@@ -4,7 +4,7 @@ import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/stumbles_list_constants.dart';
 import 'package:dating_made_better/utils/call_api.dart';
-import 'package:dating_made_better/widgets/common/profile_modal.dart';
+import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,7 +44,10 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
                     showModalBottomSheet(
                       context: context,
                       builder: (context) {
-                        return ProfileModal(profile: profile);
+                        return SwipeCard(
+                          profile: profile,
+                          isModalMode: true,
+                        );
                       },
                     );
                   },

@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
-import 'package:dating_made_better/widgets/common/profile_modal.dart';
+import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +57,10 @@ class UserProfileScreen extends StatelessWidget {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return ProfileModal(profile: profile);
+                          return SwipeCard(
+                            profile: profile,
+                            isModalMode: true,
+                          );
                         },
                       );
                     },

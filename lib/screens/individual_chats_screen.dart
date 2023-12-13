@@ -5,7 +5,7 @@ import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:dating_made_better/widgets/common/info_dialog_widget.dart';
-import 'package:dating_made_better/widgets/common/profile_modal.dart';
+import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -128,7 +128,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     .then((value) => showModalBottomSheet(
                           context: context,
                           builder: (context) {
-                            return ProfileModal(profile: value!);
+                            return SwipeCard(
+                              profile: value!,
+                              isModalMode: true,
+                            );
                           },
                         ));
                 profileLoading = false;
