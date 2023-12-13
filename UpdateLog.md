@@ -30,3 +30,8 @@ Date: 13th Dec'23
 - Fix device not being inserted in DB
 - Improve chat screen experience
 - Beautify & refractor card stack
+
+## 1.0.12
+Date: 13th Dec'23
+- Fix bug causing edit screen to crash
+- Remove extra code of profile modal
