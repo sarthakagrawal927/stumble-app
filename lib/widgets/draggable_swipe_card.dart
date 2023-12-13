@@ -64,7 +64,7 @@ class _DragWidgetState extends State<DragWidget> {
           SwipeCard(profile: widget.profile, onSwipe: handleActivityOnProfile),
           Positioned(
             bottom: MediaQuery.of(context).size.height / 24,
-            right: 0,
+            left: 0,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(eccentricity: 0.0),

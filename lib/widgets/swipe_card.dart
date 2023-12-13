@@ -17,9 +17,16 @@ class SwipeCard extends StatelessWidget {
   final bool isModalMode;
   final Function(ActivityType activity, [String? compliment]) onSwipe;
 
-  Widget getCommentFeatureWidget(Widget childComponent, bool isImage) {
+  Widget getCommentFeatureWidget(
+      Widget childComponent, bool isImage, String text) {
     if (isModalMode) return childComponent;
-    return CommentFeatureWidget(childComponent, onSwipe, isImage);
+    return CommentFeatureWidget(
+      childComponent,
+      onSwipe,
+      isImage,
+      text,
+      profile.name,
+    );
   }
 
   @override
@@ -83,48 +90,49 @@ class SwipeCard extends StatelessWidget {
               ),
             ),
             true,
+            "",
           ),
           Container(
             height: MediaQuery.of(context).size.height / 24,
           ),
           getCommentFeatureWidget(
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height / 16,
-                  padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 32),
-                  child: Text(
-                    'Talk to me about',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.height / 32,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.235,
-                  padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 32,
-                    right: MediaQuery.of(context).size.width / 32,
-                  ),
-                  child: SingleChildScrollView(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height / 16,
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 32),
                     child: Text(
+                      'Talk to me about',
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.height / 48,
                         color: Colors.white70,
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.height / 32,
                       ),
-                      profile.conversationStarter,
                     ),
                   ),
-                ),
-              ],
-            ),
-            false,
-          ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.235,
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width / 32,
+                      right: MediaQuery.of(context).size.width / 32,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Text(
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.height / 48,
+                          color: Colors.white70,
+                        ),
+                        profile.conversationStarter,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              false,
+              profile.conversationStarter),
           Container(
             height: MediaQuery.of(context).size.height / 16,
             color: backgroundColor,
@@ -185,6 +193,7 @@ class SwipeCard extends StatelessWidget {
                 decoration: imageBoxWidget(context, index)),
           ),
           true,
+          "",
         ),
         Container(
           height: MediaQuery.of(context).size.height / 16,
