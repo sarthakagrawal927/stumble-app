@@ -24,3 +24,9 @@ Date: 8th Dec'23
 ## 1.0.10
 Date: 11th Dec'23
 - Fix google auth by adding release signing key
+
+## 1.0.11
+Date: 13th Dec'23
+- Fix device not being inserted in DB
+- Improve chat screen experience
+- Beautify & refractor card stack
