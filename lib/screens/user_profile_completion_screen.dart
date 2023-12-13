@@ -218,9 +218,6 @@ class _UserProfileCompletionScreenState
                       .getPhotos
                       .map((e) => e.path)
                       .toList(),
-                  "dob": Provider.of<Profile>(context, listen: false)
-                      .getBirthDate
-                      .toIso8601String()
                 }).then((value) {
                   Navigator.of(context).pop();
                 }).catchError((error) {

@@ -248,6 +248,9 @@ class Profile with ChangeNotifier {
       age: profile[profileDBKeys[ProfileKeys.age]] ?? 23,
       ageRangePreference: targetAgeList,
       genderPreferences: targetGenderList,
+      birthDate: profile[profileDBKeys[ProfileKeys.dob]] != null
+          ? DateTime.parse(profile[profileDBKeys[ProfileKeys.dob]])
+          : DateTime.now(),
       badgeLabel: profile[profileDBKeys[ProfileKeys.badgeLabel]] ?? "",
     );
   }
