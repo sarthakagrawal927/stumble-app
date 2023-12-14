@@ -35,3 +35,8 @@ Date: 13th Dec'23
 Date: 13th Dec'23
 - Fix bug causing edit screen to crash
 - Remove extra code of profile modal
+
+## 1.0.13
+Date: 14th Dec'23
+- Fix add compliment widget
+- Swipe Card fix

@@ -46,7 +46,7 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
     setState(() {
       draggableItems.removeLast();
     });
-    if (draggableItems.length < 2 && hasMore) {
+    if (draggableItems.isEmpty && hasMore) {
       await fetchAndSetStumbles();
     }
   }
