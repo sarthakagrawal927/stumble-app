@@ -4,8 +4,11 @@ import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import '../constants.dart';
+
+const defaultAge = 23;
+const defaultTargetGenderValues = [Gender.man, Gender.nonBinary, Gender.woman];
+const defaultTargetAgeValues = RangeValues(defaultAge - 4, defaultAge + 4);
 
 class Profile with ChangeNotifier {
   int id;
@@ -30,20 +33,18 @@ class Profile with ChangeNotifier {
     required this.name,
     this.phoneNumber = "",
     required this.gender,
-    this.age = 23,
+    this.age = defaultAge,
     DateTime? birthDate,
     required this.photos,
     this.photoVerified = true,
     this.conversationStarter = "Hi there, I am on Stumble!",
     this.isPlatonic = false,
-    this.ageRangePreference = const RangeValues(18, 50),
-    this.genderPreferences = const [Gender.man, Gender.nonBinary, Gender.woman],
+    this.ageRangePreference = defaultTargetAgeValues,
+    this.genderPreferences = defaultTargetGenderValues,
     this.badgeLabel = "",
   }) : birthDate = birthDate ?? DateTime.now();
 
   int currentUser = -1;
-  String currentThreadId = "";
-  var logger = Logger();
 
   // Setters
 
@@ -201,7 +202,6 @@ class Profile with ChangeNotifier {
     } catch (e) {
       // clear authToken
       await deleteSecureData(authKey);
-      logger.e(e);
       rethrow;
     }
   }
@@ -226,7 +226,7 @@ class Profile with ChangeNotifier {
         photoList.map((e) => File(e.toString())).toList();
 
     List<dynamic> targetAgeListDynamic =
-        profile[profileDBKeys[ProfileKeys.targetAge]] ?? [18, 30];
+        profile[profileDBKeys[ProfileKeys.targetAge]] ?? defaultTargetAgeValues;
     RangeValues targetAgeList =
         convertRangeValuesToInt(targetAgeListDynamic.cast<int>());
 
@@ -245,7 +245,7 @@ class Profile with ChangeNotifier {
           profile[profileDBKeys[ProfileKeys.conversationStarter]] ?? "",
       photoVerified: profile[profileDBKeys[ProfileKeys.photoVerified]] ?? false,
       photos: photoFileList,
-      age: profile[profileDBKeys[ProfileKeys.age]] ?? 23,
+      age: profile[profileDBKeys[ProfileKeys.age]] ?? defaultAge,
       ageRangePreference: targetAgeList,
       genderPreferences: targetGenderList,
       birthDate: profile[profileDBKeys[ProfileKeys.dob]] != null
@@ -303,12 +303,12 @@ const profileDBKeys = {
 };
 
 RangeValues convertRangeValuesToInt(List<int>? intList) {
-  if (intList == null || intList.isEmpty) return const RangeValues(18, 30);
+  if (intList == null || intList.isEmpty) return defaultTargetAgeValues;
   return RangeValues(intList[0].toDouble(), intList[1].toDouble());
 }
 
 List<Gender> convertIntListToEnumList(List<int>? intList) {
-  if (intList == null || intList.isEmpty) return [Gender.man, Gender.woman];
+  if (intList == null || intList.isEmpty) return defaultTargetGenderValues;
   return intList.map((int value) {
     switch (value) {
       case 0:
