@@ -14,4 +14,4 @@ dart analyze .
 - Do not allow the user to go to next screen in onboarding without filling previous screen.
 
 iOS Push Notifications:
-xcrun simctl push booted com.example.stumbleApp sample_ios.json
+xcrun simctl push booted com.getstumbleapp sample_ios.json
