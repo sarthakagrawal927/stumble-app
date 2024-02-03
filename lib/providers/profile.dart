@@ -225,16 +225,17 @@ class Profile with ChangeNotifier {
     List<File> photoFileList =
         photoList.map((e) => File(e.toString())).toList();
 
-    List<dynamic> targetAgeListDynamic =
-        profile[profileDBKeys[ProfileKeys.targetAge]] ?? defaultTargetAgeValues;
     RangeValues targetAgeList =
-        convertRangeValuesToInt(targetAgeListDynamic.cast<int>());
+        profile[profileDBKeys[ProfileKeys.targetAge]] != null
+            ? convertRangeValuesToInt(
+                profile[profileDBKeys[ProfileKeys.targetAge]].cast<int>())
+            : defaultTargetAgeValues;
 
-    List<dynamic> targetGenderListDynamic =
-        profile[profileDBKeys[ProfileKeys.targetGender]] ??
-            [Gender.woman.index, Gender.man.index];
     List<Gender> targetGenderList =
-        convertIntListToEnumList(targetGenderListDynamic.cast<int>());
+        profile[profileDBKeys[ProfileKeys.targetGender]] == null
+            ? defaultTargetGenderValues
+            : convertIntListToEnumList(
+                profile[profileDBKeys[ProfileKeys.targetGender]].cast<int>());
 
     return Profile(
       id: profile[profileDBKeys[ProfileKeys.id]],
