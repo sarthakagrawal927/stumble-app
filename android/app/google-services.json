@@ -7,34 +7,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:607423363774:android:6e65ec54fbd8d61f57bcef",
+        "mobilesdk_app_id": "1:607423363774:android:45755a0d30b261f957bcef",
         "android_client_info": {
-          "package_name": "com.getstumbleapp"
+          "package_name": "com.getstumbleapp2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "607423363774-qi9tlfsb3da4f04ulel41v6lhdt54cir.apps.googleusercontent.com",
+          "client_id": "607423363774-7s8ferhde238gp3hd2gapa5j2kuci285.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.getstumbleapp",
+            "package_name": "com.getstumbleapp2",
+            "certificate_hash": "bc7ccdc34f5efb47dc410e2550b3dfacb5cc19ad"
+          }
+        },
+        {
+          "client_id": "607423363774-ei6m9blknkf8beisaunnlogr2f9erunm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.getstumbleapp2",
             "certificate_hash": "6fc8bfae80c150309de8d7099e6b7826f3ed6906"
           }
         },
         {
-          "client_id": "607423363774-sbtpc1os9kucmf0ek99mbrq3s117ogdb.apps.googleusercontent.com",
+          "client_id": "607423363774-v3vuri693v25vllqj69jk8fecj3askop.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.getstumbleapp",
-            "certificate_hash": "ef2c32f589d180640a7730cab12a10610589fcac"
-          }
-        },
-        {
-          "client_id": "607423363774-to2me5v271r8dl5k22n45dcv60l08nji.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.getstumbleapp",
-            "certificate_hash": "bc7ccdc34f5efb47dc410e2550b3dfacb5cc19ad"
+            "package_name": "com.getstumbleapp2",
+            "certificate_hash": "7e0af9a110a401973cd151fe28d9390c57dfdfc9"
           }
         },
         {
@@ -58,7 +58,7 @@
               "client_id": "607423363774-aom6ion3gv4ltitc5h5q81jg8d32rk6h.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.getstumbleapp"
+                "bundle_id": "com.getstumble.ap"
               }
             }
           ]

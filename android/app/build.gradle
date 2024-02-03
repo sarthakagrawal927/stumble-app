@@ -45,7 +45,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.getstumbleapp"
+        applicationId "com.getstumbleapp2"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
@@ -56,9 +56,9 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("../debug.keystore")
+            storeFile file("../../../../../upload-keystore.jks")
             storePassword "android"
-            keyAlias "androiddebugkey"
+            keyAlias "upload"
             keyPassword "android"
         }
     }

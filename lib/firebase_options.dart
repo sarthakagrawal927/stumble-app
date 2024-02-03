@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '607423363774',
     projectId: 'stumble-175cb',
     storageBucket: 'stumble-175cb.appspot.com',
-    iosBundleId: 'com.getstumbleapp',
+    iosBundleId: 'com.getstumbleapp2',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -76,6 +76,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '607423363774',
     projectId: 'stumble-175cb',
     storageBucket: 'stumble-175cb.appspot.com',
-    iosBundleId: 'com.getstumbleapp',
+    iosBundleId: 'com.getstumbleapp2',
   );
 }
