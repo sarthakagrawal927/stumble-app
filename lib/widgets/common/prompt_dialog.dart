@@ -1,0 +1,32 @@
+import 'package:dating_made_better/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+Future<Object?> promptDialog(BuildContext context, String text) {
+  return showGeneralDialog(
+    barrierColor: topAppBarColor,
+    context: context,
+    pageBuilder: (context, animation, secondaryAnimation) => Center(
+      child: Container(
+        color: widgetColor,
+        margin: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height / 8,
+          horizontal: MediaQuery.of(context).size.width / 8,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DefaultTextStyle(
+            style: GoogleFonts.sacramento(
+              color: Colors.white70,
+              fontSize: 30,
+            ),
+            child: Text(
+              textAlign: TextAlign.center,
+              text,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}

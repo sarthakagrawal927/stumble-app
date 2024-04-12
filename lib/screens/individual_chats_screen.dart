@@ -5,6 +5,7 @@ import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:dating_made_better/widgets/common/info_dialog_widget.dart';
+import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -180,36 +181,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               lookingFor = interest;
                               showLookingForOption = false;
                             });
-                            showGeneralDialog(
-                              barrierColor: topAppBarColor,
-                              context: context,
-                              pageBuilder:
-                                  (context, animation, secondaryAnimation) =>
-                                      Center(
-                                child: Container(
-                                  color: widgetColor,
-                                  margin: EdgeInsets.symmetric(
-                                    vertical:
-                                        MediaQuery.of(context).size.height / 8,
-                                    horizontal:
-                                        MediaQuery.of(context).size.width / 8,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: DefaultTextStyle(
-                                      style: GoogleFonts.sacramento(
-                                        color: Colors.white70,
-                                        fontSize: 30,
-                                      ),
-                                      child: const Text(
-                                        textAlign: TextAlign.center,
-                                        'You both have the same reason for "Stumbling" onto one another!',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
+                            promptDialog(
+                                context, PromptExplainingStumblingReason);
                           } else {
                             setState(() {
                               showLookingForOption = false;

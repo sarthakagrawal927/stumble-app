@@ -49,3 +49,8 @@ enum PhotoUploaderMode { singleUpload, multiUpload }
 
 const defaultBackupImage =
     "https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg";
+
+const PromptExplainingStumblingReason =
+    'You both have the same reason for "Stumbling" onto one another!';
+
+const PromptExplainingLocationUsage = "";
