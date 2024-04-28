@@ -23,7 +23,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           // temporary solution until proper global state management is implemented
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -41,8 +41,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
       body: ListView(
         children: [
           Container(
-            color: widgetColor,
+            color: filterScreenTextColor,
             margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width / 16,
+              bottom: MediaQuery.of(context).size.width / 16,
+              left: MediaQuery.of(context).size.width / 16,
+              right: MediaQuery.of(context).size.width / 32,
+            ),
+            padding: EdgeInsets.only(
               top: MediaQuery.of(context).size.width / 16,
               bottom: MediaQuery.of(context).size.width / 16,
               left: MediaQuery.of(context).size.width / 16,
@@ -52,8 +58,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               textAlign: TextAlign.start,
               'Do you have a preference for the genders shown to you?',
               style: TextStyle(
-                color: Colors.white,
-                backgroundColor: backgroundColor,
+                color: textColor,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
@@ -76,8 +81,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ),
           ),
           Container(
-            color: widgetColor,
+            color: filterScreenTextColor,
             margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width / 16,
+              bottom: MediaQuery.of(context).size.width / 16,
+              left: MediaQuery.of(context).size.width / 16,
+              right: MediaQuery.of(context).size.width / 32,
+            ),
+            padding: EdgeInsets.only(
               top: MediaQuery.of(context).size.width / 16,
               bottom: MediaQuery.of(context).size.width / 16,
               left: MediaQuery.of(context).size.width / 16,
@@ -87,8 +98,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               textAlign: TextAlign.start,
               'Do you have a preference for the age of people you want to meet?',
               style: TextStyle(
-                color: Colors.white,
-                backgroundColor: backgroundColor,
+                color: textColor,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
@@ -109,7 +119,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     child: Text(
                       "Between ${currentRangeValues.start.toInt()} and ${currentRangeValues.end.toInt()}",
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: textColor,
                         fontSize: 20,
                       ),
                     ),
@@ -139,9 +149,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
           ),
           Container(
             margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 16,
-                bottom: MediaQuery.of(context).size.height / 16),
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 6),
+                top: MediaQuery.of(context).size.height / 24,
+                bottom: MediaQuery.of(context).size.height / 64),
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width / 6,
+              right: MediaQuery.of(context).size.width / 6,
+            ),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: filterScreenTextColor),
@@ -172,7 +185,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
       title: Text(
         text,
         style: const TextStyle(
-          color: Colors.white70,
+          color: textColor,
           fontSize: 20,
         ),
       ),

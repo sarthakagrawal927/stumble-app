@@ -18,8 +18,14 @@ class CommentFeatureWidget extends StatelessWidget {
       children: [
         widget,
         Align(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.topRight,
           child: IconButton(
+            padding: EdgeInsets.only(
+              top: isImage
+                  ? MediaQuery.of(context).size.width / 24
+                  : MediaQuery.of(context).size.width / 10,
+              right: MediaQuery.of(context).size.width / 24,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
@@ -189,7 +195,12 @@ class CommentFeatureWidget extends StatelessWidget {
                 },
               );
             },
-            icon: const Icon(Icons.comment_rounded),
+            icon: Icon(
+              Icons.comment_rounded,
+              color: isImage
+                  ? commentIconColorForPhotos
+                  : commentIconColorForOtherPrompts,
+            ),
             iconSize: MediaQuery.of(context).size.width / 12,
             color: headingColor,
           ),

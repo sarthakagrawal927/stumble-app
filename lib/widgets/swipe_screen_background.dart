@@ -9,6 +9,7 @@ class BackgroundCurveWidget extends StatelessWidget {
       width: double.infinity,
       height: MediaQuery.of(context).size.height / 2.5,
       decoration: const ShapeDecoration(
+        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(64),

@@ -40,7 +40,9 @@ class BottomBar extends StatelessWidget {
           children: BottomBarScreens.values
               .map((value) => iconButtonBasedOnCurrentScreen(
                     Icon(bottomScreenNameToIcon[value]),
-                    currentScreen == value ? Colors.red : whiteColor,
+                    currentScreen == value
+                        ? selectedScreenIconColor
+                        : nonSelectedScreenIconColor,
                     context,
                     currentScreen == value
                         ? ""

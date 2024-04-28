@@ -60,12 +60,21 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
                 );
               },
             )
-          : Text(
-              textAlign: TextAlign.center,
-              "No nearby stumblers to 'stumble' upon at the moment.",
-              style: GoogleFonts.sacramento(
-                color: Colors.white,
-                fontSize: 40,
+          : Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width / 32,
+                vertical: MediaQuery.of(context).size.height / 64,
+              ),
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "No nearby stumblers to 'stumble' upon at the moment.",
+                  style: GoogleFonts.sacramento(
+                    color: textColor,
+                    fontSize: 40,
+                  ),
+                ),
               ),
             ),
     );

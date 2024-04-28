@@ -9,13 +9,12 @@ import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:showcaseview/showcaseview.dart';
+// import 'package:showcaseview/showcaseview.dart';
 
 import '../constants.dart';
 import '../providers/profile.dart';
 import '../widgets/bottom_app_bar.dart';
 import '../widgets/cards_stack_widget.dart';
-import '../widgets/swipe_screen_background.dart';
 
 class SwipingScreen extends StatefulWidget {
   static const routeName = '/swiping-screen';
@@ -92,13 +91,13 @@ class _SwipingScreenState extends State<SwipingScreen> {
     displayInitialPrompts().then((status) => {
           if (status)
             {
-              ShowCaseWidget.of(context).startShowCase(
-                [
-                  _dropDownKey,
-                  _profileDislikeKey,
-                  _profileLikeKey,
-                ],
-              ),
+              // ShowCaseWidget.of(context).startShowCase(
+              //   [
+              //     _dropDownKey,
+              //     _profileDislikeKey,
+              //     _profileLikeKey,
+              //   ],
+              // ),
               setState(() {
                 firstLaunch = true;
               }),
@@ -110,78 +109,85 @@ class _SwipingScreenState extends State<SwipingScreen> {
       profileDislikeKey: _profileDislikeKey,
       profileLikeKey: _profileLikeKey,
       child: Scaffold(
-        backgroundColor: widgetColor,
+        backgroundColor: backgroundColor,
         key: _scaffoldKey,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(
             MediaQuery.of(context).size.height / 16,
           ),
           child: AppBar(
-              automaticallyImplyLeading: false,
-              actions: [
-                DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    iconSize: MediaQuery.of(context).size.width / 16,
-                    dropdownColor: topAppBarColor,
-                    items: dropDownOptionList
-                        .map((e) => DropdownMenuItem(
-                              alignment: Alignment.center,
-                              value: e!.value,
-                              child: Row(
-                                children: [
-                                  e.icon,
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    e.label,
-                                    style: const TextStyle(
-                                      color: whiteColor,
-                                      fontSize: 14,
-                                    ),
+            automaticallyImplyLeading: false,
+            actions: [
+              DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  iconSize: MediaQuery.of(context).size.width / 16,
+                  dropdownColor: dropDownColor,
+                  items: dropDownOptionList
+                      .map((e) => DropdownMenuItem(
+                            alignment: Alignment.center,
+                            value: e!.value,
+                            child: Row(
+                              children: [
+                                e.icon,
+                                const SizedBox(width: 8),
+                                Text(
+                                  e.label,
+                                  style: const TextStyle(
+                                    color: whiteColor,
+                                    fontSize: 14,
                                   ),
-                                ],
-                              ),
-                            ))
-                        .toList(),
-                    onChanged: (itemIdentifier) async {
-                      dropDownOptions[itemIdentifier]!.getActivities().then(
-                            (value) => Navigator.pushNamed(context,
-                                dropDownOptions[itemIdentifier]!.routeName,
-                                arguments: value),
-                          );
-                    },
-                    icon: Showcase(
-                      description: "You can find your stumbler lists here!",
-                      key: _dropDownKey,
-                      blurValue: 1,
-                      child: const Icon(
-                        Icons.menu,
-                        color: headingColor,
-                      ),
+                                ),
+                              ],
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (itemIdentifier) async {
+                    dropDownOptions[itemIdentifier]!.getActivities().then(
+                          (value) => Navigator.pushNamed(context,
+                              dropDownOptions[itemIdentifier]!.routeName,
+                              arguments: value),
+                        );
+                  },
+                  icon: Padding(
+                    padding: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width / 16),
+                    child:
+                        // Showcase(
+                        //   description: "You can find your stumbler lists here!",
+                        //   key: _dropDownKey,
+                        //   blurValue: 1,
+                        //   child:
+                        const Icon(
+                      Icons.menu,
+                      color: headingColor,
                     ),
+                    // ),
                   ),
                 ),
-              ],
-              backgroundColor: topAppBarColor,
-              title: Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 16),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  'Stumble!',
-                  style: GoogleFonts.sacramento(
-                    fontSize: MediaQuery.of(context).size.width / 14,
-                    color: headingColor,
-                    fontWeight: FontWeight.w900,
-                  ),
+              ),
+            ],
+            backgroundColor: topAppBarColor,
+            title: Padding(
+              padding:
+                  EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
+              child: Text(
+                textAlign: TextAlign.center,
+                'Stumble!',
+                style: GoogleFonts.sacramento(
+                  fontSize: MediaQuery.of(context).size.width / 13,
+                  color: headingColor,
+                  fontWeight: FontWeight.bold,
                 ),
-              )),
+              ),
+            ),
+            centerTitle: false,
+          ),
         ),
         body: Stack(
           alignment: AlignmentDirectional.topCenter,
           children: [
-            const BackgroundCurveWidget(),
             firstLaunch
-                ? promptDialog(context, PromptExplainingLocationUsage) as Widget
+                ? promptDialog(context, promptExplainingLocationUsage) as Widget
                 : CardsStackWidget(),
             const MyLocationComponent(),
           ],

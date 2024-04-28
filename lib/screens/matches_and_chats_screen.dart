@@ -54,11 +54,16 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widgetColor,
+      backgroundColor: backgroundColor,
       appBar: TopAppBar(
         routeName: "",
       ),
       body: Container(
+        margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height / 32,
+          left: MediaQuery.of(context).size.width / 32,
+          right: MediaQuery.of(context).size.width / 32,
+        ),
         color: backgroundColor,
         child: _listsPopulated &&
                 listOfStumbleMatches.isEmpty &&
@@ -73,7 +78,7 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
                     textAlign: TextAlign.center,
                     "You haven't 'Stumbled' into anyone yet; keep swiping!",
                     style: GoogleFonts.sacramento(
-                      color: Colors.white,
+                      color: textColor,
                       fontSize: 40,
                     ),
                   ),

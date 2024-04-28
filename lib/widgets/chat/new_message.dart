@@ -15,7 +15,7 @@ class NewMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromRGBO(38, 41, 42, 1),
+      color: widgetColor,
       margin: const EdgeInsets.only(
         top: 8.0,
       ),
@@ -34,12 +34,12 @@ class NewMessage extends StatelessWidget {
               }),
               maxLines: null,
               style: const TextStyle(
-                color: whiteColor,
+                color: textColor,
               ),
               cursorColor: whiteColor,
               decoration: const InputDecoration(
                 labelText: 'Send a message!',
-                labelStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: textColor),
               ),
               onChanged: (value) {
                 _enteredMessage = value.toString();
@@ -62,7 +62,7 @@ class NewMessage extends StatelessWidget {
             },
             icon: const Icon(
               Icons.send,
-              color: whiteColor,
+              color: Colors.purple,
             ),
           )
         ],

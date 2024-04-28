@@ -38,10 +38,11 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         MediaQuery.of(context).size.height / 16,
       ),
       child: AppBar(
+        centerTitle: false,
         automaticallyImplyLeading: false,
         leading: routeName != ""
             ? IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon: const Icon(Icons.arrow_back, color: headingColor),
                 // temporary solution until proper global state management is implemented
                 onPressed: () =>
                     Navigator.of(context).pushReplacementNamed(routeName),
@@ -50,9 +51,8 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           DropdownButtonHideUnderline(
             child: DropdownButton(
-              iconSize: MediaQuery.of(context).size.width / 14,
-              enableFeedback: true,
-              dropdownColor: backgroundColor,
+              iconSize: MediaQuery.of(context).size.width / 16,
+              dropdownColor: dropDownColor,
               items: defaultDropdownOptions
                   .map((e) => DropdownMenuItem(
                         value: e.value,
@@ -78,9 +78,13 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Navigator.pushNamed(context, FiltersScreen.routeName);
                 }
               },
-              icon: const Icon(
-                Icons.menu,
-                color: headingColor,
+              icon: Padding(
+                padding: EdgeInsets.only(
+                    right: MediaQuery.of(context).size.width / 16),
+                child: const Icon(
+                  Icons.menu,
+                  color: headingColor,
+                ),
               ),
             ),
           ),
@@ -90,11 +94,12 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding:
               EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
           child: Text(
+            textAlign: TextAlign.center,
             'Stumble!',
             style: GoogleFonts.sacramento(
-              fontSize: MediaQuery.of(context).size.width / 14,
+              fontSize: MediaQuery.of(context).size.width / 13,
               color: headingColor,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

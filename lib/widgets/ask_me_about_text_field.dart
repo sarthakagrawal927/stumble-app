@@ -22,7 +22,7 @@ class AskMeAboutTextField extends StatelessWidget {
           textAlign: TextAlign.start,
           style: TextStyle(
             backgroundColor: widgetColor,
-            color: Colors.white,
+            color: textColor,
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -33,14 +33,13 @@ class AskMeAboutTextField extends StatelessWidget {
         SingleChildScrollView(
           child: TextFormField(
             style: const TextStyle(
-              color: whiteColor,
+              color: textColor,
               fontSize: 20,
               backgroundColor: widgetColor,
             ),
             initialValue: currentValue,
             maxLines: 3,
             minLines: 1,
-            keyboardAppearance: Brightness.dark,
             textInputAction: TextInputAction.next,
             cursorColor: whiteColor,
             onChanged: (newValue) => {

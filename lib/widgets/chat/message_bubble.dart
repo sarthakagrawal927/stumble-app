@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:dating_made_better/utils/general.dart';
 
@@ -34,8 +35,7 @@ class MessageBubble extends StatelessWidget {
                 bottomRight:
                     isMe ? const Radius.circular(12) : const Radius.circular(0),
               ),
-              color:
-                  isMe ? Colors.black26 : const Color.fromRGBO(48, 48, 48, 1),
+              color: isMe ? Colors.purple : Colors.black12,
             ),
             width: 140,
             padding: const EdgeInsets.symmetric(
@@ -53,7 +53,7 @@ class MessageBubble extends StatelessWidget {
                   message,
                   style: TextStyle(
                     fontSize: 20,
-                    color: isMe ? Colors.white : Colors.white,
+                    color: isMe ? whiteColor : textColor,
                   ),
                 ),
                 Align(
@@ -63,7 +63,7 @@ class MessageBubble extends StatelessWidget {
                     beautifyTime(messageTime),
                     style: TextStyle(
                       fontSize: 10,
-                      color: isMe ? Colors.white : Colors.white,
+                      color: isMe ? Colors.white : textColor,
                     ),
                   ),
                 ),

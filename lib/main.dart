@@ -14,7 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:showcaseview/showcaseview.dart';
+// import 'package:showcaseview/showcaseview.dart';
 
 import './providers/profile.dart';
 import 'screens/login_or_signup_screen.dart';
@@ -35,11 +35,13 @@ Future<void> _setUserAuthToken() async {
 
 Widget getScreen() {
   if (getScreenMode() == ScreenMode.swipingScreen) {
-    return ShowCaseWidget(
-      builder: Builder(
-        builder: (context) => const SwipingScreen(),
-      ),
-    );
+    return
+        // ShowCaseWidget(
+        //   builder: Builder(
+        //     builder: (context) =>
+        const SwipingScreen();
+    //   ),
+    // );
   }
   return const AuthScreen();
 }

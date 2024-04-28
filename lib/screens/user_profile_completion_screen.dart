@@ -71,7 +71,7 @@ class _UserProfileCompletionScreenState
                         textAlign: TextAlign.start,
                         'Profile completion',
                         style: TextStyle(
-                          color: Colors.white70,
+                          color: textColor,
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
@@ -83,7 +83,7 @@ class _UserProfileCompletionScreenState
                           textAlign: TextAlign.start,
                           "$profileCompletionPercentage%",
                           style: const TextStyle(
-                            color: Colors.white70,
+                            color: textColor,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
@@ -100,7 +100,7 @@ class _UserProfileCompletionScreenState
                     left: MediaQuery.of(context).size.width / 32,
                     right: MediaQuery.of(context).size.width / 16,
                   ),
-                  color: widgetColor,
+                  color: whiteColor,
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width / 16,
@@ -131,7 +131,7 @@ class _UserProfileCompletionScreenState
                             children: <Widget>[
                               const Icon(
                                 Icons.verified_outlined,
-                                color: Colors.white,
+                                color: textColor,
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
@@ -141,7 +141,7 @@ class _UserProfileCompletionScreenState
                                   'Verify my profile',
                                   textAlign: TextAlign.end,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: textColor,
                                     fontSize: 15,
                                   ),
                                 ),
@@ -169,7 +169,7 @@ class _UserProfileCompletionScreenState
                     textAlign: TextAlign.start,
                     'Your photos',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: textColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -226,7 +226,7 @@ class _UserProfileCompletionScreenState
               },
               child: const Text(
                 "Save",
-                style: TextStyle(fontSize: 20, color: Colors.white),
+                style: TextStyle(fontSize: 20, color: textColor),
               ),
             ),
           ),

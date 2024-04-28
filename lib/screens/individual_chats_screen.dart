@@ -79,7 +79,7 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         listOfChatMessages = value.messages;
         showLookingForOption = value.showLookingForOption;
-        showLookingForOptionColor = Colors.red;
+        showLookingForOptionColor = showLookingForOptionColor;
         lookingForSame = value.lookingForSame;
         lookingFor = value.lookingFor;
       });
@@ -107,12 +107,12 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: topAppBarColor,
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height / 12,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           // temporary solution until proper global state management is implemented
           onPressed: () =>
               Navigator.of(context).pushNamed(MatchesAndChatsScreen.routeName),
@@ -144,19 +144,20 @@ class _ChatScreenState extends State<ChatScreen> {
               width: MediaQuery.of(context).size.width / 64,
             ),
             Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 64),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width / 4,
-                  child: Text(
-                    widget.thread.name.split(" ").first,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.sacramento(
-                        fontSize: MediaQuery.of(context).size.width / 16,
-                        color: headingColor,
-                        fontWeight: FontWeight.w900),
-                  ),
-                )),
+              padding:
+                  EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 4,
+                child: Text(
+                  widget.thread.name.split(" ").first,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.sacramento(
+                      fontSize: MediaQuery.of(context).size.width / 16,
+                      color: headingColor,
+                      fontWeight: FontWeight.w900),
+                ),
+              ),
+            ),
             const Spacer(),
             showLookingForOption
                 ? DropdownButtonHideUnderline(
@@ -182,7 +183,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               showLookingForOption = false;
                             });
                             promptDialog(
-                                context, PromptExplainingStumblingReason);
+                                context, promptExplainingStumblingReason);
                           } else {
                             setState(() {
                               showLookingForOption = false;
@@ -200,7 +201,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 : Icon(
                     Icons.visibility_off,
                     size: MediaQuery.of(context).size.width / 12,
-                    color: showLookingForOptionColor,
+                    color: headingColor,
                   ),
           ],
         ),
@@ -209,7 +210,7 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           if (lookingForSame)
             Container(
-              color: topAppBarColor,
+              color: backgroundColor,
               margin: EdgeInsets.symmetric(
                 vertical: MediaQuery.of(context).size.height / 64,
                 horizontal: MediaQuery.of(context).size.width / 64,

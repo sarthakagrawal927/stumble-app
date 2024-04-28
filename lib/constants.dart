@@ -6,21 +6,33 @@ const authKey = "authToken";
 
 enum ModelOpened { userInterestInfoTeaching }
 
-const Color backgroundColor = Color.fromRGBO(26, 26, 26, 1);
+const Color backgroundColor = Color.fromRGBO(255, 254, 253, 0.9);
 
-const Color widgetColor = Color.fromRGBO(26, 26, 26, 1);
+const Color widgetColor = Colors.white;
 
-const Color headingColor = Color.fromRGBO(255, 254, 253, 1);
+const Color headingColor = Colors.black;
 
-const Color topAppBarColor = Colors.black54;
+const Color textColor = Colors.black;
 
-const Color bottomAppBarColor = Colors.black54;
+const Color dropDownColor = Colors.black;
+
+const Color topAppBarColor = Color.fromRGBO(255, 254, 253, 0.9);
+
+const Color bottomAppBarColor = Colors.black;
 
 const Color filterScreenTextColor = Color.fromRGBO(231, 10, 95, 0.5);
 
 const Color filterScreenHeadingColor = Color.fromRGBO(231, 10, 95, 0.75);
 
-const whiteColor = Color.fromRGBO(255, 254, 253, 1);
+const Color commentIconColorForPhotos = Color.fromRGBO(255, 254, 253, 1);
+
+const Color commentIconColorForOtherPrompts = Colors.black87;
+
+const Color selectedScreenIconColor = Colors.white;
+
+const Color nonSelectedScreenIconColor = Colors.white38;
+
+const whiteColor = Colors.white;
 
 enum ActivityType { like, dislike, match, unmatch }
 
@@ -50,7 +62,9 @@ enum PhotoUploaderMode { singleUpload, multiUpload }
 const defaultBackupImage =
     "https://t4.ftcdn.net/jpg/02/24/86/95/360_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg";
 
-const PromptExplainingStumblingReason =
+const promptExplainingStumblingReason =
     'You both have the same reason for "Stumbling" onto one another!';
 
-const PromptExplainingLocationUsage = "";
+const promptExplainingLocationUsage = "";
+
+const double borderRadiusValue = 20;

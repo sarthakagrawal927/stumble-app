@@ -34,66 +34,77 @@ class SwipeCard extends StatelessWidget {
     return Container(
       color: backgroundColor,
       height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width * (isModalMode ? 0.85 : 0.94),
       child: ListView(
         shrinkWrap: true,
         children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height *
+                (isModalMode ? 0.01 : 0.02),
+          ),
           getCommentFeatureWidget(
             SizedBox(
               height: MediaQuery.of(context).size.height *
-                  (isModalMode ? 0.4 : 0.6),
-              width: double.infinity,
-              child: Container(
-                alignment: Alignment.bottomLeft,
-                decoration: imageBoxWidget(context, 0),
-                child: Padding(
-                    padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 32,
-                      right: MediaQuery.of(context).size.width / 32,
-                      bottom: MediaQuery.of(context).size.width / 32,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              userInformationOnImage(context, profile.getName),
-                              userInformationOnImage(
-                                  context, profile.getAge.toString(), false),
-                              profile.photoVerified
-                                  ? verificationIconWidget(context,
-                                      Icons.verified_sharp, Colors.blue)
-                                  : verificationIconWidget(context,
-                                      Icons.verified_outlined, Colors.white)
-                            ]),
-                        profile.getBadgeLabel.isNotEmpty
-                            ? Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Badge(
-                                  isLabelVisible: false,
-                                  child: Text(
-                                    profile.getBadgeLabel,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width /
-                                              32,
-                                      fontWeight: FontWeight.w900,
+                  (isModalMode ? 0.3 : 0.45),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width / 32,
+                  right: MediaQuery.of(context).size.width / 32,
+                ),
+                child: Container(
+                  alignment: Alignment.bottomLeft,
+                  decoration: imageBoxWidget(context, 0),
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.width / 24,
+                        bottom: MediaQuery.of(context).size.width / 24,
+                        left: MediaQuery.of(context).size.width / 32,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                userInformationOnImage(
+                                    context, profile.getName),
+                                userInformationOnImage(
+                                    context, profile.getAge.toString(), false),
+                                if (profile.photoVerified)
+                                  verificationIconWidget(
+                                    context,
+                                    Icons.verified_sharp,
+                                    Colors.blue,
+                                  )
+                              ]),
+                          profile.getBadgeLabel.isNotEmpty
+                              ? Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Badge(
+                                    isLabelVisible: false,
+                                    child: Text(
+                                      profile.getBadgeLabel,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width /
+                                                32,
+                                        fontWeight: FontWeight.w900,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                            : Container(),
-                      ],
-                    )),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
             true,
             "",
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height / 24,
           ),
           getCommentFeatureWidget(
             Column(
@@ -101,29 +112,65 @@ class SwipeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
+                  decoration: const BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(borderRadiusValue),
+                      topRight: Radius.circular(borderRadiusValue),
+                    ),
+                  ),
+                  width: double.infinity,
+                  margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 32,
+                    right: MediaQuery.of(context).size.width / 32,
+                    top: MediaQuery.of(context).size.width / 16,
+                  ),
                   height: MediaQuery.of(context).size.height / 16,
                   padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 32),
-                  child: Text(
-                    'Talk to me about',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.height / 32,
+                    top: MediaQuery.of(context).size.width / 32,
+                    left: MediaQuery.of(context).size.width / 32,
+                    right: MediaQuery.of(context).size.width / 32,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width / 32,
+                      vertical: MediaQuery.of(context).size.width / 32,
+                    ),
+                    child: Text(
+                      'Talk to me about',
+                      style: TextStyle(
+                        color: textColor,
+                        fontWeight: FontWeight.w700,
+                        fontSize: MediaQuery.of(context).size.height / 64,
+                      ),
                     ),
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.235,
-                  padding: EdgeInsets.only(
+                  decoration: const BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(borderRadiusValue),
+                      bottomRight: Radius.circular(borderRadiusValue),
+                    ),
+                  ),
+                  width: double.infinity,
+                  margin: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width / 32,
                     right: MediaQuery.of(context).size.width / 32,
+                    bottom: MediaQuery.of(context).size.width / 16,
+                  ),
+                  height: MediaQuery.of(context).size.height / 6,
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 16,
+                    right: MediaQuery.of(context).size.width / 16,
+                    bottom: MediaQuery.of(context).size.width / 16,
                   ),
                   child: SingleChildScrollView(
                     child: Text(
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height / 48,
-                        color: Colors.white70,
+                        color: textColor,
                       ),
                       profile.conversationStarter,
                     ),
@@ -174,8 +221,9 @@ class SwipeCard extends StatelessWidget {
     return Text(
       "$textToDisplay ${addComma ? ',' : ''} ",
       style: TextStyle(
-        color: Colors.white,
-        fontSize: MediaQuery.of(context).size.width / 16,
+        backgroundColor: Colors.transparent,
+        color: whiteColor,
+        fontSize: MediaQuery.of(context).size.width / 20,
         fontWeight: FontWeight.w900,
       ),
       overflow: TextOverflow.ellipsis,
@@ -206,6 +254,11 @@ class SwipeCard extends StatelessWidget {
 
   BoxDecoration imageBoxWidget(BuildContext context, int index) {
     return BoxDecoration(
+      color: backgroundColor,
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(borderRadiusValue),
+        topRight: Radius.circular(borderRadiusValue),
+      ),
       image: DecorationImage(
         fit: BoxFit.cover,
         image: CachedNetworkImageProvider(profile.photos.isNotEmpty

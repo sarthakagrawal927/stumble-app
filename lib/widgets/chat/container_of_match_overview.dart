@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/utils/general.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
     return Container(
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width *
-            0.75, // You can set a specific width here
+            0.68, // You can set a specific width here
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,7 +39,10 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
             builder: (context) => ChatScreen(thread: widget.threadDetails)));
       },
       child: Container(
-        color: Colors.black,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black38),
+          color: widgetColor,
+        ),
         padding: EdgeInsets.all(
           MediaQuery.of(context).size.width / 32,
         ),
@@ -61,7 +65,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                         style: const TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white70),
+                            color: textColor),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -85,17 +89,21 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                                 child: Badge(
                                   isLabelVisible: false,
                                   backgroundColor: Colors.white,
-                                  padding: const EdgeInsets.all(10),
                                   child: Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height /
+                                          512,
+                                      right: MediaQuery.of(context).size.width /
+                                          128,
+                                    ),
                                     decoration: const BoxDecoration(
-                                      color: Colors.white,
+                                      color: backgroundColor,
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(200),
                                       ),
                                     ),
                                     child: const Text(
-                                      "Your Move",
+                                      "Your Move!",
                                       style: TextStyle(
                                         color: Colors.red,
                                         fontWeight: FontWeight.w900,
@@ -116,7 +124,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                           : "Conversation not started yet",
                       style: TextStyle(
                         fontSize: 12.5,
-                        color: Colors.white70,
+                        color: textColor,
                         fontStyle: hasConversationStarted
                             ? FontStyle.normal
                             : FontStyle.italic,
@@ -131,8 +139,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                           ? beautifyTime(
                               widget.threadDetails.lastMsgTime as DateTime)
                           : "",
-                      style: const TextStyle(
-                          fontSize: 12.5, color: Colors.white30)),
+                      style: const TextStyle(fontSize: 12.5, color: textColor)),
                 ]),
               ],
             ),

@@ -37,7 +37,7 @@ class UserProfileScreen extends StatelessWidget {
               horizontal: MediaQuery.of(context).size.width / 16,
               vertical: MediaQuery.of(context).size.height / 32,
             ),
-            color: topAppBarColor,
+            color: whiteColor,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,11 +78,11 @@ class UserProfileScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Container(
-                  color: widgetColor,
+                  color: Colors.transparent,
                   child: Text(
                     'Profile completion: $profileCompletionPercentage%',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: textColor,
                       fontSize: 20,
                     ),
                   ),
@@ -94,29 +94,31 @@ class UserProfileScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      color: widgetColor,
+                      color: Colors.transparent,
                       child: Text(
                         name,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: textColor,
                           fontSize: 20,
                         ),
                       ),
                     ),
                     Container(
-                      color: widgetColor,
+                      color: Colors.transparent,
                       child: Text(
                         '$age ',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: textColor,
                           fontSize: 20,
                         ),
                       ),
                     ),
                     Container(
-                      color: widgetColor,
+                      color: Colors.transparent,
                       child: Icon(
-                        color: Colors.blueAccent,
+                        color: isProfileVerified
+                            ? Colors.blueAccent
+                            : Colors.black45,
                         isProfileVerified
                             ? Icons.verified_rounded
                             : Icons.verified_outlined,
@@ -131,7 +133,7 @@ class UserProfileScreen extends StatelessWidget {
                   child: const Text(
                     'Edit Profile?',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: textColor,
                       fontSize: 15,
                     ),
                   ),
