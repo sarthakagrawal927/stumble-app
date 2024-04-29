@@ -6,6 +6,7 @@ import 'package:dating_made_better/widgets/new_account_screen_widgets/otp_screen
 import 'package:dating_made_better/widgets/new_account_screen_widgets/phone_number_column._widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/photo_addition_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/prompt_addition_column_widget.dart';
+import 'package:floating_bubbles/floating_bubbles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,6 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen>
     with SingleTickerProviderStateMixin {
-  bool isButtonClicked = false;
   late AnimationController _animationController;
   late Animation<Alignment> _topAlignmentAnimation;
   late Animation<Alignment> _bottomAlignmentAnimation;
@@ -45,7 +45,6 @@ class _AuthScreenState extends State<AuthScreen>
   @override
   void initState() {
     super.initState();
-    isButtonClicked = false;
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 10));
     _topAlignmentAnimation = TweenSequence<Alignment>([
@@ -101,10 +100,10 @@ class _AuthScreenState extends State<AuthScreen>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
-      body: AnimatedBuilder(
-          animation: _animationController,
-          builder: (context, child) {
-            return Container(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: const [
@@ -115,11 +114,31 @@ class _AuthScreenState extends State<AuthScreen>
                   end: _bottomAlignmentAnimation.value,
                 ),
               ),
-              child: Stack(
-                children: <Widget>[
-                  Consumer<FirstScreenStateProviders>(
-                      builder: (context, firstScreenStateProviders, _) {
-                    return Column(children: [
+            ),
+          ),
+          Positioned.fill(
+            child: FloatingBubbles(
+              noOfBubbles: 15,
+              colorsOfBubbles: const [
+                Colors.white38,
+                Colors.white70,
+              ],
+              sizeFactor: 0.16,
+              duration: 7,
+              opacity: 50,
+              paintingStyle: PaintingStyle.fill,
+              strokeWidth: 8,
+              shape: BubbleShape
+                  .circle, // circle is the default. No need to explicitly mention if its a circle.
+              speed: BubbleSpeed.normal, // normal is the default
+            ),
+          ),
+          Stack(
+            children: <Widget>[
+              Consumer<FirstScreenStateProviders>(
+                builder: (context, firstScreenStateProviders, _) {
+                  return Column(
+                    children: [
                       SizedBox(
                         height: deviceSize.height,
                         width: deviceSize.width,
@@ -128,12 +147,14 @@ class _AuthScreenState extends State<AuthScreen>
                                 ?.call(deviceSize) ??
                             FirstScreenColumn(deviceSize),
                       ),
-                    ]);
-                  })
-                ],
-              ),
-            );
-          }),
+                    ],
+                  );
+                },
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

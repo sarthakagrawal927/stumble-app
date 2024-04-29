@@ -21,7 +21,16 @@ class FirstScreenColumn extends StatefulWidget {
   State<FirstScreenColumn> createState() => _FirstScreenColumnState();
 }
 
-class _FirstScreenColumnState extends State<FirstScreenColumn> {
+class _FirstScreenColumnState extends State<FirstScreenColumn>
+    with TickerProviderStateMixin {
+  late AnimationController _stumbleAnimationController;
+  late AnimationController _mottoAnimationController;
+  late AnimationController _otherWidgetsAnimationController;
+
+  late Animation<double> _stumbleTextAnimation;
+  late Animation<double> _mottoTextAnimation;
+  late Animation<double> _otherWidgetsAnimation;
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email'],
   );
@@ -48,8 +57,41 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
   }
 
   @override
+  void dispose() {
+    _stumbleAnimationController.dispose();
+    _mottoAnimationController.dispose();
+    _otherWidgetsAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
+    _stumbleAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
+    _mottoAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _otherWidgetsAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+    _stumbleTextAnimation = CurvedAnimation(
+      parent: _stumbleAnimationController,
+      curve: Curves.easeIn,
+    );
+    _mottoTextAnimation = CurvedAnimation(
+      parent: _mottoAnimationController,
+      curve: Curves.easeIn,
+    );
+    _otherWidgetsAnimation = CurvedAnimation(
+      parent: _otherWidgetsAnimationController,
+      curve: Curves.easeIn,
+    );
+
     _googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount? account) async {
       if (account != null) {
@@ -58,6 +100,13 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
         });
       }
     });
+    Future.delayed(const Duration(seconds: 3), () {
+      _mottoAnimationController.forward();
+    });
+    Future.delayed(const Duration(seconds: 7), () {
+      _otherWidgetsAnimationController.forward();
+    });
+    _stumbleAnimationController.forward();
     // _googleSignIn.signInSilently();
   }
 
@@ -70,12 +119,15 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
         Flexible(
           child: Container(
             margin: EdgeInsets.only(top: widget.deviceSize.height / 8),
-            child: Text(
-              'Stumble',
-              style: GoogleFonts.sacramento(
-                fontSize: 60.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+            child: FadeTransition(
+              opacity: _stumbleTextAnimation,
+              child: Text(
+                'Stumble',
+                style: GoogleFonts.sacramento(
+                  fontSize: 60.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -85,61 +137,70 @@ class _FirstScreenColumnState extends State<FirstScreenColumn> {
             margin: EdgeInsets.only(
               top: widget.deviceSize.height / 32,
             ),
-            child: Text(
-              'into someone amazing!',
-              style: GoogleFonts.sacramento(
-                fontSize: 30.0,
-                color: Colors.white,
+            child: FadeTransition(
+              opacity: _mottoTextAnimation,
+              child: Text(
+                'into someone amazing!',
+                style: GoogleFonts.sacramento(
+                  fontSize: 30.0,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.end,
               ),
-              textAlign: TextAlign.end,
             ),
           ),
         ),
         SizedBox(
           height: widget.deviceSize.height / 8,
         ),
-        ElevatedButton(
-          onPressed: () async {
-            await _handleSignIn();
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            minimumSize: Size(
-                widget.deviceSize.width / 2, widget.deviceSize.height / 16),
-          ),
-          child: Text(
-            "Sign in with ${Platform.isAndroid ? 'Google' : 'Apple'}",
-            style:
-                const TextStyle(fontSize: 20, color: filterScreenHeadingColor),
+        FadeTransition(
+          opacity: _otherWidgetsAnimation,
+          child: ElevatedButton(
+            onPressed: () async {
+              await _handleSignIn();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              minimumSize: Size(
+                  widget.deviceSize.width / 2, widget.deviceSize.height / 16),
+            ),
+            child: Text(
+              "Sign in with ${Platform.isAndroid ? 'Google' : 'Apple'}",
+              style: const TextStyle(
+                  fontSize: 20, color: filterScreenHeadingColor),
+            ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: widget.deviceSize.height / 16,
-            horizontal: widget.deviceSize.width / 16,
-          ),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                const TextSpan(
-                  text: "By signing up, you agree to our ",
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-                TextSpan(
-                  text: 'Terms',
-                  style: const TextStyle(fontSize: 15, color: Colors.blue),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      launchUrl(
-                          Uri.parse('https://www.getstumble.app/privacy'));
-                    },
-                ),
-                const TextSpan(
-                  text:
-                      ". See how we use your data in our Privacy policy. We never post to facebook.",
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                ),
-              ],
+        FadeTransition(
+          opacity: _otherWidgetsAnimation,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: widget.deviceSize.height / 16,
+              horizontal: widget.deviceSize.width / 16,
+            ),
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  const TextSpan(
+                    text: "By signing up, you agree to our ",
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  TextSpan(
+                    text: 'Terms',
+                    style: const TextStyle(fontSize: 15, color: Colors.blue),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launchUrl(
+                            Uri.parse('https://www.getstumble.app/privacy'));
+                      },
+                  ),
+                  const TextSpan(
+                    text:
+                        ". See how we use your data in our Privacy policy. We never post to facebook.",
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

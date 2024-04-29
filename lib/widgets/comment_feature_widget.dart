@@ -29,7 +29,7 @@ class CommentFeatureWidget extends StatelessWidget {
             onPressed: () {
               showDialog(
                 context: context,
-                barrierColor: Colors.transparent.withOpacity(0.925),
+                barrierColor: Colors.transparent.withOpacity(0.8),
                 builder: (context) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
