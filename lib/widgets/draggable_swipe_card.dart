@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:dating_made_better/utils/call_api.dart';
-// import 'package:dating_made_better/utils/inherited_keys_helper.dart';
+import 'package:dating_made_better/utils/inherited_keys_helper.dart';
 import 'package:flutter/material.dart';
-// import 'package:showcaseview/showcaseview.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../constants.dart';
 import '../providers/profile.dart';
@@ -68,41 +68,49 @@ class _DragWidgetState extends State<DragWidget> {
     return Center(
       child: Stack(
         children: [
-          // Showcase(
-          //   description:
-          //       "Click the comment button to leave a note for your fellow stumbler!",
-          //   key: InheritedKeysHelper.of(context).profileLikeKey,
-          //   blurValue: 1,
-          //   child:
-          SwipeCard(
-            profile: widget.profile,
-            onSwipe: handleActivityOnProfile,
+          Showcase(
+            description: "Leave a comment to stumble!",
+            key: InheritedKeysHelper.of(context).profileLikeKey,
+            blurValue: 5,
+            tooltipPosition: TooltipPosition.top,
+            descriptionPadding:
+                EdgeInsets.all(MediaQuery.of(context).size.width / 128),
+            overlayOpacity: 0.1,
+            showArrow: true,
+            child: SwipeCard(
+              profile: widget.profile,
+              onSwipe: handleActivityOnProfile,
+            ),
           ),
-          // ),
           Positioned(
             bottom: MediaQuery.of(context).size.height / 24,
             left: 0,
-            // child:
-            // Showcase(
-            //   description: "Click this if uninterested in conversation.",
-            //   key: InheritedKeysHelper.of(context).profileDislikeKey,
-            //   blurValue: 1,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(eccentricity: 0.0),
-                  alignment: Alignment.bottomLeft,
-                  backgroundColor: backgroundColor),
-              onPressed: () async {
-                await handleActivityOnProfile(
-                  ActivityType.dislike,
-                );
-              },
-              child: Icon(Icons.cancel,
-                  color: Colors.black87,
-                  size: MediaQuery.of(context).size.width / 6),
+            child: Showcase(
+              description: "Click this if uninterested in conversation.",
+              key: InheritedKeysHelper.of(context).profileDislikeKey,
+              blurValue: 5,
+              descriptionPadding:
+                  EdgeInsets.all(MediaQuery.of(context).size.width / 128),
+              overlayOpacity: 0.1,
+              showArrow: true,
+              targetPadding:
+                  EdgeInsets.all(MediaQuery.of(context).size.width / 128),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: const CircleBorder(eccentricity: 0.0),
+                    alignment: Alignment.bottomLeft,
+                    backgroundColor: backgroundColor),
+                onPressed: () async {
+                  await handleActivityOnProfile(
+                    ActivityType.dislike,
+                  );
+                },
+                child: Icon(Icons.cancel,
+                    color: Colors.black87,
+                    size: MediaQuery.of(context).size.width / 6),
+              ),
             ),
           ),
-          // ),
         ],
       ),
     );

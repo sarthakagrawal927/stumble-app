@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:showcaseview/showcaseview.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../constants.dart';
 import '../providers/profile.dart';
@@ -33,6 +33,7 @@ Future<void> saveTokenToDatabase(String token) async {
 
 class _SwipingScreenState extends State<SwipingScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey _locationUsageKey = GlobalKey();
   final GlobalKey _dropDownKey = GlobalKey();
   final GlobalKey _profileLikeKey = GlobalKey();
   final GlobalKey _profileDislikeKey = GlobalKey();
@@ -75,7 +76,6 @@ class _SwipingScreenState extends State<SwipingScreen> {
   @override
   Widget build(BuildContext context) {
     SharedPreferences sharedPreferencesObject;
-    bool firstLaunch = false;
     displayInitialPrompts() async {
       sharedPreferencesObject = await SharedPreferences.getInstance();
       bool? initialPromptsVisibilityStatus =
@@ -91,20 +91,21 @@ class _SwipingScreenState extends State<SwipingScreen> {
     displayInitialPrompts().then((status) => {
           if (status)
             {
-              // ShowCaseWidget.of(context).startShowCase(
-              //   [
-              //     _dropDownKey,
-              //     _profileDislikeKey,
-              //     _profileLikeKey,
-              //   ],
-              // ),
-              setState(() {
-                firstLaunch = true;
+              WidgetsBinding.instance.addPostFrameCallback((_) async {
+                ShowCaseWidget.of(context).startShowCase(
+                  [
+                    _locationUsageKey,
+                    _dropDownKey,
+                    _profileLikeKey,
+                    _profileDislikeKey,
+                  ],
+                );
               }),
             }
         });
 
     return InheritedKeysHelper(
+      locationUsageKey: _locationUsageKey,
       dropDownKey: _dropDownKey,
       profileDislikeKey: _profileDislikeKey,
       profileLikeKey: _profileLikeKey,
@@ -151,17 +152,21 @@ class _SwipingScreenState extends State<SwipingScreen> {
                   icon: Padding(
                     padding: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width / 16),
-                    child:
-                        // Showcase(
-                        //   description: "You can find your stumbler lists here!",
-                        //   key: _dropDownKey,
-                        //   blurValue: 1,
-                        //   child:
-                        const Icon(
-                      Icons.menu,
-                      color: headingColor,
+                    child: Showcase(
+                      description: "You can find your stumbler lists here!",
+                      key: _dropDownKey,
+                      blurValue: 5,
+                      descriptionPadding: EdgeInsets.all(
+                          MediaQuery.of(context).size.width / 128),
+                      overlayOpacity: 0.1,
+                      showArrow: true,
+                      targetPadding: EdgeInsets.all(
+                          MediaQuery.of(context).size.width / 128),
+                      child: const Icon(
+                        Icons.menu,
+                        color: headingColor,
+                      ),
                     ),
-                    // ),
                   ),
                 ),
               ),
@@ -170,13 +175,29 @@ class _SwipingScreenState extends State<SwipingScreen> {
             title: Padding(
               padding:
                   EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
-              child: Text(
-                textAlign: TextAlign.center,
-                'Stumble!',
-                style: GoogleFonts.sacramento(
-                  fontSize: MediaQuery.of(context).size.width / 13,
-                  color: headingColor,
-                  fontWeight: FontWeight.bold,
+              child: Showcase(
+                description: promptExplainingLocationUsage,
+                descTextStyle:
+                    TextStyle(fontSize: MediaQuery.of(context).size.width / 24),
+                key: _locationUsageKey,
+                blurValue: 5,
+                descriptionPadding: EdgeInsets.symmetric(
+                  vertical: MediaQuery.of(context).size.height / 128,
+                  horizontal: MediaQuery.of(context).size.width / 128,
+                ),
+                tooltipPosition: TooltipPosition.bottom,
+                overlayOpacity: 0.5,
+                showArrow: false,
+                targetPadding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width / 32),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  'Stumble!',
+                  style: GoogleFonts.sacramento(
+                    fontSize: MediaQuery.of(context).size.width / 13,
+                    color: headingColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -186,9 +207,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
         body: Stack(
           alignment: AlignmentDirectional.topCenter,
           children: [
-            firstLaunch
-                ? promptDialog(context, promptExplainingLocationUsage) as Widget
-                : CardsStackWidget(),
+            CardsStackWidget(),
             const MyLocationComponent(),
           ],
         ),

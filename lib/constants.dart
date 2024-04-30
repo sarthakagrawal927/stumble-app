@@ -65,6 +65,7 @@ const defaultBackupImage =
 const promptExplainingStumblingReason =
     'You both have the same reason for "Stumbling" onto one another!';
 
-const promptExplainingLocationUsage = "";
+const promptExplainingLocationUsage =
+    "Team Stumble will only use your location to ensure that we accurately show you potential stumblers nearby, all to enhance your stumbling experience and provide you with the best possible support!";
 
 const double borderRadiusValue = 20;
