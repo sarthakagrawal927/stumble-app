@@ -107,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: topAppBarColor,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height / 12,
         automaticallyImplyLeading: false,
@@ -201,7 +201,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 : Icon(
                     Icons.visibility_off,
                     size: MediaQuery.of(context).size.width / 12,
-                    color: headingColor,
+                    color: topAppBarColor,
                   ),
           ],
         ),
@@ -225,7 +225,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           Expanded(
-            child: ChatMessages(listOfChatMessages),
+            child: ChatMessages(listOfChatMessages, widget.thread.displayPic),
           ),
           NewMessage(
             sendMessage: addNewMessage,
