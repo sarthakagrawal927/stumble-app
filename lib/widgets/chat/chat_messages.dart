@@ -6,8 +6,10 @@ import 'package:flutter/scheduler.dart';
 
 class ChatMessages extends StatelessWidget {
   final List<ChatMessage> listOfChatMessages;
+  final String stumblerDisplayPic;
 
-  const ChatMessages(this.listOfChatMessages, {super.key});
+  const ChatMessages(this.listOfChatMessages, this.stumblerDisplayPic,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class ChatMessages extends StatelessWidget {
       reverse: false,
       controller: scrollController,
       itemBuilder: ((context, index) => MessageBubble(
+            stumblerDisplayPic: stumblerDisplayPic,
             message: listOfChatMessages[index].message,
             isMe: listOfChatMessages[index].senderId == selfUserId,
             messageId: listOfChatMessages[index].id,

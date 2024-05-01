@@ -1,7 +1,6 @@
 import 'package:dating_made_better/stumbles_list_constants.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/inherited_keys_helper.dart';
-import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
 import 'package:dating_made_better/widgets/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
