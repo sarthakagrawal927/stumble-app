@@ -35,8 +35,9 @@ class _PhotoUploaderState extends State<PhotoUploader> {
     }
   }
 
+  // (3 / 10) - (1 / 64) = (91 / 640)
   Widget imageHandler(int imagePos,
-      {double heightMultiplier = 1 / 8, double widthMultiplier = 0.4}) {
+      {double heightMultiplier = 0.15, double widthMultiplier = 15 / 32}) {
     bool doesImageExist =
         Provider.of<Profile>(context).isImageAtPosPresent(imagePos);
     String imagePath =
@@ -75,14 +76,12 @@ class _PhotoUploaderState extends State<PhotoUploader> {
     bool isSingleUpload = mode == PhotoUploaderMode.singleUpload;
     return Row(children: [
       imageHandler(1,
-          heightMultiplier: isSingleUpload ? 0.4 : 0.25,
-          widthMultiplier: isSingleUpload ? 0.85 : 0.4),
+          heightMultiplier: isSingleUpload ? 0.4 : 0.30,
+          widthMultiplier: isSingleUpload ? 0.85 : 15 / 32),
       if (!isSingleUpload) ...[
-        const Spacer(),
         Column(
           children: [
             imageHandler(2),
-            const SizedBox(height: 10),
             imageHandler(3),
           ],
         )

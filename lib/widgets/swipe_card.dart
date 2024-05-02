@@ -56,11 +56,8 @@ class SwipeCard extends StatelessWidget {
                   child: Container(
                     color: Colors.transparent,
                     child: Padding(
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.width / 24,
-                        bottom: MediaQuery.of(context).size.width / 24,
-                        left: MediaQuery.of(context).size.width / 32,
-                      ),
+                      padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.width / 32),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -123,26 +120,19 @@ class SwipeCard extends StatelessWidget {
                   margin: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width / 32,
                     right: MediaQuery.of(context).size.width / 32,
-                    top: MediaQuery.of(context).size.width / 16,
+                    top: MediaQuery.of(context).size.width / 128,
                   ),
-                  height: MediaQuery.of(context).size.height / 16,
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.width / 32,
                     left: MediaQuery.of(context).size.width / 32,
                     right: MediaQuery.of(context).size.width / 32,
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 32,
-                      vertical: MediaQuery.of(context).size.width / 32,
-                    ),
-                    child: Text(
-                      'Talk to me about',
-                      style: TextStyle(
-                        color: textColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: MediaQuery.of(context).size.height / 64,
-                      ),
+                  child: Text(
+                    'Talk to me about',
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: MediaQuery.of(context).size.height / 64,
                     ),
                   ),
                 ),
@@ -158,13 +148,13 @@ class SwipeCard extends StatelessWidget {
                   margin: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width / 32,
                     right: MediaQuery.of(context).size.width / 32,
-                    bottom: MediaQuery.of(context).size.width / 16,
+                    top: MediaQuery.of(context).size.width / 128,
                   ),
                   height: MediaQuery.of(context).size.height / 6,
                   padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 16,
-                    right: MediaQuery.of(context).size.width / 16,
-                    bottom: MediaQuery.of(context).size.width / 16,
+                    top: MediaQuery.of(context).size.width / 32,
+                    left: MediaQuery.of(context).size.width / 32,
+                    right: MediaQuery.of(context).size.width / 32,
                   ),
                   child: SingleChildScrollView(
                     child: Text(
@@ -204,7 +194,7 @@ class SwipeCard extends StatelessWidget {
   Container platonicIconWidget(BuildContext context, IconData icon) {
     return Container(
       margin: EdgeInsets.only(
-        top: MediaQuery.of(context).size.height / 64,
+        top: MediaQuery.of(context).size.width / 64,
         left: MediaQuery.of(context).size.width / 64,
       ),
       alignment: Alignment.topLeft,
@@ -223,7 +213,7 @@ class SwipeCard extends StatelessWidget {
       style: TextStyle(
         backgroundColor: Colors.transparent,
         color: whiteColor,
-        fontSize: MediaQuery.of(context).size.width / 20,
+        fontSize: MediaQuery.of(context).size.width / 16,
         fontWeight: FontWeight.w900,
       ),
       overflow: TextOverflow.ellipsis,

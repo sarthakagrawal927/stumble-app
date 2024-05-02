@@ -44,28 +44,25 @@ class _FiltersScreenState extends State<FiltersScreen> {
             color: filterScreenTextColor,
             margin: EdgeInsets.only(
               top: MediaQuery.of(context).size.width / 16,
-              bottom: MediaQuery.of(context).size.width / 16,
               left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 32,
+              right: MediaQuery.of(context).size.width / 16,
             ),
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.width / 16,
-              bottom: MediaQuery.of(context).size.width / 16,
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 32,
+            padding: EdgeInsets.all(
+              MediaQuery.of(context).size.width / 32,
             ),
-            child: const Text(
+            child: Text(
               textAlign: TextAlign.start,
               'Do you have a preference for the genders shown to you?',
               style: TextStyle(
                 color: textColor,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.height / 48,
+                fontWeight: FontWeight.normal,
               ),
             ),
           ),
           Card(
             margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width / 16,
               left: MediaQuery.of(context).size.width / 16,
               right: MediaQuery.of(context).size.width / 16,
             ),
@@ -84,29 +81,26 @@ class _FiltersScreenState extends State<FiltersScreen> {
             color: filterScreenTextColor,
             margin: EdgeInsets.only(
               top: MediaQuery.of(context).size.width / 16,
-              bottom: MediaQuery.of(context).size.width / 16,
               left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 32,
+              right: MediaQuery.of(context).size.width / 16,
             ),
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.width / 16,
-              bottom: MediaQuery.of(context).size.width / 16,
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 32,
+            padding: EdgeInsets.all(
+              MediaQuery.of(context).size.width / 32,
             ),
-            child: const Text(
+            child: Text(
               textAlign: TextAlign.start,
               'Do you have a preference for the age of people you want to meet?',
               style: TextStyle(
                 color: textColor,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.height / 48,
+                fontWeight: FontWeight.normal,
               ),
             ),
           ),
           Consumer<Profile>(
             builder: (context, value, child) => Card(
               margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.width / 16,
                 left: MediaQuery.of(context).size.width / 16,
                 right: MediaQuery.of(context).size.width / 16,
               ),
@@ -114,17 +108,18 @@ class _FiltersScreenState extends State<FiltersScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.all(MediaQuery.of(context).size.height / 24),
+                    padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.height / 32,
+                    ),
                     child: Text(
                       "Between ${currentRangeValues.start.toInt()} and ${currentRangeValues.end.toInt()}",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: textColor,
-                        fontSize: 20,
+                        fontSize: MediaQuery.of(context).size.height / 48,
                       ),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 24),
+                  SizedBox(height: MediaQuery.of(context).size.height / 32),
                   RangeSlider(
                     activeColor: filterScreenTextColor,
                     inactiveColor: Colors.white30,
@@ -148,12 +143,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ),
           ),
           Container(
+            alignment: Alignment.bottomCenter,
             margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 24,
-                bottom: MediaQuery.of(context).size.height / 64),
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / 6,
-              right: MediaQuery.of(context).size.width / 6,
+                top: MediaQuery.of(context).size.width / 16,
+                bottom: MediaQuery.of(context).size.width / 64),
+            padding: EdgeInsets.all(
+              MediaQuery.of(context).size.width / 32,
             ),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -167,9 +162,16 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   ]
                 }).then((value) => {Navigator.of(context).pop()});
               },
-              child: const Text(
-                "Save preferences!",
-                style: TextStyle(fontSize: 20, color: Colors.white),
+              child: Padding(
+                padding: EdgeInsets.all(
+                  MediaQuery.of(context).size.width / 32,
+                ),
+                child: Text(
+                  "Save preferences!",
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 16,
+                      color: Colors.white),
+                ),
               ),
             ),
           ),

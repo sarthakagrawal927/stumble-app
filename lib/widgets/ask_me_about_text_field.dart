@@ -15,26 +15,26 @@ class AskMeAboutTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        const Text(
+        Text(
           'What fascinates or interests or you?',
           textAlign: TextAlign.start,
           style: TextStyle(
             backgroundColor: widgetColor,
             color: textColor,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: MediaQuery.of(context).size.height / 48,
           ),
         ),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 128,
         ),
         SingleChildScrollView(
           child: TextFormField(
-            style: const TextStyle(
+            style: TextStyle(
               color: textColor,
-              fontSize: 20,
+              fontSize: MediaQuery.of(context).size.height / 64,
               backgroundColor: widgetColor,
             ),
             initialValue: currentValue,

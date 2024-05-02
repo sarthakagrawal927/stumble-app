@@ -60,7 +60,7 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
       ),
       body: Container(
         margin: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height / 32,
+          top: MediaQuery.of(context).size.width / 32,
           left: MediaQuery.of(context).size.width / 32,
           right: MediaQuery.of(context).size.width / 32,
         ),

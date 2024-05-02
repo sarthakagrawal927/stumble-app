@@ -33,6 +33,26 @@ class _UserProfileCompletionScreenState
     super.initState();
   }
 
+  Padding profileCompletionWidget(
+    BuildContext context,
+    String profileCompletionPercentage,
+  ) {
+    return Padding(
+      padding: EdgeInsets.all(
+        MediaQuery.of(context).size.width / 16,
+      ),
+      child: Text(
+        textAlign: TextAlign.start,
+        profileCompletionPercentage,
+        style: TextStyle(
+          color: textColor,
+          fontSize: MediaQuery.of(context).size.width / 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     int profileCompletionPercentage =
@@ -54,123 +74,66 @@ class _UserProfileCompletionScreenState
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Card(
+              Container(
+                height: MediaQuery.of(context).size.height / 6,
+                width: MediaQuery.of(context).size.width / 2.25,
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height / 64,
-                  left: MediaQuery.of(context).size.width / 16,
-                  right: MediaQuery.of(context).size.width / 32,
+                  top: MediaQuery.of(context).size.width / 32,
+                  left: MediaQuery.of(context).size.width / 32,
                 ),
-                color: widgetColor,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width / 16,
-                      vertical: MediaQuery.of(context).size.width / 16),
-                  child: Column(
-                    children: [
-                      const Text(
-                        textAlign: TextAlign.start,
-                        'Profile completion',
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.width / 16),
-                        child: Text(
-                          textAlign: TextAlign.start,
-                          "$profileCompletionPercentage%",
-                          style: const TextStyle(
-                            color: textColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                    ],
+                child: profileCompletionCard(
+                  context,
+                  'Profile completion',
+                  profileCompletionWidget(
+                    context,
+                    "$profileCompletionPercentage %",
                   ),
                 ),
               ),
-              Expanded(
-                child: Card(
-                  margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height / 64,
-                    left: MediaQuery.of(context).size.width / 32,
-                    right: MediaQuery.of(context).size.width / 16,
-                  ),
-                  color: whiteColor,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width / 16,
-                        vertical: MediaQuery.of(context).size.width / 16),
-                    child: isProfileVerified
-                        ? Column(
-                            children: <Widget>[
-                              const Icon(
-                                Icons.verified_sharp,
-                                color: Colors.blueAccent,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top:
-                                        MediaQuery.of(context).size.width / 20),
-                                child: const Text(
-                                  'Verified',
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Column(
-                            children: <Widget>[
-                              const Icon(
-                                Icons.verified_outlined,
-                                color: textColor,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top:
-                                        MediaQuery.of(context).size.width / 20),
-                                child: const Text(
-                                  'Verify my profile',
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                    color: textColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                  ),
+              Container(
+                height: MediaQuery.of(context).size.height / 6,
+                width: MediaQuery.of(context).size.width / 2.25,
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width / 32,
+                  right: MediaQuery.of(context).size.width / 32,
                 ),
+                child: isProfileVerified
+                    ? verificationStatusCard(
+                        context,
+                        Icons.verified_sharp,
+                        Colors.blueAccent,
+                        "Verified",
+                      )
+                    : verificationStatusCard(
+                        context,
+                        Icons.verified_outlined,
+                        textColor,
+                        "Verify my profile",
+                      ),
               ),
             ],
           ),
-          const Divider(),
           Container(
+            height: MediaQuery.of(context).size.height / 2.4,
+            width: MediaQuery.of(context).size.width / 1.125,
             margin: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 16,
+              top: MediaQuery.of(context).size.width / 32,
+              left: MediaQuery.of(context).size.width / 32,
+              right: MediaQuery.of(context).size.width / 32,
             ),
             color: widgetColor,
             child: Column(
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.all(MediaQuery.of(context).size.width / 16),
-                  child: const Text(
+                  padding: EdgeInsets.all(
+                    MediaQuery.of(context).size.width / 32,
+                  ),
+                  child: Text(
                     textAlign: TextAlign.start,
-                    'Your photos',
+                    'Your clicks!',
                     style: TextStyle(
                       color: textColor,
-                      fontSize: 20,
+                      fontSize: MediaQuery.of(context).size.width / 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -179,13 +142,13 @@ class _UserProfileCompletionScreenState
               ],
             ),
           ),
-          const Divider(),
           Container(
             margin: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 16,
+              top: MediaQuery.of(context).size.width / 32,
+              left: MediaQuery.of(context).size.width / 32,
+              right: MediaQuery.of(context).size.width / 32,
             ),
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 16),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 32),
             color: widgetColor,
             child: Padding(
               padding:
@@ -231,6 +194,78 @@ class _UserProfileCompletionScreenState
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Card verificationStatusCard(
+    BuildContext context,
+    IconData icon,
+    Color color,
+    String text,
+  ) {
+    return Card(
+      color: widgetColor,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width / 32,
+          vertical: MediaQuery.of(context).size.width / 32,
+        ),
+        child: Column(
+          children: <Widget>[
+            verificationIconToDisplay(context, icon, color),
+            Text(
+              text,
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                color: textColor,
+                fontSize: MediaQuery.of(context).size.width / 32,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding verificationIconToDisplay(
+      BuildContext context, IconData icon, Color color) {
+    return Padding(
+      padding: EdgeInsets.all(
+        MediaQuery.of(context).size.width / 16,
+      ),
+      child: Icon(
+        size: MediaQuery.of(context).size.width / 16,
+        icon,
+        color: color,
+      ),
+    );
+  }
+
+  Widget profileCompletionCard(
+    BuildContext context,
+    String text,
+    Padding widgetToRender,
+  ) {
+    return Card(
+      color: widgetColor,
+      child: Padding(
+        padding: EdgeInsets.all(
+          MediaQuery.of(context).size.width / 32,
+        ),
+        child: Column(
+          children: [
+            widgetToRender,
+            Text(
+              text,
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                color: textColor,
+                fontSize: MediaQuery.of(context).size.width / 32,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
