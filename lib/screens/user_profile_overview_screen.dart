@@ -34,8 +34,8 @@ class UserProfileScreen extends StatelessWidget {
         children: <Widget>[
           Card(
             margin: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width / 16,
-              vertical: MediaQuery.of(context).size.height / 32,
+              horizontal: marginWidth16(context),
+              vertical: marginHeight32(context),
             ),
             color: whiteColor,
             child: Column(

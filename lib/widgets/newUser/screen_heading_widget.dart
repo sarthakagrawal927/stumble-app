@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:flutter/material.dart';
 
 class ScreenHeadingWidget extends StatelessWidget {
@@ -11,11 +12,11 @@ class ScreenHeadingWidget extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         vertical:
             MediaQuery.of(context).size.height / ((keyboardHidden ? 1 : 2) * 8),
-        horizontal: MediaQuery.of(context).size.width / 8,
+        horizontal: marginWidth8(context),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: MediaQuery.of(context).size.height / 32,
-        horizontal: MediaQuery.of(context).size.width / 32,
+        vertical: marginHeight32(context),
+        horizontal: marginWidth32(context),
       ),
       color: Colors.black38,
       child: Text(

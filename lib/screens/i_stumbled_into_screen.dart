@@ -52,8 +52,7 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
                     );
                   },
                   child: Container(
-                    margin:
-                        EdgeInsets.all(MediaQuery.of(context).size.height / 64),
+                    margin: EdgeInsets.all(marginHeight64(context)),
                     alignment: Alignment.bottomLeft,
                     decoration: imageBoxWidget(context, listOfProfiles[index]),
                   ),
@@ -62,8 +61,8 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
             )
           : Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width / 32,
-                vertical: MediaQuery.of(context).size.height / 64,
+                horizontal: marginWidth32(context),
+                vertical: marginHeight64(context),
               ),
               child: Container(
                 alignment: Alignment.center,

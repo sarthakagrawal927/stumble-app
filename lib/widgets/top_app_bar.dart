@@ -35,7 +35,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: Size.fromHeight(
-        MediaQuery.of(context).size.height / 16,
+        marginHeight16(context),
       ),
       child: AppBar(
         centerTitle: false,
@@ -51,7 +51,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           DropdownButtonHideUnderline(
             child: DropdownButton(
-              iconSize: MediaQuery.of(context).size.width / 16,
+              iconSize: marginWidth16(context),
               dropdownColor: dropDownColor,
               items: defaultDropdownOptions
                   .map((e) => DropdownMenuItem(
@@ -79,8 +79,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                 }
               },
               icon: Padding(
-                padding: EdgeInsets.only(
-                    right: MediaQuery.of(context).size.width / 16),
+                padding: EdgeInsets.only(right: marginWidth16(context)),
                 child: const Icon(
                   Icons.menu,
                   color: headingColor,
@@ -91,8 +90,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
         backgroundColor: topAppBarColor,
         title: Padding(
-          padding:
-              EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
+          padding: EdgeInsets.only(left: marginWidth16(context)),
           child: Text(
             textAlign: TextAlign.center,
             'Stumble!',

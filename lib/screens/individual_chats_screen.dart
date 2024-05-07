@@ -137,22 +137,21 @@ class _ChatScreenState extends State<ChatScreen> {
                         ));
                 profileLoading = false;
               },
-              child: CircleAvatarWidget(MediaQuery.of(context).size.width / 24,
-                  widget.thread.displayPic),
+              child: CircleAvatarWidget(
+                  marginWidth24(context), widget.thread.displayPic),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width / 64,
+              width: marginWidth64(context),
             ),
             Padding(
-              padding:
-                  EdgeInsets.only(left: MediaQuery.of(context).size.width / 64),
+              padding: EdgeInsets.only(left: marginWidth64(context)),
               child: SizedBox(
-                width: MediaQuery.of(context).size.width / 4,
+                width: marginWidth4(context),
                 child: Text(
                   widget.thread.name.split(" ").first,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.sacramento(
-                      fontSize: MediaQuery.of(context).size.width / 16,
+                      fontSize: marginWidth16(context),
                       color: headingColor,
                       fontWeight: FontWeight.w900),
                 ),
@@ -193,14 +192,14 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                       icon: Icon(
                         Icons.visibility,
-                        size: MediaQuery.of(context).size.width / 12,
+                        size: marginWidth12(context),
                         color: headingColor,
                       ),
                     ),
                   )
                 : Icon(
                     Icons.visibility_off,
-                    size: MediaQuery.of(context).size.width / 12,
+                    size: marginWidth12(context),
                     color: topAppBarColor,
                   ),
           ],
@@ -212,12 +211,12 @@ class _ChatScreenState extends State<ChatScreen> {
             Container(
               color: backgroundColor,
               margin: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height / 64,
-                horizontal: MediaQuery.of(context).size.width / 64,
+                vertical: marginHeight64(context),
+                horizontal: marginWidth64(context),
               ),
               padding: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height / 64,
-                horizontal: MediaQuery.of(context).size.width / 64,
+                vertical: marginHeight64(context),
+                horizontal: marginWidth64(context),
               ),
               child: Text(
                 'Looking for same: ${interestToLabel[lookingFor]}',

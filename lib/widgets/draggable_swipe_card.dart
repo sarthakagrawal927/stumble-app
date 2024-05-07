@@ -73,8 +73,7 @@ class _DragWidgetState extends State<DragWidget> {
             key: InheritedKeysHelper.of(context).profileLikeKey,
             blurValue: 5,
             tooltipPosition: TooltipPosition.top,
-            descriptionPadding:
-                EdgeInsets.all(MediaQuery.of(context).size.width / 128),
+            descriptionPadding: EdgeInsets.all(marginWidth128(context)),
             overlayOpacity: 0.1,
             showArrow: true,
             child: SwipeCard(
@@ -89,12 +88,10 @@ class _DragWidgetState extends State<DragWidget> {
               description: "Click this if uninterested in conversation.",
               key: InheritedKeysHelper.of(context).profileDislikeKey,
               blurValue: 5,
-              descriptionPadding:
-                  EdgeInsets.all(MediaQuery.of(context).size.width / 128),
+              descriptionPadding: EdgeInsets.all(marginWidth128(context)),
               overlayOpacity: 0.1,
               showArrow: true,
-              targetPadding:
-                  EdgeInsets.all(MediaQuery.of(context).size.width / 128),
+              targetPadding: EdgeInsets.all(marginWidth128(context)),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(eccentricity: 0.0),

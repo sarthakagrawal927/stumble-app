@@ -22,9 +22,9 @@ class CommentFeatureWidget extends StatelessWidget {
           child: IconButton(
             padding: EdgeInsets.only(
               top: isImage
-                  ? MediaQuery.of(context).size.width / 24
+                  ? marginWidth24(context)
                   : MediaQuery.of(context).size.width / 10,
-              right: MediaQuery.of(context).size.width / 24,
+              right: marginWidth24(context),
             ),
             onPressed: () {
               showDialog(
@@ -37,15 +37,14 @@ class CommentFeatureWidget extends StatelessWidget {
                     children: [
                       Container(
                         margin: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 12,
-                            right: MediaQuery.of(context).size.width / 12),
+                            left: marginWidth12(context),
+                            right: marginWidth12(context)),
                         child: Badge(
                           alignment: Alignment.centerLeft,
                           isLabelVisible: false,
                           backgroundColor: Colors.white,
                           child: Container(
-                            padding: EdgeInsets.all(
-                                MediaQuery.of(context).size.width / 32),
+                            padding: EdgeInsets.all(marginWidth32(context)),
                             decoration: const BoxDecoration(
                               color: Colors.redAccent,
                               borderRadius: BorderRadius.all(
@@ -57,8 +56,7 @@ class CommentFeatureWidget extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w900,
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 24,
+                                fontSize: marginWidth24(context),
                               ),
                             ),
                           ),
@@ -73,7 +71,7 @@ class CommentFeatureWidget extends StatelessWidget {
                           shrinkWrap: true,
                           children: <Widget>[
                             SizedBox(
-                              height: MediaQuery.of(context).size.height / 4,
+                              height: marginHeight4(context),
                               width: MediaQuery.of(context).size.width * 0.825,
                               child: !isImage
                                   ? Column(
@@ -138,12 +136,11 @@ class CommentFeatureWidget extends StatelessWidget {
                                   : widget,
                             ),
                             Container(
-                              height: MediaQuery.of(context).size.height / 64,
+                              height: marginHeight64(context),
                               color: Colors.transparent.withOpacity(0.925),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width / 12),
+                              padding: EdgeInsets.all(marginWidth12(context)),
                               child: TextField(
                                 maxLines: 2,
                                 minLines: 1,
@@ -201,7 +198,7 @@ class CommentFeatureWidget extends StatelessWidget {
                   ? commentIconColorForPhotos
                   : commentIconColorForOtherPrompts,
             ),
-            iconSize: MediaQuery.of(context).size.width / 12,
+            iconSize: marginWidth12(context),
             color: headingColor,
           ),
         )

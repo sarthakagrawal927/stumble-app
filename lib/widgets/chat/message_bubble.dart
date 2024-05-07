@@ -37,11 +37,10 @@ class MessageBubble extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.all(
-                      MediaQuery.of(context).size.width / 128,
+                      marginWidth128(context),
                     ),
                     child: CircleAvatarWidget(
-                        MediaQuery.of(context).size.width / 32,
-                        stumblerDisplayPic),
+                        marginWidth32(context), stumblerDisplayPic),
                   ),
                   messageBubbleContainers(context),
                 ],

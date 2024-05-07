@@ -42,8 +42,8 @@ void showDialogWidget(BuildContext context, ModelOpened modelOpenedName) {
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            vertical: MediaQuery.of(context).size.height / 64,
-                            horizontal: MediaQuery.of(context).size.width / 12),
+                            vertical: marginHeight64(context),
+                            horizontal: marginWidth12(context)),
                         child: Text(
                           title,
                           style: GoogleFonts.sacramento(
@@ -54,8 +54,8 @@ void showDialogWidget(BuildContext context, ModelOpened modelOpenedName) {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
-                            vertical: MediaQuery.of(context).size.height / 64,
-                            horizontal: MediaQuery.of(context).size.width / 12),
+                            vertical: marginHeight64(context),
+                            horizontal: marginWidth12(context)),
                         child: Text(
                           description,
                           style: const TextStyle(color: headingColor),

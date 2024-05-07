@@ -60,9 +60,9 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
       ),
       body: Container(
         margin: EdgeInsets.only(
-          top: MediaQuery.of(context).size.width / 32,
-          left: MediaQuery.of(context).size.width / 32,
-          right: MediaQuery.of(context).size.width / 32,
+          top: marginWidth32(context),
+          left: marginWidth32(context),
+          right: marginWidth32(context),
         ),
         color: backgroundColor,
         child: _listsPopulated &&
@@ -71,8 +71,8 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
             ? Center(
                 child: Container(
                   margin: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height / 8,
-                    horizontal: MediaQuery.of(context).size.width / 8,
+                    vertical: marginHeight8(context),
+                    horizontal: marginWidth8(context),
                   ),
                   child: Text(
                     textAlign: TextAlign.center,

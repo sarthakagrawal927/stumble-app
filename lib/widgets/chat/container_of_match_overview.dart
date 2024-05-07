@@ -44,15 +44,15 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
           color: widgetColor,
         ),
         padding: EdgeInsets.all(
-          MediaQuery.of(context).size.width / 32,
+          marginWidth32(context),
         ),
         child: Row(
           children: [
             // CircleAvatarWidget(threadDetails['display_pic']),
-            CircleAvatarWidget(MediaQuery.of(context).size.height / 32,
-                widget.threadDetails.displayPic),
+            CircleAvatarWidget(
+                marginHeight32(context), widget.threadDetails.displayPic),
             SizedBox(
-              width: MediaQuery.of(context).size.width / 24,
+              width: marginWidth24(context),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,8 +93,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                                     padding: EdgeInsets.only(
                                       top: MediaQuery.of(context).size.height /
                                           512,
-                                      right: MediaQuery.of(context).size.width /
-                                          128,
+                                      right: marginWidth128(context),
                                     ),
                                     decoration: const BoxDecoration(
                                       color: backgroundColor,

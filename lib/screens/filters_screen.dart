@@ -43,12 +43,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
           Container(
             color: filterScreenTextColor,
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.width / 16,
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 16,
+              top: marginWidth16(context),
+              left: marginWidth16(context),
+              right: marginWidth16(context),
             ),
             padding: EdgeInsets.all(
-              MediaQuery.of(context).size.width / 32,
+              marginWidth32(context),
             ),
             child: Text(
               textAlign: TextAlign.start,
@@ -62,9 +62,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
           ),
           Card(
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.width / 16,
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 16,
+              top: marginWidth16(context),
+              left: marginWidth16(context),
+              right: marginWidth16(context),
             ),
             color: widgetColor,
             child: Column(
@@ -80,12 +80,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
           Container(
             color: filterScreenTextColor,
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.width / 16,
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 16,
+              top: marginWidth16(context),
+              left: marginWidth16(context),
+              right: marginWidth16(context),
             ),
             padding: EdgeInsets.all(
-              MediaQuery.of(context).size.width / 32,
+              marginWidth32(context),
             ),
             child: Text(
               textAlign: TextAlign.start,
@@ -100,16 +100,16 @@ class _FiltersScreenState extends State<FiltersScreen> {
           Consumer<Profile>(
             builder: (context, value, child) => Card(
               margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.width / 16,
-                left: MediaQuery.of(context).size.width / 16,
-                right: MediaQuery.of(context).size.width / 16,
+                top: marginWidth16(context),
+                left: marginWidth16(context),
+                right: marginWidth16(context),
               ),
               color: widgetColor,
               child: Column(
                 children: [
                   Padding(
                     padding: EdgeInsets.all(
-                      MediaQuery.of(context).size.height / 32,
+                      marginHeight32(context),
                     ),
                     child: Text(
                       "Between ${currentRangeValues.start.toInt()} and ${currentRangeValues.end.toInt()}",
@@ -119,7 +119,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height / 32),
+                  SizedBox(height: marginHeight32(context)),
                   RangeSlider(
                     activeColor: filterScreenTextColor,
                     inactiveColor: Colors.white30,
@@ -145,10 +145,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
           Container(
             alignment: Alignment.bottomCenter,
             margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.width / 16,
-                bottom: MediaQuery.of(context).size.width / 64),
+                top: marginWidth16(context), bottom: marginWidth64(context)),
             padding: EdgeInsets.all(
-              MediaQuery.of(context).size.width / 32,
+              marginWidth32(context),
             ),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -164,13 +163,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
               },
               child: Padding(
                 padding: EdgeInsets.all(
-                  MediaQuery.of(context).size.width / 32,
+                  marginWidth32(context),
                 ),
                 child: Text(
                   "Save preferences!",
                   style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width / 16,
-                      color: Colors.white),
+                      fontSize: marginWidth16(context), color: Colors.white),
                 ),
               ),
             ),

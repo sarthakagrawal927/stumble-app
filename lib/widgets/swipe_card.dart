@@ -47,8 +47,8 @@ class SwipeCard extends StatelessWidget {
                   (isModalMode ? 0.3 : 0.45),
               child: Padding(
                 padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width / 32,
-                  right: MediaQuery.of(context).size.width / 32,
+                  left: marginWidth32(context),
+                  right: marginWidth32(context),
                 ),
                 child: Container(
                   alignment: Alignment.bottomLeft,
@@ -56,8 +56,7 @@ class SwipeCard extends StatelessWidget {
                   child: Container(
                     color: Colors.transparent,
                     child: Padding(
-                      padding: EdgeInsets.all(
-                          MediaQuery.of(context).size.width / 32),
+                      padding: EdgeInsets.all(marginWidth32(context)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -118,21 +117,21 @@ class SwipeCard extends StatelessWidget {
                   ),
                   width: double.infinity,
                   margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 32,
-                    right: MediaQuery.of(context).size.width / 32,
-                    top: MediaQuery.of(context).size.width / 128,
+                    left: marginWidth32(context),
+                    right: marginWidth32(context),
+                    top: marginWidth128(context),
                   ),
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width / 32,
-                    left: MediaQuery.of(context).size.width / 32,
-                    right: MediaQuery.of(context).size.width / 32,
+                    top: marginWidth32(context),
+                    left: marginWidth32(context),
+                    right: marginWidth32(context),
                   ),
                   child: Text(
                     'Talk to me about',
                     style: TextStyle(
                       color: textColor,
                       fontWeight: FontWeight.w700,
-                      fontSize: MediaQuery.of(context).size.height / 64,
+                      fontSize: marginHeight64(context),
                     ),
                   ),
                 ),
@@ -146,15 +145,14 @@ class SwipeCard extends StatelessWidget {
                   ),
                   width: double.infinity,
                   margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 32,
-                    right: MediaQuery.of(context).size.width / 32,
-                    top: MediaQuery.of(context).size.width / 128,
+                    left: marginWidth32(context),
+                    right: marginWidth32(context),
                   ),
                   height: MediaQuery.of(context).size.height / 6,
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width / 32,
-                    left: MediaQuery.of(context).size.width / 32,
-                    right: MediaQuery.of(context).size.width / 32,
+                    top: marginWidth32(context),
+                    left: marginWidth32(context),
+                    right: marginWidth32(context),
                   ),
                   child: SingleChildScrollView(
                     child: Text(
@@ -172,7 +170,7 @@ class SwipeCard extends StatelessWidget {
             profile.conversationStarter,
           ),
           Container(
-            height: MediaQuery.of(context).size.height / 16,
+            height: marginHeight16(context),
             color: backgroundColor,
           ),
           if (profile.getPhotos.length > 1) photoWidget(context, 1),
@@ -187,21 +185,21 @@ class SwipeCard extends StatelessWidget {
     return Icon(
       icon,
       color: color,
-      size: MediaQuery.of(context).size.width / 16,
+      size: marginWidth16(context),
     );
   }
 
   Container platonicIconWidget(BuildContext context, IconData icon) {
     return Container(
       margin: EdgeInsets.only(
-        top: MediaQuery.of(context).size.width / 64,
-        left: MediaQuery.of(context).size.width / 64,
+        top: marginWidth64(context),
+        left: marginWidth64(context),
       ),
       alignment: Alignment.topLeft,
       child: Icon(
         icon,
         color: const Color.fromARGB(255, 223, 111, 103),
-        size: MediaQuery.of(context).size.width / 8,
+        size: marginWidth8(context),
       ),
     );
   }
@@ -213,7 +211,7 @@ class SwipeCard extends StatelessWidget {
       style: TextStyle(
         backgroundColor: Colors.transparent,
         color: whiteColor,
-        fontSize: MediaQuery.of(context).size.width / 16,
+        fontSize: marginWidth16(context),
         fontWeight: FontWeight.w900,
       ),
       overflow: TextOverflow.ellipsis,
@@ -235,7 +233,7 @@ class SwipeCard extends StatelessWidget {
           "",
         ),
         Container(
-          height: MediaQuery.of(context).size.height / 16,
+          height: marginHeight16(context),
           color: backgroundColor,
         ),
       ],

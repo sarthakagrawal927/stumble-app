@@ -41,8 +41,8 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
           child: Container(
             color: const Color.fromRGBO(35, 16, 51, 1),
             margin: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 16,
+              left: marginWidth16(context),
+              right: marginWidth16(context),
             ),
             child: TextFormField(
               style: const TextStyle(

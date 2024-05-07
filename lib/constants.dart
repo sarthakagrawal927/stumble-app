@@ -69,3 +69,59 @@ const promptExplainingLocationUsage =
     "Team Stumble will only use your location to ensure that we accurately show you potential stumblers nearby, all to enhance your stumbling experience and provide you with the best possible support!";
 
 const double borderRadiusValue = 20;
+
+double marginWidth128(BuildContext context) {
+  return MediaQuery.of(context).size.width / 128;
+}
+
+double marginWidth64(BuildContext context) {
+  return MediaQuery.of(context).size.width / 64;
+}
+
+double marginWidth32(BuildContext context) {
+  return MediaQuery.of(context).size.width / 32;
+}
+
+double marginWidth24(BuildContext context) {
+  return MediaQuery.of(context).size.width / 24;
+}
+
+double marginWidth16(BuildContext context) {
+  return MediaQuery.of(context).size.width / 16;
+}
+
+double marginWidth12(BuildContext context) {
+  return MediaQuery.of(context).size.width / 12;
+}
+
+double marginWidth8(BuildContext context) {
+  return MediaQuery.of(context).size.width / 8;
+}
+
+double marginWidth4(BuildContext context) {
+  return MediaQuery.of(context).size.width / 4;
+}
+
+double marginHeight64(BuildContext context) {
+  return MediaQuery.of(context).size.height / 64;
+}
+
+double marginHeight32(BuildContext context) {
+  return MediaQuery.of(context).size.height / 32;
+}
+
+double marginHeight16(BuildContext context) {
+  return MediaQuery.of(context).size.height / 16;
+}
+
+double marginHeight8(BuildContext context) {
+  return MediaQuery.of(context).size.height / 8;
+}
+
+double marginHeight4(BuildContext context) {
+  return MediaQuery.of(context).size.height / 4;
+}
+
+double marginHeight2(BuildContext context) {
+  return MediaQuery.of(context).size.height / 2;
+}

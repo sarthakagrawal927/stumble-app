@@ -76,7 +76,7 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: Size.fromHeight(
-        MediaQuery.of(context).size.height / 16,
+        marginHeight16(context),
       ),
       child: BottomAppBar(
         color: bottomAppBarColor,

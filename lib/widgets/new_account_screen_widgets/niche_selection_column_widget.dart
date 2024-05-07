@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/widgets/newUser/screen_go_to_next_page_row.dart';
@@ -26,8 +27,8 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
         Consumer<Profile>(
           builder: (context, value, child) => Card(
             margin: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 16,
+              left: marginWidth16(context),
+              right: marginWidth16(context),
               top: MediaQuery.of(context).size.height / 6,
             ),
             color: Colors.transparent,

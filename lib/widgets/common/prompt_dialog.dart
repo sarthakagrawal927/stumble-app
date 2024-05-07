@@ -10,8 +10,8 @@ Future<Object?> promptDialog(BuildContext context, String text) {
       child: Container(
         color: widgetColor,
         margin: EdgeInsets.symmetric(
-          vertical: MediaQuery.of(context).size.height / 8,
-          horizontal: MediaQuery.of(context).size.width / 8,
+          vertical: marginHeight8(context),
+          horizontal: marginWidth8(context),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

@@ -34,7 +34,7 @@ class AskMeAboutTextField extends StatelessWidget {
           child: TextFormField(
             style: TextStyle(
               color: textColor,
-              fontSize: MediaQuery.of(context).size.height / 64,
+              fontSize: marginHeight64(context),
               backgroundColor: widgetColor,
             ),
             initialValue: currentValue,

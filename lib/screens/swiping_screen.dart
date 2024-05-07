@@ -113,14 +113,14 @@ class _SwipingScreenState extends State<SwipingScreen> {
         key: _scaffoldKey,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(
-            MediaQuery.of(context).size.height / 16,
+            marginHeight16(context),
           ),
           child: AppBar(
             automaticallyImplyLeading: false,
             actions: [
               DropdownButtonHideUnderline(
                 child: DropdownButton(
-                  iconSize: MediaQuery.of(context).size.width / 16,
+                  iconSize: marginWidth16(context),
                   dropdownColor: dropDownColor,
                   items: dropDownOptionList
                       .map((e) => DropdownMenuItem(
@@ -149,18 +149,16 @@ class _SwipingScreenState extends State<SwipingScreen> {
                         );
                   },
                   icon: Padding(
-                    padding: EdgeInsets.only(
-                        right: MediaQuery.of(context).size.width / 16),
+                    padding: EdgeInsets.only(right: marginWidth16(context)),
                     child: Showcase(
                       description: "You can find your stumbler lists here!",
                       key: _dropDownKey,
                       blurValue: 5,
-                      descriptionPadding: EdgeInsets.all(
-                          MediaQuery.of(context).size.width / 128),
+                      descriptionPadding:
+                          EdgeInsets.all(marginWidth128(context)),
                       overlayOpacity: 0.1,
                       showArrow: true,
-                      targetPadding: EdgeInsets.all(
-                          MediaQuery.of(context).size.width / 128),
+                      targetPadding: EdgeInsets.all(marginWidth128(context)),
                       child: const Icon(
                         Icons.menu,
                         color: headingColor,
@@ -172,23 +170,20 @@ class _SwipingScreenState extends State<SwipingScreen> {
             ],
             backgroundColor: topAppBarColor,
             title: Padding(
-              padding:
-                  EdgeInsets.only(left: MediaQuery.of(context).size.width / 16),
+              padding: EdgeInsets.only(left: marginWidth16(context)),
               child: Showcase(
                 description: promptExplainingLocationUsage,
-                descTextStyle:
-                    TextStyle(fontSize: MediaQuery.of(context).size.width / 24),
+                descTextStyle: TextStyle(fontSize: marginWidth24(context)),
                 key: _locationUsageKey,
                 blurValue: 5,
                 descriptionPadding: EdgeInsets.symmetric(
                   vertical: MediaQuery.of(context).size.height / 128,
-                  horizontal: MediaQuery.of(context).size.width / 128,
+                  horizontal: marginWidth128(context),
                 ),
                 tooltipPosition: TooltipPosition.bottom,
                 overlayOpacity: 0.5,
                 showArrow: false,
-                targetPadding:
-                    EdgeInsets.all(MediaQuery.of(context).size.width / 32),
+                targetPadding: EdgeInsets.all(marginWidth32(context)),
                 child: Text(
                   textAlign: TextAlign.center,
                   'Stumble!',

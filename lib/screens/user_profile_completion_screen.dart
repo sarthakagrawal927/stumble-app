@@ -2,6 +2,7 @@ import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:dating_made_better/widgets/common/photo_uploader.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -39,14 +40,14 @@ class _UserProfileCompletionScreenState
   ) {
     return Padding(
       padding: EdgeInsets.all(
-        MediaQuery.of(context).size.width / 16,
+        marginWidth16(context),
       ),
       child: Text(
         textAlign: TextAlign.start,
         profileCompletionPercentage,
         style: TextStyle(
           color: textColor,
-          fontSize: MediaQuery.of(context).size.width / 16,
+          fontSize: marginWidth16(context),
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -78,8 +79,8 @@ class _UserProfileCompletionScreenState
                 height: MediaQuery.of(context).size.height / 6,
                 width: MediaQuery.of(context).size.width / 2.25,
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width / 32,
-                  left: MediaQuery.of(context).size.width / 32,
+                  top: marginWidth32(context),
+                  left: marginWidth32(context),
                 ),
                 child: profileCompletionCard(
                   context,
@@ -94,8 +95,8 @@ class _UserProfileCompletionScreenState
                 height: MediaQuery.of(context).size.height / 6,
                 width: MediaQuery.of(context).size.width / 2.25,
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width / 32,
-                  right: MediaQuery.of(context).size.width / 32,
+                  top: marginWidth32(context),
+                  right: marginWidth32(context),
                 ),
                 child: isProfileVerified
                     ? verificationStatusCard(
@@ -104,11 +105,18 @@ class _UserProfileCompletionScreenState
                         Colors.blueAccent,
                         "Verified",
                       )
-                    : verificationStatusCard(
-                        context,
-                        Icons.verified_outlined,
-                        textColor,
-                        "Verify my profile",
+                    : Consumer<Profile>(
+                        builder: (context, value, child) => GestureDetector(
+                          onTap: () {
+                            addImageFromGallery();
+                          },
+                          child: verificationStatusCard(
+                            context,
+                            Icons.verified_outlined,
+                            textColor,
+                            "Verify my profile",
+                          ),
+                        ),
                       ),
               ),
             ],
@@ -117,23 +125,23 @@ class _UserProfileCompletionScreenState
             height: MediaQuery.of(context).size.height / 2.4,
             width: MediaQuery.of(context).size.width / 1.125,
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.width / 32,
-              left: MediaQuery.of(context).size.width / 32,
-              right: MediaQuery.of(context).size.width / 32,
+              top: marginWidth32(context),
+              left: marginWidth32(context),
+              right: marginWidth32(context),
             ),
             color: widgetColor,
             child: Column(
               children: [
                 Padding(
                   padding: EdgeInsets.all(
-                    MediaQuery.of(context).size.width / 32,
+                    marginWidth32(context),
                   ),
                   child: Text(
                     textAlign: TextAlign.start,
                     'Your clicks!',
                     style: TextStyle(
                       color: textColor,
-                      fontSize: MediaQuery.of(context).size.width / 16,
+                      fontSize: marginWidth16(context),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -144,15 +152,14 @@ class _UserProfileCompletionScreenState
           ),
           Container(
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.width / 32,
-              left: MediaQuery.of(context).size.width / 32,
-              right: MediaQuery.of(context).size.width / 32,
+              top: marginWidth32(context),
+              left: marginWidth32(context),
+              right: marginWidth32(context),
             ),
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 32),
+            padding: EdgeInsets.all(marginWidth32(context)),
             color: widgetColor,
             child: Padding(
-              padding:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.width / 32),
+              padding: EdgeInsets.only(top: marginWidth32(context)),
               child: Consumer<Profile>(
                 builder: (context, value, child) => AskMeAboutTextField(
                     _conversationStarterFocusNode,
@@ -163,11 +170,11 @@ class _UserProfileCompletionScreenState
           ),
           Container(
             margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height / 64,
+              top: marginHeight64(context),
             ),
             padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / 16,
-              right: MediaQuery.of(context).size.width / 16,
+              left: marginWidth16(context),
+              right: marginWidth16(context),
             ),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -198,75 +205,88 @@ class _UserProfileCompletionScreenState
     );
   }
 
-  Card verificationStatusCard(
-    BuildContext context,
-    IconData icon,
-    Color color,
-    String text,
-  ) {
-    return Card(
-      color: widgetColor,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width / 32,
-          vertical: MediaQuery.of(context).size.width / 32,
-        ),
-        child: Column(
-          children: <Widget>[
-            verificationIconToDisplay(context, icon, color),
-            Text(
-              text,
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                color: textColor,
-                fontSize: MediaQuery.of(context).size.width / 32,
-              ),
-            ),
-          ],
-        ),
-      ),
+  void addImageFromGallery() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
     );
+    if (pickedFile != null) {
+      //
+    }
+    // )
+    // .catchError((error) {
+    //   debugPrint(error.toString());
+    // });
   }
+}
 
-  Padding verificationIconToDisplay(
-      BuildContext context, IconData icon, Color color) {
-    return Padding(
+Card verificationStatusCard(
+  BuildContext context,
+  IconData icon,
+  Color color,
+  String text,
+) {
+  return Card(
+    color: widgetColor,
+    child: Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: marginWidth32(context),
+        vertical: marginWidth32(context),
+      ),
+      child: Column(
+        children: <Widget>[
+          verificationIconToDisplay(context, icon, color),
+          Text(
+            text,
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: textColor,
+              fontSize: marginWidth32(context),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Padding verificationIconToDisplay(
+    BuildContext context, IconData icon, Color color) {
+  return Padding(
+    padding: EdgeInsets.all(
+      marginWidth16(context),
+    ),
+    child: Icon(
+      size: marginWidth16(context),
+      icon,
+      color: color,
+    ),
+  );
+}
+
+Widget profileCompletionCard(
+  BuildContext context,
+  String text,
+  Padding widgetToRender,
+) {
+  return Card(
+    color: widgetColor,
+    child: Padding(
       padding: EdgeInsets.all(
-        MediaQuery.of(context).size.width / 16,
+        marginWidth32(context),
       ),
-      child: Icon(
-        size: MediaQuery.of(context).size.width / 16,
-        icon,
-        color: color,
-      ),
-    );
-  }
-
-  Widget profileCompletionCard(
-    BuildContext context,
-    String text,
-    Padding widgetToRender,
-  ) {
-    return Card(
-      color: widgetColor,
-      child: Padding(
-        padding: EdgeInsets.all(
-          MediaQuery.of(context).size.width / 32,
-        ),
-        child: Column(
-          children: [
-            widgetToRender,
-            Text(
-              text,
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                color: textColor,
-                fontSize: MediaQuery.of(context).size.width / 32,
-              ),
+      child: Column(
+        children: [
+          widgetToRender,
+          Text(
+            text,
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              color: textColor,
+              fontSize: marginWidth32(context),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }

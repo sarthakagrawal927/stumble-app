@@ -20,7 +20,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
           children: [
             Icon(
               Icons.remove_red_eye,
-              size: MediaQuery.of(context).size.width / 16,
+              size: marginWidth16(context),
               color: whiteColor,
             ),
             Text(
@@ -40,7 +40,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
               child: Icon(
                 Icons.arrow_forward,
                 color: whiteColor,
-                size: MediaQuery.of(context).size.width / 16,
+                size: marginWidth16(context),
               ),
             ),
           ],

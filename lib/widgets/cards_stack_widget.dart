@@ -66,8 +66,8 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
                   ? Center(
                       child: Container(
                         margin: EdgeInsets.symmetric(
-                          vertical: MediaQuery.of(context).size.height / 8,
-                          horizontal: MediaQuery.of(context).size.width / 8,
+                          vertical: marginHeight8(context),
+                          horizontal: marginWidth8(context),
                         ),
                         child: Text(
                           textAlign: TextAlign.center,
