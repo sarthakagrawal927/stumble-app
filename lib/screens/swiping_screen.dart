@@ -63,6 +63,19 @@ class _SwipingScreenState extends State<SwipingScreen> {
     FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToDatabase);
   }
 
+  displayInitialPrompts() async {
+    SharedPreferences sharedPreferencesObject =
+        await SharedPreferences.getInstance();
+    bool? initialPromptsVisibilityStatus =
+        sharedPreferencesObject.getBool("displayInitialPrompts");
+
+    if (initialPromptsVisibilityStatus == null) {
+      sharedPreferencesObject.setBool("displayInitialPrompts", true);
+      return true;
+    }
+    return false;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -70,39 +83,27 @@ class _SwipingScreenState extends State<SwipingScreen> {
       setupPushNotifications();
       Provider.of<Profile>(context, listen: false).setEntireProfileForEdit();
     });
+    try {
+      displayInitialPrompts().then((status) => {
+            if (status)
+              {
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  ShowCaseWidget.of(context).startShowCase(
+                    [
+                      _locationUsageKey,
+                      _dropDownKey,
+                      _profileLikeKey,
+                      _profileDislikeKey,
+                    ],
+                  );
+                }),
+              }
+          });
+    } catch (err) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    SharedPreferences sharedPreferencesObject;
-    displayInitialPrompts() async {
-      sharedPreferencesObject = await SharedPreferences.getInstance();
-      bool? initialPromptsVisibilityStatus =
-          sharedPreferencesObject.getBool("displayInitialPrompts");
-
-      if (initialPromptsVisibilityStatus == null) {
-        sharedPreferencesObject.setBool("displayInitialPrompts", true);
-        return true;
-      }
-      return false;
-    }
-
-    displayInitialPrompts().then((status) => {
-          if (status)
-            {
-              WidgetsBinding.instance.addPostFrameCallback((_) async {
-                ShowCaseWidget.of(context).startShowCase(
-                  [
-                    _locationUsageKey,
-                    _dropDownKey,
-                    _profileLikeKey,
-                    _profileDislikeKey,
-                  ],
-                );
-              }),
-            }
-        });
-
     return InheritedKeysHelper(
       locationUsageKey: _locationUsageKey,
       dropDownKey: _dropDownKey,
