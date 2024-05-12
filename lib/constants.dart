@@ -68,6 +68,8 @@ const promptExplainingStumblingReason =
 const promptExplainingLocationUsage =
     "Team Stumble will only use your location to ensure that we accurately show you potential stumblers nearby, all to enhance your stumbling experience and provide you with the best possible support!";
 
+const promptExplainingPhotoUnderVerification = "Your photo has been submitted; until then, keep Stumbling!";
+
 const double borderRadiusValue = 20;
 
 double marginWidth128(BuildContext context) {

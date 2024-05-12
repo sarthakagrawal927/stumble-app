@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/common/photo_uploader.dart';
+import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,6 +26,7 @@ class UserProfileCompletionScreen extends StatefulWidget {
 class _UserProfileCompletionScreenState
     extends State<UserProfileCompletionScreen> {
   final _conversationStarterFocusNode = FocusNode();
+  bool hasSubmittedImageForVerification = false;
 
   @override
   void dispose() {
@@ -107,6 +112,7 @@ class _UserProfileCompletionScreenState
                       )
                     : Consumer<Profile>(
                         builder: (context, value, child) => GestureDetector(
+
                           onTap: () {
                             addImageFromGallery();
                           },
@@ -210,12 +216,8 @@ class _UserProfileCompletionScreenState
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
-      //
-    }
-    // )
-    // .catchError((error) {
-    //   debugPrint(error.toString());
-    // });
+        uploadPhotosAPI([File(pickedFile.path)]);
+      }
   }
 }
 

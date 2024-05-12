@@ -182,7 +182,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               showLookingForOption = false;
                             });
                             promptDialog(
-                                context, promptExplainingStumblingReason);
+                                context, promptExplainingStumblingReason,);
                           } else {
                             setState(() {
                               showLookingForOption = false;
