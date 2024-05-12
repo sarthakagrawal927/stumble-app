@@ -49,20 +49,15 @@ class UserProfileScreen extends StatelessWidget {
                   child: GestureDetector(
                     onDoubleTap: () => DoNothingAction(),
                     onTap: () async {
-                      Profile profile;
-                      profile =
-                          await getUserApi().then((value) => profile = value!);
-
-                      // ignore: use_build_context_synchronously
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return SwipeCard(
-                            profile: profile,
-                            isModalMode: true,
-                          );
-                        },
-                      );
+                      getUserApi().then((value) => showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return SwipeCard(
+                                profile: value!,
+                                isModalMode: true,
+                              );
+                            },
+                          ));
                     },
                     child: CircleAvatar(
                       maxRadius: 75,

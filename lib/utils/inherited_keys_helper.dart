@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class InheritedKeysHelper extends InheritedWidget {
-  InheritedKeysHelper({
+  const InheritedKeysHelper({
+    super.key,
     required this.locationUsageKey,
     required this.dropDownKey,
     required this.profileLikeKey,
     required this.profileDislikeKey,
-    required Widget child,
-  }) : super(child: child);
+    required super.child,
+  });
 
   final GlobalKey locationUsageKey;
   final GlobalKey dropDownKey;

@@ -1,6 +1,5 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/models/profile.dart';
-import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/stumbles_list_constants.dart';
 import 'package:dating_made_better/utils/call_api.dart';
@@ -36,20 +35,16 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
                 return GestureDetector(
                   onDoubleTap: () => DoNothingAction(),
                   onTap: () async {
-                    Profile profile;
-                    profile = await getUserApi(listOfProfiles[index].id)
-                        .then((value) => profile = value!);
-
-                    // ignore: use_build_context_synchronously
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return SwipeCard(
-                          profile: profile,
-                          isModalMode: true,
-                        );
-                      },
-                    );
+                    getUserApi(listOfProfiles[index].id)
+                        .then((value) => showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return SwipeCard(
+                                  profile: value!,
+                                  isModalMode: true,
+                                );
+                              },
+                            ));
                   },
                   child: Container(
                     margin: EdgeInsets.all(marginHeight64(context)),

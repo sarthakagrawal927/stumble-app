@@ -38,9 +38,9 @@ class DragWidget extends StatefulWidget {
 class _DragWidgetState extends State<DragWidget> {
   Future<void> handleActivityOnProfile(ActivityType activity,
       [String? compliment]) async {
-    await widget.onSwipe();
     int elapsedTime = timer.elapsedMilliseconds;
     await addActivityOnLike(widget.profile, activity, elapsedTime, compliment);
+    await widget.onSwipe(); // fetches profiles
   }
 
   final timer = Stopwatch();
