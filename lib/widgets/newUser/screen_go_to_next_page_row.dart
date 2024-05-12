@@ -18,29 +18,53 @@ class ScreenGoToNextPageRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(
-              Icons.remove_red_eye,
-              size: marginWidth16(context),
-              color: whiteColor,
-            ),
-            Text(
-              textToDisplay,
-              style: const TextStyle(fontSize: 15, color: whiteColor),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
+            Padding(
+              padding: EdgeInsets.only(
+                left: marginWidth128(context), 
+                top: marginHeight128(context), 
+                bottom: marginHeight128(context),
               ),
-              onPressed: (() async {
-                await functionToSetData();
-                if (context.mounted && nextScreenRouteName != "") {
-                  Navigator.pushReplacementNamed(context, nextScreenRouteName);
-                }
-              }),
               child: Icon(
-                Icons.arrow_forward,
-                color: whiteColor,
+                Icons.remove_red_eye,
                 size: marginWidth16(context),
+                color: whiteColor,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: marginWidth128(context), 
+                top: marginHeight128(context), 
+                bottom: marginHeight128(context),
+                ),
+              child: Text(
+                textToDisplay,
+                style:  TextStyle(fontSize: MediaQuery.of(context).size.width / 32, 
+                color: whiteColor,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: marginWidth128(context), 
+                right: marginWidth128(context),
+                top: marginHeight128(context), 
+                bottom: marginHeight128(context),
+                ),  
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                ),
+                onPressed: (() async {
+                  await functionToSetData();
+                  if (context.mounted && nextScreenRouteName != "") {
+                    Navigator.pushReplacementNamed(context, nextScreenRouteName);
+                  }
+                }),
+                child: Icon(
+                  Icons.arrow_forward,
+                  color: whiteColor,
+                  size: marginWidth16(context),
+                ),
               ),
             ),
           ],

@@ -102,6 +102,9 @@ double marginWidth4(BuildContext context) {
   return MediaQuery.of(context).size.width / 4;
 }
 
+double marginHeight128(BuildContext context) {
+  return MediaQuery.of(context).size.height / 128;
+}
 double marginHeight64(BuildContext context) {
   return MediaQuery.of(context).size.height / 64;
 }

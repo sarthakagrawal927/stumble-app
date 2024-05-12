@@ -220,7 +220,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               child: Text(
                 'Looking for same: ${interestToLabel[lookingFor]}',
-                style: const TextStyle(color: whiteColor),
+                style: const TextStyle(color: headingColor),
               ),
             ),
           Expanded(
@@ -242,7 +242,7 @@ class _ChatScreenState extends State<ChatScreen> {
       value: interestToLabel[selectedOption],
       child: Text(
         interestToLabel[selectedOption]!,
-        style: const TextStyle(color: whiteColor),
+        style: const TextStyle(color: headingColor),
       ),
     );
   }
