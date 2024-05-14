@@ -1,12 +1,7 @@
-import 'package:dating_made_better/providers/first_screen_state_providers.dart';
-import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
-import '../screens/filters_screen.dart';
-import '../utils/internal_storage.dart';
 
 enum DropdownOptions {
   filters,
@@ -29,7 +24,8 @@ var defaultDropdownOptions = [
 // ignore: must_be_immutable
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   String routeName;
-  TopAppBar({required this.routeName, super.key});
+  String heading;
+  TopAppBar({required this.routeName, required this.heading, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,62 +34,19 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         marginHeight16(context),
       ),
       child: AppBar(
-        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          // temporary solution until proper global state management is implemented
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         automaticallyImplyLeading: false,
-        leading: routeName != ""
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back, color: headingColor),
-                // temporary solution until proper global state management is implemented
-                onPressed: () =>
-                    Navigator.of(context).pushReplacementNamed(routeName),
-              )
-            : null,
-        actions: [
-          DropdownButtonHideUnderline(
-            child: DropdownButton(
-              iconSize: marginWidth16(context),
-              dropdownColor: dropDownColor,
-              items: defaultDropdownOptions
-                  .map((e) => DropdownMenuItem(
-                        value: e.value,
-                        child: Row(
-                          children: [
-                            Icon(e.icon, color: whiteColor),
-                            const SizedBox(width: 8),
-                            Text(e.value,
-                                style: const TextStyle(color: whiteColor)),
-                          ],
-                        ),
-                      ))
-                  .toList(),
-              onChanged: (itemIdentifier) async {
-                if (itemIdentifier == 'Logout') {
-                  deleteSecureData(authKey).then((value) {
-                    Provider.of<FirstScreenStateProviders>(context,
-                            listen: false)
-                        .setActiveScreenMode(ScreenMode.landing);
-                    Navigator.pushNamed(context, AuthScreen.routeName);
-                  });
-                } else if (itemIdentifier == 'Filters') {
-                  Navigator.pushNamed(context, FiltersScreen.routeName);
-                }
-              },
-              icon: Padding(
-                padding: EdgeInsets.only(right: marginWidth16(context)),
-                child: const Icon(
-                  Icons.menu,
-                  color: headingColor,
-                ),
-              ),
-            ),
-          ),
-        ],
-        backgroundColor: topAppBarColor,
+        centerTitle: true,
+        actions: const [],
         title: Padding(
           padding: EdgeInsets.only(left: marginWidth16(context)),
           child: Text(
             textAlign: TextAlign.center,
-            'Stumble!',
+            heading,
             style: GoogleFonts.sacramento(
               fontSize: MediaQuery.of(context).size.width / 13,
               color: headingColor,
@@ -101,6 +54,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ),
+        backgroundColor: topAppBarColor,
       ),
     );
   }

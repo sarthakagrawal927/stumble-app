@@ -6,6 +6,7 @@ import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
+import 'package:dating_made_better/widgets/top_app_bar_with_screens_option.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class UserProfileScreen extends StatelessWidget {
         Provider.of<Profile>(context).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: TopAppBar(
+      appBar: TopAppBarWithScreensOption(
         routeName: "",
       ),
       body: Column(

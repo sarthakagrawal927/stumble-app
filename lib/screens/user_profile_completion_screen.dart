@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/common/photo_uploader.dart';
-import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
+import 'package:dating_made_better/widgets/top_app_bar_with_logout_option.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -72,7 +72,7 @@ class _UserProfileCompletionScreenState
         Provider.of<Profile>(context, listen: false).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: TopAppBar(
+      appBar: TopAppBarWithLogoutOption(
         routeName: UserProfileScreen.routeName,
       ),
       body: ListView(
