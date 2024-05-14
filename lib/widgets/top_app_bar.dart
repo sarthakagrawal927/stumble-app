@@ -3,24 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 
-enum DropdownOptions {
-  filters,
-  logout,
-}
-
-class DropdownOptionVal {
-  final String value;
-  final IconData icon;
-  final DropdownOptions dropdownOption;
-
-  DropdownOptionVal(this.value, this.icon, this.dropdownOption);
-}
-
-var defaultDropdownOptions = [
-  DropdownOptionVal("Logout", Icons.exit_to_app, DropdownOptions.logout),
-  DropdownOptionVal("Filters", Icons.filter_list, DropdownOptions.filters),
-];
-
 // ignore: must_be_immutable
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   String routeName;

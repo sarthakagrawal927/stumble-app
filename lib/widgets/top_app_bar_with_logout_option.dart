@@ -1,5 +1,6 @@
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/screens/login_or_signup_screen.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ import '../utils/internal_storage.dart';
 enum DropdownOptions {
   filters,
   logout,
+  delete,
 }
 
 class DropdownOptionVal {
@@ -22,8 +24,9 @@ class DropdownOptionVal {
 }
 
 var defaultDropdownOptions = [
-  DropdownOptionVal("Logout", Icons.exit_to_app, DropdownOptions.logout),
   DropdownOptionVal("Filters", Icons.filter_list, DropdownOptions.filters),
+  DropdownOptionVal("Logout", Icons.exit_to_app, DropdownOptions.logout),
+  DropdownOptionVal("Delete :'(", Icons.emoji_flags, DropdownOptions.delete),
 ];
 
 // ignore: must_be_immutable
@@ -74,6 +77,13 @@ class TopAppBarWithLogoutOption extends StatelessWidget implements PreferredSize
                         .setActiveScreenMode(ScreenMode.landing);
                     Navigator.pushNamed(context, AuthScreen.routeName);
                   });
+                } else if (itemIdentifier == 'Delete :\'(') {
+                  deleteUserApi().then((_) => deleteSecureData(authKey).then((value) {
+                    Provider.of<FirstScreenStateProviders>(context,
+                            listen: false)
+                        .setActiveScreenMode(ScreenMode.landing);
+                    Navigator.pushNamed(context, AuthScreen.routeName);
+                  }));
                 } else if (itemIdentifier == 'Filters') {
                   Navigator.pushNamed(context, FiltersScreen.routeName);
                 }

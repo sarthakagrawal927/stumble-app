@@ -43,6 +43,7 @@ enum ApiType {
   googleAuth,
   appleAuth,
   upsertUser,
+  deleteUser,
   getProfile,
   findStumbles,
   addActivity,
@@ -208,6 +209,11 @@ Future<Profile> upsertUserApi(Map<String, dynamic> bodyParams) async {
 Future<void> activateUserApi(Map<String, dynamic> bodyParams) async {
   await callAPI(getApiEndpoint(ApiType.activateUser),
       bodyParams: bodyParams, method: HttpMethods.post);
+}
+
+Future<void> deleteUserApi() async {
+  await callAPI(getApiEndpoint(ApiType.deleteUser),
+      method: HttpMethods.delete);
 }
 
 Future<bool> updateUserInterest(String threadId, int interest) async {
