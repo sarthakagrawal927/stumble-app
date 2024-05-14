@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
-import '../widgets/top_app_bar.dart';
 
 Future<List<MiniProfile>> _getMatches() async {
   // var profiles = await getMatches();

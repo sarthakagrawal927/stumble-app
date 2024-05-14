@@ -1,13 +1,8 @@
-import 'package:dating_made_better/providers/first_screen_state_providers.dart';
-import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:dating_made_better/stumbles_list_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
-import '../screens/filters_screen.dart';
-import '../utils/internal_storage.dart';
 
 // ignore: must_be_immutable
 class TopAppBarWithScreensOption extends StatelessWidget implements PreferredSizeWidget {

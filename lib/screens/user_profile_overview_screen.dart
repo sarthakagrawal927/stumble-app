@@ -5,7 +5,6 @@ import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
-import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:dating_made_better/widgets/top_app_bar_with_screens_option.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
