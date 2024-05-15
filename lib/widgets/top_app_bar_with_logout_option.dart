@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../constants.dart';
 import '../utils/internal_storage.dart';
@@ -13,6 +14,7 @@ enum DropdownOptions {
   feedback,
   logout,
   delete,
+  privacy,
 }
 
 class DropdownOptionVal {
@@ -25,6 +27,7 @@ class DropdownOptionVal {
 
 var defaultDropdownOptions = [
   DropdownOptionVal("Leave feedback!", Icons.pages, DropdownOptions.feedback),
+  DropdownOptionVal("Privacy terms", Icons.document_scanner, DropdownOptions.privacy),
   DropdownOptionVal("Logout", Icons.exit_to_app, DropdownOptions.logout),
   DropdownOptionVal("Delete :'(", Icons.emoji_flags, DropdownOptions.delete),
 ];
@@ -81,7 +84,10 @@ class TopAppBarWithLogoutOption extends StatelessWidget implements PreferredSize
                         .setActiveScreenMode(ScreenMode.landing);
                     Navigator.pushNamed(context, AuthScreen.routeName);
                   });
-                } else if (itemIdentifier == 'Delete :\'\(') {
+                } else if (itemIdentifier == 'Privacy terms') {
+                    launchUrl(
+                        Uri.parse('https://www.getstumble.app/privacy'));
+                } else if (itemIdentifier == 'Delete :\'(') {
                   deleteUserApi().then((_) => deleteSecureData(authKey).then((value) {
                     Provider.of<FirstScreenStateProviders>(context,
                             listen: false)
