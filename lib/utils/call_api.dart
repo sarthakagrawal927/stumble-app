@@ -116,15 +116,26 @@ Future<Map<String, dynamic>> callAPI(
               HttpHeaders.contentTypeHeader: 'application/json',
             },
           )
-        : _chuckerHttpClient.get(
-            Uri.parse(baseURL + reqUrl + getUrlFromQueryParams(queryParams)),
-            headers: {
-              ...headers,
-              HttpHeaders.authorizationHeader: AppConstants.token.isEmpty
-                  ? await readSecureData(authKey) ?? ""
-                  : AppConstants.token,
-            },
-          ));
+        : method == HttpMethods.delete
+            ? _chuckerHttpClient.delete(
+                Uri.parse(
+                    baseURL + reqUrl + getUrlFromQueryParams(queryParams)),
+                headers: {
+                  ...headers,
+                  HttpHeaders.authorizationHeader: AppConstants.token.isEmpty
+                      ? await readSecureData(authKey) ?? ""
+                      : AppConstants.token,
+                },
+              )
+            : _chuckerHttpClient.get(
+                Uri.parse(
+                    baseURL + reqUrl + getUrlFromQueryParams(queryParams)),
+                headers: {
+                    ...headers,
+                    HttpHeaders.authorizationHeader: AppConstants.token.isEmpty
+                        ? await readSecureData(authKey) ?? ""
+                        : AppConstants.token,
+                  }));
     if (response.statusCode != HttpStatus.ok) {
       if (response.statusCode == HttpStatus.notFound) {
         // direct to login screen
