@@ -82,7 +82,7 @@ const apiList = {
   ApiType.activateUser: "/api/v1/user/activate",
   ApiType.updateUserInterest: "/api/v1/activity/update_user_interest",
   ApiType.addDevice: "/api/v1/user/device",
-  ApiType.sendFeedback: "/api/v1/feedback",
+  ApiType.sendFeedback: "/api/v1/user/feedback",
 };
 
 String getApiEndpoint(ApiType apiType) {
