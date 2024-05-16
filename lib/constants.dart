@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 enum Gender { woman, man, nonBinary }
 
 const authKey = "authToken";
+const privacyUrl = "https://www.getstumble.app/privacy";
 
 enum ModelOpened { userInterestInfoTeaching }
 
@@ -68,7 +69,8 @@ const promptExplainingStumblingReason =
 const promptExplainingLocationUsage =
     "Team Stumble will only use your location to ensure that we accurately show you potential stumblers nearby, all to enhance your stumbling experience and provide you with the best possible support!";
 
-const promptExplainingPhotoUnderVerification = "Your photo has been submitted; until then, keep Stumbling!";
+const promptExplainingPhotoUnderVerification =
+    "Your photo has been submitted; until then, keep Stumbling!";
 
 const double borderRadiusValue = 20;
 
@@ -107,6 +109,7 @@ double marginWidth4(BuildContext context) {
 double marginHeight128(BuildContext context) {
   return MediaQuery.of(context).size.height / 128;
 }
+
 double marginHeight64(BuildContext context) {
   return MediaQuery.of(context).size.height / 64;
 }

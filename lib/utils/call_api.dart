@@ -67,6 +67,7 @@ const apiList = {
   ApiType.googleAuth: "/api/v1/user/google_auth",
   ApiType.appleAuth: "/api/v1/user/apple_auth",
   ApiType.upsertUser: "/api/v1/user",
+  ApiType.deleteUser: "/api/v1/user",
   ApiType.getProfile: "/api/v1/user?user_id=",
   ApiType.findStumbles: "/api/v1/activity/find",
   ApiType.addActivity: "/api/v1/activity",
@@ -223,8 +224,7 @@ Future<void> activateUserApi(Map<String, dynamic> bodyParams) async {
 }
 
 Future<void> deleteUserApi() async {
-  await callAPI(getApiEndpoint(ApiType.deleteUser),
-      method: HttpMethods.delete);
+  await callAPI(getApiEndpoint(ApiType.deleteUser), method: HttpMethods.delete);
 }
 
 Future<bool> updateUserInterest(String threadId, int interest) async {
