@@ -10,6 +10,7 @@ enum ScreenMode {
   photoAdditionInput,
   nicheSelectionInput,
   promptAdditionInput,
+  locationDisclosureScreen,
   swipingScreen
 }
 
