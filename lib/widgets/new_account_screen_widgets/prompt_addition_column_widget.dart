@@ -1,11 +1,10 @@
-import 'package:dating_made_better/screens/login_or_signup_screen.dart';
+import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 import '../../providers/profile.dart';
-import '../../screens/swiping_screen.dart';
 import '../newUser/screen_heading_widget.dart';
 import '../newUser/screen_go_to_next_page_row.dart';
 
@@ -68,24 +67,11 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
         ScreenGoToNextPageRow(
           "This will be shown on your profile!",
           "",
-          () async {
+          () {
             handleSnackBarIfInputNotFilled(promptTextValue != "", () async {
               Provider.of<Profile>(context, listen: false)
                   .setConversationStarter = promptTextValue;
-              if (isLoading) return;
-              isLoading = true;
-              try {
-                Provider.of<Profile>(context, listen: false)
-                    .upsertUserOnboarding()
-                    .then((value) {
-                  Navigator.of(context).pushNamed(SwipingScreen.routeName);
-                });
-              } catch (e) {
-                // redirect to login screen
-                Navigator.of(context).pushNamed(AuthScreen.routeName);
-              } finally {
-                isLoading = false;
-              }
+                  Provider.of<FirstScreenStateProviders>    (context, listen: false).setNextScreenActive();
             }, context, valueToFill: "prompt");
           },
         ),

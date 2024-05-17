@@ -190,8 +190,7 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
                     style: const TextStyle(fontSize: 15, color: Colors.blue),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launchUrl(
-                            Uri.parse('https://www.getstumble.app/privacy'));
+                        launchUrl(Uri.parse(privacyUrl));
                       },
                   ),
                   const TextSpan(

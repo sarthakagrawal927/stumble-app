@@ -25,6 +25,7 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
       backgroundColor: backgroundColor,
       appBar: TopAppBar(
         routeName: SwipingScreen.routeName,
+        heading: "Stumble"
       ),
       body: listOfProfiles.isNotEmpty
           ? GridView.builder(

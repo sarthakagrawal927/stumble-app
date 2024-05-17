@@ -43,6 +43,7 @@ enum ApiType {
   googleAuth,
   appleAuth,
   upsertUser,
+  deleteUser,
   getProfile,
   findStumbles,
   addActivity,
@@ -57,6 +58,7 @@ enum ApiType {
   activateUser,
   updateUserInterest,
   addDevice,
+  sendFeedback,
 }
 
 const apiList = {
@@ -65,6 +67,7 @@ const apiList = {
   ApiType.googleAuth: "/api/v1/user/google_auth",
   ApiType.appleAuth: "/api/v1/user/apple_auth",
   ApiType.upsertUser: "/api/v1/user",
+  ApiType.deleteUser: "/api/v1/user",
   ApiType.getProfile: "/api/v1/user?user_id=",
   ApiType.findStumbles: "/api/v1/activity/find",
   ApiType.addActivity: "/api/v1/activity",
@@ -79,6 +82,7 @@ const apiList = {
   ApiType.activateUser: "/api/v1/user/activate",
   ApiType.updateUserInterest: "/api/v1/activity/update_user_interest",
   ApiType.addDevice: "/api/v1/user/device",
+  ApiType.sendFeedback: "/api/v1/user/feedback",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -112,15 +116,26 @@ Future<Map<String, dynamic>> callAPI(
               HttpHeaders.contentTypeHeader: 'application/json',
             },
           )
-        : _chuckerHttpClient.get(
-            Uri.parse(baseURL + reqUrl + getUrlFromQueryParams(queryParams)),
-            headers: {
-              ...headers,
-              HttpHeaders.authorizationHeader: AppConstants.token.isEmpty
-                  ? await readSecureData(authKey) ?? ""
-                  : AppConstants.token,
-            },
-          ));
+        : method == HttpMethods.delete
+            ? _chuckerHttpClient.delete(
+                Uri.parse(
+                    baseURL + reqUrl + getUrlFromQueryParams(queryParams)),
+                headers: {
+                  ...headers,
+                  HttpHeaders.authorizationHeader: AppConstants.token.isEmpty
+                      ? await readSecureData(authKey) ?? ""
+                      : AppConstants.token,
+                },
+              )
+            : _chuckerHttpClient.get(
+                Uri.parse(
+                    baseURL + reqUrl + getUrlFromQueryParams(queryParams)),
+                headers: {
+                    ...headers,
+                    HttpHeaders.authorizationHeader: AppConstants.token.isEmpty
+                        ? await readSecureData(authKey) ?? ""
+                        : AppConstants.token,
+                  }));
     if (response.statusCode != HttpStatus.ok) {
       if (response.statusCode == HttpStatus.notFound) {
         // direct to login screen
@@ -194,6 +209,15 @@ Future<void> sendOtpApi(String phoneNumber) async {
       method: HttpMethods.post);
 }
 
+Future<void> sendFeedbackApi(String phoneNumber, String feedback) async {
+  await callAPI(getApiEndpoint(ApiType.sendFeedback),
+      bodyParams: {
+        'phone': phoneNumber,
+        'message': feedback,
+      },
+      method: HttpMethods.post);
+}
+
 Future<Profile> upsertUserApi(Map<String, dynamic> bodyParams) async {
   try {
     var data = await callAPI(getApiEndpoint(ApiType.upsertUser),
@@ -208,6 +232,10 @@ Future<Profile> upsertUserApi(Map<String, dynamic> bodyParams) async {
 Future<void> activateUserApi(Map<String, dynamic> bodyParams) async {
   await callAPI(getApiEndpoint(ApiType.activateUser),
       bodyParams: bodyParams, method: HttpMethods.post);
+}
+
+Future<void> deleteUserApi() async {
+  await callAPI(getApiEndpoint(ApiType.deleteUser), method: HttpMethods.delete);
 }
 
 Future<bool> updateUserInterest(String threadId, int interest) async {
