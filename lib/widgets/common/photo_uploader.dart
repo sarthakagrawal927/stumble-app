@@ -6,6 +6,35 @@ import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:exif/exif.dart';
+import 'package:image/image.dart' as img;
+
+Future<void> applyRotationFix(String originalPath) async {
+  try {
+    Map<String, IfdTag> data = await readExifFromFile(File(originalPath));
+    print(data);
+
+    int length = int.parse(data['EXIF ExifImageLength'].toString());
+    int width = int.parse(data['EXIF ExifImageWidth'].toString());
+    String orientation = data['Image Orientation'].toString();
+
+    img.Image? original = img.decodeImage(File(originalPath).readAsBytesSync());
+    if (length > width) {
+      if (orientation.contains('Rotated 90 CW')) {
+        img.Image fixed = img.copyRotate(original!, angle: -90);
+        File(originalPath).writeAsBytesSync(img.encodeJpg(fixed));
+      } else if (orientation.contains('Rotated 180 CW')) {
+        img.Image fixed = img.copyRotate(original!, angle: -180);
+        File(originalPath).writeAsBytesSync(img.encodeJpg(fixed));
+      } else if (orientation.contains('Rotated 270 CW')) {
+        img.Image fixed = img.copyRotate(original!, angle: -270);
+        File(originalPath).writeAsBytesSync(img.encodeJpg(fixed));
+      }
+    }
+  } catch (e) {
+    print(e.toString());
+  }
+}
 
 class PhotoUploader extends StatefulWidget {
   final PhotoUploaderMode mode;
@@ -24,6 +53,7 @@ class _PhotoUploaderState extends State<PhotoUploader> {
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
+      await applyRotationFix(pickedFile.path);
       uploadPhotosAPI([File(pickedFile.path)]).then((filePaths) {
         Provider.of<Profile>(context, listen: false).setImageAtPosition(
           File(filePaths[0]),
