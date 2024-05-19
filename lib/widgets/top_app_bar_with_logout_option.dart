@@ -88,12 +88,109 @@ class TopAppBarWithLogoutOption extends StatelessWidget implements PreferredSize
                     launchUrl(
                         Uri.parse('https://www.getstumble.app/privacy'));
                 } else if (itemIdentifier == 'Delete :\'(') {
-                  deleteUserApi().then((_) => deleteSecureData(authKey).then((value) {
-                    Provider.of<FirstScreenStateProviders>(context,
-                            listen: false)
-                        .setActiveScreenMode(ScreenMode.landing);
-                    Navigator.pushNamed(context, AuthScreen.routeName);
-                  }));
+                  showDialog(
+                context: context,
+                barrierColor: Colors.transparent.withOpacity(0.8),
+                builder: (context) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Dialog(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40)),
+                        elevation: 16,
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: <Widget>[
+                            SizedBox(
+                              height: marginHeight4(context),
+                              width: MediaQuery.of(context).size.width * 0.825,
+                              child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              top: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  64),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                32,
+                                            vertical: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                64,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                style: GoogleFonts.acme(
+                                                  fontSize: marginWidth16(context),
+                                                  color: headingColor,),
+                                                textAlign: TextAlign.left,
+                                                softWrap: true,
+                                                "It saddens us to witness your stumbling come to a halt in discovering more incredible individuals!",
+                                              ),
+                                              SizedBox(height: marginHeight64(context)),
+                                              Text(style: GoogleFonts.acme(
+                                                  fontSize: marginWidth32(context) / 1.2,
+                                                  color: headingColor,),
+                                                textAlign: TextAlign.left,
+                                                softWrap: true,
+                                                "Click on the ✅ to delete.")
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                            ),
+                            Container(
+                              height: marginHeight64(context),
+                              color: Colors.transparent.withOpacity(0.925),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                IconButton(
+                                  iconSize:
+                                      MediaQuery.of(context).size.width / 10,
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop("");
+                                  },
+                                ),
+                                IconButton(
+                                  iconSize:
+                                      MediaQuery.of(context).size.width / 10,
+                                  icon: const Icon(
+                                    Icons.check,
+                                  ),
+                                  onPressed: () {
+                                    deleteUserApi().then((_) => deleteSecureData(authKey).then((value) {
+                                      Provider.of<FirstScreenStateProviders>(context,
+                                              listen: false)
+                                          .setActiveScreenMode(ScreenMode.landing);
+                                      Navigator.pushNamed(context, AuthScreen.routeName);
+                                    }));
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );}
+                  );
                 } else if (itemIdentifier == 'Leave feedback!') {
                 showDialog(
                 context: context,
