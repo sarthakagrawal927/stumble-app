@@ -23,20 +23,40 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
     return Column(
       children: [
         const ScreenHeadingWidget(
-            "Do you want to have the non-platonic filters enabled?"),
+            "Do you want to have the Stumbling filters enabled?"),
+        Container(
+          color: Colors.black38,
+          margin: EdgeInsets.symmetric(
+            horizontal: marginWidth16(context),
+          ),
+        child: Padding(
+            padding: EdgeInsets.symmetric(
+            vertical: marginHeight32(context),
+            horizontal: marginWidth32(context),
+          ),
+          child: Text(
+              textAlign: TextAlign.center,
+              "Our objective is to diminish the hurdles that impede individuals from stumbling upon remarkable people. We strive to offer clarity regarding the intentions of those they encounter—whether for a friendly chat, professional networking, or romantic interest. To facilitate this, we've introduced an option enabling users to specify their desired connection with each new encounter. Only when *both* parties stumble upon the same option will it be revealed to both!", 
+            style: TextStyle(
+              color: whiteColor,
+              fontSize: marginWidth24(context)
+            ),
+            ),
+        ),
+        ),
         Consumer<Profile>(
           builder: (context, value, child) => Card(
             margin: EdgeInsets.only(
               left: marginWidth16(context),
               right: marginWidth16(context),
-              top: MediaQuery.of(context).size.height / 6,
+              top: marginHeight32(context),
             ),
             color: Colors.transparent,
             child: Theme(
               data: ThemeData(unselectedWidgetColor: Colors.white),
               child: CheckboxListTile(
                 title: const Text(
-                  'Non-platonic filters: ',
+                  'Stumbling filters: ',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -52,7 +72,7 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
             ),
           ),
         ),
-        ScreenGoToNextPageRow("You will not be shown the dating filters.", "",
+        ScreenGoToNextPageRow("Know exactly what each stumbler seeks from you!", "",
             () {
           Provider.of<FirstScreenStateProviders>(context, listen: false)
               .setNextScreenActive();

@@ -390,8 +390,8 @@ Future<bool> verifyPhotoAPI(File photo) async {
 
     var response =
         await dio.post(getApiEndpoint(ApiType.verifyPhoto), data: formData);
-    final data = response.data["verified"];
-    return data["isVerified"];
+    final data = response.data["data"] as Map<String, dynamic>;
+    return data["photo_verified"];
   } catch (err) {
     debugPrint(err.toString());
     rethrow;
