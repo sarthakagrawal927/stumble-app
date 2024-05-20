@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 enum DropDownOptions {
   liked,
   stumbledOntoMe,
+  filters,
 }
 
 class DropdownOptionVals {
@@ -43,11 +44,23 @@ final Map<DropDownOptions, DropdownOptionVals> dropDownOptions = {
     ),
     '/stumbled-onto-me-screen',
   ),
+  DropDownOptions.filters: DropdownOptionVals(
+    'Filters',
+    DropDownOptions.filters,
+    "",
+    _getFilters,
+    const Icon(
+      Icons.menu_book_outlined,
+      color: Colors.white,
+    ),
+    '/filters-screen',
+    ),
 };
 
 final dropDownOptionList = [
   dropDownOptions[DropDownOptions.liked],
   dropDownOptions[DropDownOptions.stumbledOntoMe],
+  dropDownOptions[DropDownOptions.filters],
 ];
 
 Future<List<MiniProfile>> _getPeopleWhoLiked() async {
@@ -58,6 +71,10 @@ Future<List<MiniProfile>> _getPeopleWhoLiked() async {
 Future<List<MiniProfile>> _getPeopleWhoLikedMe() async {
   var profiles = await getPeopleWhoLikedMe();
   return profiles.map<MiniProfile>((e) => MiniProfile.fromJson(e)).toList();
+}
+
+Future<List<MiniProfile>> _getFilters() async {
+  return <MiniProfile>[];
 }
 
 BoxDecoration imageBoxWidget(BuildContext context, MiniProfile profile) {

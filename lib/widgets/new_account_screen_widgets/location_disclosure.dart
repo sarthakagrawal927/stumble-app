@@ -43,9 +43,10 @@ class _LocationDisclosureState extends State<LocationDisclosure> {
                 vertical: marginHeight128(context),
               ),
               child: Text("Stumble collects location data to show your profile to other potential stumblers in your immediate vicinity, even when the app is closed or not in use.", 
-              style: GoogleFonts.sacramento(
+              style: TextStyle(
                       fontSize: marginWidth16(context),
-                      color: whiteColor,),
+                      color: whiteColor,
+                      ),
               ),
             ),
           ),

@@ -213,7 +213,7 @@ class _UserProfileCompletionScreenState
 
   Future<File> addImageFromGallery() async {
     XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
+      source: ImageSource.camera,
     );
     if (pickedFile != null) {
         return File(pickedFile.path);

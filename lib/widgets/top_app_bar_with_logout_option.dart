@@ -141,7 +141,7 @@ class TopAppBarWithLogoutOption extends StatelessWidget implements PreferredSize
                                               ),
                                               SizedBox(height: marginHeight64(context)),
                                               Text(style: GoogleFonts.acme(
-                                                  fontSize: marginWidth32(context) / 1.2,
+                                                  fontSize: marginWidth32(context) / 1.5,
                                                   color: headingColor,),
                                                 textAlign: TextAlign.left,
                                                 softWrap: true,
