@@ -115,7 +115,8 @@ class _UserProfileCompletionScreenState
                             addImageFromGallery()
                                 .then((file) => verifyPhotoAPI(file))
                                 .then((isVerified) => {
-                                      Provider.of<Profile>(context)
+                                      Provider.of<Profile>(context,
+                                              listen: false)
                                           .setVerificationStatus = isVerified
                                     });
                           },
