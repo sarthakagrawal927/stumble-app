@@ -99,7 +99,9 @@ class _SwipingScreenState extends State<SwipingScreen> {
                 }),
               }
           });
-    } catch (err) {}
+    } catch (err) {
+      debugPrint(err.toString());
+    }
   }
 
   @override

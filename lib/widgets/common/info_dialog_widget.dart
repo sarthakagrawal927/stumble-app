@@ -31,7 +31,10 @@ void showDialogWidget(BuildContext context, ModelOpened modelOpenedName) {
       builder: (BuildContext context) {
         return Center(
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: marginHeight64(context), horizontal: marginWidth64(context),),
+            padding: EdgeInsets.symmetric(
+              vertical: marginHeight64(context),
+              horizontal: marginWidth64(context),
+            ),
             child: Dialog(
                 backgroundColor: widgetColor,
                 shape: RoundedRectangleBorder(

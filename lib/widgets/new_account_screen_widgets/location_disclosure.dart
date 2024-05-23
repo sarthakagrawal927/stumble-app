@@ -1,7 +1,5 @@
-
 import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
@@ -39,13 +37,15 @@ class _LocationDisclosureState extends State<LocationDisclosure> {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: marginWidth128(context), 
+                horizontal: marginWidth128(context),
                 vertical: marginHeight128(context),
               ),
-              child: Text("Stumble collects location data to show your profile to other potential stumblers in your immediate vicinity, even when the app is closed or not in use.", 
-              style: GoogleFonts.sacramento(
-                      fontSize: marginWidth16(context),
-                      color: whiteColor,),
+              child: Text(
+                "Stumble collects location data to show your profile to other potential stumblers in your immediate vicinity, even when the app is closed or not in use.",
+                style: TextStyle(
+                  fontSize: marginWidth16(context),
+                  color: whiteColor,
+                ),
               ),
             ),
           ),
@@ -54,21 +54,21 @@ class _LocationDisclosureState extends State<LocationDisclosure> {
           "Click this to begin stumbling!",
           "",
           () async {
-              if (isLoading) return;
-              isLoading = true;
-              try {
-                Provider.of<Profile>(context, listen: false)
-                    .upsertUserOnboarding()
-                    .then((value) {
-Navigator.of(context).pushNamed(SwipingScreen.routeName);
-                });
-              } catch (e) {
-                // redirect to login screen
-Navigator.of(context).pushNamed(AuthScreen.routeName);
-              } finally {
-                isLoading = false;
-              }
-            }, 
+            if (isLoading) return;
+            isLoading = true;
+            try {
+              Provider.of<Profile>(context, listen: false)
+                  .upsertUserOnboarding()
+                  .then((value) {
+                Navigator.of(context).pushNamed(SwipingScreen.routeName);
+              });
+            } catch (e) {
+              // redirect to login screen
+              Navigator.of(context).pushNamed(AuthScreen.routeName);
+            } finally {
+              isLoading = false;
+            }
+          },
         ),
       ],
     );

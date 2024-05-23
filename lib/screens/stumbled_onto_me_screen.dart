@@ -23,10 +23,7 @@ class _StumbledOntoMeScreenState extends State<StumbledOntoMeScreen> {
         ModalRoute.of(context)!.settings.arguments as List<MiniProfile>;
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: TopAppBar(
-        routeName: SwipingScreen.routeName,
-        heading: "Stumble"
-      ),
+      appBar: TopAppBar(routeName: SwipingScreen.routeName, heading: "Stumble"),
       body: listOfProfiles.isNotEmpty
           ? GridView.builder(
               itemCount: listOfProfiles.length,

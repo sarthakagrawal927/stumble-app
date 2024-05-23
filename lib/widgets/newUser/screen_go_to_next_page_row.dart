@@ -20,8 +20,8 @@ class ScreenGoToNextPageRow extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                left: marginWidth128(context), 
-                top: marginHeight128(context), 
+                left: marginWidth128(context),
+                top: marginHeight128(context),
                 bottom: marginHeight128(context),
               ),
               child: Icon(
@@ -32,24 +32,25 @@ class ScreenGoToNextPageRow extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: marginWidth128(context), 
-                top: marginHeight128(context), 
+                left: marginWidth128(context),
+                top: marginHeight128(context),
                 bottom: marginHeight128(context),
-                ),
+              ),
               child: Text(
                 textToDisplay,
-                style:  TextStyle(fontSize: MediaQuery.of(context).size.width / 32, 
-                color: whiteColor,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width / 32,
+                  color: whiteColor,
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: marginWidth128(context), 
+                left: marginWidth128(context),
                 right: marginWidth128(context),
-                top: marginHeight128(context), 
+                top: marginHeight128(context),
                 bottom: marginHeight128(context),
-                ),  
+              ),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
@@ -57,7 +58,8 @@ class ScreenGoToNextPageRow extends StatelessWidget {
                 onPressed: (() async {
                   await functionToSetData();
                   if (context.mounted && nextScreenRouteName != "") {
-                    Navigator.pushReplacementNamed(context, nextScreenRouteName);
+                    Navigator.pushReplacementNamed(
+                        context, nextScreenRouteName);
                   }
                 }),
                 child: Icon(

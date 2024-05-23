@@ -56,6 +56,7 @@ enum ApiType {
   addMessage,
   uploadFile,
   activateUser,
+  verifyPhoto,
   updateUserInterest,
   addDevice,
   sendFeedback,
@@ -80,6 +81,7 @@ const apiList = {
   ApiType.startConversation: "/api/v1/chat/start_conversation",
   ApiType.uploadFile: "/api/v1/user/upload",
   ApiType.activateUser: "/api/v1/user/activate",
+  ApiType.verifyPhoto: "/api/v1/user/verify_photo",
   ApiType.updateUserInterest: "/api/v1/activity/update_user_interest",
   ApiType.addDevice: "/api/v1/user/device",
   ApiType.sendFeedback: "/api/v1/user/feedback",
@@ -369,6 +371,27 @@ Future<List<String>> uploadPhotosAPI(List<File> photos) async {
         await dio.post(getApiEndpoint(ApiType.uploadFile), data: formData);
     final data = response.data["data"] as Map<String, dynamic>;
     return (data["filePaths"] as List<dynamic>).cast<String>();
+  } catch (err) {
+    debugPrint(err.toString());
+    rethrow;
+  }
+}
+
+Future<bool> verifyPhotoAPI(File photo) async {
+  try {
+    FormData formData = FormData.fromMap({
+      "photo": MultipartFile.fromFileSync(photo.path,
+          filename: photo.path.split('/').last,
+          contentType: MediaType('image', 'png'))
+    });
+    var dio = Dio();
+    dio.options.headers["Authorization"] = AppConstants.token;
+    dio.options.baseUrl = baseURL;
+
+    var response =
+        await dio.post(getApiEndpoint(ApiType.verifyPhoto), data: formData);
+    final data = response.data["data"] as Map<String, dynamic>;
+    return data["photo_verified"];
   } catch (err) {
     debugPrint(err.toString());
     rethrow;

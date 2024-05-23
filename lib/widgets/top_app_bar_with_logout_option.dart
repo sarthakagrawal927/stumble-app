@@ -27,13 +27,15 @@ class DropdownOptionVal {
 
 var defaultDropdownOptions = [
   DropdownOptionVal("Leave feedback!", Icons.pages, DropdownOptions.feedback),
-  DropdownOptionVal("Privacy terms", Icons.document_scanner, DropdownOptions.privacy),
+  DropdownOptionVal(
+      "Privacy terms", Icons.document_scanner, DropdownOptions.privacy),
   DropdownOptionVal("Logout", Icons.exit_to_app, DropdownOptions.logout),
   DropdownOptionVal("Delete :'(", Icons.emoji_flags, DropdownOptions.delete),
 ];
 
 // ignore: must_be_immutable
-class TopAppBarWithLogoutOption extends StatelessWidget implements PreferredSizeWidget {
+class TopAppBarWithLogoutOption extends StatelessWidget
+    implements PreferredSizeWidget {
   String routeName;
   TopAppBarWithLogoutOption({required this.routeName, super.key});
 
@@ -85,36 +87,151 @@ class TopAppBarWithLogoutOption extends StatelessWidget implements PreferredSize
                     Navigator.pushNamed(context, AuthScreen.routeName);
                   });
                 } else if (itemIdentifier == 'Privacy terms') {
-                    launchUrl(
-                        Uri.parse('https://www.getstumble.app/privacy'));
+                  launchUrl(Uri.parse('https://www.getstumble.app/privacy'));
                 } else if (itemIdentifier == 'Delete :\'(') {
-                  deleteUserApi().then((_) => deleteSecureData(authKey).then((value) {
-                    Provider.of<FirstScreenStateProviders>(context,
-                            listen: false)
-                        .setActiveScreenMode(ScreenMode.landing);
-                    Navigator.pushNamed(context, AuthScreen.routeName);
-                  }));
+                  showDialog(
+                      context: context,
+                      barrierColor: Colors.transparent.withOpacity(0.8),
+                      builder: (context) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Dialog(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40)),
+                              elevation: 16,
+                              child: ListView(
+                                shrinkWrap: true,
+                                children: <Widget>[
+                                  SizedBox(
+                                      height: marginHeight4(context),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.825,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    64),
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  32,
+                                              vertical: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  64,
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  style: GoogleFonts.acme(
+                                                    fontSize:
+                                                        marginWidth16(context),
+                                                    color: headingColor,
+                                                  ),
+                                                  textAlign: TextAlign.left,
+                                                  softWrap: true,
+                                                  "It saddens us to witness your stumbling come to a halt in discovering more incredible individuals!",
+                                                ),
+                                                SizedBox(
+                                                    height: marginHeight64(
+                                                        context)),
+                                                Text(
+                                                    style: GoogleFonts.acme(
+                                                      fontSize: marginWidth32(
+                                                              context) /
+                                                          1.5,
+                                                      color: headingColor,
+                                                    ),
+                                                    textAlign: TextAlign.left,
+                                                    softWrap: true,
+                                                    "Click on the ✅ to delete.")
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  Container(
+                                    height: marginHeight64(context),
+                                    color:
+                                        Colors.transparent.withOpacity(0.925),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      IconButton(
+                                        iconSize:
+                                            MediaQuery.of(context).size.width /
+                                                10,
+                                        icon: const Icon(Icons.close),
+                                        onPressed: () {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop("");
+                                        },
+                                      ),
+                                      IconButton(
+                                        iconSize:
+                                            MediaQuery.of(context).size.width /
+                                                10,
+                                        icon: const Icon(
+                                          Icons.check,
+                                        ),
+                                        onPressed: () {
+                                          deleteUserApi().then((_) =>
+                                              deleteSecureData(authKey)
+                                                  .then((value) {
+                                                Provider.of<FirstScreenStateProviders>(
+                                                        context,
+                                                        listen: false)
+                                                    .setActiveScreenMode(
+                                                        ScreenMode.landing);
+                                                Navigator.pushNamed(context,
+                                                    AuthScreen.routeName);
+                                              }));
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      });
                 } else if (itemIdentifier == 'Leave feedback!') {
-                showDialog(
-                context: context,
-                barrierColor: Colors.transparent.withOpacity(0.8),
-                builder: (context) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Dialog(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40)),
-                        elevation: 16,
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: <Widget>[
-                            SizedBox(
-                              height: marginHeight4(context),
-                              width: MediaQuery.of(context).size.width * 0.825,
-                              child: Column(
+                  showDialog(
+                    context: context,
+                    barrierColor: Colors.transparent.withOpacity(0.8),
+                    builder: (context) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Dialog(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40)),
+                            elevation: 16,
+                            child: ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                SizedBox(
+                                    height: marginHeight4(context),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.825,
+                                    child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment:
@@ -139,101 +256,112 @@ class TopAppBarWithLogoutOption extends StatelessWidget implements PreferredSize
                                           child: Text(
                                             style: GoogleFonts.acme(
                                               fontSize: marginWidth16(context),
-                                              color: headingColor,),
+                                              color: headingColor,
+                                            ),
                                             textAlign: TextAlign.left,
                                             softWrap: true,
                                             "We'd love to hear YOU, to make stumbling a better experience for YOU!",
                                           ),
                                         ),
                                       ],
-                                    )
-                            ),
-                            Container(
-                              height: marginHeight64(context),
-                              color: Colors.transparent.withOpacity(0.925),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(marginWidth12(context)),
-                              child: TextField(
-                                maxLines: 2,
-                                minLines: 1,
-                                cursorColor: Colors.black,
-                                autocorrect: true,
-                                keyboardType: TextInputType.multiline,
-                                textInputAction: TextInputAction.newline,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
+                                    )),
+                                Container(
+                                  height: marginHeight64(context),
+                                  color: Colors.transparent.withOpacity(0.925),
                                 ),
-                                maxLength: 75,
-                                onChanged: (value) {
-                                  feedback = value;
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: marginWidth64(context), 
-                                vertical: marginHeight128(context),
-                              ),
-                              child: InternationalPhoneNumberInput(
-                                cursorColor: headingColor,
-                                onInputChanged: (PhoneNumber number) {
-                                  phoneNumber = number.phoneNumber!;
-                                },
-                                selectorConfig: const SelectorConfig(
-                                  selectorType: PhoneInputSelectorType.DIALOG,
-                                ),
-                                ignoreBlank: false,
-                                autoValidateMode: AutovalidateMode.onUserInteraction,
-                                selectorTextStyle: const TextStyle(color: headingColor),
-                                autoFocus: true,
-                                hintText: "Phone number",
-                                keyboardAction: TextInputAction.done,
-                                textFieldController: controller,
-                                textStyle: const TextStyle(color: headingColor),
-                                formatInput: true,
-                                keyboardType: const TextInputType.numberWithOptions(
-                                    signed: true, decimal: true),
-                                inputBorder: const OutlineInputBorder(),
-                                onFieldSubmitted: (value) {
-                                  phoneNumber = value;
-                                },
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                IconButton(
-                                  iconSize:
-                                      MediaQuery.of(context).size.width / 10,
-                                  icon: const Icon(Icons.close),
-                                  onPressed: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop("");
-                                  },
-                                ),
-                                IconButton(
-                                  iconSize:
-                                      MediaQuery.of(context).size.width / 10,
-                                  icon: const Icon(
-                                    Icons.check,
+                                Padding(
+                                  padding:
+                                      EdgeInsets.all(marginWidth12(context)),
+                                  child: TextField(
+                                    maxLines: 2,
+                                    minLines: 1,
+                                    cursorColor: Colors.black,
+                                    autocorrect: true,
+                                    keyboardType: TextInputType.multiline,
+                                    textInputAction: TextInputAction.newline,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                    ),
+                                    maxLength: 75,
+                                    onChanged: (value) {
+                                      feedback = value;
+                                    },
                                   ),
-                                  onPressed: () {
-                                    sendFeedbackApi(phoneNumber, feedback);
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop("");
-                                  },
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: marginWidth64(context),
+                                    vertical: marginHeight128(context),
+                                  ),
+                                  child: InternationalPhoneNumberInput(
+                                    cursorColor: headingColor,
+                                    onInputChanged: (PhoneNumber number) {
+                                      phoneNumber = number.phoneNumber!;
+                                    },
+                                    selectorConfig: const SelectorConfig(
+                                      selectorType:
+                                          PhoneInputSelectorType.DIALOG,
+                                    ),
+                                    ignoreBlank: false,
+                                    autoValidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    selectorTextStyle:
+                                        const TextStyle(color: headingColor),
+                                    autoFocus: true,
+                                    hintText: "Phone number",
+                                    keyboardAction: TextInputAction.done,
+                                    textFieldController: controller,
+                                    textStyle:
+                                        const TextStyle(color: headingColor),
+                                    formatInput: true,
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                            signed: true, decimal: true),
+                                    inputBorder: const OutlineInputBorder(),
+                                    onFieldSubmitted: (value) {
+                                      phoneNumber = value;
+                                    },
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    IconButton(
+                                      iconSize:
+                                          MediaQuery.of(context).size.width /
+                                              10,
+                                      icon: const Icon(Icons.close),
+                                      onPressed: () {
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop("");
+                                      },
+                                    ),
+                                    IconButton(
+                                      iconSize:
+                                          MediaQuery.of(context).size.width /
+                                              10,
+                                      icon: const Icon(
+                                        Icons.check,
+                                      ),
+                                      onPressed: () {
+                                        sendFeedbackApi(phoneNumber, feedback);
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop("");
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
+                          ),
+                        ],
+                      );
+                    },
                   );
-                },
-              );
                 }
               },
               icon: Padding(

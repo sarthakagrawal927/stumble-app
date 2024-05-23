@@ -71,7 +71,8 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
             handleSnackBarIfInputNotFilled(promptTextValue != "", () async {
               Provider.of<Profile>(context, listen: false)
                   .setConversationStarter = promptTextValue;
-                  Provider.of<FirstScreenStateProviders>    (context, listen: false).setNextScreenActive();
+              Provider.of<FirstScreenStateProviders>(context, listen: false)
+                  .setNextScreenActive();
             }, context, valueToFill: "prompt");
           },
         ),

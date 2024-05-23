@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants.dart';
 
 // ignore: must_be_immutable
-class TopAppBarWithScreensOption extends StatelessWidget implements PreferredSizeWidget {
+class TopAppBarWithScreensOption extends StatelessWidget
+    implements PreferredSizeWidget {
   String routeName;
   TopAppBarWithScreensOption({required this.routeName, super.key});
 
@@ -24,31 +25,32 @@ class TopAppBarWithScreensOption extends StatelessWidget implements PreferredSiz
               iconSize: marginWidth16(context),
               dropdownColor: dropDownColor,
               items: dropDownOptionList
-                  .map((e) => DropdownMenuItem(
-                        value: e!.value,
-                        child: Row(
-                              children: [
-                                e.icon,
-                                const SizedBox(width: 8),
-                                Text(
-                                  e.label,
-                                  style: const TextStyle(
-                                    color: whiteColor,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e!.value,
+                      child: Row(
+                        children: [
+                          e.icon,
+                          const SizedBox(width: 8),
+                          Text(
+                            e.label,
+                            style: const TextStyle(
+                              color: whiteColor,
+                              fontSize: 14,
                             ),
+                          ),
+                        ],
                       ),
-                    )
+                    ),
+                  )
                   .toList(),
               onChanged: (itemIdentifier) async {
-                  dropDownOptions[itemIdentifier]!.getActivities().then(
-                        (value) => Navigator.pushNamed(context,
-                            dropDownOptions[itemIdentifier]!.routeName,
-                            arguments: value),
-                      );
-                },
+                dropDownOptions[itemIdentifier]!.getActivities().then(
+                      (value) => Navigator.pushNamed(
+                          context, dropDownOptions[itemIdentifier]!.routeName,
+                          arguments: value),
+                    );
+              },
               icon: Padding(
                 padding: EdgeInsets.only(right: marginWidth16(context)),
                 child: const Icon(

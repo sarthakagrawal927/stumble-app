@@ -111,8 +111,13 @@ class _UserProfileCompletionScreenState
                       )
                     : Consumer<Profile>(
                         builder: (context, value, child) => GestureDetector(
-                          onTap: () {
-                            addImageFromGallery();
+                          onTap: () async {
+                            addImageFromGallery()
+                                .then((file) => verifyPhotoAPI(file))
+                                .then((isVerified) => {
+                                      Provider.of<Profile>(context)
+                                          .setVerificationStatus = isVerified
+                                    });
                           },
                           child: verificationStatusCard(
                             context,
@@ -209,13 +214,14 @@ class _UserProfileCompletionScreenState
     );
   }
 
-  void addImageFromGallery() async {
+  Future<File> addImageFromGallery() async {
     XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
+      source: ImageSource.camera,
     );
     if (pickedFile != null) {
-      uploadPhotosAPI([File(pickedFile.path)]);
+      return File(pickedFile.path);
     }
+    return File("");
   }
 }
 

@@ -28,7 +28,7 @@ final screenWidgets = {
       NicheSelectionColumn(deviceSize),
   ScreenMode.promptAdditionInput: (deviceSize) =>
       PromptAdditionColumn(deviceSize),
-  ScreenMode.locationDisclosureScreen: (deviceSize) => 
+  ScreenMode.locationDisclosureScreen: (deviceSize) =>
       LocationDisclosure(deviceSize),
 };
 

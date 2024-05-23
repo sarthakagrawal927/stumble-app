@@ -13,10 +13,10 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
 
-const interestToLabel = {
+var interestToLabel = {
   InterestType.friendship: "Just a conversation",
-  InterestType.hookup: "Hookup",
-  InterestType.relationship: "Relationship",
+  InterestType.hookup: "🌚",
+  InterestType.relationship: "💞",
 };
 
 var labelToInterest = {
@@ -182,7 +182,9 @@ class _ChatScreenState extends State<ChatScreen> {
                               showLookingForOption = false;
                             });
                             promptDialog(
-                                context, promptExplainingStumblingReason,);
+                              context,
+                              promptExplainingStumblingReason,
+                            );
                           } else {
                             setState(() {
                               showLookingForOption = false;
