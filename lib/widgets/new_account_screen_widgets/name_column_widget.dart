@@ -33,7 +33,7 @@ class _NameColumnState extends State<NameColumn> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const ScreenHeadingWidget("What's your first name?"),
+        const ScreenHeadingWidget("What should your 'stumblers' call you?"),
         Container(
           margin: EdgeInsets.only(
             left: widget.deviceSize.width / 16,
