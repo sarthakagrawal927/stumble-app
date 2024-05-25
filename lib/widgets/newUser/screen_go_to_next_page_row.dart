@@ -22,7 +22,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
               padding: EdgeInsets.only(
                 left: marginWidth128(context), 
                 top: marginHeight128(context), 
-                bottom: marginHeight128(context),
+                bottom: marginHeight32(context),
               ),
               child: Icon(
                 Icons.remove_red_eye,
@@ -34,11 +34,11 @@ class ScreenGoToNextPageRow extends StatelessWidget {
               padding: EdgeInsets.only(
                 left: marginWidth128(context), 
                 top: marginHeight128(context), 
-                bottom: marginHeight128(context),
+                bottom: marginHeight32(context),
                 ),
               child: Text(
                 textToDisplay,
-                style:  TextStyle(fontSize: MediaQuery.of(context).size.width / 32, 
+                style:  TextStyle(fontSize: marginWidth32(context), 
                 color: whiteColor,
                 ),
               ),
@@ -48,7 +48,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
                 left: marginWidth128(context), 
                 right: marginWidth128(context),
                 top: marginHeight128(context), 
-                bottom: marginHeight128(context),
+                bottom: marginHeight32(context),
                 ),  
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(

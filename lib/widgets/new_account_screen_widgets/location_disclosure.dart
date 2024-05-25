@@ -38,8 +38,8 @@ class _LocationDisclosureState extends State<LocationDisclosure> {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: marginWidth128(context), 
-                vertical: marginHeight128(context),
+                horizontal: marginWidth64(context), 
+                vertical: marginHeight64(context),
               ),
               child: Text("Stumble collects location data to show your profile to other potential stumblers in your immediate vicinity, even when the app is closed or not in use.", 
               style: TextStyle(

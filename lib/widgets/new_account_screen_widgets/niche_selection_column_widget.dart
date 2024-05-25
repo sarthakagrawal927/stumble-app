@@ -31,8 +31,8 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
           ),
         child: Padding(
             padding: EdgeInsets.symmetric(
-            vertical: marginHeight32(context),
-            horizontal: marginWidth32(context),
+            vertical: marginHeight64(context),
+            horizontal: marginWidth64(context),
           ),
           child: Text(
               textAlign: TextAlign.center,
@@ -55,11 +55,11 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
             child: Theme(
               data: ThemeData(unselectedWidgetColor: Colors.white),
               child: CheckboxListTile(
-                title: const Text(
+                title: Text(
                   'Stumbling filters: ',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: marginWidth16(context),
                   ),
                 ),
                 value: isUserPlatonic,
