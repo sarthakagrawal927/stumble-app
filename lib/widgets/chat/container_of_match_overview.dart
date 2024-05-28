@@ -146,7 +146,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                             onPressed: () {
                               reportAndBlockUserApi(
                                 widget.threadDetails.chatterId, 
-                                widget.threadDetails.userId,
+                                2,
                                 reportMessage,
                               );
                               Navigator.of(context, rootNavigator: true)
