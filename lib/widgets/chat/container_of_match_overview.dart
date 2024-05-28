@@ -1,7 +1,9 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/general.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../screens/individual_chats_screen.dart';
 import '../circle_avatar.dart';
@@ -33,10 +35,133 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
   @override
   Widget build(BuildContext context) {
     bool hasConversationStarted = widget.threadDetails.lastMsgTime != null;
+    String reportMessage = "";
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ChatScreen(thread: widget.threadDetails)));
+      },
+      onLongPress: () {
+        showDialog(
+          context: context,
+          barrierColor: Colors.transparent.withOpacity(0.8),
+          builder: (context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Dialog(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                  elevation: 16,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      SizedBox(
+                        height: marginHeight4(context),
+                        width: MediaQuery.of(context).size.width * 0.825,
+                        child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: MediaQuery.of(context)
+                                                .size
+                                                .width /
+                                            64),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: MediaQuery.of(context)
+                                              .size
+                                              .width /
+                                          32,
+                                      vertical: MediaQuery.of(context)
+                                              .size
+                                              .height /
+                                          64,
+                                    ),
+                                    child: Text(
+                                      style: GoogleFonts.acme(
+                                        fontSize: marginWidth16(context),
+                                        color: headingColor,),
+                                      textAlign: TextAlign.left,
+                                      softWrap: true,
+                                      "We encourage you to drop a message if you're reporting a user, so we can assist you promptly.",
+                                    ),
+                                  ),
+                                ],
+                              )
+                      ),
+                      Container(
+                        height: marginHeight64(context),
+                        color: Colors.transparent.withOpacity(0.925),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(marginWidth12(context)),
+                        child: TextField(
+                          maxLines: 2,
+                          minLines: 1,
+                          cursorColor: Colors.black,
+                          autocorrect: true,
+                          keyboardType: TextInputType.multiline,
+                          textInputAction: TextInputAction.newline,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                          maxLength: 75,
+                          onChanged: (value) {
+                            reportMessage = value;
+                          },
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                            iconSize:
+                                MediaQuery.of(context).size.width / 10,
+                            icon: Icon(
+                              Icons.block, 
+                              color: const Color.fromARGB(255, 250, 120, 111),
+                              size: marginWidth8(context),
+                            ),
+                            onPressed: () {
+                              blockUserApi(widget.threadDetails.chatterId);
+                              Navigator.of(context, rootNavigator: true)
+                                  .pop("");
+                            },
+                          ),
+                          IconButton(
+                            iconSize:
+                                MediaQuery.of(context).size.width / 10,
+                            icon: Icon(
+                              Icons.report,
+                              color: Colors.red,
+                              size: marginWidth8(context),
+                            ),
+                            onPressed: () {
+                              reportAndBlockUserApi(
+                                widget.threadDetails.chatterId, 
+                                widget.threadDetails.userId,
+                                reportMessage,
+                              );
+                              Navigator.of(context, rootNavigator: true)
+                                  .pop("");
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -129,7 +254,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                             : FontStyle.italic,
                       ),
                       overflow: TextOverflow.ellipsis,
-
+    
                       // italics if hasConversationStarted
                     ),
                   ),
