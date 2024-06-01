@@ -1,3 +1,5 @@
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
@@ -26,7 +28,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
               ),
               child: Icon(
                 Icons.remove_red_eye,
-                size: marginWidth16(context),
+                size: fontSize32(context),
                 color: whiteColor,
               ),
             ),
@@ -37,8 +39,9 @@ class ScreenGoToNextPageRow extends StatelessWidget {
                 bottom: marginHeight32(context),
                 ),
               child: Text(
+                textAlign: TextAlign.center,
                 textToDisplay,
-                style:  TextStyle(fontSize: marginWidth32(context), 
+                style:  TextStyle(fontSize: fontSize64(context), 
                 color: whiteColor,
                 ),
               ),
@@ -63,7 +66,7 @@ class ScreenGoToNextPageRow extends StatelessWidget {
                 child: Icon(
                   Icons.arrow_forward,
                   color: whiteColor,
-                  size: marginWidth16(context),
+                  size: fontSize32(context),
                 ),
               ),
             ),

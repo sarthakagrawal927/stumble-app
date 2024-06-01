@@ -1,4 +1,5 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:dating_made_better/utils/general.dart';

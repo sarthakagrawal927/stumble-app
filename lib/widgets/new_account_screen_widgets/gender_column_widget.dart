@@ -1,3 +1,5 @@
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,28 +26,28 @@ class _GenderColumnState extends State<GenderColumn> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const ScreenHeadingWidget("What's your gender?"),
+        const ScreenHeadingWidget("Which gender do you identify with?"),
         Container(
           margin: EdgeInsets.symmetric(
-            horizontal: widget.deviceSize.width / 24,
-            vertical: widget.deviceSize.height / 16,
+            horizontal: marginWidth16(context),
+            vertical: marginHeight16(context),
           ),
-          child: const Text(
-              style: TextStyle(fontSize: 20, color: whiteColor),
+          child: Text(
+              style: TextStyle(fontSize: fontSize48(context), color: whiteColor),
               "Pick which best describes you!"),
         ),
         Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: widget.deviceSize.height / 48),
+              padding: EdgeInsets.only(top: marginHeight48(context)),
               child: genderListTile('Woman', Gender.woman, context),
             ),
             Padding(
-              padding: EdgeInsets.only(top: widget.deviceSize.height / 48),
+              padding: EdgeInsets.only(top: marginHeight48(context)),
               child: genderListTile('Man', Gender.man, context),
             ),
             Padding(
-              padding: EdgeInsets.only(top: widget.deviceSize.height / 48),
+              padding: EdgeInsets.only(top: marginHeight48(context)),
               child: genderListTile('Nonbinary', Gender.nonBinary, context),
             ),
           ],
@@ -69,12 +71,12 @@ class _GenderColumnState extends State<GenderColumn> {
   RadioListTile genderListTile(
       String text, Gender gender, BuildContext context) {
     return RadioListTile<Gender>(
-      tileColor: Colors.white,
+      tileColor: whiteColor,
       title: Text(
         text,
-        style: const TextStyle(
-          fontSize: 30,
-          color: Colors.white,
+        style: TextStyle(
+          fontSize: fontSize32(context),
+          color: whiteColor,
         ),
       ),
       onChanged: (Gender? value) {

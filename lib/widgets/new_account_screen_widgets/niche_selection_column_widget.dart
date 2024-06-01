@@ -1,4 +1,6 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/widgets/newUser/screen_go_to_next_page_row.dart';
@@ -39,7 +41,7 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
               "Our objective is to diminish the hurdles that impede individuals from stumbling upon remarkable people. We strive to offer clarity regarding the intentions of those they encounter—whether for a friendly chat, professional networking, or romantic interest. To facilitate this, we've introduced an option enabling users to specify their desired connection with each new encounter. Only when *both* parties stumble upon the same option will it be revealed to both!", 
             style: TextStyle(
               color: whiteColor,
-              fontSize: marginWidth24(context)
+              fontSize: fontSize48(context)
             ),
             ),
         ),
@@ -53,13 +55,13 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
             ),
             color: Colors.transparent,
             child: Theme(
-              data: ThemeData(unselectedWidgetColor: Colors.white),
+              data: ThemeData(unselectedWidgetColor: whiteColor),
               child: CheckboxListTile(
                 title: Text(
                   'Stumbling filters: ',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: marginWidth16(context),
+                    color: whiteColor,
+                    fontSize: fontSize32(context),
                   ),
                 ),
                 value: isUserPlatonic,
@@ -72,7 +74,7 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
             ),
           ),
         ),
-        ScreenGoToNextPageRow("Know exactly what each stumbler seeks from you!", "",
+        ScreenGoToNextPageRow("Know stumbling reasons for all!", "",
             () {
           Provider.of<FirstScreenStateProviders>(context, listen: false)
               .setNextScreenActive();

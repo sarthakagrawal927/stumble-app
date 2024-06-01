@@ -1,4 +1,5 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_colors.dart';
 import 'package:flutter/material.dart';
 
 class ScreenHeadingWidget extends StatelessWidget {
@@ -27,7 +28,7 @@ class ScreenHeadingWidget extends StatelessWidget {
         style: TextStyle(
           fontSize: marginHeight32(context),
           fontWeight: FontWeight.w600,
-          color: Colors.white,
+          color: whiteColor,
         ),
         text,
       ),

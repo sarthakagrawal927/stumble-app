@@ -47,7 +47,7 @@ class _PhotoUploaderState extends State<PhotoUploader> {
         style: ElevatedButton.styleFrom(
           backgroundColor: widgetColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(marginWidth64(context)),
           ),
           padding: EdgeInsets.zero,
           fixedSize: Size(

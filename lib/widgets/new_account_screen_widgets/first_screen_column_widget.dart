@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/hooks/index.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/gestures.dart';
@@ -117,17 +119,14 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Flexible(
-          child: Container(
-            margin: EdgeInsets.only(top: widget.deviceSize.height / 8),
-            child: FadeTransition(
-              opacity: _stumbleTextAnimation,
-              child: Text(
-                'Stumble',
-                style: GoogleFonts.sacramento(
-                  fontSize: 60.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+          child: FadeTransition(
+            opacity: _stumbleTextAnimation,
+            child: Text(
+              'Stumble',
+              style: GoogleFonts.sacramento(
+                fontSize: fontSize16(context),
+                color: whiteColor,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -142,8 +141,8 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
               child: Text(
                 'into someone amazing!',
                 style: GoogleFonts.sacramento(
-                  fontSize: 30.0,
-                  color: Colors.white,
+                  fontSize: fontSize24(context),
+                  color: whiteColor,
                 ),
                 textAlign: TextAlign.end,
               ),
@@ -160,14 +159,14 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
               await _handleSignIn();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
+              backgroundColor: whiteColor,
               minimumSize: Size(
                   widget.deviceSize.width / 2, widget.deviceSize.height / 16),
             ),
             child: Text(
               "Sign in with ${Platform.isAndroid ? 'Google' : 'Apple'}",
-              style: const TextStyle(
-                  fontSize: 20, color: filterScreenHeadingColor),
+              style: TextStyle(
+                  fontSize: fontSize48(context), color: filterScreenHeadingColor),
             ),
           ),
         ),
@@ -181,22 +180,22 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
             child: RichText(
               text: TextSpan(
                 children: [
-                  const TextSpan(
+                  TextSpan(
                     text: "By signing up, you agree to our ",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
+                    style: TextStyle(fontSize: fontSize64(context), color: whiteColor),
                   ),
                   TextSpan(
                     text: 'Terms',
-                    style: const TextStyle(fontSize: 15, color: Colors.blue),
+                    style: TextStyle(fontSize: fontSize64(context), color: blueColor),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         launchUrl(Uri.parse(privacyUrl));
                       },
                   ),
-                  const TextSpan(
+                  TextSpan(
                     text:
                         ". See how we use your data in our Privacy policy. We never post to facebook.",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
+                    style: TextStyle(fontSize: fontSize64(context), color: whiteColor),
                   ),
                 ],
               ),

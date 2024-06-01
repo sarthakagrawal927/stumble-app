@@ -1,3 +1,5 @@
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,7 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
       children: [
         const ScreenHeadingWidget("What fascinates or interests or you?"),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 7,
+          height: marginHeight8(context),
         ),
         SingleChildScrollView(
           child: Container(
@@ -44,16 +46,15 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
               right: marginWidth16(context),
             ),
             child: TextFormField(
-              style: const TextStyle(
+              style: TextStyle(
                 color: whiteColor,
-                fontSize: 20,
+                fontSize: fontSize48(context),
               ),
               initialValue: '',
               maxLines: 3,
               minLines: 1,
               focusNode: textFieldFocusNode,
               autofocus: true,
-              keyboardAppearance: Brightness.dark,
               textInputAction: TextInputAction.next,
               cursorColor: whiteColor,
               onChanged: (value) {

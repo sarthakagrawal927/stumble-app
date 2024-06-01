@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/widgets/comment_feature_widget.dart';
 import 'package:flutter/material.dart';
 

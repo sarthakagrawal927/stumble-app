@@ -1,4 +1,7 @@
 import 'package:age_calculator/age_calculator.dart';
+import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
@@ -35,25 +38,29 @@ class _AgeColumnState extends State<AgeColumn> {
       children: [
         const ScreenHeadingWidget("What's your date of birth?"),
         Container(
-            padding: const EdgeInsets.all(15),
+            margin: EdgeInsets.symmetric(
+              vertical: marginHeight16(context), 
+              horizontal: marginWidth24(context)
+              ),
+            padding: EdgeInsets.all(marginWidth24(context)),
             height: MediaQuery.of(context).size.width / 3,
             child: Center(
                 child: TextField(
-              cursorColor: Colors.white,
+              cursorColor: whiteColor,
               controller: dateInput,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
+              style: TextStyle(
+                color: whiteColor,
+                fontSize: fontSize32(context),
               ),
               //editing controller of this TextField
               decoration: const InputDecoration(
                 icon: Icon(Icons.calendar_today), //icon of text field
                 labelText: "Enter Date", //label text of field
                 labelStyle: TextStyle(
-                  color: Colors.white,
+                  color: whiteColor,
                 ),
-                iconColor: Colors.white,
-                fillColor: Colors.white,
+                iconColor: whiteColor,
+                fillColor: whiteColor,
               ),
               readOnly: true,
               //set it true, so that user will not able to edit text
@@ -79,7 +86,7 @@ class _AgeColumnState extends State<AgeColumn> {
                     //low to choose before today.
                     initialDatePickerMode: DatePickerMode.day,
                     initialEntryMode: DatePickerEntryMode.calendarOnly);
-
+        
                 if (pickedDate != null) {
                   setState(() {
                     birthDateInput = pickedDate!;
