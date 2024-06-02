@@ -42,10 +42,7 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
         await _googleSignIn.signIn();
       } else if (Platform.isIOS) {
         final credential = await SignInWithApple.getAppleIDCredential(
-          scopes: [
-            AppleIDAuthorizationScopes.email,
-            AppleIDAuthorizationScopes.fullName,
-          ],
+          scopes: [AppleIDAuthorizationScopes.email],
         );
 
         verifyAppleAuth(credential)
