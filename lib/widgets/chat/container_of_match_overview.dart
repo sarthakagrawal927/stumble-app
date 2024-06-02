@@ -1,4 +1,6 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/general.dart';
@@ -51,7 +53,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Dialog(
-                  backgroundColor: Colors.white,
+                  backgroundColor: whiteColor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40)),
                   elevation: 16,
@@ -59,7 +61,6 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                     shrinkWrap: true,
                     children: <Widget>[
                       SizedBox(
-                        height: marginHeight4(context),
                         width: MediaQuery.of(context).size.width * 0.825,
                         child: Column(
                                 crossAxisAlignment:
@@ -69,23 +70,14 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(
-                                        top: MediaQuery.of(context)
-                                                .size
-                                                .width /
-                                            64),
+                                        top: marginWidth64(context)),
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: MediaQuery.of(context)
-                                              .size
-                                              .width /
-                                          32,
-                                      vertical: MediaQuery.of(context)
-                                              .size
-                                              .height /
-                                          64,
+                                      horizontal: marginWidth32(context),
+                                      vertical: marginHeight64(context),
                                     ),
                                     child: Text(
                                       style: GoogleFonts.acme(
-                                        fontSize: marginWidth16(context),
+                                        fontSize: fontSize48(context),
                                         color: headingColor,),
                                       textAlign: TextAlign.left,
                                       softWrap: true,
@@ -100,7 +92,12 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                         color: Colors.transparent.withOpacity(0.925),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(marginWidth12(context)),
+                        padding: EdgeInsets.only(
+                          top: marginHeight64(context), 
+                          left: marginWidth16(context), 
+                          right: marginWidth16(context), 
+                          bottom: marginHeight128(context),
+                        ),
                         child: TextField(
                           maxLines: 2,
                           minLines: 1,
@@ -108,11 +105,11 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                           autocorrect: true,
                           keyboardType: TextInputType.multiline,
                           textInputAction: TextInputAction.newline,
-                          style: const TextStyle(
+                          style:  TextStyle(
                             color: Colors.black,
-                            fontSize: 20,
+                            fontSize: fontSize64(context),
                           ),
-                          maxLength: 75,
+                          maxLength: 25,
                           onChanged: (value) {
                             reportMessage = value;
                           },
@@ -123,11 +120,11 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                         children: [
                           IconButton(
                             iconSize:
-                                MediaQuery.of(context).size.width / 10,
+                                fontSize16(context),
                             icon: Icon(
                               Icons.block, 
-                              color: const Color.fromARGB(255, 250, 120, 111),
-                              size: marginWidth8(context),
+                              color: Colors.black,
+                              size: marginWidth12(context),
                             ),
                             onPressed: () {
                               blockUserApi(widget.threadDetails.chatterId);
@@ -137,11 +134,11 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                           ),
                           IconButton(
                             iconSize:
-                                MediaQuery.of(context).size.width / 10,
+                                fontSize16(context),
                             icon: Icon(
                               Icons.report,
                               color: Colors.red,
-                              size: marginWidth8(context),
+                              size: marginWidth12(context),
                             ),
                             onPressed: () {
                               reportAndBlockUserApi(

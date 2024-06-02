@@ -83,10 +83,9 @@ class SwipeCard extends StatelessWidget {
                                     child: Text(
                                       profile.getBadgeLabel,
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: whiteColor,
                                         fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                32,
+                                            marginWidth32(context),
                                         fontWeight: FontWeight.w900,
                                       ),
                                     ),

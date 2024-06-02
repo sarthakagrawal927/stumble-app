@@ -82,7 +82,7 @@ class _DragWidgetState extends State<DragWidget> {
             ),
           ),
           Positioned(
-            bottom: MediaQuery.of(context).size.height / 24,
+            bottom: marginHeight24(context),
             left: 0,
             child: Showcase(
               description: "Click this if uninterested in conversation.",

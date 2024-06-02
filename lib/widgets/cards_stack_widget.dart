@@ -1,4 +1,5 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -74,7 +75,7 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
                           "No nearby stumblers to 'stumble' upon at the moment.",
                           style: GoogleFonts.sacramento(
                             color: textColor,
-                            fontSize: 40,
+                            fontSize: fontSize24(context),
                           ),
                         ),
                       ),

@@ -9,6 +9,10 @@ double fontSize24(BuildContext context) {
   return MediaQuery.of(context).size.height / 24;
 }
 
+double fontSize28(BuildContext context) {
+  return MediaQuery.of(context).size.height / 28;
+}
+
 double fontSize32(BuildContext context) {
   return MediaQuery.of(context).size.height / 32;
 }

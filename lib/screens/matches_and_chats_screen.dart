@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
@@ -79,7 +80,7 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
                     "You haven't 'Stumbled' into anyone yet; keep swiping!",
                     style: GoogleFonts.sacramento(
                       color: textColor,
-                      fontSize: 40,
+                      fontSize: fontSize24(context),
                     ),
                   ),
                 ),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
@@ -43,8 +44,8 @@ class UserProfileScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: marginHeight64(context),
                 ),
                 Center(
                   child: GestureDetector(
@@ -70,21 +71,21 @@ class UserProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: marginHeight64(context),
                 ),
                 Container(
                   color: Colors.transparent,
                   child: Text(
                     'Profile completion: $profileCompletionPercentage%',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: textColor,
-                      fontSize: 20,
+                      fontSize: fontSize48(context),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: marginHeight64(context),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -93,9 +94,9 @@ class UserProfileScreen extends StatelessWidget {
                       color: Colors.transparent,
                       child: Text(
                         name,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: textColor,
-                          fontSize: 20,
+                          fontSize: fontSize48(context),
                         ),
                       ),
                     ),
@@ -103,9 +104,9 @@ class UserProfileScreen extends StatelessWidget {
                       color: Colors.transparent,
                       child: Text(
                         '$age ',
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: textColor,
-                          fontSize: 20,
+                          fontSize: fontSize48(context),
                         ),
                       ),
                     ),
@@ -122,15 +123,15 @@ class UserProfileScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: marginHeight64(context),
                 ),
                 TextButton(
-                  child: const Text(
+                  child: Text(
                     'Edit Profile?',
                     style: TextStyle(
                       color: textColor,
-                      fontSize: 15,
+                      fontSize: fontSize64(context),
                     ),
                   ),
                   onPressed: () {
@@ -138,8 +139,8 @@ class UserProfileScreen extends StatelessWidget {
                         context, UserProfileCompletionScreen.routeName);
                   },
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: marginHeight64(context),
                 ),
               ],
             ),

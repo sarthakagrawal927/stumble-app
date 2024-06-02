@@ -1,4 +1,5 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class BottomBar extends StatelessWidget {
       BuildContext context, String routeNameOfScreenToPush) {
     return IconButton(
       icon: icon,
+      iconSize: fontSize32(context),
       color: color,
       onPressed: () {
         if (routeNameOfScreenToPush != "") {
@@ -34,7 +36,7 @@ class BottomBar extends StatelessWidget {
   Padding bottomAppBarConfigurationBasedOnCurrentScreen(
       BuildContext context, BottomBarScreens currentScreen) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0),
+      padding: EdgeInsets.only(bottom: marginHeight128(context)),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: BottomBarScreens.values
