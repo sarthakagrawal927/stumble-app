@@ -192,11 +192,12 @@ class CommentFeatureWidget extends StatelessWidget {
                 },
               );
             },
-            icon: Icon(
-              Icons.comment_rounded,
-              color: isImage
-                  ? commentIconColorForPhotos
-                  : commentIconColorForOtherPrompts,
+            icon: const Icon(
+              Icons.favorite_outline_rounded,
+              // color: isImage
+              //     ? commentIconColorForPhotos
+              //     : commentIconColorForOtherPrompts,
+              color: Color.fromRGBO(15, 42, 70, 1),
             ),
             iconSize: marginWidth12(context),
             color: headingColor,

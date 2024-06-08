@@ -1,5 +1,5 @@
 import 'package:dating_made_better/constants.dart';
-import 'package:dating_made_better/constants_font_sizes.dart';
+import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/stumbles_list_constants.dart';
@@ -66,10 +66,7 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
                 child: Text(
                   textAlign: TextAlign.center,
                   "No nearby stumblers to 'stumble' upon at the moment.",
-                  style: GoogleFonts.sacramento(
-                    color: textColor,
-                    fontSize: fontSize24(context),
-                  ),
+                  style: promptFont(textColor, context)
                 ),
               ),
             ),

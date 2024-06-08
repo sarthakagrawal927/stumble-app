@@ -1,6 +1,7 @@
 import 'package:dating_made_better/constants_colors.dart';
-import 'package:dating_made_better/constants_font_sizes.dart';
+import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/stumbles_list_constants.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/inherited_keys_helper.dart';
 import 'package:dating_made_better/widgets/location.dart';
@@ -112,7 +113,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
       profileDislikeKey: _profileDislikeKey,
       profileLikeKey: _profileLikeKey,
       child: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: Color.fromRGBO(245, 237, 15, 1),
         key: _scaffoldKey,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(
@@ -198,12 +199,8 @@ class _SwipingScreenState extends State<SwipingScreen> {
                 targetPadding: EdgeInsets.all(marginWidth32(context)),
                 child: Text(
                   textAlign: TextAlign.center,
-                  'Stumble!',
-                  style: GoogleFonts.sacramento(
-                    fontSize: fontSize28(context),
-                    color: headingColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  'Stumble',
+                  style: AppTextStyles.Heading(context),
                 ),
               ),
             ),

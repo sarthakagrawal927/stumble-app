@@ -1,6 +1,6 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_colors.dart';
-import 'package:dating_made_better/constants_font_sizes.dart';
+import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/general.dart';

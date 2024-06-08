@@ -102,23 +102,9 @@ class _AuthScreenState extends State<AuthScreen>
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.black,
+      backgroundColor: Color.fromRGBO(134, 70, 156, 1),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: const [
-                    Color.fromRGBO(35, 16, 51, 1),
-                    Color.fromRGBO(16, 14, 29, 1),
-                  ],
-                  begin: _topAlignmentAnimation.value,
-                  end: _bottomAlignmentAnimation.value,
-                ),
-              ),
-            ),
-          ),
           Positioned.fill(
             child: FloatingBubbles(
               noOfBubbles: 15,

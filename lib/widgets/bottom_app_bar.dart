@@ -1,5 +1,5 @@
 import 'package:dating_made_better/constants.dart';
-import 'package:dating_made_better/constants_font_sizes.dart';
+import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:flutter/material.dart';

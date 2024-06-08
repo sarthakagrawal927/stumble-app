@@ -1,5 +1,5 @@
 import 'package:dating_made_better/constants_colors.dart';
-import 'package:dating_made_better/constants_font_sizes.dart';
+import 'package:dating_made_better/constants_fonts.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
@@ -25,18 +25,6 @@ class ScreenGoToNextPageRow extends StatelessWidget {
                 left: marginWidth128(context), 
                 top: marginHeight128(context), 
                 bottom: marginHeight32(context),
-              ),
-              child: Icon(
-                Icons.remove_red_eye,
-                size: fontSize32(context),
-                color: whiteColor,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: marginWidth128(context), 
-                top: marginHeight128(context), 
-                bottom: marginHeight32(context),
                 ),
               child: Text(
                 textAlign: TextAlign.center,
@@ -46,28 +34,20 @@ class ScreenGoToNextPageRow extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: marginWidth128(context), 
-                right: marginWidth128(context),
-                top: marginHeight128(context), 
-                bottom: marginHeight32(context),
-                ),  
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                ),
-                onPressed: (() async {
-                  await functionToSetData();
-                  if (context.mounted && nextScreenRouteName != "") {
-                    Navigator.pushReplacementNamed(context, nextScreenRouteName);
-                  }
-                }),
-                child: Icon(
-                  Icons.arrow_forward,
-                  color: whiteColor,
-                  size: fontSize32(context),
-                ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+              ),
+              onPressed: (() async {
+                await functionToSetData();
+                if (context.mounted && nextScreenRouteName != "") {
+                  Navigator.pushReplacementNamed(context, nextScreenRouteName);
+                }
+              }),
+              child: Icon(
+                Icons.arrow_forward,
+                color: whiteColor,
+                size: fontSize32(context),
               ),
             ),
           ],
