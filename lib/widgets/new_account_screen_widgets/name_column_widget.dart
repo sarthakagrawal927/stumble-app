@@ -1,5 +1,5 @@
 import 'package:dating_made_better/constants_colors.dart';
-import 'package:dating_made_better/constants_font_sizes.dart';
+import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,8 @@ class _NameColumnState extends State<NameColumn> {
           child: Text(
               style: TextStyle(
                 fontSize: fontSize48(context),
-                color: whiteColor,
+                color: Color.fromRGBO(255, 205, 234, 1),
+                fontWeight: FontWeight.w400,
               ),
               "You won't be able to change this later!"),
         ),
@@ -73,7 +74,7 @@ class _NameColumnState extends State<NameColumn> {
               labelText: 'Name',
               labelStyle: GoogleFonts.lato(
                 fontSize: fontSize48(context),
-                color: whiteColor,
+                color: Color.fromRGBO(134, 70, 156, 1),
               ),
             ),
             keyboardType: TextInputType.name,
@@ -86,7 +87,7 @@ class _NameColumnState extends State<NameColumn> {
           ),
         ),
         ScreenGoToNextPageRow(
-          "This will be shown on your profile!",
+          "",
           "",
           () {
             handleSnackBarIfInputNotFilled(_name != "", () async {

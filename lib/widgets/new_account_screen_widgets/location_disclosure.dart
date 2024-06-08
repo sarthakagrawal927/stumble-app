@@ -1,5 +1,5 @@
 import 'package:dating_made_better/constants_colors.dart';
-import 'package:dating_made_better/constants_font_sizes.dart';
+import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

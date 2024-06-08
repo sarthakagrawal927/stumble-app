@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 double fontSize16(BuildContext context) {
@@ -32,3 +33,16 @@ double fontSize96(BuildContext context) {
   return MediaQuery.of(context).size.height / 96;
 }
 
+TextStyle headingFont(Color color, BuildContext context) {
+  return GoogleFonts.poppins(
+            color: color,
+            fontSize: fontSize24(context),
+          );
+}
+
+TextStyle promptFont(Color color, BuildContext context) {
+  return GoogleFonts.poppins(
+            color: color,
+            fontSize: fontSize24(context),
+          );
+}

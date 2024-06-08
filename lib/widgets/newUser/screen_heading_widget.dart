@@ -22,13 +22,13 @@ class ScreenHeadingWidget extends StatelessWidget {
         vertical: marginHeight32(context),
         horizontal: marginWidth32(context),
       ),
-      color: Colors.black38,
+      color: Colors.transparent,
       child: Text(
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: marginHeight32(context),
           fontWeight: FontWeight.w600,
-          color: whiteColor,
+          color: Color.fromRGBO(255, 205, 234, 1),
         ),
         text,
       ),
