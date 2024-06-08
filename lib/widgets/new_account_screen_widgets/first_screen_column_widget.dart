@@ -163,7 +163,8 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
             child: Text(
               "Sign in with ${Platform.isAndroid ? 'Google' : 'Apple'}",
               style: TextStyle(
-                  fontSize: fontSize48(context), color: filterScreenHeadingColor),
+                  fontSize: fontSize48(context),
+                  color: filterScreenHeadingColor),
             ),
           ),
         ),
@@ -179,11 +180,13 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
                 children: [
                   TextSpan(
                     text: "By signing up, you agree to our ",
-                    style: TextStyle(fontSize: fontSize64(context), color: whiteColor),
+                    style: TextStyle(
+                        fontSize: fontSize64(context), color: whiteColor),
                   ),
                   TextSpan(
                     text: 'Terms',
-                    style: TextStyle(fontSize: fontSize64(context), color: blueColor),
+                    style: TextStyle(
+                        fontSize: fontSize64(context), color: blueColor),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         launchUrl(Uri.parse(privacyUrl));
@@ -192,7 +195,8 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
                   TextSpan(
                     text:
                         ". See how we use your data in our Privacy policy. We never post to facebook.",
-                    style: TextStyle(fontSize: fontSize64(context), color: whiteColor),
+                    style: TextStyle(
+                        fontSize: fontSize64(context), color: whiteColor),
                   ),
                 ],
               ),

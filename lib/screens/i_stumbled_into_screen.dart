@@ -1,13 +1,12 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
-import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/models/profile.dart';
-import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/stumbles_list_constants.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class IStumbledIntoScreen extends StatefulWidget {
   static const routeName = '/i-stumbled-into-screen';
@@ -23,50 +22,49 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
     final List<MiniProfile> listOfProfiles =
         ModalRoute.of(context)!.settings.arguments as List<MiniProfile>;
     return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: TopAppBar(routeName: SwipingScreen.routeName, heading: "Stumble"),
-      body: listOfProfiles.isNotEmpty
-          ? GridView.builder(
-              itemCount: listOfProfiles.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onDoubleTap: () => DoNothingAction(),
-                  onTap: () async {
-                    getUserApi(listOfProfiles[index].id)
-                        .then((value) => showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return SwipeCard(
-                                  profile: value!,
-                                  isModalMode: true,
-                                );
-                              },
-                            ));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(marginHeight64(context)),
-                    alignment: Alignment.bottomLeft,
-                    decoration: imageBoxWidget(context, listOfProfiles[index]),
-                  ),
-                );
-              },
-            )
-          : Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: marginWidth32(context),
-                vertical: marginHeight64(context),
-              ),
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(
-                  textAlign: TextAlign.center,
-                  "No nearby stumblers to 'stumble' upon at the moment.",
-                  style: promptFont(textColor, context)
+        backgroundColor: AppColors.backgroundColor,
+        appBar: TopAppBar(heading: "Stumble"),
+        body: listOfProfiles.isNotEmpty
+            ? GridView.builder(
+                itemCount: listOfProfiles.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onDoubleTap: () => DoNothingAction(),
+                    onTap: () async {
+                      getUserApi(listOfProfiles[index].id)
+                          .then((value) => showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return SwipeCard(
+                                    profile: value!,
+                                    isModalMode: true,
+                                  );
+                                },
+                              ));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(marginHeight64(context)),
+                      alignment: Alignment.bottomLeft,
+                      decoration:
+                          imageBoxWidget(context, listOfProfiles[index]),
+                    ),
+                  );
+                },
+              )
+            : Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: marginWidth32(context),
+                  vertical: marginHeight64(context),
                 ),
-              ),
-            ),
-    );
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                      textAlign: TextAlign.center,
+                      "No nearby stumblers to 'stumble' upon at the moment.",
+                      style: AppTextStyles.regularText(context)),
+                ),
+              ));
   }
 }

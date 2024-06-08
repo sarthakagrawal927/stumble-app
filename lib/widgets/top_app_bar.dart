@@ -1,13 +1,12 @@
+import 'package:dating_made_better/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 
 // ignore: must_be_immutable
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
-  String routeName;
   String heading;
-  TopAppBar({required this.routeName, required this.heading, super.key});
+  TopAppBar({required this.heading, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +28,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Text(
             textAlign: TextAlign.center,
             heading,
-            style: GoogleFonts.sacramento(
-              fontSize: MediaQuery.of(context).size.width / 13,
-              color: headingColor,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.heading(context),
           ),
         ),
         backgroundColor: topAppBarColor,

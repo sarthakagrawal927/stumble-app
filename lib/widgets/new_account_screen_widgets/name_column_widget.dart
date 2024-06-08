@@ -48,7 +48,7 @@ class _NameColumnState extends State<NameColumn> {
           child: Text(
               style: TextStyle(
                 fontSize: fontSize48(context),
-                color: Color.fromRGBO(255, 205, 234, 1),
+                color: const Color.fromRGBO(255, 205, 234, 1),
                 fontWeight: FontWeight.w400,
               ),
               "You won't be able to change this later!"),
@@ -74,7 +74,7 @@ class _NameColumnState extends State<NameColumn> {
               labelText: 'Name',
               labelStyle: GoogleFonts.lato(
                 fontSize: fontSize48(context),
-                color: Color.fromRGBO(134, 70, 156, 1),
+                color: const Color.fromRGBO(134, 70, 156, 1),
               ),
             ),
             keyboardType: TextInputType.name,

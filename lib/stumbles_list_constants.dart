@@ -1,3 +1,4 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
@@ -29,7 +30,7 @@ final Map<DropDownOptions, DropdownOptionVals> dropDownOptions = {
     _getPeopleWhoLiked,
     const Icon(
       Icons.filter_list_rounded,
-      color: Colors.white,
+      color: AppColors.primaryColor,
     ),
     '/i-stumbled-into-screen',
   ),
@@ -40,7 +41,7 @@ final Map<DropDownOptions, DropdownOptionVals> dropDownOptions = {
     _getPeopleWhoLikedMe,
     const Icon(
       Icons.favorite,
-      color: Colors.white,
+      color: AppColors.primaryColor,
     ),
     '/stumbled-onto-me-screen',
   ),
@@ -51,7 +52,7 @@ final Map<DropDownOptions, DropdownOptionVals> dropDownOptions = {
     _getFilters,
     const Icon(
       Icons.menu_book_outlined,
-      color: Colors.white,
+      color: AppColors.primaryColor,
     ),
     '/filters-screen',
   ),

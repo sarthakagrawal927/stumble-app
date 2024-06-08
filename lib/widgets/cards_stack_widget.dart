@@ -1,8 +1,7 @@
 import 'package:dating_made_better/constants.dart';
-import 'package:dating_made_better/constants_fonts.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../providers/profile.dart';
 import './draggable_swipe_card.dart';
@@ -55,55 +54,25 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
-              child: draggableItems.isEmpty
-                  ? Center(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                          vertical: marginHeight8(context),
-                          horizontal: marginWidth8(context),
-                        ),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          "No nearby stumblers to 'stumble' upon at the moment.",
-                          style: GoogleFonts.sacramento(
-                            color: textColor,
-                            fontSize: fontSize24(context),
-                          ),
-                        ),
-                      ),
-                    )
-                  : DragWidget(
-                      profile: draggableItems.last,
-                      onSwipe: removeProfileOnSwipe,
-                    )),
-        ),
-        Positioned(
-          left: 0,
-          child: DragTarget<int>(
-            builder: (
-              BuildContext context,
-              List<dynamic> accepted,
-              List<dynamic> rejected,
-            ) {
-              return IgnorePointer(
+    return Container(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        child: draggableItems.isEmpty
+            ? Center(
                 child: Container(
-                  height: 700.0,
-                  width: 80.0,
-                  color: Colors.transparent,
+                  margin: EdgeInsets.symmetric(
+                    vertical: marginHeight8(context),
+                    horizontal: marginWidth8(context),
+                  ),
+                  child: Text(
+                      textAlign: TextAlign.center,
+                      "No nearby stumblers to 'stumble' upon at the moment.",
+                      style: AppTextStyles.regularText(context)),
                 ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
+              )
+            : DragWidget(
+                profile: draggableItems.last,
+                onSwipe: removeProfileOnSwipe,
+              ));
   }
 }

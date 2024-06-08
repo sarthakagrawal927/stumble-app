@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dating_made_better/constants_colors.dart';
-import 'package:dating_made_better/constants_fonts.dart';
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
@@ -28,7 +28,7 @@ class UserProfileScreen extends StatelessWidget {
     bool isProfileVerified =
         Provider.of<Profile>(context).getPhotoVerificationStatus;
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: TopAppBarWithLogoutOption(
         routeName: "",
       ),
@@ -39,7 +39,6 @@ class UserProfileScreen extends StatelessWidget {
               horizontal: marginWidth16(context),
               vertical: marginHeight32(context),
             ),
-            color: whiteColor,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,7 +63,6 @@ class UserProfileScreen extends StatelessWidget {
                     child: CircleAvatar(
                       maxRadius: 75,
                       minRadius: 75,
-                      backgroundColor: Colors.transparent,
                       backgroundImage: CachedNetworkImageProvider(
                         photos.isNotEmpty ? photos[0].path : defaultBackupImage,
                       ),
@@ -74,15 +72,9 @@ class UserProfileScreen extends StatelessWidget {
                 SizedBox(
                   height: marginHeight64(context),
                 ),
-                Container(
-                  color: Colors.transparent,
-                  child: Text(
-                    'Profile completion: $profileCompletionPercentage%',
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: fontSize48(context),
-                    ),
-                  ),
+                Text(
+                  'Profile completion: $profileCompletionPercentage%',
+                  style: AppTextStyles.descriptionText(context),
                 ),
                 SizedBox(
                   height: marginHeight64(context),
@@ -90,26 +82,8 @@ class UserProfileScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      color: Colors.transparent,
-                      child: Text(
-                        name,
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: fontSize48(context),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      color: Colors.transparent,
-                      child: Text(
-                        '$age ',
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: fontSize48(context),
-                        ),
-                      ),
-                    ),
+                    Text('$name, $age',
+                        style: AppTextStyles.chatNameText(context)),
                     Container(
                       color: Colors.transparent,
                       child: Icon(
@@ -126,13 +100,19 @@ class UserProfileScreen extends StatelessWidget {
                 SizedBox(
                   height: marginHeight64(context),
                 ),
-                TextButton(
-                  child: Text(
-                    'Edit Profile?',
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: fontSize64(context),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: AppColors.primaryColor,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
                     ),
+                  ),
+                  child: Text(
+                    'Edit Profile',
+                    style: AppTextStyles.regularText(context),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(

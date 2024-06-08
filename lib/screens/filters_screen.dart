@@ -1,5 +1,6 @@
-import 'package:dating_made_better/constants_fonts.dart';
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/providers/profile.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
     RangeValues currentRangeValues =
         Provider.of<Profile>(context, listen: false).getAgeRangePreference;
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -31,18 +32,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         actions: const [],
-        title: const Text(
+        title: Text(
           'Filters',
-          style: TextStyle(
-            color: headingColor,
-          ),
+          style: AppTextStyles.heading(context),
         ),
-        backgroundColor: topAppBarColor,
       ),
       body: ListView(
         children: [
           Container(
-            color: filterScreenTextColor,
+            color: AppColors.secondaryColor,
             margin: EdgeInsets.only(
               top: marginWidth16(context),
               left: marginWidth16(context),
@@ -54,11 +52,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
             child: Text(
               textAlign: TextAlign.start,
               'Do you have a preference for the genders shown to you?',
-              style: TextStyle(
-                color: textColor,
-                fontSize: fontSize48(context),
-                fontWeight: FontWeight.normal,
-              ),
+              style: AppTextStyles.secondaryHeading(context, size: 18.0),
             ),
           ),
           Card(
@@ -67,11 +61,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
               left: marginWidth16(context),
               right: marginWidth16(context),
             ),
-            color: widgetColor,
             child: Column(
               children: [
                 checkBoxListTileFunction(
-                    'Nonbinary people', Gender.nonBinary, selectedGenders),
+                    'Non-binary people', Gender.nonBinary, selectedGenders),
                 checkBoxListTileFunction(
                     'Women', Gender.woman, selectedGenders),
                 checkBoxListTileFunction('Men', Gender.man, selectedGenders),
@@ -79,7 +72,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ),
           ),
           Container(
-            color: filterScreenTextColor,
+            color: AppColors.secondaryColor,
             margin: EdgeInsets.only(
               top: marginWidth16(context),
               left: marginWidth16(context),
@@ -91,11 +84,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
             child: Text(
               textAlign: TextAlign.start,
               'Do you have a preference for the age of people you want to meet?',
-              style: TextStyle(
-                color: textColor,
-                fontSize: fontSize48(context),
-                fontWeight: FontWeight.normal,
-              ),
+              style: AppTextStyles.secondaryHeading(context, size: 18.0),
             ),
           ),
           Consumer<Profile>(
@@ -114,15 +103,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
                     ),
                     child: Text(
                       "Between ${currentRangeValues.start.toInt()} and ${currentRangeValues.end.toInt()}",
-                      style: TextStyle(
-                        color: textColor,
-                        fontSize: MediaQuery.of(context).size.height / 48,
-                      ),
+                      style: AppTextStyles.chatNameText(context),
                     ),
                   ),
                   SizedBox(height: marginHeight32(context)),
                   RangeSlider(
-                    activeColor: filterScreenTextColor,
+                    activeColor: AppColors.secondaryColor,
                     inactiveColor: Colors.white30,
                     values: currentRangeValues,
                     max: 80,
@@ -152,7 +138,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: filterScreenTextColor),
+                  backgroundColor: AppColors.secondaryColor),
               onPressed: () async {
                 Provider.of<Profile>(context, listen: false).upsertUser({
                   "target_gender": selectedGenders.map((e) => e.index).toList(),
@@ -166,11 +152,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 padding: EdgeInsets.all(
                   marginWidth32(context),
                 ),
-                child: Text(
-                  "Save preferences!",
-                  style: TextStyle(
-                      fontSize: marginWidth16(context), color: Colors.white),
-                ),
+                child: Text("Save preferences!",
+                    style: AppTextStyles.secondaryHeading(context)),
               ),
             ),
           ),
@@ -182,14 +165,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
   CheckboxListTile checkBoxListTileFunction(
       final String text, final Gender gender, List<Gender> selectedGenders) {
     return CheckboxListTile(
-      activeColor: filterScreenHeadingColor,
-      title: Text(
-        text,
-        style: TextStyle(
-          color: textColor,
-          fontSize: fontSize64(context),
-        ),
-      ),
+      activeColor: AppColors.secondaryColor,
+      title: Text(text, style: AppTextStyles.dropdownText(context)),
       value: selectedGenders.contains(gender),
       onChanged: (_) {
         setState(() {

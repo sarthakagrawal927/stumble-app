@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
-import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/common/photo_uploader.dart';
-import 'package:dating_made_better/widgets/top_app_bar_with_logout_option.dart';
+import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -71,9 +72,9 @@ class _UserProfileCompletionScreenState
     bool isProfileVerified =
         Provider.of<Profile>(context, listen: false).getPhotoVerificationStatus;
     return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: TopAppBarWithLogoutOption(
-        routeName: UserProfileScreen.routeName,
+      backgroundColor: AppColors.backgroundColor,
+      appBar: TopAppBar(
+        heading: "Profile Edit",
       ),
       body: ListView(
         children: <Widget>[
@@ -189,7 +190,7 @@ class _UserProfileCompletionScreenState
             ),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: filterScreenTextColor),
+                  backgroundColor: AppColors.secondaryColor),
               onPressed: () async {
                 Provider.of<Profile>(context, listen: false).upsertUser({
                   "conversation_starter":
@@ -207,7 +208,8 @@ class _UserProfileCompletionScreenState
               },
               child: const Text(
                 "Save",
-                style: TextStyle(fontSize: 20, color: textColor),
+                style:
+                    TextStyle(fontSize: 20, color: AppColors.backgroundColor),
               ),
             ),
           ),
@@ -246,10 +248,7 @@ Card verificationStatusCard(
           Text(
             text,
             textAlign: TextAlign.end,
-            style: TextStyle(
-              color: textColor,
-              fontSize: marginWidth32(context),
-            ),
+            style: AppTextStyles.descriptionText(context),
           ),
         ],
       ),
@@ -288,9 +287,8 @@ Widget profileCompletionCard(
           Text(
             text,
             textAlign: TextAlign.end,
-            style: TextStyle(
-              color: textColor,
-              fontSize: fontSize64(context),
+            style: AppTextStyles.descriptionText(
+              context,
             ),
           ),
         ],

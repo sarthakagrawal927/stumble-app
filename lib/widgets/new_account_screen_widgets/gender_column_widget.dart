@@ -33,7 +33,8 @@ class _GenderColumnState extends State<GenderColumn> {
             vertical: marginHeight16(context),
           ),
           child: Text(
-              style: TextStyle(fontSize: fontSize48(context), color: whiteColor),
+              style:
+                  TextStyle(fontSize: fontSize48(context), color: whiteColor),
               "Pick which best describes you!"),
         ),
         Column(

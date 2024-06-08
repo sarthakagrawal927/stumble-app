@@ -1,15 +1,14 @@
-import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/stumbles_list_constants.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/inherited_keys_helper.dart';
-import 'package:dating_made_better/widgets/location.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
+import 'package:dating_made_better/widgets/location.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
@@ -115,7 +114,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
       profileDislikeKey: _profileDislikeKey,
       profileLikeKey: _profileLikeKey,
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(245, 237, 15, 1),
+        backgroundColor: AppColors.backgroundColor,
         key: _scaffoldKey,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(
@@ -125,30 +124,23 @@ class _SwipingScreenState extends State<SwipingScreen> {
             automaticallyImplyLeading: false,
             actions: [
               DropdownButtonHideUnderline(
-                child: Container(
-                  padding: EdgeInsets.zero,
+                child: ButtonTheme(
+                  alignedDropdown: true,
                   child: DropdownButton(
-                    padding: EdgeInsets.zero,
-                    iconSize: fontSize64(context),
-                    dropdownColor: dropDownColor,
+                    borderRadius: BorderRadius.circular(10),
+                    dropdownColor: AppColors.backgroundColor,
                     items: dropDownOptionList
                         .map((e) => DropdownMenuItem(
                               alignment: Alignment.center,
                               value: e!.value,
                               child: Row(
+                                textDirection: TextDirection.ltr,
                                 children: [
                                   e.icon,
                                   SizedBox(width: fontSize96(context)),
-                                  Container(
-                                    margin: EdgeInsets.zero,
-                                    padding: EdgeInsets.zero,
-                                    child: Text(
-                                      e.label,
-                                      style: TextStyle(
-                                        color: whiteColor,
-                                        fontSize: fontSize64(context),
-                                      ),
-                                    ),
+                                  Text(
+                                    e.label,
+                                    style: AppTextStyles.dropdownText(context),
                                   ),
                                 ],
                               ),
@@ -164,46 +156,46 @@ class _SwipingScreenState extends State<SwipingScreen> {
                     icon: Container(
                       padding: EdgeInsets.only(right: marginWidth32(context)),
                       child: Showcase(
-                        description: "You can find your stumbler lists here!",
-                        key: _dropDownKey,
-                        blurValue: 5,
-                        descriptionPadding:
-                            EdgeInsets.all(marginWidth128(context)),
-                        overlayOpacity: 0.1,
-                        showArrow: true,
-                        targetPadding: EdgeInsets.all(marginWidth128(context)),
-                        child: Icon(
-                          Icons.menu,
-                          color: headingColor,
-                          size: fontSize32(context),
-                        ),
-                      ),
+                          description: "You can find your stumbler lists here!",
+                          key: _dropDownKey,
+                          blurValue: 5,
+                          descriptionPadding:
+                              EdgeInsets.all(marginWidth128(context)),
+                          overlayOpacity: 0.1,
+                          showArrow: true,
+                          targetPadding:
+                              EdgeInsets.all(marginWidth128(context)),
+                          child: Transform.scale(
+                            scale: 1.25,
+                            child: Icon(
+                              Icons.menu,
+                              color: AppColors.primaryColor,
+                              size: fontSize32(context),
+                            ),
+                          )),
                     ),
                   ),
                 ),
               ),
             ],
             backgroundColor: topAppBarColor,
-            title: Padding(
-              padding: EdgeInsets.only(left: marginWidth32(context)),
-              child: Showcase(
-                description: promptExplainingLocationUsage,
-                descTextStyle: TextStyle(fontSize: marginWidth24(context)),
-                key: _locationUsageKey,
-                blurValue: 5,
-                descriptionPadding: EdgeInsets.symmetric(
-                  vertical: MediaQuery.of(context).size.height / 128,
-                  horizontal: marginWidth128(context),
-                ),
-                tooltipPosition: TooltipPosition.bottom,
-                overlayOpacity: 0.5,
-                showArrow: false,
-                targetPadding: EdgeInsets.all(marginWidth32(context)),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  'Stumble',
-                  style: AppTextStyles.Heading(context),
-                ),
+            title: Showcase(
+              description: promptExplainingLocationUsage,
+              descTextStyle: TextStyle(fontSize: marginWidth24(context)),
+              key: _locationUsageKey,
+              blurValue: 5,
+              descriptionPadding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height / 128,
+                horizontal: marginWidth128(context),
+              ),
+              tooltipPosition: TooltipPosition.bottom,
+              overlayOpacity: 0.5,
+              showArrow: false,
+              targetPadding: EdgeInsets.all(marginWidth32(context)),
+              child: Text(
+                textAlign: TextAlign.center,
+                'Stumble',
+                style: AppTextStyles.heading(context),
               ),
             ),
             centerTitle: false,

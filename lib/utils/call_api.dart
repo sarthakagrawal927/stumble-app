@@ -245,24 +245,22 @@ Future<void> deleteUserApi() async {
 }
 
 Future<void> blockUserApi(int badActorId) async {
-  await callAPI(
-    getApiEndpoint(ApiType.blockUser), 
-    method: HttpMethods.post,
-    bodyParams: {
-      'badActorId': badActorId,
-    });
+  await callAPI(getApiEndpoint(ApiType.blockUser),
+      method: HttpMethods.post,
+      bodyParams: {
+        'badActorId': badActorId,
+      });
 }
 
-Future<void> reportAndBlockUserApi(int badActorId, int source, String message) async {
-  await callAPI(
-    getApiEndpoint(ApiType.reportAndBlockUser), 
-    method: HttpMethods.post,
-    bodyParams: {
-      'badActorId': badActorId,
-      'source': source,
-      'message': message,
-    }
-  );
+Future<void> reportAndBlockUserApi(
+    int badActorId, int source, String message) async {
+  await callAPI(getApiEndpoint(ApiType.reportAndBlockUser),
+      method: HttpMethods.post,
+      bodyParams: {
+        'badActorId': badActorId,
+        'source': source,
+        'message': message,
+      });
 }
 
 Future<bool> updateUserInterest(String threadId, int interest) async {

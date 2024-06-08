@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/widgets/comment_feature_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -84,8 +85,7 @@ class SwipeCard extends StatelessWidget {
                                       profile.getBadgeLabel,
                                       style: TextStyle(
                                         color: whiteColor,
-                                        fontSize:
-                                            marginWidth32(context),
+                                        fontSize: marginWidth32(context),
                                         fontWeight: FontWeight.w900,
                                       ),
                                     ),
@@ -128,11 +128,7 @@ class SwipeCard extends StatelessWidget {
                   ),
                   child: Text(
                     'Talk to me about',
-                    style: TextStyle(
-                      color: textColor,
-                      fontWeight: FontWeight.w700,
-                      fontSize: marginHeight64(context),
-                    ),
+                    style: AppTextStyles.descriptionText(context),
                   ),
                 ),
                 Container(
@@ -156,10 +152,7 @@ class SwipeCard extends StatelessWidget {
                   ),
                   child: SingleChildScrollView(
                     child: Text(
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.height / 48,
-                        color: textColor,
-                      ),
+                      style: AppTextStyles.regularText(context),
                       profile.conversationStarter,
                     ),
                   ),
@@ -207,13 +200,8 @@ class SwipeCard extends StatelessWidget {
   Text userInformationOnImage(BuildContext context, String textToDisplay,
       [bool addComma = true]) {
     return Text(
-      "$textToDisplay ${addComma ? ',' : ''} ",
-      style: TextStyle(
-        backgroundColor: Colors.transparent,
-        color: whiteColor,
-        fontSize: marginWidth16(context),
-        fontWeight: FontWeight.w900,
-      ),
+      "$textToDisplay${addComma ? ',' : ''} ",
+      style: AppTextStyles.secondaryHeading(context),
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -223,8 +211,12 @@ class SwipeCard extends StatelessWidget {
       children: [
         getCommentFeatureWidget(
           Container(
+            padding: EdgeInsets.only(
+              left: marginWidth32(context),
+              right: marginWidth32(context),
+            ),
             color: backgroundColor,
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: MediaQuery.of(context).size.height * 0.45,
             child: Container(
                 alignment: Alignment.bottomLeft,
                 decoration: imageBoxWidget(context, index)),
@@ -243,9 +235,8 @@ class SwipeCard extends StatelessWidget {
   BoxDecoration imageBoxWidget(BuildContext context, int index) {
     return BoxDecoration(
       color: backgroundColor,
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(borderRadiusValue),
-        topRight: Radius.circular(borderRadiusValue),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(borderRadiusValue),
       ),
       image: DecorationImage(
         fit: BoxFit.cover,

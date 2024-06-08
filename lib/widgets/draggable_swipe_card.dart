@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/inherited_keys_helper.dart';
 import 'package:flutter/material.dart';
@@ -82,8 +83,8 @@ class _DragWidgetState extends State<DragWidget> {
             ),
           ),
           Positioned(
-            bottom: marginHeight24(context),
-            left: 0,
+            bottom: marginHeight32(context),
+            left: marginWidth128(context),
             child: Showcase(
               description: "Click this if uninterested in conversation.",
               key: InheritedKeysHelper.of(context).profileDislikeKey,
@@ -92,19 +93,15 @@ class _DragWidgetState extends State<DragWidget> {
               overlayOpacity: 0.1,
               showArrow: true,
               targetPadding: EdgeInsets.all(marginWidth128(context)),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(eccentricity: 0.0),
-                    alignment: Alignment.bottomLeft,
-                    backgroundColor: backgroundColor),
+              child: IconButton(
                 onPressed: () async {
                   await handleActivityOnProfile(
                     ActivityType.dislike,
                   );
                 },
-                child: Icon(Icons.cancel,
-                    color: Colors.black87,
-                    size: MediaQuery.of(context).size.width / 6),
+                icon: Icon(Icons.cancel,
+                    color: AppColors.primaryColor,
+                    size: MediaQuery.of(context).size.width / 7),
               ),
             ),
           ),

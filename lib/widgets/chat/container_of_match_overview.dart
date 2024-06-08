@@ -1,7 +1,9 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/general.dart';
 import 'package:flutter/material.dart';
@@ -61,41 +63,39 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                     shrinkWrap: true,
                     children: <Widget>[
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.825,
-                        child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        top: marginWidth64(context)),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: marginWidth32(context),
-                                      vertical: marginHeight64(context),
-                                    ),
-                                    child: Text(
-                                      style: GoogleFonts.acme(
-                                        fontSize: fontSize48(context),
-                                        color: headingColor,),
-                                      textAlign: TextAlign.left,
-                                      softWrap: true,
-                                      "We encourage you to drop a message if you're reporting a user, so we can assist you promptly.",
-                                    ),
+                          width: MediaQuery.of(context).size.width * 0.825,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    top: marginWidth64(context)),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: marginWidth32(context),
+                                  vertical: marginHeight64(context),
+                                ),
+                                child: Text(
+                                  style: GoogleFonts.acme(
+                                    fontSize: fontSize48(context),
+                                    color: headingColor,
                                   ),
-                                ],
-                              )
-                      ),
+                                  textAlign: TextAlign.left,
+                                  softWrap: true,
+                                  "We encourage you to drop a message if you're reporting a user, so we can assist you promptly.",
+                                ),
+                              ),
+                            ],
+                          )),
                       Container(
                         height: marginHeight64(context),
                         color: Colors.transparent.withOpacity(0.925),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          top: marginHeight64(context), 
-                          left: marginWidth16(context), 
-                          right: marginWidth16(context), 
+                          top: marginHeight64(context),
+                          left: marginWidth16(context),
+                          right: marginWidth16(context),
                           bottom: marginHeight128(context),
                         ),
                         child: TextField(
@@ -105,7 +105,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                           autocorrect: true,
                           keyboardType: TextInputType.multiline,
                           textInputAction: TextInputAction.newline,
-                          style:  TextStyle(
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: fontSize64(context),
                           ),
@@ -119,10 +119,9 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           IconButton(
-                            iconSize:
-                                fontSize16(context),
+                            iconSize: fontSize16(context),
                             icon: Icon(
-                              Icons.block, 
+                              Icons.block,
                               color: Colors.black,
                               size: marginWidth12(context),
                             ),
@@ -133,8 +132,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                             },
                           ),
                           IconButton(
-                            iconSize:
-                                fontSize16(context),
+                            iconSize: fontSize16(context),
                             icon: Icon(
                               Icons.report,
                               color: Colors.red,
@@ -142,7 +140,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                             ),
                             onPressed: () {
                               reportAndBlockUserApi(
-                                widget.threadDetails.chatterId, 
+                                widget.threadDetails.chatterId,
                                 2,
                                 reportMessage,
                               );
@@ -161,8 +159,13 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
         );
       },
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black38),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: AppColors.primaryColor,
+              width: 0.2,
+            ),
+          ),
           color: widgetColor,
         ),
         padding: EdgeInsets.all(
@@ -172,7 +175,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
           children: [
             // CircleAvatarWidget(threadDetails['display_pic']),
             CircleAvatarWidget(
-                marginHeight32(context), widget.threadDetails.displayPic),
+                marginHeight24(context), widget.threadDetails.displayPic),
             SizedBox(
               width: marginWidth24(context),
             ),
@@ -184,10 +187,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                     Flexible(
                       child: Text(
                         widget.threadDetails.name,
-                        style: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: textColor),
+                        style: AppTextStyles.chatNameText(context),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -251,7 +251,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                             : FontStyle.italic,
                       ),
                       overflow: TextOverflow.ellipsis,
-    
+
                       // italics if hasConversationStarted
                     ),
                   ),

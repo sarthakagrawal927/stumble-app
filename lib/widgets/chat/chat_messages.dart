@@ -24,7 +24,6 @@ class ChatMessages extends StatelessWidget {
       reverse: false,
       controller: scrollController,
       itemBuilder: ((context, index) => MessageBubble(
-            stumblerDisplayPic: stumblerDisplayPic,
             message: listOfChatMessages[index].message,
             isMe: listOfChatMessages[index].senderId == selfUserId,
             messageId: listOfChatMessages[index].id,

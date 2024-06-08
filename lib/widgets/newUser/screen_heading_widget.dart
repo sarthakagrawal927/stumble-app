@@ -1,5 +1,4 @@
 import 'package:dating_made_better/constants.dart';
-import 'package:dating_made_better/constants_colors.dart';
 import 'package:flutter/material.dart';
 
 class ScreenHeadingWidget extends StatelessWidget {
@@ -13,8 +12,8 @@ class ScreenHeadingWidget extends StatelessWidget {
       margin: EdgeInsets.only(
         top:
             MediaQuery.of(context).size.height / ((keyboardHidden ? 1 : 2) * 8),
-          bottom:
-            MediaQuery.of(context).size.height / ((keyboardHidden ? 1 : 2) * 16),
+        bottom: MediaQuery.of(context).size.height /
+            ((keyboardHidden ? 1 : 2) * 16),
         left: marginWidth8(context),
         right: marginWidth8(context),
       ),
@@ -28,7 +27,7 @@ class ScreenHeadingWidget extends StatelessWidget {
         style: TextStyle(
           fontSize: marginHeight32(context),
           fontWeight: FontWeight.w600,
-          color: Color.fromRGBO(255, 205, 234, 1),
+          color: const Color.fromRGBO(255, 205, 234, 1),
         ),
         text,
       ),

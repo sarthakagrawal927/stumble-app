@@ -70,7 +70,7 @@ const promptExplainingLocationUsage =
 const promptExplainingPhotoUnderVerification =
     "Your photo has been submitted; until then, keep Stumbling!";
 
-const double borderRadiusValue = 20;
+const double borderRadiusValue = 10;
 
 double marginWidth128(BuildContext context) {
   return MediaQuery.of(context).size.width / 128;

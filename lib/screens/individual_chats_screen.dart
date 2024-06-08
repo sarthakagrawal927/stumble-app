@@ -1,5 +1,6 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/models/chat.dart';
-import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
@@ -8,15 +9,14 @@ import 'package:dating_made_better/widgets/common/info_dialog_widget.dart';
 import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
 
 var interestToLabel = {
-  InterestType.friendship: "Just a conversation",
-  InterestType.hookup: "🌚",
-  InterestType.relationship: "💞",
+  InterestType.friendship: "Just a Conversation",
+  InterestType.hookup: "Casual Encounter",
+  InterestType.relationship: "Relationship",
 };
 
 var labelToInterest = {
@@ -107,18 +107,13 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
+        backgroundColor: AppColors.backgroundColor,
         toolbarHeight: MediaQuery.of(context).size.height / 12,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          // temporary solution until proper global state management is implemented
-          onPressed: () =>
-              Navigator.of(context).pushNamed(MatchesAndChatsScreen.routeName),
-        ),
-        backgroundColor: topAppBarColor,
+        leadingWidth: marginWidth16(context),
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
               onDoubleTap: () => DoNothingAction(),
@@ -138,34 +133,29 @@ class _ChatScreenState extends State<ChatScreen> {
                 profileLoading = false;
               },
               child: CircleAvatarWidget(
-                  marginWidth24(context), widget.thread.displayPic),
+                  marginWidth16(context), widget.thread.displayPic),
             ),
             SizedBox(
-              width: marginWidth64(context),
+              width: marginWidth128(context),
             ),
             Padding(
               padding: EdgeInsets.only(left: marginWidth64(context)),
               child: SizedBox(
-                width: marginWidth4(context),
-                child: Text(
-                  widget.thread.name.split(" ").first,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.sacramento(
-                      fontSize: marginWidth16(context),
-                      color: headingColor,
-                      fontWeight: FontWeight.w900),
-                ),
-              ),
+                  width: marginWidth4(context),
+                  child: Text(widget.thread.name.split(" ").first,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.chatNameText(context))),
             ),
             const Spacer(),
             showLookingForOption
                 ? DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      borderRadius: BorderRadius.circular(10),
+                      dropdownColor: AppColors.backgroundColor,
                       onTap: () async {
                         await showModelIfNotShown(
                             context, ModelOpened.userInterestInfoTeaching);
                       },
-                      dropdownColor: backgroundColor,
                       items: labelToInterest.entries
                           .map((e) => nicheSelectedOption(e.value))
                           .toList(),
@@ -195,15 +185,17 @@ class _ChatScreenState extends State<ChatScreen> {
                       icon: Icon(
                         Icons.visibility,
                         size: marginWidth12(context),
-                        color: headingColor,
+                        color: AppColors.primaryColor,
                       ),
                     ),
                   )
-                : Icon(
-                    Icons.visibility_off,
-                    size: marginWidth12(context),
-                    color: topAppBarColor,
-                  ),
+                : lookingForSame
+                    ? Container()
+                    : Icon(
+                        Icons.visibility_off,
+                        size: marginWidth12(context),
+                        color: AppColors.primaryColor,
+                      ),
           ],
         ),
       ),
@@ -244,7 +236,7 @@ class _ChatScreenState extends State<ChatScreen> {
       value: interestToLabel[selectedOption],
       child: Text(
         interestToLabel[selectedOption]!,
-        style: const TextStyle(color: headingColor),
+        style: AppTextStyles.dropdownText(context),
       ),
     );
   }

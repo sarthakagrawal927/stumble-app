@@ -89,7 +89,8 @@ class _MyLocationComponent extends State<MyLocationComponent> {
           child: Text(
             textAlign: TextAlign.left,
             'Oops! Stumble can\'t accurately function without your location! :(',
-            style: TextStyle(color: Colors.white, fontSize: fontSize48(context)),
+            style:
+                TextStyle(color: Colors.white, fontSize: fontSize48(context)),
           ),
         ),
       );

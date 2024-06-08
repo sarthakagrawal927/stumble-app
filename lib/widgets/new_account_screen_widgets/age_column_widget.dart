@@ -39,9 +39,8 @@ class _AgeColumnState extends State<AgeColumn> {
         const ScreenHeadingWidget("What's your date of birth?"),
         Container(
             margin: EdgeInsets.symmetric(
-              vertical: marginHeight16(context), 
-              horizontal: marginWidth24(context)
-              ),
+                vertical: marginHeight16(context),
+                horizontal: marginWidth24(context)),
             padding: EdgeInsets.all(marginWidth24(context)),
             height: MediaQuery.of(context).size.width / 3,
             child: Center(
@@ -86,7 +85,7 @@ class _AgeColumnState extends State<AgeColumn> {
                     //low to choose before today.
                     initialDatePickerMode: DatePickerMode.day,
                     initialEntryMode: DatePickerEntryMode.calendarOnly);
-        
+
                 if (pickedDate != null) {
                   setState(() {
                     birthDateInput = pickedDate!;

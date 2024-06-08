@@ -93,11 +93,10 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [ChuckerFlutter.navigatorObserver],
         title: 'Stumble!',
         theme: ThemeData(
-          textTheme: GoogleFonts.latoTextTheme(
-            Theme.of(context).textTheme,
-          ),
-          scaffoldBackgroundColor: backgroundColor
-        ),
+            textTheme: GoogleFonts.latoTextTheme(
+              Theme.of(context).textTheme,
+            ),
+            scaffoldBackgroundColor: backgroundColor),
         home: getScreen(),
         routes: {
           AuthScreen.routeName: (context) => const AuthScreen(),

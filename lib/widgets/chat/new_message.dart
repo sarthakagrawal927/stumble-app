@@ -1,3 +1,4 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -34,13 +35,15 @@ class NewMessage extends StatelessWidget {
                 return null;
               }),
               maxLines: null,
-              style: const TextStyle(
-                color: textColor,
-              ),
+              style:
+                  const TextStyle(color: AppColors.primaryColor, height: 0.6),
               cursorColor: whiteColor,
               decoration: const InputDecoration(
-                labelText: 'Send a message!',
-                labelStyle: TextStyle(color: textColor),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                labelText: 'Send a message',
+                labelStyle:
+                    TextStyle(fontSize: 12, color: AppColors.primaryColor),
               ),
               onChanged: (value) {
                 _enteredMessage = value.toString();
@@ -48,7 +51,6 @@ class NewMessage extends StatelessWidget {
             ),
           ),
           IconButton(
-            color: const Color.fromRGBO(38, 41, 42, 1),
             onPressed: () async {
               if (isLoading || _enteredMessage.trim().isEmpty) return;
               isLoading = true;
@@ -62,8 +64,8 @@ class NewMessage extends StatelessWidget {
               }
             },
             icon: const Icon(
-              Icons.send,
-              color: Colors.purple,
+              Icons.send_rounded,
+              color: AppColors.secondaryColor,
             ),
           )
         ],

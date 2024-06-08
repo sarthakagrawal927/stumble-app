@@ -1,3 +1,4 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/models/profile.dart';
@@ -55,45 +56,40 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: TopAppBarWithScreensOption(
         routeName: "",
       ),
-      body: Container(
-        margin: EdgeInsets.only(
-          top: marginWidth32(context),
-          left: marginWidth32(context),
-          right: marginWidth32(context),
-        ),
-        color: backgroundColor,
-        child: _listsPopulated &&
-                listOfStumbleMatches.isEmpty &&
-                listOfMatchesConversationStartedWith.isEmpty
-            ? Center(
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: marginHeight8(context),
-                    horizontal: marginWidth8(context),
-                  ),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    "You haven't 'Stumbled' into anyone yet; keep swiping!",
-                    style: GoogleFonts.sacramento(
-                      color: textColor,
-                      fontSize: fontSize24(context),
-                    ),
+      body: _listsPopulated &&
+              listOfStumbleMatches.isEmpty &&
+              listOfMatchesConversationStartedWith.isEmpty
+          ? Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: marginHeight8(context),
+                  horizontal: marginWidth8(context),
+                ),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  "You haven't 'Stumbled' into anyone yet; keep swiping!",
+                  style: GoogleFonts.sacramento(
+                    color: textColor,
+                    fontSize: fontSize24(context),
                   ),
                 ),
-              )
-            : Column(
-                children: [
-                  Expanded(
-                    child: MatchesConversationStartedWith(
-                        listOfMatchesConversationStartedWith),
-                  ),
-                ],
               ),
-      ),
+            )
+          : Column(
+              children: [
+                SizedBox(
+                  height: marginHeight48(context),
+                ),
+                Expanded(
+                  child: MatchesConversationStartedWith(
+                      listOfMatchesConversationStartedWith),
+                ),
+              ],
+            ),
       bottomNavigationBar:
           const BottomBar(currentScreen: BottomBarScreens.chatScreen),
     );

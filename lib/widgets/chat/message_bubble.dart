@@ -1,11 +1,9 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
-import 'package:dating_made_better/constants_colors.dart';
-import 'package:dating_made_better/widgets/circle_avatar.dart';
-import 'package:flutter/material.dart';
 import 'package:dating_made_better/utils/general.dart';
+import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
-  final String stumblerDisplayPic;
   final String message;
   final bool isMe;
   final int messageId;
@@ -14,7 +12,6 @@ class MessageBubble extends StatelessWidget {
 
   @override
   const MessageBubble({
-    required this.stumblerDisplayPic,
     required this.message,
     required this.isMe,
     required this.messageId,
@@ -34,18 +31,8 @@ class MessageBubble extends StatelessWidget {
                 // Can add deletion/reply functionalities here.
               )
             : GestureDetector(
-                child: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(
-                      marginWidth128(context),
-                    ),
-                    child: CircleAvatarWidget(
-                        marginWidth32(context), stumblerDisplayPic),
-                  ),
-                  messageBubbleContainers(context),
-                ],
-              ))
+                child: messageBubbleContainers(context),
+              )
       ],
     );
   }
@@ -61,7 +48,7 @@ class MessageBubble extends StatelessWidget {
           bottomRight:
               isMe ? const Radius.circular(0) : const Radius.circular(12),
         ),
-        color: isMe ? const Color.fromARGB(255, 134, 71, 145) : Colors.black12,
+        color: isMe ? AppColors.secondaryColor : Colors.grey[200],
       ),
       width: MediaQuery.of(context).size.width / 2,
       padding: const EdgeInsets.symmetric(
@@ -78,8 +65,9 @@ class MessageBubble extends StatelessWidget {
           Text(
             message,
             style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width / 27,
-              color: isMe ? whiteColor : textColor,
+              fontSize: MediaQuery.of(context).size.width / 22,
+              fontWeight: FontWeight.w500,
+              color: isMe ? AppColors.backgroundColor : AppColors.primaryColor,
             ),
           ),
           Align(
