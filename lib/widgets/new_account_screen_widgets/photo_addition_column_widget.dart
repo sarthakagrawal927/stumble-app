@@ -26,7 +26,7 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
       children: [
         const ScreenHeadingWidget("Add your first photo!"),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 20,
+          height: marginHeight16(context),
         ),
         const Row(
           mainAxisAlignment: MainAxisAlignment.center,

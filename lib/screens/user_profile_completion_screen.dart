@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/screens/user_profile_overview_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/common/photo_uploader.dart';
@@ -44,14 +45,14 @@ class _UserProfileCompletionScreenState
   ) {
     return Padding(
       padding: EdgeInsets.all(
-        marginWidth16(context),
+        marginWidth24(context),
       ),
       child: Text(
         textAlign: TextAlign.start,
         profileCompletionPercentage,
         style: TextStyle(
           color: textColor,
-          fontSize: marginWidth16(context),
+          fontSize: fontSize32(context),
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -263,7 +264,7 @@ Padding verificationIconToDisplay(
       marginWidth16(context),
     ),
     child: Icon(
-      size: marginWidth16(context),
+      size: fontSize32(context),
       icon,
       color: color,
     ),
@@ -289,7 +290,7 @@ Widget profileCompletionCard(
             textAlign: TextAlign.end,
             style: TextStyle(
               color: textColor,
-              fontSize: marginWidth32(context),
+              fontSize: fontSize64(context),
             ),
           ),
         ],

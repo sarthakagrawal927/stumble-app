@@ -1,3 +1,5 @@
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +28,7 @@ class _LocationDisclosureState extends State<LocationDisclosure> {
       children: [
         const ScreenHeadingWidget("How is your location used for stumbling?"),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 12,
+          height: marginHeight16(context),
         ),
         SingleChildScrollView(
           child: Container(
@@ -41,9 +43,10 @@ class _LocationDisclosureState extends State<LocationDisclosure> {
                 vertical: marginHeight128(context),
               ),
               child: Text(
+                textAlign: TextAlign.center,
                 "Stumble collects location data to show your profile to other potential stumblers in your immediate vicinity, even when the app is closed or not in use.",
                 style: TextStyle(
-                  fontSize: marginWidth16(context),
+                  fontSize: fontSize48(context),
                   color: whiteColor,
                 ),
               ),

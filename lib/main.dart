@@ -89,12 +89,14 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        color: backgroundColor,
         navigatorObservers: [ChuckerFlutter.navigatorObserver],
         title: 'Stumble!',
         theme: ThemeData(
           textTheme: GoogleFonts.latoTextTheme(
             Theme.of(context).textTheme,
           ),
+          scaffoldBackgroundColor: backgroundColor
         ),
         home: getScreen(),
         routes: {

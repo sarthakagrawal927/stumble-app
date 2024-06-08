@@ -1,3 +1,4 @@
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/providers/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +56,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               'Do you have a preference for the genders shown to you?',
               style: TextStyle(
                 color: textColor,
-                fontSize: MediaQuery.of(context).size.height / 48,
+                fontSize: fontSize48(context),
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -92,7 +93,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
               'Do you have a preference for the age of people you want to meet?',
               style: TextStyle(
                 color: textColor,
-                fontSize: MediaQuery.of(context).size.height / 48,
+                fontSize: fontSize48(context),
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -184,9 +185,9 @@ class _FiltersScreenState extends State<FiltersScreen> {
       activeColor: filterScreenHeadingColor,
       title: Text(
         text,
-        style: const TextStyle(
+        style: TextStyle(
           color: textColor,
-          fontSize: 20,
+          fontSize: fontSize64(context),
         ),
       ),
       value: selectedGenders.contains(gender),

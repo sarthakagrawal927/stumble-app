@@ -1,3 +1,5 @@
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
@@ -106,7 +108,6 @@ class TopAppBarWithLogoutOption extends StatelessWidget
                                 shrinkWrap: true,
                                 children: <Widget>[
                                   SizedBox(
-                                      height: marginHeight4(context),
                                       width: MediaQuery.of(context).size.width *
                                           0.825,
                                       child: Column(
@@ -117,26 +118,18 @@ class TopAppBarWithLogoutOption extends StatelessWidget
                                         children: [
                                           Container(
                                             margin: EdgeInsets.only(
-                                                top: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    64),
+                                                top: marginWidth64(context)),
                                             padding: EdgeInsets.symmetric(
-                                              horizontal: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  32,
-                                              vertical: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  64,
+                                              horizontal:
+                                                  marginWidth32(context),
+                                              vertical: marginHeight64(context),
                                             ),
                                             child: Column(
                                               children: [
                                                 Text(
                                                   style: GoogleFonts.acme(
                                                     fontSize:
-                                                        marginWidth16(context),
+                                                        fontSize48(context),
                                                     color: headingColor,
                                                   ),
                                                   textAlign: TextAlign.left,
@@ -144,13 +137,12 @@ class TopAppBarWithLogoutOption extends StatelessWidget
                                                   "It saddens us to witness your stumbling come to a halt in discovering more incredible individuals!",
                                                 ),
                                                 SizedBox(
-                                                    height: marginHeight64(
+                                                    height: marginHeight128(
                                                         context)),
                                                 Text(
                                                     style: GoogleFonts.acme(
-                                                      fontSize: marginWidth32(
-                                                              context) /
-                                                          1.5,
+                                                      fontSize:
+                                                          fontSize96(context),
                                                       color: headingColor,
                                                     ),
                                                     textAlign: TextAlign.left,
@@ -381,7 +373,7 @@ class TopAppBarWithLogoutOption extends StatelessWidget
             textAlign: TextAlign.center,
             'Stumble!',
             style: GoogleFonts.sacramento(
-              fontSize: MediaQuery.of(context).size.width / 13,
+              fontSize: fontSize28(context),
               color: headingColor,
               fontWeight: FontWeight.bold,
             ),

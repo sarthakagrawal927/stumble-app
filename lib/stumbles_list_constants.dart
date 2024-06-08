@@ -23,7 +23,7 @@ class DropdownOptionVals {
 
 final Map<DropDownOptions, DropdownOptionVals> dropDownOptions = {
   DropDownOptions.liked: DropdownOptionVals(
-    'I wanna stumble into',
+    'I stumbled into',
     DropDownOptions.liked,
     "Like someone",
     _getPeopleWhoLiked,

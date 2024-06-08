@@ -44,6 +44,8 @@ enum ApiType {
   appleAuth,
   upsertUser,
   deleteUser,
+  blockUser,
+  reportAndBlockUser,
   getProfile,
   findStumbles,
   addActivity,
@@ -69,6 +71,8 @@ const apiList = {
   ApiType.appleAuth: "/api/v1/user/apple_auth",
   ApiType.upsertUser: "/api/v1/user",
   ApiType.deleteUser: "/api/v1/user",
+  ApiType.blockUser: "/api/v1/user/block",
+  ApiType.reportAndBlockUser: "/api/v1/user/report_and_block",
   ApiType.getProfile: "/api/v1/user?user_id=",
   ApiType.findStumbles: "/api/v1/activity/find",
   ApiType.addActivity: "/api/v1/activity",
@@ -238,6 +242,27 @@ Future<void> activateUserApi(Map<String, dynamic> bodyParams) async {
 
 Future<void> deleteUserApi() async {
   await callAPI(getApiEndpoint(ApiType.deleteUser), method: HttpMethods.delete);
+}
+
+Future<void> blockUserApi(int badActorId) async {
+  await callAPI(
+    getApiEndpoint(ApiType.blockUser), 
+    method: HttpMethods.post,
+    bodyParams: {
+      'badActorId': badActorId,
+    });
+}
+
+Future<void> reportAndBlockUserApi(int badActorId, int source, String message) async {
+  await callAPI(
+    getApiEndpoint(ApiType.reportAndBlockUser), 
+    method: HttpMethods.post,
+    bodyParams: {
+      'badActorId': badActorId,
+      'source': source,
+      'message': message,
+    }
+  );
 }
 
 Future<bool> updateUserInterest(String threadId, int interest) async {

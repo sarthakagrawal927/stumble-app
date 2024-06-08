@@ -1,3 +1,5 @@
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
@@ -33,46 +35,45 @@ class _NameColumnState extends State<NameColumn> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const ScreenHeadingWidget("What's your first name?"),
+        const ScreenHeadingWidget("What should your 'stumblers' call you?"),
         Container(
           margin: EdgeInsets.only(
-            left: widget.deviceSize.width / 16,
-            right: widget.deviceSize.width / 16,
+            left: marginWidth16(context),
+            right: marginWidth16(context),
           ),
           padding: EdgeInsets.symmetric(
-            vertical: widget.deviceSize.height / 32,
-            horizontal: widget.deviceSize.width / 16,
+            vertical: marginHeight32(context),
+            horizontal: marginWidth16(context),
           ),
-          child: const Text(
+          child: Text(
               style: TextStyle(
-                fontSize: 20,
+                fontSize: fontSize48(context),
                 color: whiteColor,
               ),
               "You won't be able to change this later!"),
         ),
         Container(
           margin: EdgeInsets.only(
-            left: widget.deviceSize.width / 16,
-            right: widget.deviceSize.width / 16,
+            left: marginWidth16(context),
+            right: marginWidth16(context),
           ),
-          padding: EdgeInsets.only(top: widget.deviceSize.height / 32),
+          padding: EdgeInsets.only(top: marginHeight32(context)),
           child: TextField(
             controller: nameTextBoxController,
             cursorColor: backgroundColor,
-            keyboardAppearance: Brightness.dark,
-            style: const TextStyle(
+            style: TextStyle(
               color: whiteColor,
-              fontSize: 35,
+              fontSize: fontSize32(context),
             ),
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                   borderSide: BorderSide(
-                color: Colors.white,
+                color: whiteColor,
               )),
               labelText: 'Name',
               labelStyle: GoogleFonts.lato(
-                fontSize: 25,
-                color: Colors.white,
+                fontSize: fontSize48(context),
+                color: whiteColor,
               ),
             ),
             keyboardType: TextInputType.name,

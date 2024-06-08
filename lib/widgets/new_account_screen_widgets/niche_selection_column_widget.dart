@@ -1,4 +1,6 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/widgets/newUser/screen_go_to_next_page_row.dart';
@@ -51,13 +53,13 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
             ),
             color: Colors.transparent,
             child: Theme(
-              data: ThemeData(unselectedWidgetColor: Colors.white),
+              data: ThemeData(unselectedWidgetColor: whiteColor),
               child: CheckboxListTile(
-                title: const Text(
+                title: Text(
                   'Stumbling filters: ',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
+                    color: whiteColor,
+                    fontSize: fontSize32(context),
                   ),
                 ),
                 value: isUserPlatonic,

@@ -1,3 +1,5 @@
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/stumbles_list_constants.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/inherited_keys_helper.dart';
@@ -122,49 +124,58 @@ class _SwipingScreenState extends State<SwipingScreen> {
             automaticallyImplyLeading: false,
             actions: [
               DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  iconSize: marginWidth16(context),
-                  dropdownColor: dropDownColor,
-                  items: dropDownOptionList
-                      .map((e) => DropdownMenuItem(
-                            alignment: Alignment.center,
-                            value: e!.value,
-                            child: Row(
-                              children: [
-                                e.icon,
-                                const SizedBox(width: 8),
-                                Text(
-                                  e.label,
-                                  style: const TextStyle(
-                                    color: whiteColor,
-                                    fontSize: 14,
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  child: DropdownButton(
+                    padding: EdgeInsets.zero,
+                    iconSize: fontSize64(context),
+                    dropdownColor: dropDownColor,
+                    items: dropDownOptionList
+                        .map((e) => DropdownMenuItem(
+                              alignment: Alignment.center,
+                              value: e!.value,
+                              child: Row(
+                                children: [
+                                  e.icon,
+                                  SizedBox(width: fontSize96(context)),
+                                  Container(
+                                    margin: EdgeInsets.zero,
+                                    padding: EdgeInsets.zero,
+                                    child: Text(
+                                      e.label,
+                                      style: TextStyle(
+                                        color: whiteColor,
+                                        fontSize: fontSize64(context),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ))
-                      .toList(),
-                  onChanged: (itemIdentifier) async {
-                    dropDownOptions[itemIdentifier]!.getActivities().then(
-                          (value) => Navigator.pushNamed(context,
-                              dropDownOptions[itemIdentifier]!.routeName,
-                              arguments: value),
-                        );
-                  },
-                  icon: Padding(
-                    padding: EdgeInsets.only(right: marginWidth16(context)),
-                    child: Showcase(
-                      description: "You can find your stumbler lists here!",
-                      key: _dropDownKey,
-                      blurValue: 5,
-                      descriptionPadding:
-                          EdgeInsets.all(marginWidth128(context)),
-                      overlayOpacity: 0.1,
-                      showArrow: true,
-                      targetPadding: EdgeInsets.all(marginWidth128(context)),
-                      child: const Icon(
-                        Icons.menu,
-                        color: headingColor,
+                                ],
+                              ),
+                            ))
+                        .toList(),
+                    onChanged: (itemIdentifier) async {
+                      dropDownOptions[itemIdentifier]!.getActivities().then(
+                            (value) => Navigator.pushNamed(context,
+                                dropDownOptions[itemIdentifier]!.routeName,
+                                arguments: value),
+                          );
+                    },
+                    icon: Container(
+                      padding: EdgeInsets.only(right: marginWidth32(context)),
+                      child: Showcase(
+                        description: "You can find your stumbler lists here!",
+                        key: _dropDownKey,
+                        blurValue: 5,
+                        descriptionPadding:
+                            EdgeInsets.all(marginWidth128(context)),
+                        overlayOpacity: 0.1,
+                        showArrow: true,
+                        targetPadding: EdgeInsets.all(marginWidth128(context)),
+                        child: Icon(
+                          Icons.menu,
+                          color: headingColor,
+                          size: fontSize32(context),
+                        ),
                       ),
                     ),
                   ),
@@ -173,7 +184,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
             ],
             backgroundColor: topAppBarColor,
             title: Padding(
-              padding: EdgeInsets.only(left: marginWidth16(context)),
+              padding: EdgeInsets.only(left: marginWidth32(context)),
               child: Showcase(
                 description: promptExplainingLocationUsage,
                 descTextStyle: TextStyle(fontSize: marginWidth24(context)),
@@ -191,7 +202,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
                   textAlign: TextAlign.center,
                   'Stumble!',
                   style: GoogleFonts.sacramento(
-                    fontSize: MediaQuery.of(context).size.width / 13,
+                    fontSize: fontSize28(context),
                     color: headingColor,
                     fontWeight: FontWeight.bold,
                   ),

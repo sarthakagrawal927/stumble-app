@@ -33,8 +33,6 @@ const Color selectedScreenIconColor = Colors.white;
 
 const Color nonSelectedScreenIconColor = Colors.white38;
 
-const whiteColor = Colors.white;
-
 enum ActivityType { like, dislike, match, unmatch }
 
 enum InterestType { hookup, relationship, friendship }
@@ -114,8 +112,16 @@ double marginHeight64(BuildContext context) {
   return MediaQuery.of(context).size.height / 64;
 }
 
+double marginHeight48(BuildContext context) {
+  return MediaQuery.of(context).size.height / 48;
+}
+
 double marginHeight32(BuildContext context) {
   return MediaQuery.of(context).size.height / 32;
+}
+
+double marginHeight24(BuildContext context) {
+  return MediaQuery.of(context).size.height / 24;
 }
 
 double marginHeight16(BuildContext context) {

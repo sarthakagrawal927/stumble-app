@@ -1,7 +1,11 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/general.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../screens/individual_chats_screen.dart';
 import '../circle_avatar.dart';
@@ -33,10 +37,128 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
   @override
   Widget build(BuildContext context) {
     bool hasConversationStarted = widget.threadDetails.lastMsgTime != null;
+    String reportMessage = "";
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ChatScreen(thread: widget.threadDetails)));
+      },
+      onLongPress: () {
+        showDialog(
+          context: context,
+          barrierColor: Colors.transparent.withOpacity(0.8),
+          builder: (context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Dialog(
+                  backgroundColor: whiteColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                  elevation: 16,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.825,
+                        child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        top: marginWidth64(context)),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: marginWidth32(context),
+                                      vertical: marginHeight64(context),
+                                    ),
+                                    child: Text(
+                                      style: GoogleFonts.acme(
+                                        fontSize: fontSize48(context),
+                                        color: headingColor,),
+                                      textAlign: TextAlign.left,
+                                      softWrap: true,
+                                      "We encourage you to drop a message if you're reporting a user, so we can assist you promptly.",
+                                    ),
+                                  ),
+                                ],
+                              )
+                      ),
+                      Container(
+                        height: marginHeight64(context),
+                        color: Colors.transparent.withOpacity(0.925),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: marginHeight64(context), 
+                          left: marginWidth16(context), 
+                          right: marginWidth16(context), 
+                          bottom: marginHeight128(context),
+                        ),
+                        child: TextField(
+                          maxLines: 2,
+                          minLines: 1,
+                          cursorColor: Colors.black,
+                          autocorrect: true,
+                          keyboardType: TextInputType.multiline,
+                          textInputAction: TextInputAction.newline,
+                          style:  TextStyle(
+                            color: Colors.black,
+                            fontSize: fontSize64(context),
+                          ),
+                          maxLength: 25,
+                          onChanged: (value) {
+                            reportMessage = value;
+                          },
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                            iconSize:
+                                fontSize16(context),
+                            icon: Icon(
+                              Icons.block, 
+                              color: Colors.black,
+                              size: marginWidth12(context),
+                            ),
+                            onPressed: () {
+                              blockUserApi(widget.threadDetails.chatterId);
+                              Navigator.of(context, rootNavigator: true)
+                                  .pop("");
+                            },
+                          ),
+                          IconButton(
+                            iconSize:
+                                fontSize16(context),
+                            icon: Icon(
+                              Icons.report,
+                              color: Colors.red,
+                              size: marginWidth12(context),
+                            ),
+                            onPressed: () {
+                              reportAndBlockUserApi(
+                                widget.threadDetails.chatterId, 
+                                2,
+                                reportMessage,
+                              );
+                              Navigator.of(context, rootNavigator: true)
+                                  .pop("");
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -129,7 +251,7 @@ class _ContainerOfMatchOverviewState extends State<ContainerOfMatchOverview> {
                             : FontStyle.italic,
                       ),
                       overflow: TextOverflow.ellipsis,
-
+    
                       // italics if hasConversationStarted
                     ),
                   ),

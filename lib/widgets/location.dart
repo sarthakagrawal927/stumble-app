@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/constants_font_sizes.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -81,10 +83,13 @@ class _MyLocationComponent extends State<MyLocationComponent> {
     if (!isLocationWorking) {
       return Center(
         child: Container(
-          color: Colors.green,
-          child: const Text(
-            'Location not working',
-            style: TextStyle(color: Colors.white),
+          padding: EdgeInsets.all(marginHeight128(context)),
+          margin: EdgeInsets.all(marginHeight8(context)),
+          color: Colors.red,
+          child: Text(
+            textAlign: TextAlign.left,
+            'Oops! Stumble can\'t accurately function without your location! :(',
+            style: TextStyle(color: Colors.white, fontSize: fontSize48(context)),
           ),
         ),
       );
