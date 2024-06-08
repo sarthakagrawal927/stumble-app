@@ -7,7 +7,7 @@
    <application
         android:label="Stumble"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/stumble_logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"
