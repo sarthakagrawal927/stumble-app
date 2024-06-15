@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/hooks/index.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -120,11 +121,7 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
             opacity: _stumbleTextAnimation,
             child: Text(
               'Stumble',
-              style: GoogleFonts.sacramento(
-                fontSize: fontSize16(context),
-                color: whiteColor,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.heading(context, color: AppColors.backgroundColor, size: 40.0)
             ),
           ),
         ),
@@ -137,10 +134,7 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
               opacity: _mottoTextAnimation,
               child: Text(
                 'into someone amazing!',
-                style: GoogleFonts.sacramento(
-                  fontSize: fontSize24(context),
-                  color: whiteColor,
-                ),
+                style: AppTextStyles.secondaryHeading(context),
                 textAlign: TextAlign.end,
               ),
             ),

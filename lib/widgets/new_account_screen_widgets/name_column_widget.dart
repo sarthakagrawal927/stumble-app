@@ -1,9 +1,10 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
@@ -48,7 +49,7 @@ class _NameColumnState extends State<NameColumn> {
           child: Text(
               style: TextStyle(
                 fontSize: fontSize48(context),
-                color: const Color.fromRGBO(255, 205, 234, 1),
+                color: AppColors.backgroundColor,
                 fontWeight: FontWeight.w400,
               ),
               "You won't be able to change this later!"),
@@ -61,7 +62,7 @@ class _NameColumnState extends State<NameColumn> {
           padding: EdgeInsets.only(top: marginHeight32(context)),
           child: TextField(
             controller: nameTextBoxController,
-            cursorColor: backgroundColor,
+            cursorColor: AppColors.backgroundColor,
             style: TextStyle(
               color: whiteColor,
               fontSize: fontSize32(context),
@@ -69,13 +70,10 @@ class _NameColumnState extends State<NameColumn> {
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                   borderSide: BorderSide(
-                color: whiteColor,
+                color: AppColors.backgroundColor,
               )),
               labelText: 'Name',
-              labelStyle: GoogleFonts.lato(
-                fontSize: fontSize48(context),
-                color: const Color.fromRGBO(134, 70, 156, 1),
-              ),
+              labelStyle: AppTextStyles.regularText(context, color: AppColors.backgroundColor)
             ),
             keyboardType: TextInputType.name,
             autofocus: true,
@@ -87,8 +85,6 @@ class _NameColumnState extends State<NameColumn> {
           ),
         ),
         ScreenGoToNextPageRow(
-          "",
-          "",
           () {
             handleSnackBarIfInputNotFilled(_name != "", () async {
               Provider.of<FirstScreenStateProviders>(context, listen: false)

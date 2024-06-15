@@ -1,5 +1,7 @@
 import 'package:dating_made_better/app_colors.dart';
+import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
@@ -18,6 +20,24 @@ var interestToLabel = {
   InterestType.hookup: "Casual Encounter",
   InterestType.relationship: "Relationship",
 };
+
+enum DropdownOptions {
+  block,
+  report,
+}
+
+class DropdownOptionVal {
+  final String value;
+  final IconData icon;
+  final DropdownOptions dropdownOption;
+
+  DropdownOptionVal(this.value, this.icon, this.dropdownOption);
+}
+
+var dropdownOptions = [
+  DropdownOptionVal("Block", Icons.block, DropdownOptions.block),
+  DropdownOptionVal("Report", Icons.report, DropdownOptions.report),
+];
 
 var labelToInterest = {
   interestToLabel[InterestType.friendship]: InterestType.friendship,
@@ -106,12 +126,129 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String reportMessage = "";
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColor,
         toolbarHeight: MediaQuery.of(context).size.height / 12,
         leadingWidth: marginWidth16(context),
+        actions: [
+          DropdownButtonHideUnderline(child: 
+          DropdownButton(
+            icon: Padding(
+              padding: EdgeInsets.only(
+                right: marginWidth16(context)),
+              child: Icon(
+                Icons.more_vert,                       
+                color: headingColor,
+                ),
+            ),
+            borderRadius: BorderRadius.circular(10),
+            dropdownColor: AppColors.backgroundColor,
+            iconSize: marginWidth16(context),
+            items: dropdownOptions
+                .map((e) => DropdownMenuItem(
+                      value: e.value,
+                      child: Row(
+                        children: [
+                          Icon(e.icon, color: AppColors.primaryColor),
+                          const SizedBox(width: 8),
+                          Text(e.value,
+                              style: AppTextStyles.dropdownText(context)),
+                        ],
+                      ),
+                    ))
+                .toList(),
+                onChanged: (itemIdentifier) async {
+                  if (itemIdentifier == 'Block') {
+                    blockUserApi(widget.thread.chatterId);
+                    Navigator.of(context, rootNavigator: true)
+                                    .pushReplacementNamed(MatchesAndChatsScreen.routeName);
+                  } else if (itemIdentifier == 'Report') {
+                    showDialog(
+                      context: context,
+                      barrierColor: Colors.transparent.withOpacity(0.5),
+                      builder: (context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(0))),
+            
+                          child: ListView(
+                          shrinkWrap: true,
+                          children: <Widget>[
+                          Container(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: marginWidth32(context),
+                                vertical: marginHeight128(context),
+                              ),
+                              child: Text(
+                                "We encourage you to drop a message if you're reporting a user, so we can assist you promptly.",
+                                style: AppTextStyles.regularText(context),
+                              ),
+                            ),
+                            ),
+                            Container(child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: marginWidth32(context),
+                                vertical: marginHeight128(context),
+                              ),
+                              child: TextField(
+                                                        maxLines: 2,
+                                                        minLines: 1,
+                                                        cursorColor: Colors.black,
+                                                        autocorrect: true,
+                                                        keyboardType: TextInputType.multiline,
+                                                        textInputAction: TextInputAction.newline,
+                                                        style: AppTextStyles.descriptionText(context),
+                                                        maxLength: 25,
+                                                        onChanged: (value) {
+                              reportMessage = value;
+                                                        },
+                                                      ),
+                            ),),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                                horizontal: marginWidth32(context),
+                                vertical: marginHeight128(context),
+                              ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                            IconButton(
+                              iconSize: fontSize16(context),
+                              icon: Icon(
+                                Icons.check_circle_rounded,
+                                color: Colors.black,
+                                size: marginWidth12(context),
+                              ),
+                              onPressed: () {
+                                reportAndBlockUserApi(widget.thread.chatterId, 2, reportMessage);
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacementNamed(MatchesAndChatsScreen.routeName);
+                              },
+                            ),
+                            IconButton(
+                              iconSize: fontSize16(context),
+                              icon: Icon(
+                                Icons.cancel,
+                                color: Colors.black,
+                                size: marginWidth12(context),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop("");
+                              },
+                            ),
+                          ],),
+                        )
+                          ],
+                        ));
+                      });}
+                },
+          ))
+        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -189,13 +326,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                   )
-                : lookingForSame
-                    ? Container()
-                    : Icon(
-                        Icons.visibility_off,
-                        size: marginWidth12(context),
-                        color: AppColors.primaryColor,
-                      ),
+                : Container()
           ],
         ),
       ),

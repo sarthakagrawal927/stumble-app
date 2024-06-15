@@ -54,8 +54,6 @@ class _LocationDisclosureState extends State<LocationDisclosure> {
           ),
         ),
         ScreenGoToNextPageRow(
-          "Click this to begin stumbling!",
-          "",
           () async {
             if (isLoading) return;
             isLoading = true;

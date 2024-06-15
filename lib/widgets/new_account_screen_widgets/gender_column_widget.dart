@@ -1,3 +1,4 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
@@ -54,8 +55,6 @@ class _GenderColumnState extends State<GenderColumn> {
           ],
         ),
         ScreenGoToNextPageRow(
-          "This will be shown on your profile!",
-          "",
           () {
             handleSnackBarIfInputNotFilled(_gender != null, () async {
               Provider.of<FirstScreenStateProviders>(context, listen: false)
@@ -72,12 +71,12 @@ class _GenderColumnState extends State<GenderColumn> {
   RadioListTile genderListTile(
       String text, Gender gender, BuildContext context) {
     return RadioListTile<Gender>(
-      tileColor: whiteColor,
+      tileColor: AppColors.primaryColor,
       title: Text(
         text,
         style: TextStyle(
           fontSize: fontSize32(context),
-          color: whiteColor,
+          color: AppColors.backgroundColor,
         ),
       ),
       onChanged: (Gender? value) {

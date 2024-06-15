@@ -73,7 +73,7 @@ class _NicheSelectionColumnState extends State<NicheSelectionColumn> {
           ),
         ),
         ScreenGoToNextPageRow(
-            "Know exactly what each stumbler seeks from you!", "", () {
+          () {
           Provider.of<FirstScreenStateProviders>(context, listen: false)
               .setNextScreenActive();
           Provider.of<Profile>(context, listen: false).setIfUserIsPlatonic =
