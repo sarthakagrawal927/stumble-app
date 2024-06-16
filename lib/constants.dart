@@ -35,7 +35,6 @@ const Color nonSelectedScreenIconColor = Colors.white38;
 
 enum ActivityType { like, dislike, match, unmatch }
 
-enum InterestType { hookup, relationship, friendship }
 
 const activityValue = {
   ActivityType.like: 1,
@@ -44,11 +43,6 @@ const activityValue = {
   ActivityType.unmatch: 96,
 };
 
-const interestValue = {
-  InterestType.hookup: 1,
-  InterestType.relationship: 2,
-  InterestType.friendship: 3,
-};
 
 enum BottomBarScreens {
   userProfileOverviewScreen,

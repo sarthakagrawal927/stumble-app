@@ -74,6 +74,9 @@ class _UserProfileCompletionScreenState
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: TopAppBar(
+        centerTitle: true,
+        showActions: false,
+        showLeading: true,
         heading: "Profile Edit",
       ),
       body: ListView(

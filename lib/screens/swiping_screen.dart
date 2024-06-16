@@ -1,11 +1,13 @@
 import 'package:dating_made_better/app_colors.dart';
-import 'package:dating_made_better/constants_fonts.dart';
-import 'package:dating_made_better/stumbles_list_constants.dart';
-import 'package:dating_made_better/text_styles.dart';
+import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/inherited_keys_helper.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
+import 'package:dating_made_better/widgets/dropdown_options_constants.dart';
 import 'package:dating_made_better/widgets/location.dart';
+import 'package:dating_made_better/widgets/top_app_bar.dart';
+import 'package:dating_made_better/widgets/top_app_bar_constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -120,85 +122,15 @@ class _SwipingScreenState extends State<SwipingScreen> {
           preferredSize: Size.fromHeight(
             marginHeight16(context),
           ),
-          child: AppBar(
-            automaticallyImplyLeading: false,
-            actions: [
-              DropdownButtonHideUnderline(
-                child: ButtonTheme(
-                  alignedDropdown: true,
-                  child: DropdownButton(
-                    borderRadius: BorderRadius.circular(10),
-                    dropdownColor: AppColors.backgroundColor,
-                    items: dropDownOptionList
-                        .map((e) => DropdownMenuItem(
-                              alignment: Alignment.center,
-                              value: e!.value,
-                              child: Row(
-                                textDirection: TextDirection.ltr,
-                                children: [
-                                  e.icon,
-                                  SizedBox(width: fontSize96(context)),
-                                  Text(
-                                    e.label,
-                                    style: AppTextStyles.dropdownText(context),
-                                  ),
-                                ],
-                              ),
-                            ))
-                        .toList(),
-                    onChanged: (itemIdentifier) async {
-                      dropDownOptions[itemIdentifier]!.getActivities().then(
-                            (value) => Navigator.pushNamed(context,
-                                dropDownOptions[itemIdentifier]!.routeName,
-                                arguments: value),
-                          );
-                    },
-                    icon: Container(
-                      padding: EdgeInsets.only(right: marginWidth32(context)),
-                      child: Showcase(
-                          description: "You can find your stumbler lists here!",
-                          key: _dropDownKey,
-                          blurValue: 5,
-                          descriptionPadding:
-                              EdgeInsets.all(marginWidth128(context)),
-                          overlayOpacity: 0.1,
-                          showArrow: true,
-                          targetPadding:
-                              EdgeInsets.all(marginWidth128(context)),
-                          child: Transform.scale(
-                            scale: 1.25,
-                            child: Icon(
-                              Icons.menu,
-                              color: AppColors.primaryColor,
-                              size: fontSize32(context),
-                            ),
-                          )),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-            backgroundColor: topAppBarColor,
-            title: Showcase(
-              description: promptExplainingLocationUsage,
-              descTextStyle: TextStyle(fontSize: marginWidth24(context)),
-              key: _locationUsageKey,
-              blurValue: 5,
-              descriptionPadding: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height / 128,
-                horizontal: marginWidth128(context),
-              ),
-              tooltipPosition: TooltipPosition.bottom,
-              overlayOpacity: 0.5,
-              showArrow: false,
-              targetPadding: EdgeInsets.all(marginWidth32(context)),
-              child: Text(
-                textAlign: TextAlign.center,
-                'Stumble',
-                style: AppTextStyles.heading(context),
-              ),
-            ),
+          child: TopAppBar(
             centerTitle: false,
+            heading: "Stumble",
+            showActions: true,
+            showLeading: false,
+            dropDownItems: dropdownWithScreenOptions,
+            dropDownKey: _dropDownKey,
+            locationUsageKey: _locationUsageKey,
+            screen: Screen.swipingScreen,
           ),
         ),
         body: Stack(

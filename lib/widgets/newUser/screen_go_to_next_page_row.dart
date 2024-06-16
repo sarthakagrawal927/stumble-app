@@ -19,8 +19,8 @@ class ScreenGoToNextPageRow extends StatelessWidget {
           margin: EdgeInsets.only(bottom: marginHeight32(context)),
           child: IconButton(
             padding: EdgeInsets.zero,
-            constraints: BoxConstraints(),
-            icon: Icon(Icons.double_arrow_sharp),
+            constraints: const BoxConstraints(),
+            icon: const Icon(Icons.double_arrow_sharp),
             color: AppColors.backgroundColor,
             iconSize: fontSize24(context),
             onPressed: (() async {

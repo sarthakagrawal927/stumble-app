@@ -4,7 +4,7 @@ import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/matches_conversation_started_with.dart';
-import 'package:dating_made_better/widgets/top_app_bar_with_screens_option.dart';
+import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -57,8 +57,11 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: TopAppBarWithScreensOption(
-        routeName: "",
+      appBar: TopAppBar(
+        centerTitle: false,
+        showActions: false,
+        showLeading: false,
+        heading: 'Your Stumblers',
       ),
       body: _listsPopulated &&
               listOfStumbleMatches.isEmpty &&

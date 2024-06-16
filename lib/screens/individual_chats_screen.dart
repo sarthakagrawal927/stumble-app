@@ -1,5 +1,4 @@
 import 'package:dating_made_better/app_colors.dart';
-import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
@@ -9,41 +8,16 @@ import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:dating_made_better/widgets/common/info_dialog_widget.dart';
 import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
+import 'package:dating_made_better/widgets/dropdown_options_constants.dart';
+import 'package:dating_made_better/widgets/interest_types_constants.dart';
+import 'package:dating_made_better/widgets/report_dialog.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
 
-var interestToLabel = {
-  InterestType.friendship: "Just a Conversation",
-  InterestType.hookup: "Casual Encounter",
-  InterestType.relationship: "Relationship",
-};
 
-enum DropdownOptions {
-  block,
-  report,
-}
-
-class DropdownOptionVal {
-  final String value;
-  final IconData icon;
-  final DropdownOptions dropdownOption;
-
-  DropdownOptionVal(this.value, this.icon, this.dropdownOption);
-}
-
-var dropdownOptions = [
-  DropdownOptionVal("Block", Icons.block, DropdownOptions.block),
-  DropdownOptionVal("Report", Icons.report, DropdownOptions.report),
-];
-
-var labelToInterest = {
-  interestToLabel[InterestType.friendship]: InterestType.friendship,
-  interestToLabel[InterestType.hookup]: InterestType.hookup,
-  interestToLabel[InterestType.relationship]: InterestType.relationship,
-};
 
 class ChatApiResponse {
   final List<ChatMessage> messages;
@@ -126,7 +100,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String reportMessage = "";
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
@@ -139,7 +112,7 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: Padding(
               padding: EdgeInsets.only(
                 right: marginWidth16(context)),
-              child: Icon(
+              child: const Icon(
                 Icons.more_vert,                       
                 color: headingColor,
                 ),
@@ -147,105 +120,14 @@ class _ChatScreenState extends State<ChatScreen> {
             borderRadius: BorderRadius.circular(10),
             dropdownColor: AppColors.backgroundColor,
             iconSize: marginWidth16(context),
-            items: dropdownOptions
-                .map((e) => DropdownMenuItem(
-                      value: e.value,
-                      child: Row(
-                        children: [
-                          Icon(e.icon, color: AppColors.primaryColor),
-                          const SizedBox(width: 8),
-                          Text(e.value,
-                              style: AppTextStyles.dropdownText(context)),
-                        ],
-                      ),
-                    ))
-                .toList(),
-                onChanged: (itemIdentifier) async {
+            items: getDropDownMenuList(context, individualChatScreenDropdownOptions),
+            onChanged: (itemIdentifier) async {
                   if (itemIdentifier == 'Block') {
                     blockUserApi(widget.thread.chatterId);
                     Navigator.of(context, rootNavigator: true)
                                     .pushReplacementNamed(MatchesAndChatsScreen.routeName);
                   } else if (itemIdentifier == 'Report') {
-                    showDialog(
-                      context: context,
-                      barrierColor: Colors.transparent.withOpacity(0.5),
-                      builder: (context) {
-                        return Dialog(
-                          shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(0))),
-            
-                          child: ListView(
-                          shrinkWrap: true,
-                          children: <Widget>[
-                          Container(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: marginWidth32(context),
-                                vertical: marginHeight128(context),
-                              ),
-                              child: Text(
-                                "We encourage you to drop a message if you're reporting a user, so we can assist you promptly.",
-                                style: AppTextStyles.regularText(context),
-                              ),
-                            ),
-                            ),
-                            Container(child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: marginWidth32(context),
-                                vertical: marginHeight128(context),
-                              ),
-                              child: TextField(
-                                                        maxLines: 2,
-                                                        minLines: 1,
-                                                        cursorColor: Colors.black,
-                                                        autocorrect: true,
-                                                        keyboardType: TextInputType.multiline,
-                                                        textInputAction: TextInputAction.newline,
-                                                        style: AppTextStyles.descriptionText(context),
-                                                        maxLength: 25,
-                                                        onChanged: (value) {
-                              reportMessage = value;
-                                                        },
-                                                      ),
-                            ),),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                                horizontal: marginWidth32(context),
-                                vertical: marginHeight128(context),
-                              ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                            IconButton(
-                              iconSize: fontSize16(context),
-                              icon: Icon(
-                                Icons.check_circle_rounded,
-                                color: Colors.black,
-                                size: marginWidth12(context),
-                              ),
-                              onPressed: () {
-                                reportAndBlockUserApi(widget.thread.chatterId, 2, reportMessage);
-                                Navigator.of(context, rootNavigator: true)
-                                    .pushReplacementNamed(MatchesAndChatsScreen.routeName);
-                              },
-                            ),
-                            IconButton(
-                              iconSize: fontSize16(context),
-                              icon: Icon(
-                                Icons.cancel,
-                                color: Colors.black,
-                                size: marginWidth12(context),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop("");
-                              },
-                            ),
-                          ],),
-                        )
-                          ],
-                        ));
-                      });}
+                    reportDialog(context, widget.thread.chatterId);}
                 },
           ))
         ],
@@ -360,7 +242,6 @@ class _ChatScreenState extends State<ChatScreen> {
           const BottomBar(currentScreen: BottomBarScreens.chatScreen),
     );
   }
-
   DropdownMenuItem<String> nicheSelectedOption(
       final InterestType selectedOption) {
     return DropdownMenuItem(
