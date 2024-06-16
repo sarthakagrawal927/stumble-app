@@ -3,6 +3,7 @@ import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
 
 Future<Position> determinePosition() async {
@@ -59,7 +60,9 @@ class _MyLocationComponent extends State<MyLocationComponent> {
   @override
   void initState() {
     super.initState();
-    _callActivateUser();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _callActivateUser();
+    });
   }
 
   _callActivateUser() async {
