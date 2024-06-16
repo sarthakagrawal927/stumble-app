@@ -38,7 +38,8 @@ class CommentFeatureWidget extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.only(
                               left: marginWidth12(context),
-                              right: marginWidth12(context)),
+                              right: marginWidth12(context),
+                              bottom: 0.0),
                           child: Badge(
                             alignment: Alignment.centerLeft,
                             isLabelVisible: false,
@@ -46,9 +47,9 @@ class CommentFeatureWidget extends StatelessWidget {
                             child: Container(
                               padding: EdgeInsets.all(marginWidth32(context)),
                               decoration: const BoxDecoration(
-                                color: Colors.redAccent,
+                                color: AppColors.secondaryColor,
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(200),
+                                  Radius.circular(10),
                                 ),
                               ),
                               child: Text(
@@ -65,7 +66,7 @@ class CommentFeatureWidget extends StatelessWidget {
                         Dialog(
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)),
+                              borderRadius: BorderRadius.circular(10)),
                           elevation: 16,
                           child: ListView(
                             shrinkWrap: true,
@@ -82,20 +83,9 @@ class CommentFeatureWidget extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.only(
-                                                top: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    64),
                                             padding: EdgeInsets.symmetric(
-                                              horizontal: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  32,
-                                              vertical: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  64,
+                                              horizontal: marginWidth32(context),
+                                              vertical: marginHeight128(context),
                                             ),
                                             child: Text(
                                                 textAlign: TextAlign.left,
@@ -105,14 +95,8 @@ class CommentFeatureWidget extends StatelessWidget {
                                           ),
                                           Container(
                                             padding: EdgeInsets.symmetric(
-                                              horizontal: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  32,
-                                              vertical: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  64,
+                                              horizontal: marginWidth32(context),
+                                              vertical: marginHeight128(context),
                                             ),
                                             child: Text(
                                               textOnProfile,
@@ -129,10 +113,6 @@ class CommentFeatureWidget extends StatelessWidget {
                                         ],
                                       )
                                     : widget,
-                              ),
-                              Container(
-                                height: marginHeight64(context),
-                                color: Colors.transparent.withOpacity(0.925),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(marginWidth12(context)),
