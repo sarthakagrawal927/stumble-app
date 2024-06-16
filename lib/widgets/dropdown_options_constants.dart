@@ -8,8 +8,7 @@ import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:dating_made_better/widgets/deletion_dialog_widget.dart';
-import 'package:dating_made_better/widgets/feedback_widget.dart';
-import 'package:dating_made_better/widgets/report_dialog.dart';
+import 'package:dating_made_better/widgets/generic_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -54,7 +53,7 @@ final Map<String, DropdownOptionVal?> dropDownOptions = {
   'Leave feedback!': DropdownOptionVal(
     'Leave feedback!', 
     Icons.pages, 
-    ((context) => feedbackWidget(context)
+    ((context) => genericDialogWidget(context, reason: PromptReason.appFeedback)
     )
   ),
   'Privacy terms': DropdownOptionVal(
@@ -92,7 +91,7 @@ final Map<String, DropdownOptionVal?> dropDownOptions = {
     'Report', 
     Icons.report, 
     (((context, [chatterId]) {
-      reportDialog(context, chatterId);
+      genericDialogWidget(context, reason: PromptReason.reportUser, chatterId: chatterId);
     }))
   ),
 };

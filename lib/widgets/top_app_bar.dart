@@ -55,15 +55,10 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                     onChanged: (itemIdentifier) async {
                         dropDownOptions[itemIdentifier]!.onClick(context);
                       },
-                    icon: (screen != Screen.swipingScreen && screen != Screen.userProfileOverviewScreen)
-                    ? Padding(
-                      padding: EdgeInsets.only(right: marginWidth16(context)),
-                      child: dropdownMenuIcon(context),) 
-                    : dropDownButtonWithoutPadding(
-                      context, dropDownKey, screen)
-                  ),
+                    icon: (
+                      dropDownButtonWithoutPadding(context, dropDownKey, screen)),
                 ),
-              ),
+              )),
           ]
         : null,
         title: screen == Screen.swipingScreen
@@ -71,8 +66,8 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           : showLeading 
             ? Padding(
               padding: EdgeInsets.only(left: marginWidth16(context)),
-              child: headingWidget(context, heading),
-            ) : headingWidget(context, heading),
+              child: headingWidget(context, heading),) 
+            : headingWidget(context, heading, screen: screen),
             backgroundColor: topAppBarColor,
       ),
     );

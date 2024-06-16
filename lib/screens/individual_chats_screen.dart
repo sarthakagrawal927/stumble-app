@@ -9,8 +9,8 @@ import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:dating_made_better/widgets/common/info_dialog_widget.dart';
 import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
 import 'package:dating_made_better/widgets/dropdown_options_constants.dart';
+import 'package:dating_made_better/widgets/generic_dialog_widget.dart';
 import 'package:dating_made_better/widgets/interest_types_constants.dart';
-import 'package:dating_made_better/widgets/report_dialog.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:flutter/material.dart';
 
@@ -106,17 +106,18 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: AppColors.backgroundColor,
         toolbarHeight: MediaQuery.of(context).size.height / 12,
         leadingWidth: marginWidth16(context),
-        actions: [
-          DropdownButtonHideUnderline(child: 
-          DropdownButton(
-            icon: Padding(
+        actions: !showLookingForOption ? 
+        [
+          DropdownButtonHideUnderline(
+            child: DropdownButton(
+            icon:
+            Padding(
               padding: EdgeInsets.only(
                 right: marginWidth16(context)),
               child: const Icon(
                 Icons.more_vert,                       
                 color: headingColor,
-                ),
-            ),
+                ),),
             borderRadius: BorderRadius.circular(10),
             dropdownColor: AppColors.backgroundColor,
             iconSize: marginWidth16(context),
@@ -127,10 +128,11 @@ class _ChatScreenState extends State<ChatScreen> {
                     Navigator.of(context, rootNavigator: true)
                                     .pushReplacementNamed(MatchesAndChatsScreen.routeName);
                   } else if (itemIdentifier == 'Report') {
-                    reportDialog(context, widget.thread.chatterId);}
+                    genericDialogWidget(context, reason: PromptReason.reportUser, chatterId: widget.thread.chatterId);}
                 },
           ))
-        ],
+        ]
+        : null,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

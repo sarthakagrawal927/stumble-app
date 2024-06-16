@@ -1,5 +1,4 @@
 import 'package:dating_made_better/app_colors.dart';
-import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/inherited_keys_helper.dart';
