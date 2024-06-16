@@ -64,11 +64,12 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
                     vertical: marginHeight8(context),
                     horizontal: marginWidth8(context),
                   ),
-                  child: Text(
-                      textAlign: TextAlign.center,
-                      "No nearby stumblers to 'stumble' upon at the moment.",
-                      style: AppTextStyles.regularText(context)),
-                ),
+                  child: 
+                  Text(
+                    textAlign: TextAlign.center,
+                    getPromptTexts[PromptEnum.noStumblersNearby]!,
+                    style: AppTextStyles.regularText(context)
+                  ),)
               )
             : DragWidget(
                 profile: draggableItems.last,

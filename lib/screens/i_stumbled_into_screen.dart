@@ -65,10 +65,11 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
                 child: Container(
                   alignment: Alignment.center,
                   child: Text(
-                      textAlign: TextAlign.center,
-                      "No nearby stumblers to 'stumble' upon at the moment.",
-                      style: AppTextStyles.regularText(context)),
-                ),
-              ));
+                    textAlign: TextAlign.center,
+                    getPromptTexts[PromptEnum.noLiked]!,
+                    style: AppTextStyles.regularText(context)
+                  ),
+              )
+            ));
   }
 }

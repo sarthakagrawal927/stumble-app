@@ -7,7 +7,6 @@ import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
-import 'package:dating_made_better/widgets/deletion_dialog_widget.dart';
 import 'package:dating_made_better/widgets/generic_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -76,7 +75,7 @@ final Map<String, DropdownOptionVal?> dropDownOptions = {
   'Delete :\'(': DropdownOptionVal(
     'Delete :\'(', 
     Icons.emoji_flags, 
-    ((context) => deletionWidget(context)),
+    ((context) => genericDialogWidget(context, reason: PromptReason.deletionPrompt)),
   ),
   'Block': DropdownOptionVal(
     'Block', 

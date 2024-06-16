@@ -45,7 +45,20 @@ Future<dynamic> genericDialogWidget(BuildContext context, {PromptReason reason =
                                 ),
                               ),
                             
-                            Padding(
+                            reason == PromptReason.deletionPrompt
+                            ? Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: marginWidth32(context),
+                                vertical: marginHeight128(context),
+                              ),
+                              child: Text(
+                                  style: AppTextStyles.regularText(context, size: 10.0),
+                                  textAlign: TextAlign.center,
+                                  softWrap: true,
+                                  "Sure about leaving your stumblers? :(",
+                                )
+                            )
+                            : Padding(
                               padding: EdgeInsets.symmetric(
                               horizontal: marginWidth32(context),
                               vertical: marginHeight128(context),
