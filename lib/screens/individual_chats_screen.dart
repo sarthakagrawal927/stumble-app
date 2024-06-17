@@ -6,7 +6,7 @@ import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
-import 'package:dating_made_better/widgets/common/info_dialog_widget.dart';
+import 'package:dating_made_better/widgets/common/menu_dropdown.dart';
 import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
 import 'package:dating_made_better/widgets/dropdown_options_constants.dart';
 import 'package:dating_made_better/widgets/generic_dialog_widget.dart';
@@ -100,6 +100,27 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  Future<void> handleNicheSelection(InterestType interest) async {
+    updateUserInterest(widget.thread.threadId, interestValue[interest]!)
+        .then((sameInterest) {
+      if (sameInterest) {
+        setState(() {
+          lookingForSame = true;
+          lookingFor = interest;
+          showLookingForOption = false;
+        });
+        promptDialog(
+          context,
+          promptExplainingStumblingReason,
+        );
+      } else {
+        setState(() {
+          showLookingForOption = false;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,111 +130,75 @@ class _ChatScreenState extends State<ChatScreen> {
         toolbarHeight: MediaQuery.of(context).size.height / 12,
         leadingWidth: marginWidth16(context),
         actions: [
-          DropdownButtonHideUnderline(
-              child: DropdownButton(
-            icon: Padding(
-              padding: EdgeInsets.only(right: marginWidth16(context)),
-              child: const Icon(
-                Icons.more_vert,
-                color: headingColor,
-              ),
-            ),
-            borderRadius: BorderRadius.circular(10),
-            dropdownColor: AppColors.backgroundColor,
-            iconSize: marginWidth16(context),
-            items: getDropDownMenuList(
-                context, individualChatScreenDropdownOptions),
-            onChanged: (itemIdentifier) async {
-              if (itemIdentifier == 'Block') {
-                blockUserApi(widget.thread.chatterId);
-                Navigator.of(context, rootNavigator: true)
-                    .pushReplacementNamed(MatchesAndChatsScreen.routeName);
-              } else if (itemIdentifier == 'Report') {
+          MenuDropdown(const Icon(Icons.more_vert), [
+            DropdownOptionParams(
+              value: 'Report',
+              icon: Icons.report,
+              onClick: () => {
                 genericDialogWidget(context,
                     reason: PromptReason.reportUser,
-                    chatterId: widget.thread.chatterId);
-              }
-            },
-          ))
+                    chatterId: widget.thread.chatterId)
+              },
+            ),
+            DropdownOptionParams(
+              value: 'Block',
+              icon: Icons.block,
+              onClick: () => {
+                blockUserApi(widget.thread.chatterId),
+                Navigator.of(context, rootNavigator: true)
+                    .pushReplacementNamed(MatchesAndChatsScreen.routeName)
+              },
+            ),
+          ]),
+          MenuDropdown(
+            const Icon(Icons.remove_red_eye_outlined),
+            interestToLabel.entries
+                .map((e) => DropdownOptionParams(
+                      onClick: () => handleNicheSelection(e.key),
+                      value: e.value.toString(),
+                    ))
+                .toList(),
+          ),
         ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            GestureDetector(
-              onDoubleTap: () => DoNothingAction(),
-              onTap: () async {
-                if (profileLoading) return;
-                profileLoading = true;
-                await getUserApi(widget.thread.chatterId)
-                    .then((value) => showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return SwipeCard(
-                              profile: value!,
-                              isModalMode: true,
-                            );
-                          },
-                        ));
-                profileLoading = false;
-              },
-              child: CircleAvatarWidget(
-                  marginWidth16(context), widget.thread.displayPic),
-            ),
             SizedBox(
-              width: marginWidth128(context),
+              child: GestureDetector(
+                  onDoubleTap: () => DoNothingAction(),
+                  onTap: () async {
+                    if (profileLoading) return;
+                    profileLoading = true;
+                    await getUserApi(widget.thread.chatterId)
+                        .then((value) => showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return SwipeCard(
+                                  profile: value!,
+                                  isModalMode: true,
+                                );
+                              },
+                            ));
+                    profileLoading = false;
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      CircleAvatarWidget(
+                          marginWidth16(context), widget.thread.displayPic),
+                      Padding(
+                        padding: EdgeInsets.only(left: marginWidth32(context)),
+                        child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            child: Text(
+                                widget.thread.name.split(" ").first +
+                                    widget.thread.name.split(" ").first,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.chatNameText(context))),
+                      )
+                    ],
+                  )),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: marginWidth64(context)),
-              child: SizedBox(
-                  width: marginWidth4(context),
-                  child: Text(widget.thread.name.split(" ").first,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.chatNameText(context))),
-            ),
-            const Spacer(),
-            showLookingForOption
-                ? DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      borderRadius: BorderRadius.circular(10),
-                      dropdownColor: AppColors.backgroundColor,
-                      onTap: () async {
-                        await showModelIfNotShown(
-                            context, ModelOpened.userInterestInfoTeaching);
-                      },
-                      items: labelToInterest.entries
-                          .map((e) => nicheSelectedOption(e.value))
-                          .toList(),
-                      onChanged: (itemIdentifier) async {
-                        InterestType interest =
-                            labelToInterest[itemIdentifier]!;
-                        updateUserInterest(widget.thread.threadId,
-                                interestValue[interest]!)
-                            .then((sameInterest) {
-                          if (sameInterest) {
-                            setState(() {
-                              lookingForSame = true;
-                              lookingFor = interest;
-                              showLookingForOption = false;
-                            });
-                            promptDialog(
-                              context,
-                              promptExplainingStumblingReason,
-                            );
-                          } else {
-                            setState(() {
-                              showLookingForOption = false;
-                            });
-                          }
-                        });
-                      },
-                      icon: Icon(
-                        Icons.visibility,
-                        size: marginWidth12(context),
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                  )
-                : Container()
           ],
         ),
       ),
@@ -250,18 +235,4 @@ class _ChatScreenState extends State<ChatScreen> {
           const BottomBar(currentScreen: BottomBarScreens.chatScreen),
     );
   }
-
-  DropdownMenuItem<String> nicheSelectedOption(
-      final InterestType selectedOption) {
-    return DropdownMenuItem(
-      value: interestToLabel[selectedOption],
-      child: Text(
-        interestToLabel[selectedOption]!,
-        style: AppTextStyles.dropdownText(context),
-      ),
-    );
-  }
-
-  // implement preferredSize
-  Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 }
