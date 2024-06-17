@@ -17,16 +17,15 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
 
-
-
 class ChatApiResponse {
   final List<ChatMessage> messages;
-  final bool lookingForSame;
-  final bool showLookingForOption;
+  final bool? lookingForSame;
+  final bool? showLookingForOption;
   final InterestType? lookingFor;
+  final bool? isBlocked;
 
   ChatApiResponse(this.messages, this.lookingFor, this.showLookingForOption,
-      this.lookingForSame);
+      this.lookingForSame, this.isBlocked);
 }
 
 Future<ChatApiResponse> _getChatMessages(String threadId) async {
@@ -41,7 +40,8 @@ Future<ChatApiResponse> _getChatMessages(String threadId) async {
       messages.map<ChatMessage>((e) => ChatMessage.fromJson(e)).toList(),
       lookingForInterest,
       apiResponse["showLookingForOption"],
-      apiResponse["lookingForSame"]);
+      apiResponse["lookingForSame"],
+      apiResponse["isBlocked"]);
 }
 
 Future<ChatMessage> _addNewMessage(
@@ -64,6 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Color showLookingForOptionColor = topAppBarColor;
   bool lookingForSame = false;
   bool profileLoading = false;
+  bool isBlocked = false;
   late InterestType? lookingFor;
 
   bool userHasSelectedANicheOption = false;
@@ -72,10 +73,11 @@ class _ChatScreenState extends State<ChatScreen> {
     _getChatMessages(widget.thread.threadId).then((value) {
       setState(() {
         listOfChatMessages = value.messages;
-        showLookingForOption = value.showLookingForOption;
+        showLookingForOption = value.showLookingForOption ?? false;
         showLookingForOptionColor = showLookingForOptionColor;
-        lookingForSame = value.lookingForSame;
+        lookingForSame = value.lookingForSame ?? false;
         lookingFor = value.lookingFor;
+        isBlocked = value.isBlocked ?? false;
       });
     });
   }
@@ -106,33 +108,34 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: AppColors.backgroundColor,
         toolbarHeight: MediaQuery.of(context).size.height / 12,
         leadingWidth: marginWidth16(context),
-        actions: !showLookingForOption ? 
-        [
+        actions: [
           DropdownButtonHideUnderline(
-            child: DropdownButton(
-            icon:
-            Padding(
-              padding: EdgeInsets.only(
-                right: marginWidth16(context)),
+              child: DropdownButton(
+            icon: Padding(
+              padding: EdgeInsets.only(right: marginWidth16(context)),
               child: const Icon(
-                Icons.more_vert,                       
+                Icons.more_vert,
                 color: headingColor,
-                ),),
+              ),
+            ),
             borderRadius: BorderRadius.circular(10),
             dropdownColor: AppColors.backgroundColor,
             iconSize: marginWidth16(context),
-            items: getDropDownMenuList(context, individualChatScreenDropdownOptions),
+            items: getDropDownMenuList(
+                context, individualChatScreenDropdownOptions),
             onChanged: (itemIdentifier) async {
-                  if (itemIdentifier == 'Block') {
-                    blockUserApi(widget.thread.chatterId);
-                    Navigator.of(context, rootNavigator: true)
-                                    .pushReplacementNamed(MatchesAndChatsScreen.routeName);
-                  } else if (itemIdentifier == 'Report') {
-                    genericDialogWidget(context, reason: PromptReason.reportUser, chatterId: widget.thread.chatterId);}
-                },
+              if (itemIdentifier == 'Block') {
+                blockUserApi(widget.thread.chatterId);
+                Navigator.of(context, rootNavigator: true)
+                    .pushReplacementNamed(MatchesAndChatsScreen.routeName);
+              } else if (itemIdentifier == 'Report') {
+                genericDialogWidget(context,
+                    reason: PromptReason.reportUser,
+                    chatterId: widget.thread.chatterId);
+              }
+            },
           ))
-        ]
-        : null,
+        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -235,15 +238,19 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: ChatMessages(listOfChatMessages, widget.thread.displayPic),
           ),
-          NewMessage(
-            sendMessage: addNewMessage,
-          )
+          isBlocked
+              ? Text("You have blocked this user",
+                  style: AppTextStyles.regularText(context))
+              : NewMessage(
+                  sendMessage: addNewMessage,
+                )
         ],
       ),
       bottomNavigationBar:
           const BottomBar(currentScreen: BottomBarScreens.chatScreen),
     );
   }
+
   DropdownMenuItem<String> nicheSelectedOption(
       final InterestType selectedOption) {
     return DropdownMenuItem(
