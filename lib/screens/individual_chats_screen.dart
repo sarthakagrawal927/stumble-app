@@ -1,6 +1,5 @@
 import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/models/chat.dart';
-import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
@@ -140,25 +139,41 @@ class _ChatScreenState extends State<ChatScreen> {
                     chatterId: widget.thread.chatterId)
               },
             ),
-            DropdownOptionParams(
-              value: 'Block',
-              icon: Icons.block,
-              onClick: () => {
-                blockUserApi(widget.thread.chatterId),
-                Navigator.of(context, rootNavigator: true)
-                    .pushReplacementNamed(MatchesAndChatsScreen.routeName)
-              },
-            ),
+            !isBlocked
+                ? DropdownOptionParams(
+                    value: 'Block',
+                    icon: Icons.block,
+                    onClick: () => {
+                      blockUserApi(widget.thread.chatterId).then((value) {
+                        setState(() {
+                          isBlocked = true;
+                        });
+                      }),
+                    },
+                  )
+                : DropdownOptionParams(
+                    value: 'Unblock',
+                    icon: Icons.block_outlined,
+                    onClick: () => {
+                      unblockUserApi(widget.thread.chatterId).then((value) => {
+                            setState(() {
+                              isBlocked = false;
+                            })
+                          })
+                    },
+                  )
           ]),
-          MenuDropdown(
-            const Icon(Icons.remove_red_eye_outlined),
-            interestToLabel.entries
-                .map((e) => DropdownOptionParams(
-                      onClick: () => handleNicheSelection(e.key),
-                      value: e.value.toString(),
-                    ))
-                .toList(),
-          ),
+          showLookingForOption
+              ? MenuDropdown(
+                  const Icon(Icons.remove_red_eye_outlined),
+                  interestToLabel.entries
+                      .map((e) => DropdownOptionParams(
+                            onClick: () => handleNicheSelection(e.key),
+                            value: e.value.toString(),
+                          ))
+                      .toList(),
+                )
+              : Container(),
         ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -190,9 +205,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         padding: EdgeInsets.only(left: marginWidth32(context)),
                         child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.45,
-                            child: Text(
-                                widget.thread.name.split(" ").first +
-                                    widget.thread.name.split(" ").first,
+                            child: Text(widget.thread.name.split(" ").first,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.chatNameText(context))),
                       )

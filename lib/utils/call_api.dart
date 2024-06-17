@@ -19,7 +19,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 const String localBaseUrl = "http://192.168.1.6:8080";
 const String prodBaseUrl = "https://api.getstumble.app";
-const String baseURL = localBaseUrl;
+const String baseURL = prodBaseUrl;
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
 final logger = Logger();
 
@@ -45,6 +45,7 @@ enum ApiType {
   upsertUser,
   deleteUser,
   blockUser,
+  unblockUser,
   reportAndBlockUser,
   getProfile,
   findStumbles,
@@ -72,6 +73,7 @@ const apiList = {
   ApiType.upsertUser: "/api/v1/user",
   ApiType.deleteUser: "/api/v1/user",
   ApiType.blockUser: "/api/v1/user/block",
+  ApiType.unblockUser: "/api/v1/user/unblock",
   ApiType.reportAndBlockUser: "/api/v1/user/report_and_block",
   ApiType.getProfile: "/api/v1/user?user_id=",
   ApiType.findStumbles: "/api/v1/activity/find",
@@ -246,6 +248,14 @@ Future<void> deleteUserApi() async {
 
 Future<void> blockUserApi(int badActorId) async {
   await callAPI(getApiEndpoint(ApiType.blockUser),
+      method: HttpMethods.post,
+      bodyParams: {
+        'badActorId': badActorId,
+      });
+}
+
+Future<void> unblockUserApi(int badActorId) async {
+  await callAPI(getApiEndpoint(ApiType.unblockUser),
       method: HttpMethods.post,
       bodyParams: {
         'badActorId': badActorId,
