@@ -1,9 +1,11 @@
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
+import 'package:dating_made_better/utils/internal_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
@@ -144,15 +146,18 @@ Future<dynamic> genericDialogWidget(BuildContext context,
                                             MatchesAndChatsScreen.routeName)
                                   }
                                 : {
-                                    deleteUserApi().then((value) {
-                                      Provider.of<FirstScreenStateProviders>(
-                                              context,
-                                              listen: false)
-                                          .setActiveScreenMode(
-                                              ScreenMode.landing);
-                                      Navigator.pushNamed(
-                                          context, AuthScreen.routeName);
-                                    }),
+                                    await deleteUserApi(),
+                                    AppConstants.token = "",
+                                    AppConstants.user = {},
+                                    deleteSecureData(authKey).then((value) => {
+                                          Provider.of<FirstScreenStateProviders>(
+                                                  context,
+                                                  listen: false)
+                                              .setActiveScreenMode(
+                                                  ScreenMode.landing),
+                                          Navigator.pushNamed(
+                                              context, AuthScreen.routeName)
+                                        })
                                   };
                       }),
                   IconButton(
