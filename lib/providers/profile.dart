@@ -18,12 +18,12 @@ class Profile with ChangeNotifier {
   Gender gender;
   DateTime birthDate;
   List<File> photos = [];
-  bool photoVerified;
+  int photoVerificationStatus;
   String conversationStarter;
   bool isPlatonic;
   RangeValues ageRangePreference;
   List<Gender> genderPreferences;
-  String bearerToken = AppConstants.token;
+
   double profileCompletionAmount = 0.0;
   String badgeLabel = "";
 
@@ -36,7 +36,7 @@ class Profile with ChangeNotifier {
     this.age = defaultAge,
     DateTime? birthDate,
     required this.photos,
-    this.photoVerified = true,
+    this.photoVerificationStatus = 0,
     this.conversationStarter = "Hi there, I am on Stumble!",
     this.isPlatonic = false,
     this.ageRangePreference = defaultTargetAgeValues,
@@ -131,8 +131,8 @@ class Profile with ChangeNotifier {
     return phoneNumber;
   }
 
-  bool get getPhotoVerificationStatus {
-    return photoVerified;
+  int get getPhotoVerificationStatus {
+    return photoVerificationStatus;
   }
 
   bool get getIfUserIsPlatonic {
@@ -183,7 +183,7 @@ class Profile with ChangeNotifier {
     birthDate = fromConstants.birthDate;
     conversationStarter = fromConstants.conversationStarter;
     photos = fromConstants.photos;
-    photoVerified = fromConstants.photoVerified;
+    photoVerificationStatus = fromConstants.photoVerificationStatus;
     age = fromConstants.age;
     phoneNumber = fromConstants.phoneNumber;
     isPlatonic = fromConstants.isPlatonic;
@@ -244,7 +244,8 @@ class Profile with ChangeNotifier {
           profile[profileDBKeys[ProfileKeys.gender]] ?? Gender.woman.index],
       conversationStarter:
           profile[profileDBKeys[ProfileKeys.conversationStarter]] ?? "",
-      photoVerified: profile[profileDBKeys[ProfileKeys.photoVerified]] ?? false,
+      photoVerificationStatus:
+          profile[profileDBKeys[ProfileKeys.photoVerificationStatus]] ?? false,
       photos: photoFileList,
       age: profile[profileDBKeys[ProfileKeys.age]] ?? defaultAge,
       ageRangePreference: targetAgeList,
@@ -257,7 +258,7 @@ class Profile with ChangeNotifier {
   }
 }
 
-// {"id":1,"name":"wqdqwdw","phone":"+919792972971","dob":"2010-10-05T00:00:00.000Z","gender":1,"photos":["https://stumblers.s3.ap-south-1.amazonaws.com/uploads/Screenshot_20230926-165250.png"],"role":11,"phone_verified":true,"photo_verified":false,"conversation_starter":"dqwdwqdwqdwq","target_age":[],"target_gender":[1,2],"instagram_id":null,"snapchat_id":null,"twitter_id":null,"height":22,"interests":["dance","music","sports"],"voice_note":null,"workDesignation":"Software Engineer","workPlace":"Bangalore","education":"B.Tech","educationCompletionYear":2022,"languages":["english","hindi"],"religion":"hindu","createdAt":"2023-09-19T15:08:42.356Z","updatedAt":"2023-10-03T16:04:38.666Z"}}
+// {"id":1,"name":"wqdqwdw","phone":"+919792972971","dob":"2010-10-05T00:00:00.000Z","gender":1,"photos":["https://stumblers.s3.ap-south-1.amazonaws.com/uploads/Screenshot_20230926-165250.png"],"role":11,"phone_verified":true,"conversation_starter":"dqwdwqdwqdwq","target_age":[],"target_gender":[1,2],"instagram_id":null,"snapchat_id":null,"twitter_id":null,"height":22,"interests":["dance","music","sports"],"voice_note":null,"workDesignation":"Software Engineer","workPlace":"Bangalore","education":"B.Tech","educationCompletionYear":2022,"languages":["english","hindi"],"religion":"hindu","createdAt":"2023-09-19T15:08:42.356Z","updatedAt":"2023-10-03T16:04:38.666Z"}}
 enum ProfileKeys {
   id,
   name,
@@ -268,7 +269,7 @@ enum ProfileKeys {
   photos,
   role,
   phoneVerified,
-  photoVerified,
+  photoVerificationStatus,
   conversationStarter,
   targetAge,
   targetGender,
@@ -296,7 +297,7 @@ const profileDBKeys = {
   ProfileKeys.photos: "photos",
   ProfileKeys.role: "role",
   ProfileKeys.phoneVerified: "phone_verified",
-  ProfileKeys.photoVerified: "photo_verified",
+  ProfileKeys.photoVerificationStatus: "photo_verification_status",
   ProfileKeys.conversationStarter: "conversation_starter",
   ProfileKeys.targetAge: "target_age",
   ProfileKeys.targetGender: "target_gender",

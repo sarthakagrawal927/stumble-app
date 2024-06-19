@@ -27,7 +27,7 @@ class UserProfileScreen extends StatelessWidget {
     String name = Provider.of<Profile>(context).getName;
     int age = Provider.of<Profile>(context).getAge;
     List<File> photos = Provider.of<Profile>(context).getPhotos;
-    bool isProfileVerified =
+    int photoVerificationStatus =
         Provider.of<Profile>(context).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -94,10 +94,14 @@ class UserProfileScreen extends StatelessWidget {
                     Container(
                       color: Colors.transparent,
                       child: Icon(
-                        color: isProfileVerified
+                        color: photoVerificationStatus ==
+                                photoVerificationStatusValue[
+                                    PhotoVerificationStatus.verified]
                             ? Colors.blueAccent
                             : Colors.black45,
-                        isProfileVerified
+                        photoVerificationStatus ==
+                                photoVerificationStatusValue[
+                                    PhotoVerificationStatus.verified]
                             ? Icons.verified_rounded
                             : Icons.verified_outlined,
                       ),

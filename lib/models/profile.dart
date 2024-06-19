@@ -4,7 +4,7 @@ class MiniProfile {
   final int id;
   final String name;
   final int? age;
-  final bool? photoVerified;
+  final int? photoVerificationStatus;
   final String? photo;
   final Gender? gender;
 
@@ -12,7 +12,7 @@ class MiniProfile {
       {required this.id,
       required this.name,
       this.age,
-      this.photoVerified,
+      this.photoVerificationStatus,
       this.photo,
       this.gender});
 
@@ -22,7 +22,7 @@ class MiniProfile {
       name: profile["name"],
       age: profile["age"] ?? 22,
       gender: Gender.values[profile["gender"]],
-      photoVerified: profile["photo_verified"],
+      photoVerificationStatus: profile["photo_verification_status"],
       photo: profile["photo"],
     );
   }

@@ -7,13 +7,11 @@ import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/hooks/index.dart';
-import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
 

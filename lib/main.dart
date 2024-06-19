@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
             birthDate: DateTime.now(),
             conversationStarter: "",
             gender: Gender.woman,
-            photoVerified: false,
+            photoVerificationStatus: 0,
             isPlatonic: true,
             genderPreferences: [],
             ageRangePreference: const RangeValues(18, 40),

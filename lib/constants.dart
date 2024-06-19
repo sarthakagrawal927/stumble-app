@@ -35,6 +35,8 @@ const Color nonSelectedScreenIconColor = Colors.white38;
 
 enum ActivityType { like, dislike, match, unmatch }
 
+enum PhotoVerificationStatus { needToVerify, verified, pending, rejected }
+
 const activityValue = {
   ActivityType.like: 1,
   ActivityType.dislike: -1,
@@ -42,6 +44,12 @@ const activityValue = {
   ActivityType.unmatch: 96,
 };
 
+const photoVerificationStatusValue = {
+  PhotoVerificationStatus.needToVerify: 0,
+  PhotoVerificationStatus.pending: 1,
+  PhotoVerificationStatus.verified: 5,
+  PhotoVerificationStatus.rejected: 9,
+};
 
 enum BottomBarScreens {
   userProfileOverviewScreen,
@@ -59,8 +67,10 @@ enum PromptEnum {
 Map<PromptEnum, String> getPromptTexts = {
   PromptEnum.noMatches: "You haven't 'Stumbled' into anyone yet; keep swiping!",
   PromptEnum.noLiked: "No nearby stumblers to 'stumble' upon at the moment.",
-  PromptEnum.noStumbledOntoMe: "No nearby stumblers to 'stumble' upon at the moment.",
-  PromptEnum.noStumblersNearby: "No nearby stumblers to 'stumble' upon at the moment.",
+  PromptEnum.noStumbledOntoMe:
+      "No nearby stumblers to 'stumble' upon at the moment.",
+  PromptEnum.noStumblersNearby:
+      "No nearby stumblers to 'stumble' upon at the moment.",
 };
 
 enum PhotoUploaderMode { singleUpload, multiUpload }
