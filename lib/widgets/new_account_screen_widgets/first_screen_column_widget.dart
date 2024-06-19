@@ -5,12 +5,15 @@ import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
+import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/hooks/index.dart';
+import 'package:dating_made_better/providers/profile.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -44,12 +47,17 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
       if (Platform.isAndroid) {
         await _googleSignIn.signIn();
       } else if (Platform.isIOS) {
-        final credential = await SignInWithApple.getAppleIDCredential(
-          scopes: [AppleIDAuthorizationScopes.email],
-        );
-
-        verifyAppleAuth(credential)
-            .then((value) => handleSignInComplete(context));
+        SignInWithApple.getAppleIDCredential(
+          scopes: [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName
+          ],
+        ).then((credential) => {
+              // Apparently Apple provides the fullName and email fields for the first sign in only. These fields will be null for subsequent sign ins.
+              AppConstants.nameFromAppleAuth = credential.givenName ?? '',
+              verifyAppleAuth(credential)
+                  .then((value) => handleSignInComplete(context))
+            });
       }
     } catch (error) {
       debugPrint(error.toString());
@@ -119,10 +127,9 @@ class _FirstScreenColumnState extends State<FirstScreenColumn>
         Flexible(
           child: FadeTransition(
             opacity: _stumbleTextAnimation,
-            child: Text(
-              'Stumble',
-              style: AppTextStyles.heading(context, color: AppColors.backgroundColor, size: 40.0)
-            ),
+            child: Text('Stumble',
+                style: AppTextStyles.heading(context,
+                    color: AppColors.backgroundColor, size: 40.0)),
           ),
         ),
         Flexible(

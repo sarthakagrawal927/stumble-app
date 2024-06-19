@@ -1,6 +1,7 @@
 import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
+import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/widgets/common/snackbar_widget.dart';
@@ -22,7 +23,8 @@ class NameColumn extends StatefulWidget {
 }
 
 class _NameColumnState extends State<NameColumn> {
-  final nameTextBoxController = TextEditingController();
+  final nameTextBoxController =
+      TextEditingController(text: AppConstants.nameFromAppleAuth);
   String _name = "";
 
   @override
@@ -68,13 +70,13 @@ class _NameColumnState extends State<NameColumn> {
               fontSize: fontSize32(context),
             ),
             decoration: InputDecoration(
-              border: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                color: AppColors.backgroundColor,
-              )),
-              labelText: 'Name',
-              labelStyle: AppTextStyles.regularText(context, color: AppColors.backgroundColor)
-            ),
+                border: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                  color: AppColors.backgroundColor,
+                )),
+                labelText: 'Name',
+                labelStyle: AppTextStyles.regularText(context,
+                    color: AppColors.backgroundColor)),
             keyboardType: TextInputType.name,
             autofocus: true,
             onChanged: (value) {
