@@ -250,7 +250,7 @@ Future<void> blockUserApi(int badActorId) async {
   await callAPI(getApiEndpoint(ApiType.blockUser),
       method: HttpMethods.post,
       bodyParams: {
-        'badActorId': badActorId,
+        badActorIdKey: badActorId,
       });
 }
 
@@ -258,7 +258,7 @@ Future<void> unblockUserApi(int badActorId) async {
   await callAPI(getApiEndpoint(ApiType.unblockUser),
       method: HttpMethods.post,
       bodyParams: {
-        'badActorId': badActorId,
+        badActorIdKey: badActorId,
       });
 }
 
@@ -267,8 +267,8 @@ Future<void> reportAndBlockUserApi(
   await callAPI(getApiEndpoint(ApiType.reportAndBlockUser),
       method: HttpMethods.post,
       bodyParams: {
-        'badActorId': badActorId,
-        'source': source,
+        badActorIdKey: badActorId,
+        reportSourceKey: source,
         'message': message,
       });
 }

@@ -3,6 +3,7 @@ import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
+import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
@@ -26,7 +27,8 @@ Map<PromptReason, String> promptDisplayText = {
 };
 
 Future<dynamic> genericDialogWidget(BuildContext context,
-    {PromptReason reason = PromptReason.appFeedback, chatterId = 0}) {
+    {PromptReason reason = PromptReason.appFeedback,
+    Map<String, dynamic> extraParams = const {}}) {
   String phoneNumber = "";
   String feedback = "";
   TextEditingController controller = TextEditingController();
@@ -140,10 +142,23 @@ Future<dynamic> genericDialogWidget(BuildContext context,
                             : reason == PromptReason.reportUser
                                 ? {
                                     reportAndBlockUserApi(
-                                        chatterId, 2, feedback),
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pushReplacementNamed(
-                                            MatchesAndChatsScreen.routeName)
+                                        extraParams[badActorIdKey],
+                                        extraParams[reportSourceKey],
+                                        feedback),
+                                    if (extraParams[reportSourceKey] ==
+                                        reportSourceChat)
+                                      {
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pushReplacementNamed(
+                                                MatchesAndChatsScreen.routeName)
+                                      }
+                                    else
+                                      {
+                                        // refresh the page
+                                        Navigator.pushReplacementNamed(
+                                            context, SwipingScreen.routeName)
+                                      }
                                   }
                                 : {
                                     await deleteUserApi(),

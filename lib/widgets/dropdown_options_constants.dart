@@ -3,7 +3,6 @@ import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/models/profile.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/screens/login_or_signup_screen.dart';
-import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/internal_storage.dart';
@@ -80,15 +79,6 @@ final Map<String, DropdownOptionVal?> dropDownOptions = {
     ((context) =>
         genericDialogWidget(context, reason: PromptReason.deletionPrompt)),
   ),
-  'Block': DropdownOptionVal('Block', Icons.block, ((context, [chatterId]) {
-    blockUserApi(chatterId);
-    Navigator.of(context, rootNavigator: true)
-        .pushReplacementNamed(MatchesAndChatsScreen.routeName);
-  })),
-  'Report': DropdownOptionVal('Report', Icons.report, (((context, [chatterId]) {
-    genericDialogWidget(context,
-        reason: PromptReason.reportUser, chatterId: chatterId);
-  }))),
 };
 
 final dropdownWithScreenOptions = [

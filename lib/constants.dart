@@ -51,6 +51,11 @@ const photoVerificationStatusValue = {
   PhotoVerificationStatus.rejected: 9,
 };
 
+const reportSourceChat = 1;
+const reportSourceProfile = 2;
+const badActorIdKey = "badActorId";
+const reportSourceKey = "source";
+
 enum BottomBarScreens {
   userProfileOverviewScreen,
   swipingScreen,

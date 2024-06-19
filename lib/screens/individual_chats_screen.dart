@@ -136,7 +136,10 @@ class _ChatScreenState extends State<ChatScreen> {
               onClick: () => {
                 genericDialogWidget(context,
                     reason: PromptReason.reportUser,
-                    chatterId: widget.thread.chatterId)
+                    extraParams: {
+                      badActorIdKey: widget.thread.chatterId,
+                      reportSourceKey: reportSourceChat
+                    }),
               },
             ),
             !isBlocked
