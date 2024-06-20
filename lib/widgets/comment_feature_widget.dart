@@ -1,6 +1,6 @@
 import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
-import 'package:dating_made_better/text_styles.dart';
+import 'package:dating_made_better/widgets/common/dialog_widget.dart';
 import 'package:flutter/material.dart';
 
 class CommentFeatureWidget extends StatelessWidget {
@@ -27,147 +27,45 @@ class CommentFeatureWidget extends StatelessWidget {
                 right: marginWidth24(context),
               ),
               onPressed: () {
-                showDialog(
-                  context: context,
-                  barrierColor: Colors.transparent.withOpacity(0.8),
-                  builder: (context) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                dialogWidget(
+                    context: context,
+                    submitLabel: "Like",
+                    onSubmit: () async {
+                      onSwipe(ActivityType.like, commentOnWidget);
+                      Navigator.of(context, rootNavigator: true).pop("");
+                    },
+                    childWidget: Column(
                       children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: marginWidth12(context),
-                              right: marginWidth12(context),
-                              bottom: 0.0),
-                          child: Badge(
-                            alignment: Alignment.centerLeft,
-                            isLabelVisible: false,
-                            backgroundColor: Colors.white,
-                            child: Container(
-                              padding: EdgeInsets.all(marginWidth32(context)),
-                              decoration: const BoxDecoration(
-                                color: AppColors.secondaryColor,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              child: Text(
-                                name,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: marginWidth24(context),
-                                ),
-                              ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 4,
+                          child: widget,
+                        ),
+                        TextField(
+                          maxLines: 2,
+                          minLines: 1,
+                          cursorColor: Colors.black,
+                          autocorrect: true,
+                          keyboardType: TextInputType.multiline,
+                          decoration: const InputDecoration(
+                            hintText: "Leave a compliment!",
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
                             ),
                           ),
-                        ),
-                        Dialog(
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          elevation: 16,
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              SizedBox(
-                                height: marginHeight4(context),
-                                width:
-                                    MediaQuery.of(context).size.width * 0.825,
-                                child: !isImage
-                                    ? Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: marginWidth32(context),
-                                              vertical: marginHeight128(context),
-                                            ),
-                                            child: Text(
-                                                textAlign: TextAlign.left,
-                                                "Talk to me about",
-                                                style: AppTextStyles
-                                                    .descriptionText(context)),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: marginWidth32(context),
-                                              vertical: marginHeight128(context),
-                                            ),
-                                            child: Text(
-                                              textOnProfile,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    16,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : widget,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(marginWidth12(context)),
-                                child: TextField(
-                                  maxLines: 2,
-                                  minLines: 1,
-                                  cursorColor: Colors.black,
-                                  autocorrect: true,
-                                  keyboardType: TextInputType.multiline,
-                                  textInputAction: TextInputAction.newline,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                  maxLength: 75,
-                                  onChanged: (value) {
-                                    commentOnWidget = value;
-                                  },
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  IconButton(
-                                    iconSize:
-                                        MediaQuery.of(context).size.width / 10,
-                                    icon: const Icon(Icons.close),
-                                    onPressed: () {
-                                      Navigator.of(context, rootNavigator: true)
-                                          .pop("");
-                                    },
-                                  ),
-                                  IconButton(
-                                    iconSize:
-                                        MediaQuery.of(context).size.width / 10,
-                                    icon: const Icon(
-                                      Icons.check,
-                                    ),
-                                    onPressed: () {
-                                      onSwipe(
-                                          ActivityType.like, commentOnWidget);
-                                      Navigator.of(context, rootNavigator: true)
-                                          .pop("");
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
+                          textInputAction: TextInputAction.newline,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
                           ),
-                        ),
+                          maxLength: 75,
+                          onChanged: (value) {
+                            commentOnWidget = value;
+                          },
+                        )
                       ],
-                    );
-                  },
-                );
+                    ),
+                    title: "Like $name!");
               },
               icon: const Icon(
                 Icons.favorite_outline_rounded,

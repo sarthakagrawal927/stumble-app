@@ -38,6 +38,7 @@ Future<dynamic> dialogWidget({
             ),
             Container(
               padding: const EdgeInsets.all(16),
+              color: AppColors.backgroundColor,
               child: Column(children: [
                 childWidget!,
                 const SizedBox(height: 16),

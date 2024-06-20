@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/text_styles.dart';
+import 'package:dating_made_better/utils/general.dart';
 import 'package:dating_made_better/widgets/comment_feature_widget.dart';
 import 'package:dating_made_better/widgets/common/buttons.dart';
 import 'package:dating_made_better/widgets/common/small_profile_badge.dart';
@@ -90,7 +91,10 @@ class SwipeCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: marginHeight64(context)),
                 child: Row(children: [
-                  SmallProfileBadge(text: profile.gender.name),
+                  SmallProfileBadge(
+                    text: upperCaseFirstLetter(profile.gender.name),
+                    icon: Icons.person,
+                  ),
                   SizedBox(width: marginWidth64(context)),
                   // SmallProfileBadge(text: "${profile.getAge} years old"),
                   SizedBox(width: marginWidth64(context)),
