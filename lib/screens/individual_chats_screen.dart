@@ -1,5 +1,6 @@
 import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
@@ -8,8 +9,8 @@ import 'package:dating_made_better/widgets/circle_avatar.dart';
 import 'package:dating_made_better/widgets/common/menu_dropdown.dart';
 import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
 import 'package:dating_made_better/widgets/dropdown_options_constants.dart';
-import 'package:dating_made_better/widgets/generic_dialog_widget.dart';
 import 'package:dating_made_better/widgets/interest_types_constants.dart';
+import 'package:dating_made_better/widgets/moderation/report_user_widget.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:flutter/material.dart';
 
@@ -134,12 +135,16 @@ class _ChatScreenState extends State<ChatScreen> {
               value: 'Report',
               icon: Icons.report,
               onClick: () => {
-                genericDialogWidget(context,
-                    reason: PromptReason.reportUser,
-                    extraParams: {
-                      badActorIdKey: widget.thread.chatterId,
-                      reportSourceKey: reportSourceChat
-                    }),
+                reportUserWidget(
+                    context: context,
+                    onReport: () async {
+                      Navigator.of(context, rootNavigator: true)
+                          .pushReplacementNamed(
+                              MatchesAndChatsScreen.routeName);
+                    },
+                    profileName: widget.thread.name,
+                    profileId: widget.thread.chatterId,
+                    source: reportSourceChat),
               },
             ),
             !isBlocked

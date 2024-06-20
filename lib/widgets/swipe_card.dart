@@ -5,7 +5,7 @@ import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/widgets/comment_feature_widget.dart';
 import 'package:dating_made_better/widgets/common/buttons.dart';
 import 'package:dating_made_better/widgets/common/small_profile_badge.dart';
-import 'package:dating_made_better/widgets/generic_dialog_widget.dart';
+import 'package:dating_made_better/widgets/moderation/report_user_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../providers/profile.dart';
@@ -152,14 +152,16 @@ class SwipeCard extends StatelessWidget {
           if (profile.getPhotos.length > 1) photoWidget(context, 1),
           if (profile.getPhotos.length > 2) photoWidget(context, 2),
           SecondaryButton(
-            text: 'Report/Block User',
+            text: 'Report/Block ${profile.getName}',
             onPressed: () {
-              genericDialogWidget(context,
-                  reason: PromptReason.reportUser,
-                  extraParams: {
-                    badActorIdKey: profile.id,
-                    reportSourceKey: reportSourceProfile
-                  });
+              reportUserWidget(
+                  context: context,
+                  onReport: () async {
+                    onSwipe(ActivityType.report);
+                  },
+                  profileId: profile.id,
+                  profileName: profile.getName,
+                  source: reportSourceProfile);
             },
           ),
           Container(

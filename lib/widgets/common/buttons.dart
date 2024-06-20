@@ -16,6 +16,7 @@ class SecondaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.backgroundColor,
         shape: RoundedRectangleBorder(
           side: const BorderSide(
             color: AppColors.primaryColor,
@@ -27,7 +28,7 @@ class SecondaryButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         text,
-        style: AppTextStyles.regularText(context),
+        style: AppTextStyles.dropdownText(context),
       ),
     );
   }

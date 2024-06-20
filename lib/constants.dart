@@ -33,7 +33,7 @@ const Color selectedScreenIconColor = Colors.white;
 
 const Color nonSelectedScreenIconColor = Colors.white38;
 
-enum ActivityType { like, dislike, match, unmatch }
+enum ActivityType { like, dislike, match, unmatch, report }
 
 enum PhotoVerificationStatus { needToVerify, verified, pending, rejected }
 
