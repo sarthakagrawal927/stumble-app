@@ -8,7 +8,6 @@ enum ScreenMode {
   ageInput,
   genderInput,
   photoAdditionInput,
-  nicheSelectionInput,
   promptAdditionInput,
   locationDisclosureScreen,
   swipingScreen
