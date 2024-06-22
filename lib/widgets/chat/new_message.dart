@@ -14,6 +14,10 @@ class NewMessage extends StatelessWidget {
 
   final _controller = TextEditingController();
 
+  void dispose() {
+    _controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

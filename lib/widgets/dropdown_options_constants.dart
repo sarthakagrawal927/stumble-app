@@ -1,14 +1,11 @@
 import 'package:dating_made_better/app_colors.dart';
-import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/models/profile.dart';
-import 'package:dating_made_better/providers/first_screen_state_providers.dart';
-import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
-import 'package:dating_made_better/utils/internal_storage.dart';
-import 'package:dating_made_better/widgets/generic_dialog_widget.dart';
+import 'package:dating_made_better/utils/helper.dart';
+import 'package:dating_made_better/widgets/common/dialog_widget.dart';
+import 'package:dating_made_better/widgets/moderation/user_feedback_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DropdownOptionVal {
@@ -55,29 +52,29 @@ final Map<String, DropdownOptionVal?> dropDownOptions = {
     Icons.menu_book_outlined,
     ((context) => Navigator.pushNamed(context, "/filters-screen")),
   ),
-  'Leave feedback!': DropdownOptionVal(
-      'Leave feedback!',
-      Icons.pages,
-      ((context) =>
-          genericDialogWidget(context, reason: PromptReason.appFeedback))),
+  'Leave feedback!': DropdownOptionVal('Leave feedback!', Icons.pages,
+      ((context) => userFeedbackWidget(context: context))),
   'Privacy terms': DropdownOptionVal(
     'Privacy terms',
     Icons.document_scanner,
     (context) => launchUrl(Uri.parse('https://www.getstumble.app/privacy')),
   ),
   'Logout': DropdownOptionVal(
-      'Logout',
-      Icons.exit_to_app,
-      ((context) => deleteSecureData(authKey).then((value) {
-            Provider.of<FirstScreenStateProviders>(context, listen: false)
-                .setActiveScreenMode(ScreenMode.landing);
-            Navigator.pushReplacementNamed(context, AuthScreen.routeName);
-          }))),
+      'Logout', Icons.exit_to_app, ((context) => logOut(context))),
   'Delete :\'(': DropdownOptionVal(
     'Delete :\'(',
     Icons.emoji_flags,
-    ((context) =>
-        genericDialogWidget(context, reason: PromptReason.deletionPrompt)),
+    ((context) => dialogWidget(
+        context: context,
+        childWidget: Text(
+          "It saddens us to witness your stumbling come to a halt in discovering more incredible individuals.",
+          style: AppTextStyles.regularText(context),
+        ),
+        submitLabel: "Delete",
+        onSubmit: () async {
+          await deleteUserApi().then((value) => logOut(context));
+        },
+        title: "Are you sure?")),
   ),
 };
 
