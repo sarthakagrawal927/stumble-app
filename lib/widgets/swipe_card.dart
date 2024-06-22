@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_colors.dart';
+import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/general.dart';
 import 'package:dating_made_better/widgets/comment_feature_widget.dart';
@@ -155,19 +156,20 @@ class SwipeCard extends StatelessWidget {
           ),
           if (profile.getPhotos.length > 1) photoWidget(context, 1),
           if (profile.getPhotos.length > 2) photoWidget(context, 2),
-          SecondaryButton(
-            text: 'Report/Block ${profile.getName}',
-            onPressed: () {
-              reportUserWidget(
-                  context: context,
-                  onReport: () async {
-                    onSwipe(ActivityType.report);
-                  },
-                  profileId: profile.id,
-                  profileName: profile.getName,
-                  source: reportSourceProfile);
-            },
-          ),
+          if (profile.id != AppConstants.user["id"])
+            SecondaryButton(
+              text: 'Report ${profile.getName}',
+              onPressed: () {
+                reportUserWidget(
+                    context: context,
+                    onReport: () async {
+                      onSwipe(ActivityType.report);
+                    },
+                    profileId: profile.id,
+                    profileName: profile.getName,
+                    source: reportSourceProfile);
+              },
+            ),
           Container(
             height: marginHeight32(context),
             color: backgroundColor,

@@ -15,7 +15,7 @@ Future<dynamic> reportUserWidget({
 
   return dialogWidget(
     context: context,
-    title: 'Report/Block $profileName',
+    title: 'Report $profileName',
     submitLabel: 'Report',
     onSubmit: () async {
       reportAndBlockUserApi(profileId, reportSourceProfile, reportMessage)
