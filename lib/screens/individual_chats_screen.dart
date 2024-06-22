@@ -183,45 +183,38 @@ class _ChatScreenState extends State<ChatScreen> {
                 )
               : Container(),
         ],
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              child: GestureDetector(
-                  onDoubleTap: () => DoNothingAction(),
-                  onTap: () async {
-                    if (profileLoading) return;
-                    profileLoading = true;
-                    await getUserApi(widget.thread.chatterId)
-                        .then((value) => showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return SwipeCard(
-                                  profile: value!,
-                                  isModalMode: true,
-                                );
-                              },
-                            ));
-                    profileLoading = false;
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      CircleAvatarWidget(
-                          marginWidth16(context), widget.thread.displayPic),
-                      Padding(
-                        padding: EdgeInsets.only(left: marginWidth32(context)),
-                        child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.45,
-                            child: Text(widget.thread.name.split(" ").first,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.chatNameText(context))),
-                      )
-                    ],
-                  )),
-            ),
-          ],
-        ),
+        title: GestureDetector(
+            onDoubleTap: () => DoNothingAction(),
+            onTap: () async {
+              if (profileLoading) return;
+              profileLoading = true;
+              await getUserApi(widget.thread.chatterId)
+                  .then((value) => showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return SwipeCard(
+                            profile: value!,
+                            isModalMode: true,
+                          );
+                        },
+                      ));
+              profileLoading = false;
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                CircleAvatarWidget(
+                    marginWidth16(context), widget.thread.displayPic),
+                SizedBox(width: marginWidth32(context)),
+                Flexible(
+                  child: Text(
+                    widget.thread.name.split(" ").first,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.chatNameText(context),
+                  ),
+                )
+              ],
+            )),
       ),
       body: Column(
         children: [
