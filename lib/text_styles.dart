@@ -4,7 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyles {
-  static TextStyle heading(context, {color = AppColors.primaryColor, size = 30.0}) => GoogleFonts.poppins(
+  static TextStyle heading(context,
+          {color = AppColors.primaryColor, size = 30.0}) =>
+      GoogleFonts.poppins(
         color: color,
         fontSize: TextScaleHelper.scaleText(context, size),
         fontWeight: FontWeight.w900,
@@ -23,7 +25,9 @@ class AppTextStyles {
         fontWeight: FontWeight.w400,
       );
 
-  static TextStyle regularText(context, {color = AppColors.primaryColor, size = 16.0}) => GoogleFonts.poppins(
+  static TextStyle regularText(context,
+          {color = AppColors.primaryColor, size = 16.0}) =>
+      GoogleFonts.poppins(
         color: color,
         fontSize: TextScaleHelper.scaleText(context, size),
         fontWeight: FontWeight.w600,

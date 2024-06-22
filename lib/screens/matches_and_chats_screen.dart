@@ -72,10 +72,9 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
                   horizontal: marginWidth8(context),
                 ),
                 child: Text(
-                textAlign: TextAlign.center,
-                getPromptTexts[PromptEnum.noMatches]!,
-                style: AppTextStyles.regularText(context)
-                ),
+                    textAlign: TextAlign.center,
+                    getPromptTexts[PromptEnum.noMatches]!,
+                    style: AppTextStyles.regularText(context)),
               ),
             )
           : Column(

@@ -24,10 +24,10 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: TopAppBar(
-          centerTitle: true,
-          showActions: false,
-          showLeading: true,
-          heading: "Stumble"),
+            centerTitle: true,
+            showActions: false,
+            showLeading: true,
+            heading: "Stumble"),
         body: listOfProfiles.isNotEmpty
             ? GridView.builder(
                 itemCount: listOfProfiles.length,
@@ -65,11 +65,9 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
                 child: Container(
                   alignment: Alignment.center,
                   child: Text(
-                    textAlign: TextAlign.center,
-                    getPromptTexts[PromptEnum.noLiked]!,
-                    style: AppTextStyles.regularText(context)
-                  ),
-              )
-            ));
+                      textAlign: TextAlign.center,
+                      getPromptTexts[PromptEnum.noLiked]!,
+                      style: AppTextStyles.regularText(context)),
+                )));
   }
 }

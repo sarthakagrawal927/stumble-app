@@ -15,12 +15,12 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   GlobalKey locationUsageKey;
   List<DropdownOptionVal?> dropDownItems;
   Screen screen;
-  
+
   TopAppBar({
     required this.centerTitle,
     required this.showActions,
     required this.showLeading,
-    required this.heading, 
+    required this.heading,
     this.dropDownKey = const GlobalObjectKey(""),
     this.locationUsageKey = const GlobalObjectKey(""),
     this.dropDownItems = const [],
@@ -36,16 +36,17 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: AppBar(
         leading: showLeading
-        ? IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),) 
-        : null,
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            : null,
         automaticallyImplyLeading: false,
         centerTitle: centerTitle,
-        actions: showActions 
-        ? [
-            DropdownButtonHideUnderline(
-                child: ButtonTheme(
+        actions: showActions
+            ? [
+                DropdownButtonHideUnderline(
+                    child: ButtonTheme(
                   alignedDropdown: true,
                   child: DropdownButton(
                     borderRadius: BorderRadius.circular(10),
@@ -53,22 +54,24 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                     iconSize: marginWidth16(context),
                     items: getDropDownMenuList(context, dropDownItems),
                     onChanged: (itemIdentifier) async {
-                        dropDownOptions[itemIdentifier]!.onClick(context);
-                      },
-                    icon: (
-                      dropDownButtonWithoutPadding(context, dropDownKey, screen)),
-                ),
-              )),
-          ]
-        : null,
+                      dropDownOptions[itemIdentifier]!.onClick(context);
+                    },
+                    icon: (dropDownButtonWithoutPadding(
+                        context, dropDownKey, screen)),
+                  ),
+                )),
+              ]
+            : null,
         title: screen == Screen.swipingScreen
-          ? swipingScreenHeadingWithShowcase(context, locationUsageKey, heading)
-          : showLeading 
-            ? Padding(
-              padding: EdgeInsets.only(left: marginWidth16(context)),
-              child: headingWidget(context, heading),) 
-            : headingWidget(context, heading, screen: screen),
-            backgroundColor: topAppBarColor,
+            ? swipingScreenHeadingWithShowcase(
+                context, locationUsageKey, heading)
+            : showLeading
+                ? Padding(
+                    padding: EdgeInsets.only(left: marginWidth16(context)),
+                    child: headingWidget(context, heading),
+                  )
+                : headingWidget(context, heading, screen: screen),
+        backgroundColor: topAppBarColor,
       ),
     );
   }

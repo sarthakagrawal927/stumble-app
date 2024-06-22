@@ -39,13 +39,13 @@ class _AgeColumnState extends State<AgeColumn> {
       children: [
         const ScreenHeadingWidget("What's your date of birth?"),
         Container(
-            margin: EdgeInsets.symmetric(
-                vertical: marginHeight16(context),
-                horizontal: marginWidth24(context)),
-            padding: EdgeInsets.all(marginWidth24(context)),
-            height: MediaQuery.of(context).size.width / 3,
-            child: Center(
-                child: TextField(
+          margin: EdgeInsets.symmetric(
+              vertical: marginHeight16(context),
+              horizontal: marginWidth24(context)),
+          padding: EdgeInsets.all(marginWidth24(context)),
+          height: MediaQuery.of(context).size.width / 3,
+          child: Center(
+            child: TextField(
               cursorColor: AppColors.backgroundColor,
               controller: dateInput,
               style: TextStyle(
@@ -95,9 +95,10 @@ class _AgeColumnState extends State<AgeColumn> {
                   });
                 }
               },
-            ),),),
-        ScreenGoToNextPageRow(
-          () {
+            ),
+          ),
+        ),
+        ScreenGoToNextPageRow(() {
           handleSnackBarIfInputNotFilled(pickedDate != null, () async {
             Provider.of<FirstScreenStateProviders>(context, listen: false)
                 .setNextScreenActive();

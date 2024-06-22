@@ -4,9 +4,7 @@ import 'package:dating_made_better/constants_fonts.dart';
 import 'package:flutter/material.dart';
 
 class ScreenGoToNextPageRow extends StatelessWidget {
-  const ScreenGoToNextPageRow(
-      this.functionToSetData,
-      {super.key});
+  const ScreenGoToNextPageRow(this.functionToSetData, {super.key});
   final Function functionToSetData;
 
   @override
@@ -14,7 +12,6 @@ class ScreenGoToNextPageRow extends StatelessWidget {
     return Expanded(
       child: Align(
         alignment: Alignment.bottomCenter,
-
         child: Container(
           margin: EdgeInsets.only(bottom: marginHeight32(context)),
           child: IconButton(
@@ -24,8 +21,8 @@ class ScreenGoToNextPageRow extends StatelessWidget {
             color: AppColors.backgroundColor,
             iconSize: fontSize24(context),
             onPressed: (() async {
-            await functionToSetData();
-          }),
+              await functionToSetData();
+            }),
           ),
         ),
       ),
