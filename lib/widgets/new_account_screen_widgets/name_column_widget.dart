@@ -25,7 +25,6 @@ class NameColumn extends StatefulWidget {
 class _NameColumnState extends State<NameColumn> {
   final nameTextBoxController =
       TextEditingController(text: AppConstants.nameFromAppleAuth);
-  String _name = "";
 
   @override
   void dispose() {
@@ -79,19 +78,16 @@ class _NameColumnState extends State<NameColumn> {
                     color: AppColors.backgroundColor)),
             keyboardType: TextInputType.name,
             autofocus: true,
-            onChanged: (value) {
-              setState(() {
-                _name = value;
-              });
-            },
           ),
         ),
         ScreenGoToNextPageRow(
           () {
-            handleSnackBarIfInputNotFilled(_name != "", () async {
+            handleSnackBarIfInputNotFilled(
+                nameTextBoxController.value.text != "", () async {
               Provider.of<FirstScreenStateProviders>(context, listen: false)
                   .setNextScreenActive();
-              Provider.of<Profile>(context, listen: false).setName = _name;
+              Provider.of<Profile>(context, listen: false).setName =
+                  nameTextBoxController.value.text;
             }, context, valueToFill: "name");
           },
         )
