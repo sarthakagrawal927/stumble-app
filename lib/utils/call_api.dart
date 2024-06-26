@@ -17,7 +17,7 @@ import 'package:logger/logger.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-const String localBaseUrl = "http://192.168.1.6:8080";
+const String localBaseUrl = "http://192.168.1.2:8080";
 const String prodBaseUrl = "https://api.getstumble.app";
 const String baseURL = prodBaseUrl;
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
