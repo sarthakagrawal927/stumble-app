@@ -429,33 +429,3 @@ Future<bool> verifyPhotoAPI(File photo) async {
     rethrow;
   }
 }
-
-/*
-  * @description: Uploads photos to the server, unused
- */
-Future<List<String>> uploadPhotosAPI2(List<File> photos) async {
-  try {
-    var httpMultipartRequest = http.MultipartRequest(
-        "POST", Uri.parse(baseURL + getApiEndpoint(ApiType.uploadFile)));
-
-    for (var photo in photos) {
-      http.ByteStream byteStream = http.ByteStream((photo.openRead()));
-      httpMultipartRequest.files.add(http.MultipartFile(
-        'photos',
-        byteStream,
-        await photo.length(),
-        filename: photo.path.split("/").last,
-      ));
-    }
-
-    http.StreamedResponse response = await httpMultipartRequest.send();
-    debugPrint(response.toString());
-
-    response.stream.transform(utf8.decoder).listen((value) {
-      debugPrint(value);
-    });
-  } catch (err) {
-    debugPrint(err.toString());
-  }
-  return [""];
-}

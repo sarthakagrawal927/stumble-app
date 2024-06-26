@@ -15,7 +15,7 @@ Future<void> addActivityOnLike(
     [String? comment]) {
   Map<String, dynamic> bodyParams = {
     'targetId': profile.id,
-    'type': activityValue[activity],
+    'type': activity.value,
     'compliment': comment ?? '',
     'timeTaken': timeTaken,
   };

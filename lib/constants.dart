@@ -33,23 +33,26 @@ const Color selectedScreenIconColor = Colors.white;
 
 const Color nonSelectedScreenIconColor = Colors.white38;
 
-enum ActivityType { like, dislike, match, unmatch, report }
+enum ActivityType {
+  like(1),
+  dislike(-1),
+  match(69),
+  unmatch(96),
+  report(0); // report is not a real activity, but a type of activity
 
-enum PhotoVerificationStatus { needToVerify, verified, pending, rejected }
+  const ActivityType(this.value);
+  final int value;
+}
 
-const activityValue = {
-  ActivityType.like: 1,
-  ActivityType.dislike: -1,
-  ActivityType.match: 69,
-  ActivityType.unmatch: 96,
-};
+enum PhotoVerificationStatus {
+  needToVerify(0),
+  pending(1),
+  verified(5),
+  rejected(9);
 
-const photoVerificationStatusValue = {
-  PhotoVerificationStatus.needToVerify: 0,
-  PhotoVerificationStatus.pending: 1,
-  PhotoVerificationStatus.verified: 5,
-  PhotoVerificationStatus.rejected: 9,
-};
+  const PhotoVerificationStatus(this.value);
+  final int value;
+}
 
 const reportSourceChat = 1;
 const reportSourceProfile = 2;

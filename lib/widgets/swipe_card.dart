@@ -101,8 +101,7 @@ class SwipeCard extends StatelessWidget {
                   SizedBox(width: marginWidth64(context)),
                   // verified text
                   if (profile.photoVerificationStatus ==
-                      photoVerificationStatusValue[
-                          PhotoVerificationStatus.verified])
+                      PhotoVerificationStatus.verified)
                     const SmallProfileBadge(
                       text: "Verified",
                       icon: Icons.verified,

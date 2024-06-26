@@ -69,7 +69,7 @@ class _UserProfileCompletionScreenState
     String conversationStarterPrompt =
         Provider.of<Profile>(context, listen: false)
             .getConversationStarterPrompt;
-    int photoVerificationStatus =
+    PhotoVerificationStatus photoVerificationStatus =
         Provider.of<Profile>(context, listen: false).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -107,34 +107,28 @@ class _UserProfileCompletionScreenState
                   top: marginWidth32(context),
                   right: marginWidth32(context),
                 ),
-                child: photoVerificationStatus ==
-                        photoVerificationStatusValue[
-                            PhotoVerificationStatus.verified]
-                    ? verificationStatusCard(
-                        context,
-                        Icons.verified_sharp,
-                        Colors.blueAccent,
-                        "Verified",
-                      )
-                    : Consumer<Profile>(
-                        builder: (context, value, child) => GestureDetector(
-                          onTap: () async {
-                            addImageFromGallery()
-                                .then((file) => verifyPhotoAPI(file))
-                                .then((isVerified) => {
-                                      Provider.of<Profile>(context,
-                                              listen: false)
-                                          .setVerificationStatus = isVerified
-                                    });
-                          },
-                          child: verificationStatusCard(
-                            context,
-                            Icons.verified_outlined,
-                            textColor,
-                            "Verify my profile",
-                          ),
-                        ),
-                      ),
+                child: Consumer<Profile>(
+                  builder: (context, value, child) => GestureDetector(
+                    onTap: () async {
+                      if (photoVerificationStatus ==
+                              PhotoVerificationStatus.needToVerify ||
+                          photoVerificationStatus ==
+                              PhotoVerificationStatus.rejected) {
+                        addImageFromGallery()
+                            .then((file) => verifyPhotoAPI(file))
+                            .then((isVerified) => {
+                                  Provider.of<Profile>(context, listen: false)
+                                          .photoVerificationStatus =
+                                      PhotoVerificationStatus.pending
+                                });
+                      }
+                    },
+                    child: verificationStatusCard(
+                      context,
+                      photoVerificationStatus,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -234,11 +228,32 @@ class _UserProfileCompletionScreenState
   }
 }
 
+class PhotoVerificationView {
+  final String text;
+  final Color color;
+  final IconData icon;
+
+  PhotoVerificationView({
+    required this.text,
+    required this.color,
+    required this.icon,
+  });
+}
+
+final photoVerificationStatusToTextMap = {
+  PhotoVerificationStatus.needToVerify: PhotoVerificationView(
+      color: Colors.red, icon: Icons.warning, text: "Verify"),
+  PhotoVerificationStatus.pending: PhotoVerificationView(
+      color: Colors.red, icon: Icons.warning, text: "Verify"),
+  PhotoVerificationStatus.verified: PhotoVerificationView(
+      color: Colors.red, icon: Icons.warning, text: "Verify"),
+  PhotoVerificationStatus.rejected: PhotoVerificationView(
+      color: Colors.red, icon: Icons.warning, text: "Verify"),
+};
+
 Card verificationStatusCard(
   BuildContext context,
-  IconData icon,
-  Color color,
-  String text,
+  PhotoVerificationStatus photoVerificationStatus,
 ) {
   return Card(
     color: widgetColor,
@@ -249,28 +264,24 @@ Card verificationStatusCard(
       ),
       child: Column(
         children: <Widget>[
-          verificationIconToDisplay(context, icon, color),
+          Padding(
+            padding: EdgeInsets.all(
+              marginWidth16(context),
+            ),
+            child: Icon(
+              size: fontSize32(context),
+              photoVerificationStatusToTextMap[photoVerificationStatus]!.icon,
+              color: photoVerificationStatusToTextMap[photoVerificationStatus]!
+                  .color,
+            ),
+          ),
           Text(
-            text,
+            photoVerificationStatusToTextMap[photoVerificationStatus]!.text,
             textAlign: TextAlign.end,
             style: AppTextStyles.descriptionText(context),
           ),
         ],
       ),
-    ),
-  );
-}
-
-Padding verificationIconToDisplay(
-    BuildContext context, IconData icon, Color color) {
-  return Padding(
-    padding: EdgeInsets.all(
-      marginWidth16(context),
-    ),
-    child: Icon(
-      size: fontSize32(context),
-      icon,
-      color: color,
     ),
   );
 }

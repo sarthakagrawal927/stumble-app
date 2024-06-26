@@ -18,7 +18,7 @@ class Profile with ChangeNotifier {
   Gender gender;
   DateTime birthDate;
   List<File> photos = [];
-  int photoVerificationStatus;
+  PhotoVerificationStatus photoVerificationStatus;
   String conversationStarter;
   bool isPlatonic;
   RangeValues ageRangePreference;
@@ -36,7 +36,7 @@ class Profile with ChangeNotifier {
     this.age = defaultAge,
     DateTime? birthDate,
     required this.photos,
-    this.photoVerificationStatus = 0,
+    this.photoVerificationStatus = PhotoVerificationStatus.needToVerify,
     this.conversationStarter = "Hi there, I am on Stumble!",
     this.isPlatonic = false,
     this.ageRangePreference = defaultTargetAgeValues,
@@ -105,14 +105,6 @@ class Profile with ChangeNotifier {
     notifyListeners();
   }
 
-  set setVerificationStatus(bool currentStatus) {
-    setVerificationStatus = currentStatus;
-    if (currentStatus) {
-      profileCompletionAmount += 1;
-    }
-    notifyListeners();
-  }
-
   // Getters
 
   String get getName {
@@ -131,7 +123,7 @@ class Profile with ChangeNotifier {
     return phoneNumber;
   }
 
-  int get getPhotoVerificationStatus {
+  PhotoVerificationStatus get getPhotoVerificationStatus {
     return photoVerificationStatus;
   }
 
@@ -245,7 +237,8 @@ class Profile with ChangeNotifier {
       conversationStarter:
           profile[profileDBKeys[ProfileKeys.conversationStarter]] ?? "",
       photoVerificationStatus:
-          profile[profileDBKeys[ProfileKeys.photoVerificationStatus]] ?? false,
+          profile[profileDBKeys[ProfileKeys.photoVerificationStatus]] ??
+              PhotoVerificationStatus.needToVerify,
       photos: photoFileList,
       age: profile[profileDBKeys[ProfileKeys.age]] ?? defaultAge,
       ageRangePreference: targetAgeList,
