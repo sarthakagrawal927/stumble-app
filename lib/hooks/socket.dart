@@ -1,4 +1,4 @@
-import 'package:dating_made_better/providers/socket.dart';
+import 'package:dating_made_better/providers/realtime.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,8 @@ void connectSocket(int userId, BuildContext context) {
   });
 
   socket.on('newMessage', (data) {
-    Provider.of<SocketProvider>(context, listen: false).incrementMessageCount();
+    Provider.of<RealtimeProvider>(context, listen: false)
+        .handleNewChatMessage(data);
   });
 
   socket.onDisconnect((_) {

@@ -1,6 +1,6 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_fonts.dart';
-import 'package:dating_made_better/providers/socket.dart';
+import 'package:dating_made_better/providers/realtime.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,9 @@ class BottomBar extends StatelessWidget {
                 minHeight: 16,
               ),
               child: Text(
-                Provider.of<SocketProvider>(context).newMessageCount.toString(),
+                Provider.of<RealtimeProvider>(context)
+                    .newMessageCount
+                    .toString(),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 10,

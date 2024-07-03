@@ -1,5 +1,6 @@
 import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/providers/realtime.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
@@ -13,6 +14,7 @@ import 'package:dating_made_better/widgets/interest_types_constants.dart';
 import 'package:dating_made_better/widgets/moderation/report_user_widget.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
@@ -80,21 +82,25 @@ class _ChatScreenState extends State<ChatScreen> {
         isBlocked = value.isBlocked ?? false;
       });
     });
+    Provider.of<RealtimeProvider>(context, listen: false)
+        .initializeActiveThreadMessages(
+            listOfChatMessages, widget.thread.threadId);
   }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => setChatState(context));
+    Provider.of<RealtimeProvider>(context, listen: false)
+        .openChatThread(widget.thread.threadId);
   }
 
   Future<void> addNewMessage(String message) async {
     await _addNewMessage(
             widget.thread.threadId, message, widget.thread.chatterId)
         .then((value) {
-      setState(() {
-        listOfChatMessages.add(value);
-      });
+      Provider.of<RealtimeProvider>(context, listen: false)
+          .addUserMessageToActiveThread(value);
     }).catchError((err) {
       throw err;
     });
@@ -235,7 +241,10 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           Expanded(
-            child: ChatMessages(listOfChatMessages, widget.thread.displayPic),
+            child: ChatMessages(
+                Provider.of<RealtimeProvider>(context, listen: true)
+                    .activeThreadMessages,
+                widget.thread.displayPic),
           ),
           isBlocked
               ? Text("You have blocked this user",
