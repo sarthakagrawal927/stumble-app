@@ -4,11 +4,13 @@ import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/firebase_options.dart';
 import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/providers/socket.dart';
 import 'package:dating_made_better/screens/i_stumbled_into_screen.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/screens/stumbled_onto_me_screen.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/utils/helper.dart';
+import 'package:dating_made_better/widgets/common/parent.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -87,33 +89,36 @@ class MyApp extends StatelessWidget {
             photos: [],
           ),
         ),
+        ChangeNotifierProvider.value(value: SocketProvider()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        color: AppColors.backgroundColor,
-        navigatorObservers: [ChuckerFlutter.navigatorObserver],
-        title: 'Stumble!',
-        theme: ThemeData(
-            textTheme: GoogleFonts.latoTextTheme(
-              Theme.of(context).textTheme,
-            ),
-            scaffoldBackgroundColor: backgroundColor),
-        home: getScreen(),
-        routes: {
-          AuthScreen.routeName: (context) => const AuthScreen(),
-          SwipingScreen.routeName: (context) => const SwipingScreen(),
-          UserProfileScreen.routeName: (context) => const UserProfileScreen(),
-          UserProfileCompletionScreen.routeName: (context) =>
-              const UserProfileCompletionScreen(),
-          // ChatScreen.routeName: (context) => const ChatScreen(),
-          MatchesAndChatsScreen.routeName: (context) =>
-              const MatchesAndChatsScreen(),
-          FiltersScreen.routeName: (context) => const FiltersScreen(),
-          StumbledOntoMeScreen.routeName: (context) =>
-              const StumbledOntoMeScreen(),
-          IStumbledIntoScreen.routeName: (context) =>
-              const IStumbledIntoScreen(),
-        },
+      child: Parent(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          color: AppColors.backgroundColor,
+          navigatorObservers: [ChuckerFlutter.navigatorObserver],
+          title: 'Stumble!',
+          theme: ThemeData(
+              textTheme: GoogleFonts.latoTextTheme(
+                Theme.of(context).textTheme,
+              ),
+              scaffoldBackgroundColor: backgroundColor),
+          home: getScreen(),
+          routes: {
+            AuthScreen.routeName: (context) => const AuthScreen(),
+            SwipingScreen.routeName: (context) => const SwipingScreen(),
+            UserProfileScreen.routeName: (context) => const UserProfileScreen(),
+            UserProfileCompletionScreen.routeName: (context) =>
+                const UserProfileCompletionScreen(),
+            // ChatScreen.routeName: (context) => const ChatScreen(),
+            MatchesAndChatsScreen.routeName: (context) =>
+                const MatchesAndChatsScreen(),
+            FiltersScreen.routeName: (context) => const FiltersScreen(),
+            StumbledOntoMeScreen.routeName: (context) =>
+                const StumbledOntoMeScreen(),
+            IStumbledIntoScreen.routeName: (context) =>
+                const IStumbledIntoScreen(),
+          },
+        ),
       ),
     );
   }

@@ -63,6 +63,7 @@ dependencies:
   flutter_neumorphic: ^3.2.0
   flutter_inset_box_shadow: ^1.0.8
   flutter_exif_rotation: ^0.5.1
+  socket_io_client: ^2.0.3+1
 
 dev_dependencies:
   change_app_package_name: ^1.1.0

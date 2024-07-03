@@ -1,8 +1,10 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_fonts.dart';
+import 'package:dating_made_better/providers/socket.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/user_profile_overview_screen.dart';
 
@@ -19,17 +21,45 @@ const bottomScreenNameToRoute = {
 };
 
 class BottomBar extends StatelessWidget {
-  IconButton iconButtonBasedOnCurrentScreen(Icon icon, Color color,
+  Widget iconButtonBasedOnCurrentScreen(Icon icon, Color color,
       BuildContext context, String routeNameOfScreenToPush) {
-    return IconButton(
-      icon: icon,
-      iconSize: fontSize32(context),
-      color: color,
-      onPressed: () {
-        if (routeNameOfScreenToPush != "") {
-          Navigator.pushReplacementNamed(context, routeNameOfScreenToPush);
-        }
-      },
+    return Stack(
+      children: [
+        IconButton(
+          icon: icon,
+          iconSize: fontSize32(context),
+          color: color,
+          onPressed: () {
+            if (routeNameOfScreenToPush != "") {
+              Navigator.pushReplacementNamed(context, routeNameOfScreenToPush);
+            }
+          },
+        ),
+        if (routeNameOfScreenToPush == MatchesAndChatsScreen.routeName)
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Container(
+              padding: const EdgeInsets.all(2),
+              decoration: const BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 16,
+                minHeight: 16,
+              ),
+              child: Text(
+                Provider.of<SocketProvider>(context).newMessageCount.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+      ],
     );
   }
 
