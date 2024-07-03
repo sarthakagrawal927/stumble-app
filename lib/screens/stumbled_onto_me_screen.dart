@@ -22,49 +22,53 @@ class _StumbledOntoMeScreenState extends State<StumbledOntoMeScreen> {
     final List<MiniProfile> listOfProfiles =
         ModalRoute.of(context)!.settings.arguments as List<MiniProfile>;
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: TopAppBar(heading: "Stumble"),
-      body: listOfProfiles.isNotEmpty
-          ? GridView.builder(
-              itemCount: listOfProfiles.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onDoubleTap: () => DoNothingAction(),
-                  onTap: () async {
-                    getUserApi(listOfProfiles[index].id)
-                        .then((value) => showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return SwipeCard(
-                                  profile: value!,
-                                  isModalMode: true,
-                                );
-                              },
-                            ));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(marginHeight64(context)),
-                    alignment: Alignment.bottomLeft,
-                    decoration: imageBoxWidget(context, listOfProfiles[index]),
-                  ),
-                );
-              },
-            )
-          : Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: marginWidth32(context),
-                vertical: marginHeight64(context),
-              ),
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(
-                    textAlign: TextAlign.center,
-                    "No nearby stumblers to 'stumble' upon at the moment.",
-                    style: AppTextStyles.regularText(context)),
-              ),
-            ),
-    );
+        backgroundColor: AppColors.backgroundColor,
+        appBar: TopAppBar(
+            centerTitle: true,
+            showActions: false,
+            showLeading: true,
+            heading: "Stumble"),
+        body: listOfProfiles.isNotEmpty
+            ? GridView.builder(
+                itemCount: listOfProfiles.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onDoubleTap: () => DoNothingAction(),
+                    onTap: () async {
+                      getUserApi(listOfProfiles[index].id)
+                          .then((value) => showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return SwipeCard(
+                                    profile: value!,
+                                    isModalMode: true,
+                                  );
+                                },
+                              ));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(marginHeight64(context)),
+                      alignment: Alignment.bottomLeft,
+                      decoration:
+                          imageBoxWidget(context, listOfProfiles[index]),
+                    ),
+                  );
+                },
+              )
+            : Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: marginWidth32(context),
+                  vertical: marginHeight64(context),
+                ),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                      textAlign: TextAlign.center,
+                      getPromptTexts[PromptEnum.noStumbledOntoMe]!,
+                      style: AppTextStyles.regularText(context)),
+                ),
+              ));
   }
 }

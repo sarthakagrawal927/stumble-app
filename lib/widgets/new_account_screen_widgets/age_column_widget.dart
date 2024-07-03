@@ -1,4 +1,5 @@
 import 'package:age_calculator/age_calculator.dart';
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_colors.dart';
 import 'package:dating_made_better/constants_fonts.dart';
@@ -38,17 +39,17 @@ class _AgeColumnState extends State<AgeColumn> {
       children: [
         const ScreenHeadingWidget("What's your date of birth?"),
         Container(
-            margin: EdgeInsets.symmetric(
-                vertical: marginHeight16(context),
-                horizontal: marginWidth24(context)),
-            padding: EdgeInsets.all(marginWidth24(context)),
-            height: MediaQuery.of(context).size.width / 3,
-            child: Center(
-                child: TextField(
-              cursorColor: whiteColor,
+          margin: EdgeInsets.symmetric(
+              vertical: marginHeight16(context),
+              horizontal: marginWidth24(context)),
+          padding: EdgeInsets.all(marginWidth24(context)),
+          height: MediaQuery.of(context).size.width / 3,
+          child: Center(
+            child: TextField(
+              cursorColor: AppColors.backgroundColor,
               controller: dateInput,
               style: TextStyle(
-                color: whiteColor,
+                color: AppColors.backgroundColor,
                 fontSize: fontSize32(context),
               ),
               //editing controller of this TextField
@@ -58,13 +59,14 @@ class _AgeColumnState extends State<AgeColumn> {
                 labelStyle: TextStyle(
                   color: whiteColor,
                 ),
-                iconColor: whiteColor,
-                fillColor: whiteColor,
+                iconColor: AppColors.backgroundColor,
+                fillColor: AppColors.backgroundColor,
               ),
               readOnly: true,
               //set it true, so that user will not able to edit text
               onTap: () async {
                 pickedDate = await showDatePicker(
+                    barrierColor: AppColors.primaryColor,
                     context: context,
                     firstDate: DateTime(
                       DateTime.now().year - 70,
@@ -93,9 +95,10 @@ class _AgeColumnState extends State<AgeColumn> {
                   });
                 }
               },
-            ))),
-        // ),
-        ScreenGoToNextPageRow("This will be shown on your profile!", "", () {
+            ),
+          ),
+        ),
+        ScreenGoToNextPageRow(() {
           handleSnackBarIfInputNotFilled(pickedDate != null, () async {
             Provider.of<FirstScreenStateProviders>(context, listen: false)
                 .setNextScreenActive();

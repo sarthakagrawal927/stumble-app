@@ -6,6 +6,7 @@ import 'package:dating_made_better/utils/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 
 class PhotoUploader extends StatefulWidget {
   final PhotoUploaderMode mode;
@@ -22,9 +23,12 @@ class _PhotoUploaderState extends State<PhotoUploader> {
   void addImageFromGallery([int imagePos = 1]) async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
+      requestFullMetadata: true,
     );
     if (pickedFile != null) {
-      uploadPhotosAPI([File(pickedFile.path)]).then((filePaths) {
+      File rotatedImage =
+          await FlutterExifRotation.rotateAndSaveImage(path: pickedFile.path);
+      uploadPhotosAPI([rotatedImage]).then((filePaths) {
         Provider.of<Profile>(context, listen: false).setImageAtPosition(
           File(filePaths[0]),
           imagePos,

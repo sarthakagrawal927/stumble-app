@@ -23,7 +23,11 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
         ModalRoute.of(context)!.settings.arguments as List<MiniProfile>;
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        appBar: TopAppBar(heading: "Stumble"),
+        appBar: TopAppBar(
+            centerTitle: true,
+            showActions: false,
+            showLeading: true,
+            heading: "Stumble"),
         body: listOfProfiles.isNotEmpty
             ? GridView.builder(
                 itemCount: listOfProfiles.length,
@@ -62,9 +66,8 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
                   alignment: Alignment.center,
                   child: Text(
                       textAlign: TextAlign.center,
-                      "No nearby stumblers to 'stumble' upon at the moment.",
+                      getPromptTexts[PromptEnum.noLiked]!,
                       style: AppTextStyles.regularText(context)),
-                ),
-              ));
+                )));
   }
 }

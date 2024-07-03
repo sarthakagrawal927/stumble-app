@@ -1,4 +1,5 @@
 import 'package:chucker_flutter/chucker_flutter.dart';
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/firebase_options.dart';
 import 'package:dating_made_better/global_store.dart';
@@ -79,7 +80,7 @@ class MyApp extends StatelessWidget {
             birthDate: DateTime.now(),
             conversationStarter: "",
             gender: Gender.woman,
-            photoVerified: false,
+            photoVerificationStatus: 0,
             isPlatonic: true,
             genderPreferences: [],
             ageRangePreference: const RangeValues(18, 40),
@@ -89,7 +90,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        color: backgroundColor,
+        color: AppColors.backgroundColor,
         navigatorObservers: [ChuckerFlutter.navigatorObserver],
         title: 'Stumble!',
         theme: ThemeData(

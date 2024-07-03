@@ -1,6 +1,11 @@
+import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/screens/login_or_signup_screen.dart';
 import 'package:dating_made_better/utils/general.dart';
+import 'package:dating_made_better/utils/internal_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 ScreenMode getScreenMode() {
   bool userIsEmpty = isNullEmptyOrFalse(AppConstants.user);
@@ -19,4 +24,14 @@ ScreenMode getScreenMode() {
   } else {
     return ScreenMode.swipingScreen;
   }
+}
+
+Future<void> logOut(BuildContext context) async {
+  AppConstants.token = "";
+  AppConstants.user = {};
+  deleteSecureData(authKey).then((value) => {
+        Provider.of<FirstScreenStateProviders>(context, listen: false)
+            .setActiveScreenMode(ScreenMode.landing),
+        Navigator.pushNamed(context, AuthScreen.routeName)
+      });
 }

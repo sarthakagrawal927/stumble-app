@@ -48,7 +48,7 @@ void showDialogWidget(BuildContext context, ModelOpened modelOpenedName) {
                             horizontal: marginWidth12(context)),
                         child: Text(
                           title,
-                          style: GoogleFonts.sacramento(
+                          style: GoogleFonts.acme(
                               fontSize: 35,
                               color: headingColor,
                               fontWeight: FontWeight.w900),

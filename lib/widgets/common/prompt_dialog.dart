@@ -16,7 +16,7 @@ Future<Object?> promptDialog(BuildContext context, String text) {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: DefaultTextStyle(
-            style: GoogleFonts.sacramento(
+            style: GoogleFonts.acme(
               color: headingColor,
               fontSize: 30,
             ),

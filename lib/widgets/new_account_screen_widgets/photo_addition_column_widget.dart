@@ -33,8 +33,6 @@ class _PhotoAdditionColumnState extends State<PhotoAdditionColumn> {
           children: [PhotoUploader(PhotoUploaderMode.singleUpload)],
         ),
         ScreenGoToNextPageRow(
-          "This is displayed on your profile",
-          "",
           () {
             handleSnackBarIfInputNotFilled(
                 Provider.of<Profile>(context, listen: false)

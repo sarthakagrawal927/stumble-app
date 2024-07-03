@@ -1,38 +1,31 @@
 import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/models/chat.dart';
+import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/chat_messages.dart';
 import 'package:dating_made_better/widgets/chat/new_message.dart';
 import 'package:dating_made_better/widgets/circle_avatar.dart';
-import 'package:dating_made_better/widgets/common/info_dialog_widget.dart';
+import 'package:dating_made_better/widgets/common/menu_dropdown.dart';
 import 'package:dating_made_better/widgets/common/prompt_dialog.dart';
+import 'package:dating_made_better/widgets/dropdown_options_constants.dart';
+import 'package:dating_made_better/widgets/interest_types_constants.dart';
+import 'package:dating_made_better/widgets/moderation/report_user_widget.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
 
-var interestToLabel = {
-  InterestType.friendship: "Just a Conversation",
-  InterestType.hookup: "Casual Encounter",
-  InterestType.relationship: "Relationship",
-};
-
-var labelToInterest = {
-  interestToLabel[InterestType.friendship]: InterestType.friendship,
-  interestToLabel[InterestType.hookup]: InterestType.hookup,
-  interestToLabel[InterestType.relationship]: InterestType.relationship,
-};
-
 class ChatApiResponse {
   final List<ChatMessage> messages;
-  final bool lookingForSame;
-  final bool showLookingForOption;
+  final bool? lookingForSame;
+  final bool? showLookingForOption;
   final InterestType? lookingFor;
+  final bool? isBlocked;
 
   ChatApiResponse(this.messages, this.lookingFor, this.showLookingForOption,
-      this.lookingForSame);
+      this.lookingForSame, this.isBlocked);
 }
 
 Future<ChatApiResponse> _getChatMessages(String threadId) async {
@@ -47,7 +40,8 @@ Future<ChatApiResponse> _getChatMessages(String threadId) async {
       messages.map<ChatMessage>((e) => ChatMessage.fromJson(e)).toList(),
       lookingForInterest,
       apiResponse["showLookingForOption"],
-      apiResponse["lookingForSame"]);
+      apiResponse["lookingForSame"],
+      apiResponse["isBlocked"]);
 }
 
 Future<ChatMessage> _addNewMessage(
@@ -70,6 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Color showLookingForOptionColor = topAppBarColor;
   bool lookingForSame = false;
   bool profileLoading = false;
+  bool isBlocked = false;
   late InterestType? lookingFor;
 
   bool userHasSelectedANicheOption = false;
@@ -78,10 +73,11 @@ class _ChatScreenState extends State<ChatScreen> {
     _getChatMessages(widget.thread.threadId).then((value) {
       setState(() {
         listOfChatMessages = value.messages;
-        showLookingForOption = value.showLookingForOption;
+        showLookingForOption = value.showLookingForOption ?? false;
         showLookingForOptionColor = showLookingForOptionColor;
-        lookingForSame = value.lookingForSame;
+        lookingForSame = value.lookingForSame ?? false;
         lookingFor = value.lookingFor;
+        isBlocked = value.isBlocked ?? false;
       });
     });
   }
@@ -104,6 +100,27 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  Future<void> handleNicheSelection(InterestType interest) async {
+    updateUserInterest(widget.thread.threadId, interestValue[interest]!)
+        .then((sameInterest) {
+      if (sameInterest) {
+        setState(() {
+          lookingForSame = true;
+          lookingFor = interest;
+          showLookingForOption = false;
+        });
+        promptDialog(
+          context,
+          promptExplainingStumblingReason,
+        );
+      } else {
+        setState(() {
+          showLookingForOption = false;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,92 +129,92 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: AppColors.backgroundColor,
         toolbarHeight: MediaQuery.of(context).size.height / 12,
         leadingWidth: marginWidth16(context),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onDoubleTap: () => DoNothingAction(),
-              onTap: () async {
-                if (profileLoading) return;
-                profileLoading = true;
-                await getUserApi(widget.thread.chatterId)
-                    .then((value) => showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return SwipeCard(
-                              profile: value!,
-                              isModalMode: true,
-                            );
-                          },
-                        ));
-                profileLoading = false;
+        actions: [
+          MenuDropdown(const Icon(Icons.more_vert), [
+            DropdownOptionParams(
+              value: 'Report',
+              icon: Icons.report,
+              onClick: () => {
+                reportUserWidget(
+                    context: context,
+                    onReport: () async {
+                      Navigator.of(context, rootNavigator: true)
+                          .pushReplacementNamed(
+                              MatchesAndChatsScreen.routeName);
+                    },
+                    profileName: widget.thread.name,
+                    profileId: widget.thread.chatterId,
+                    source: reportSourceChat),
               },
-              child: CircleAvatarWidget(
-                  marginWidth16(context), widget.thread.displayPic),
             ),
-            SizedBox(
-              width: marginWidth128(context),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: marginWidth64(context)),
-              child: SizedBox(
-                  width: marginWidth4(context),
-                  child: Text(widget.thread.name.split(" ").first,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.chatNameText(context))),
-            ),
-            const Spacer(),
-            showLookingForOption
-                ? DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      borderRadius: BorderRadius.circular(10),
-                      dropdownColor: AppColors.backgroundColor,
-                      onTap: () async {
-                        await showModelIfNotShown(
-                            context, ModelOpened.userInterestInfoTeaching);
-                      },
-                      items: labelToInterest.entries
-                          .map((e) => nicheSelectedOption(e.value))
-                          .toList(),
-                      onChanged: (itemIdentifier) async {
-                        InterestType interest =
-                            labelToInterest[itemIdentifier]!;
-                        updateUserInterest(widget.thread.threadId,
-                                interestValue[interest]!)
-                            .then((sameInterest) {
-                          if (sameInterest) {
-                            setState(() {
-                              lookingForSame = true;
-                              lookingFor = interest;
-                              showLookingForOption = false;
-                            });
-                            promptDialog(
-                              context,
-                              promptExplainingStumblingReason,
-                            );
-                          } else {
-                            setState(() {
-                              showLookingForOption = false;
-                            });
-                          }
+            !isBlocked
+                ? DropdownOptionParams(
+                    value: 'Block',
+                    icon: Icons.block,
+                    onClick: () => {
+                      blockUserApi(widget.thread.chatterId).then((value) {
+                        setState(() {
+                          isBlocked = true;
                         });
-                      },
-                      icon: Icon(
-                        Icons.visibility,
-                        size: marginWidth12(context),
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
+                      }),
+                    },
                   )
-                : lookingForSame
-                    ? Container()
-                    : Icon(
-                        Icons.visibility_off,
-                        size: marginWidth12(context),
-                        color: AppColors.primaryColor,
-                      ),
-          ],
-        ),
+                : DropdownOptionParams(
+                    value: 'Unblock',
+                    icon: Icons.block_outlined,
+                    onClick: () => {
+                      unblockUserApi(widget.thread.chatterId).then((value) => {
+                            setState(() {
+                              isBlocked = false;
+                            })
+                          })
+                    },
+                  )
+          ]),
+          showLookingForOption
+              ? MenuDropdown(
+                  const Icon(Icons.remove_red_eye_outlined),
+                  interestToLabel.entries
+                      .map((e) => DropdownOptionParams(
+                            onClick: () => handleNicheSelection(e.key),
+                            value: e.value.toString(),
+                          ))
+                      .toList(),
+                )
+              : Container(),
+        ],
+        title: GestureDetector(
+            onDoubleTap: () => DoNothingAction(),
+            onTap: () async {
+              if (profileLoading) return;
+              profileLoading = true;
+              await getUserApi(widget.thread.chatterId)
+                  .then((value) => showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return SwipeCard(
+                            profile: value!,
+                            isModalMode: true,
+                          );
+                        },
+                      ));
+              profileLoading = false;
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                CircleAvatarWidget(
+                    marginWidth16(context), widget.thread.displayPic),
+                SizedBox(width: marginWidth32(context)),
+                Flexible(
+                  child: Text(
+                    widget.thread.name.split(" ").first,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.chatNameText(context),
+                  ),
+                )
+              ],
+            )),
       ),
       body: Column(
         children: [
@@ -220,27 +237,16 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: ChatMessages(listOfChatMessages, widget.thread.displayPic),
           ),
-          NewMessage(
-            sendMessage: addNewMessage,
-          )
+          isBlocked
+              ? Text("You have blocked this user",
+                  style: AppTextStyles.regularText(context))
+              : NewMessage(
+                  sendMessage: addNewMessage,
+                )
         ],
       ),
       bottomNavigationBar:
           const BottomBar(currentScreen: BottomBarScreens.chatScreen),
     );
   }
-
-  DropdownMenuItem<String> nicheSelectedOption(
-      final InterestType selectedOption) {
-    return DropdownMenuItem(
-      value: interestToLabel[selectedOption],
-      child: Text(
-        interestToLabel[selectedOption]!,
-        style: AppTextStyles.dropdownText(context),
-      ),
-    );
-  }
-
-  // implement preferredSize
-  Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 }

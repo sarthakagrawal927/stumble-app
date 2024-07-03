@@ -1,12 +1,11 @@
 import 'package:dating_made_better/app_colors.dart';
-import 'package:dating_made_better/constants_fonts.dart';
 import 'package:dating_made_better/models/chat.dart';
 import 'package:dating_made_better/models/profile.dart';
+import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/matches_conversation_started_with.dart';
-import 'package:dating_made_better/widgets/top_app_bar_with_screens_option.dart';
+import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../constants.dart';
 import '../widgets/bottom_app_bar.dart';
@@ -57,8 +56,11 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: TopAppBarWithScreensOption(
-        routeName: "",
+      appBar: TopAppBar(
+        centerTitle: false,
+        showActions: false,
+        showLeading: false,
+        heading: 'Your Stumblers',
       ),
       body: _listsPopulated &&
               listOfStumbleMatches.isEmpty &&
@@ -70,13 +72,9 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
                   horizontal: marginWidth8(context),
                 ),
                 child: Text(
-                  textAlign: TextAlign.center,
-                  "You haven't 'Stumbled' into anyone yet; keep swiping!",
-                  style: GoogleFonts.sacramento(
-                    color: textColor,
-                    fontSize: fontSize24(context),
-                  ),
-                ),
+                    textAlign: TextAlign.center,
+                    getPromptTexts[PromptEnum.noMatches]!,
+                    style: AppTextStyles.regularText(context)),
               ),
             )
           : Column(

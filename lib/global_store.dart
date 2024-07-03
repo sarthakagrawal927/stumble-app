@@ -2,4 +2,5 @@
 class AppConstants {
   static String token = "";
   static Map<String, dynamic> user = {};
+  static String nameFromAppleAuth = "";
 }

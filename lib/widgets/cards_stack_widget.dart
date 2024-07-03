@@ -60,16 +60,15 @@ class _CardsStackWidgetState extends State<CardsStackWidget>
         child: draggableItems.isEmpty
             ? Center(
                 child: Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: marginHeight8(context),
-                    horizontal: marginWidth8(context),
-                  ),
-                  child: Text(
-                      textAlign: TextAlign.center,
-                      "No nearby stumblers to 'stumble' upon at the moment.",
-                      style: AppTextStyles.regularText(context)),
+                margin: EdgeInsets.symmetric(
+                  vertical: marginHeight8(context),
+                  horizontal: marginWidth8(context),
                 ),
-              )
+                child: Text(
+                    textAlign: TextAlign.center,
+                    getPromptTexts[PromptEnum.noStumblersNearby]!,
+                    style: AppTextStyles.regularText(context)),
+              ))
             : DragWidget(
                 profile: draggableItems.last,
                 onSwipe: removeProfileOnSwipe,

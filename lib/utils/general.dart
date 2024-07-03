@@ -27,3 +27,9 @@ String beautifyTime(DateTime dateTime) {
       '${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}';
   return '$formattedTime, $formattedDate';
 }
+
+String upperCaseFirstLetter(String s) {
+  // add checks for null, empty, or false
+  if (s.isEmpty) return s;
+  return s[0].toUpperCase() + s.substring(1);
+}

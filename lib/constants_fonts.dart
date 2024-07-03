@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+double fontSize12(BuildContext context) {
+  return MediaQuery.of(context).size.height / 12;
+}
+
 double fontSize16(BuildContext context) {
   return MediaQuery.of(context).size.height / 16;
 }

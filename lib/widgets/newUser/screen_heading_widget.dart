@@ -1,3 +1,4 @@
+import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class ScreenHeadingWidget extends StatelessWidget {
         style: TextStyle(
           fontSize: marginHeight32(context),
           fontWeight: FontWeight.w600,
-          color: const Color.fromRGBO(255, 205, 234, 1),
+          color: AppColors.backgroundColor,
         ),
         text,
       ),

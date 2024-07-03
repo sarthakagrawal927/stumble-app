@@ -66,8 +66,6 @@ class _PromptAdditionColumnState extends State<PromptAdditionColumn> {
           ),
         ),
         ScreenGoToNextPageRow(
-          "This will be shown on your profile!",
-          "",
           () {
             handleSnackBarIfInputNotFilled(promptTextValue != "", () async {
               Provider.of<Profile>(context, listen: false)

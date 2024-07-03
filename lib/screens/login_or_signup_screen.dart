@@ -3,7 +3,6 @@ import 'package:dating_made_better/providers/first_screen_state_providers.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/age_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/gender_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/location_disclosure.dart';
-import 'package:dating_made_better/widgets/new_account_screen_widgets/niche_selection_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/otp_screen_column_widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/phone_number_column._widget.dart';
 import 'package:dating_made_better/widgets/new_account_screen_widgets/photo_addition_column_widget.dart';
@@ -25,8 +24,6 @@ final screenWidgets = {
   ScreenMode.genderInput: (deviceSize) => GenderColumn(deviceSize),
   ScreenMode.photoAdditionInput: (deviceSize) =>
       PhotoAdditionColumn(deviceSize),
-  ScreenMode.nicheSelectionInput: (deviceSize) =>
-      NicheSelectionColumn(deviceSize),
   ScreenMode.promptAdditionInput: (deviceSize) =>
       PromptAdditionColumn(deviceSize),
   ScreenMode.locationDisclosureScreen: (deviceSize) =>

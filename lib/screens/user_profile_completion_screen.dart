@@ -69,11 +69,14 @@ class _UserProfileCompletionScreenState
     String conversationStarterPrompt =
         Provider.of<Profile>(context, listen: false)
             .getConversationStarterPrompt;
-    bool isProfileVerified =
+    int photoVerificationStatus =
         Provider.of<Profile>(context, listen: false).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: TopAppBar(
+        centerTitle: true,
+        showActions: false,
+        showLeading: true,
         heading: "Profile Edit",
       ),
       body: ListView(
@@ -104,7 +107,9 @@ class _UserProfileCompletionScreenState
                   top: marginWidth32(context),
                   right: marginWidth32(context),
                 ),
-                child: isProfileVerified
+                child: photoVerificationStatus ==
+                        photoVerificationStatusValue[
+                            PhotoVerificationStatus.verified]
                     ? verificationStatusCard(
                         context,
                         Icons.verified_sharp,

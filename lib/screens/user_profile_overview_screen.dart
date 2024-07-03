@@ -6,8 +6,11 @@ import 'package:dating_made_better/screens/user_profile_completion_screen.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
+import 'package:dating_made_better/widgets/common/buttons.dart';
+import 'package:dating_made_better/widgets/dropdown_options_constants.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
-import 'package:dating_made_better/widgets/top_app_bar_with_logout_option.dart';
+import 'package:dating_made_better/widgets/top_app_bar.dart';
+import 'package:dating_made_better/widgets/top_app_bar_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,12 +28,17 @@ class UserProfileScreen extends StatelessWidget {
     String name = Provider.of<Profile>(context).getName;
     int age = Provider.of<Profile>(context).getAge;
     List<File> photos = Provider.of<Profile>(context).getPhotos;
-    bool isProfileVerified =
+    int photoVerificationStatus =
         Provider.of<Profile>(context).getPhotoVerificationStatus;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: TopAppBarWithLogoutOption(
-        routeName: "",
+      appBar: TopAppBar(
+        showLeading: false,
+        showActions: true,
+        dropDownItems: profileScreensDropdownOptions,
+        heading: 'Stumble',
+        screen: Screen.userProfileOverviewScreen,
+        centerTitle: false,
       ),
       body: Column(
         children: <Widget>[
@@ -87,10 +95,14 @@ class UserProfileScreen extends StatelessWidget {
                     Container(
                       color: Colors.transparent,
                       child: Icon(
-                        color: isProfileVerified
+                        color: photoVerificationStatus ==
+                                photoVerificationStatusValue[
+                                    PhotoVerificationStatus.verified]
                             ? Colors.blueAccent
                             : Colors.black45,
-                        isProfileVerified
+                        photoVerificationStatus ==
+                                photoVerificationStatusValue[
+                                    PhotoVerificationStatus.verified]
                             ? Icons.verified_rounded
                             : Icons.verified_outlined,
                       ),
@@ -100,20 +112,8 @@ class UserProfileScreen extends StatelessWidget {
                 SizedBox(
                   height: marginHeight64(context),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: AppColors.primaryColor,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    'Edit Profile',
-                    style: AppTextStyles.regularText(context),
-                  ),
+                SecondaryButton(
+                  text: "Edit Profile",
                   onPressed: () {
                     Navigator.pushNamed(
                         context, UserProfileCompletionScreen.routeName);
