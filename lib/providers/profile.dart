@@ -236,9 +236,8 @@ class Profile with ChangeNotifier {
           profile[profileDBKeys[ProfileKeys.gender]] ?? Gender.woman.index],
       conversationStarter:
           profile[profileDBKeys[ProfileKeys.conversationStarter]] ?? "",
-      photoVerificationStatus:
-          profile[profileDBKeys[ProfileKeys.photoVerificationStatus]] ??
-              PhotoVerificationStatus.needToVerify,
+      photoVerificationStatus: convertIntToPhotoVerificationStatus(
+          profile[profileDBKeys[ProfileKeys.photoVerificationStatus]]),
       photos: photoFileList,
       age: profile[profileDBKeys[ProfileKeys.age]] ?? defaultAge,
       ageRangePreference: targetAgeList,
@@ -316,4 +315,18 @@ List<Gender> convertIntListToEnumList(List<int>? intList) {
         throw ArgumentError('Invalid integer value: $value');
     }
   }).toList();
+}
+
+PhotoVerificationStatus convertIntToPhotoVerificationStatus(int value) {
+  switch (value) {
+    case 1:
+      return PhotoVerificationStatus.pending;
+    case 5:
+      return PhotoVerificationStatus.verified;
+    case 9:
+      return PhotoVerificationStatus.rejected;
+    case 0:
+    default:
+      return PhotoVerificationStatus.needToVerify;
+  }
 }
