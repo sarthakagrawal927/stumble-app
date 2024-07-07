@@ -242,13 +242,13 @@ class PhotoVerificationView {
 
 final photoVerificationStatusToTextMap = {
   PhotoVerificationStatus.needToVerify: PhotoVerificationView(
-      color: Colors.red, icon: Icons.warning, text: "Verify"),
+      color: Colors.black, icon: Icons.check_circle_outlined, text: "Verify your profile!"),
   PhotoVerificationStatus.pending: PhotoVerificationView(
-      color: Colors.red, icon: Icons.warning, text: "Verify"),
+      color: Colors.orange, icon: Icons.warning, text: "Verification under progress!"),
   PhotoVerificationStatus.verified: PhotoVerificationView(
-      color: Colors.red, icon: Icons.warning, text: "Verify"),
+      color: Colors.green, icon: Icons.check_circle, text: "You're verified!"),
   PhotoVerificationStatus.rejected: PhotoVerificationView(
-      color: Colors.red, icon: Icons.warning, text: "Verify"),
+      color: Colors.red, icon: Icons.warning, text: "Verification failed! Retry!"),
 };
 
 Card verificationStatusCard(
@@ -277,7 +277,7 @@ Card verificationStatusCard(
           ),
           Text(
             photoVerificationStatusToTextMap[photoVerificationStatus]!.text,
-            textAlign: TextAlign.end,
+            textAlign: TextAlign.center,
             style: AppTextStyles.descriptionText(context),
           ),
         ],
