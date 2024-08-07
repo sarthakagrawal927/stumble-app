@@ -4,6 +4,7 @@ import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/firebase_options.dart';
 import 'package:dating_made_better/global_store.dart';
 import 'package:dating_made_better/providers/first_screen_state_providers.dart';
+import 'package:dating_made_better/screens/events_screen.dart';
 import 'package:dating_made_better/screens/i_stumbled_into_screen.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/screens/stumbled_onto_me_screen.dart';
@@ -113,6 +114,7 @@ class MyApp extends StatelessWidget {
               const StumbledOntoMeScreen(),
           IStumbledIntoScreen.routeName: (context) =>
               const IStumbledIntoScreen(),
+          EventsScreen.routeName: (context) => const EventsScreen(),
         },
       ),
     );

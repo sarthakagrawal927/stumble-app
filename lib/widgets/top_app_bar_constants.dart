@@ -14,11 +14,12 @@ import 'package:showcaseview/showcaseview.dart';
 enum Screen {
   swipingScreen,
   userProfileOverviewScreen,
+  eventsScreen,
 }
 
-Icon dropdownMenuIcon(BuildContext context, {screen = Screen.swipingScreen}) {
+Icon dropdownMenuIcon(BuildContext context, IconData icon, {screen = Screen.swipingScreen}) {
   return Icon(
-    Icons.menu,
+    icon,
     color: AppColors.primaryColor,
     size: fontSize32(context),
   );
@@ -47,8 +48,10 @@ Container dropDownButtonWithoutPadding(
               showArrow: true,
               targetPadding: EdgeInsets.all(marginWidth128(context)),
               child: Transform.scale(
-                  scale: 1.25, child: dropdownMenuIcon(context)))
-          : Transform.scale(scale: 1.25, child: dropdownMenuIcon(context)));
+                  scale: 1.25, child: dropdownMenuIcon(context, Icons.menu)))
+          : screen == Screen.eventsScreen 
+            ? Transform.scale(scale: 1.25, child: dropdownMenuIcon(context, Icons.add_box_outlined))
+            : Transform.scale(scale: 1.25, child: dropdownMenuIcon(context, Icons.menu)));
 }
 
 Showcase swipingScreenHeadingWithShowcase(

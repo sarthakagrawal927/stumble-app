@@ -60,6 +60,7 @@ enum BottomBarScreens {
   userProfileOverviewScreen,
   swipingScreen,
   chatScreen,
+  eventsScreen,
 }
 
 enum PromptEnum {
@@ -67,6 +68,7 @@ enum PromptEnum {
   noLiked,
   noStumbledOntoMe,
   noStumblersNearby,
+  noEvents,
 }
 
 Map<PromptEnum, String> getPromptTexts = {
@@ -76,6 +78,7 @@ Map<PromptEnum, String> getPromptTexts = {
       "No nearby stumblers to 'stumble' upon at the moment.",
   PromptEnum.noStumblersNearby:
       "No nearby stumblers to 'stumble' upon at the moment.",
+  PromptEnum.noEvents: "Stay tuned, new events around you can pop up any time!"
 };
 
 enum PhotoUploaderMode { singleUpload, multiUpload }

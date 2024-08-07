@@ -63,6 +63,8 @@ enum ApiType {
   updateUserInterest,
   addDevice,
   sendFeedback,
+  getEvents,
+  createEvent,
 }
 
 const apiList = {
@@ -91,6 +93,7 @@ const apiList = {
   ApiType.updateUserInterest: "/api/v1/activity/update_user_interest",
   ApiType.addDevice: "/api/v1/user/device",
   ApiType.sendFeedback: "/api/v1/user/feedback",
+  ApiType.getEvents: "/api/v1/events",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -458,4 +461,13 @@ Future<List<String>> uploadPhotosAPI2(List<File> photos) async {
     debugPrint(err.toString());
   }
   return [""];
+}
+
+// Events APIs
+Future<List<dynamic>> getEvents() async {
+  var data = await callAPI(
+    getApiEndpoint(ApiType.getEvents),
+    method: HttpMethods.get,
+  );
+  return data["events"];
 }

@@ -1,5 +1,6 @@
 import 'package:dating_made_better/constants.dart';
 import 'package:dating_made_better/constants_fonts.dart';
+import 'package:dating_made_better/screens/events_screen.dart';
 import 'package:dating_made_better/screens/matches_and_chats_screen.dart';
 import 'package:dating_made_better/screens/swiping_screen.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +11,14 @@ const bottomScreenNameToIcon = {
   BottomBarScreens.swipingScreen: Icons.favorite,
   BottomBarScreens.chatScreen: Icons.chat,
   BottomBarScreens.userProfileOverviewScreen: Icons.account_box_rounded,
+  BottomBarScreens.eventsScreen: Icons.groups_3_outlined
 };
 
 const bottomScreenNameToRoute = {
   BottomBarScreens.swipingScreen: SwipingScreen.routeName,
   BottomBarScreens.chatScreen: MatchesAndChatsScreen.routeName,
   BottomBarScreens.userProfileOverviewScreen: UserProfileScreen.routeName,
+  BottomBarScreens.eventsScreen: EventsScreen.routeName
 };
 
 class BottomBar extends StatelessWidget {
@@ -61,6 +64,7 @@ class BottomBar extends StatelessWidget {
     Widget widgetToReturn;
     switch (currentScreen) {
       case BottomBarScreens.userProfileOverviewScreen:
+      case BottomBarScreens.eventsScreen:
       case BottomBarScreens.chatScreen:
         widgetToReturn = bottomAppBarConfigurationBasedOnCurrentScreen(
             context, currentScreen);
