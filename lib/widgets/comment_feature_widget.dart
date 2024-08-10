@@ -29,7 +29,7 @@ class CommentFeatureWidget extends StatelessWidget {
               child: IconButton(
                 style: ButtonStyle(
                   alignment: Alignment.center,
-                  backgroundColor: MaterialStateProperty.all(
+                  backgroundColor: WidgetStateProperty.all(
                     AppColors.primaryColor,
                   ),
                 ),

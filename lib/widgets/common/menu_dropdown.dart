@@ -37,8 +37,8 @@ class _MenuDropdownState extends State<MenuDropdown> {
           );
         },
         style: const MenuStyle(
-          elevation: MaterialStatePropertyAll(0),
-          shape: MaterialStatePropertyAll(
+          elevation: WidgetStatePropertyAll(0),
+          shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
@@ -48,11 +48,11 @@ class _MenuDropdownState extends State<MenuDropdown> {
             .map((e) => MenuItemButton(
                   onPressed: e.onClick,
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(
+                      padding: WidgetStateProperty.all(
                           const EdgeInsets.symmetric(
                               vertical: 3, horizontal: 16)),
                       backgroundColor:
-                          MaterialStateProperty.all(AppColors.backgroundColor)),
+                          WidgetStateProperty.all(AppColors.backgroundColor)),
                   child: Row(
                     children: [
                       e.icon != null

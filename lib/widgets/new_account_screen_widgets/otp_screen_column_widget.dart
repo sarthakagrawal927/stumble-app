@@ -54,11 +54,10 @@ class _OTPScreenColumnState extends State<OTPScreenColumn> {
           },
           //runs when every textfield is filled
           onSubmit: (String verificationCode) async {
-            verifyOtpApi(verificationCode,
-                    Provider.of<Profile>(context, listen: false).getPhone)
-                .then((profile) {
-              handleSignInComplete(context);
-            });
+            final profile = Provider.of<Profile>(context, listen: false);
+            await verifyOtpApi(verificationCode, profile.getPhone);
+            if (!mounted) return; // Check if the widget is still mounted
+            handleSignInComplete(context);
           }, // end onSubmit
         ),
       ],
