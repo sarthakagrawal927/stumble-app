@@ -56,9 +56,7 @@ Future<void> main() async {
   runApp(
     ShowCaseWidget(
       autoPlay: false,
-      builder: Builder(
-        builder: (context) => const MyApp(),
-      ),
+      builder: (BuildContext context) => const MyApp(),
     ),
   );
 }
