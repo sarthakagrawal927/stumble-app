@@ -12,16 +12,16 @@ class AppTextStyles {
         fontWeight: FontWeight.w900,
       );
 
-  static TextStyle secondaryHeading(context, {size = 22.0}) =>
+  static TextStyle secondaryHeading(context, {size = 22.0, color = AppColors.backgroundColor}) =>
       GoogleFonts.poppins(
-        color: AppColors.backgroundColor,
+        color: color,
         fontSize: TextScaleHelper.scaleText(context, size),
         fontWeight: FontWeight.w700,
       );
 
-  static TextStyle descriptionText(context) => GoogleFonts.poppins(
+  static TextStyle descriptionText(context, {size = 11.0}) => GoogleFonts.poppins(
         color: AppColors.primaryColor,
-        fontSize: TextScaleHelper.scaleText(context, 11),
+        fontSize: TextScaleHelper.scaleText(context, size),
         fontWeight: FontWeight.w400,
       );
 

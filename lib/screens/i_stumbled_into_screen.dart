@@ -52,7 +52,7 @@ class _IStumbledIntoScreenState extends State<IStumbledIntoScreen> {
                       margin: EdgeInsets.all(marginHeight64(context)),
                       alignment: Alignment.bottomLeft,
                       decoration:
-                          imageBoxWidget(context, listOfProfiles[index]),
+                          imageBoxWidget(context, listOfProfiles[index].photo),
                     ),
                   );
                 },
