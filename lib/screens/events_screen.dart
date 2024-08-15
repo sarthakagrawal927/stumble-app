@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
@@ -6,10 +8,13 @@ import 'package:dating_made_better/stumbles_list_constants.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/bottom_app_bar.dart';
+import 'package:dating_made_better/widgets/common/dialog_widget.dart';
+import 'package:dating_made_better/widgets/common/small_profile_badge.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
 import 'package:dating_made_better/widgets/top_app_bar_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({super.key});
@@ -67,10 +72,71 @@ void setEventState(context) {
                     child: GestureDetector(
                       onDoubleTap: () => DoNothingAction(),
                       onTap: () async {
-                        // showDialog(context: context, builder: (context) {
-
-                        //   return Center(child: Container(height: marginHeight2(context), width: MediaQuery.of(context).size.width / 1.25,  child: Text("To be edited tomorrow"), alignment: Alignment.center, color: Colors.blue,));
-                        // },);
+                        dialogWidget(
+                          context: context, 
+                          submitLabel: "Register!", 
+                          title: listOfEvents[index].eventName,
+                          onSubmit: () async {
+                            launchUrl(Uri.parse(listOfEvents[index].eventLink));
+                          },
+                          childWidget: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: marginHeight4(context) * 1.25,
+                                decoration: imageBoxWidget(
+                                context, listOfEvents[index].eventImageUrl),),
+                              SizedBox(height: marginHeight48(context)),
+                              Text(
+                                listOfEvents[index].eventDescription,
+                                textAlign: TextAlign.left,
+                                style: AppTextStyles.descriptionText(context, size: 12.5),
+                              ),
+                              SizedBox(height: marginHeight48(context)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                  const Icon(Icons.date_range, size: 25.0,),
+                                  SizedBox(width: marginWidth128(context),),
+                                  Text(style: AppTextStyles.descriptionText(context), listOfEvents[index].eventStartTime.substring(0, 10)),
+                                ],),
+                                SizedBox(width: marginWidth32(context),),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                  const Icon(Icons.timelapse, size: 25.0,),
+                                  SizedBox(width: marginWidth128(context),),
+                                  Text(style: AppTextStyles.descriptionText(context), "${listOfEvents[index].eventStartTime.substring(11, 16)} - ${listOfEvents[index].eventEndTime.substring(11, 16)}"),
+                                ],)
+                              ],),
+                              SizedBox(height: marginHeight48(context)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                  const Icon(Icons.location_on, size: 25.0,),
+                                  SizedBox(width: marginWidth128(context),),
+                                  Text(style: AppTextStyles.descriptionText(context), listOfEvents[index].eventLocationName),
+                                ],),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                  const Icon(Icons.people_sharp, size: 25.0,),
+                                  SizedBox(width: marginWidth128(context),),
+                                  Text(style: AppTextStyles.descriptionText(context), listOfEvents[index].numberOfInterestedUsersInEvent == null ? "0" : listOfEvents[index].numberOfInterestedUsersInEvent.toString(),),
+                                ],),
+                              ],),
+                              SizedBox(height: marginHeight48(context)),
+                              SmallProfileBadge(text: listOfEvents[index].eventOrganizerName, icon: Icons.person_pin_circle,),
+                            ],
+                          ),
+                        );
                       },
                       child: Card(
                         borderOnForeground: true,
@@ -101,7 +167,8 @@ void setEventState(context) {
                             Padding(
                               padding: const EdgeInsets.only(left: 10.0, right: 10.0,),
                               child: Text(
-                                listOfEvents[index].eventDescription,
+                                "${listOfEvents[index].eventDescription.substring(0,
+                                min(listOfEvents[index].eventDescription.length, 75))}...",
                                 textAlign: TextAlign.start,
                                 style: AppTextStyles.regularText(context, size: 10.0),
                               ),
