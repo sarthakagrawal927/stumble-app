@@ -34,7 +34,7 @@ class UserProfileScreen extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       appBar: TopAppBar(
         showLeading: false,
-        showActions: true,
+        showActions: DropDownType.dropDown,
         dropDownItems: profileScreensDropdownOptions,
         heading: 'Stumble',
         screen: Screen.userProfileOverviewScreen,

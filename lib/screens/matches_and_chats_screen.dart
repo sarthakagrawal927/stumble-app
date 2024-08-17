@@ -5,6 +5,7 @@ import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/chat/matches_conversation_started_with.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
+import 'package:dating_made_better/widgets/top_app_bar_constants.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -58,7 +59,7 @@ class _MatchesAndChatsScreenState extends State<MatchesAndChatsScreen> {
       backgroundColor: AppColors.backgroundColor,
       appBar: TopAppBar(
         centerTitle: false,
-        showActions: false,
+        showActions: DropDownType.showNothing,
         showLeading: false,
         heading: 'Your Stumblers',
       ),

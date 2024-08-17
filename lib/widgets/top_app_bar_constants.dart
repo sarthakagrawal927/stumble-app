@@ -17,6 +17,12 @@ enum Screen {
   eventsScreen,
 }
 
+enum DropDownType {
+  dropDown,
+  addItem,
+  showNothing,
+}
+
 Icon dropdownMenuIcon(BuildContext context, IconData icon, {screen = Screen.swipingScreen}) {
   return Icon(
     icon,

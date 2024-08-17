@@ -6,6 +6,7 @@ import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/swipe_card.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
+import 'package:dating_made_better/widgets/top_app_bar_constants.dart';
 import 'package:flutter/material.dart';
 
 class StumbledOntoMeScreen extends StatefulWidget {
@@ -25,7 +26,7 @@ class _StumbledOntoMeScreenState extends State<StumbledOntoMeScreen> {
         backgroundColor: AppColors.backgroundColor,
         appBar: TopAppBar(
             centerTitle: true,
-            showActions: false,
+            showActions: DropDownType.showNothing,
             showLeading: true,
             heading: "Stumble"),
         body: listOfProfiles.isNotEmpty

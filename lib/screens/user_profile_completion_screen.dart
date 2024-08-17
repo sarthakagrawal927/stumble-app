@@ -6,6 +6,7 @@ import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/common/photo_uploader.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
+import 'package:dating_made_better/widgets/top_app_bar_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -75,7 +76,7 @@ class _UserProfileCompletionScreenState
       backgroundColor: AppColors.backgroundColor,
       appBar: TopAppBar(
         centerTitle: true,
-        showActions: false,
+        showActions: DropDownType.showNothing,
         showLeading: true,
         heading: "Profile Edit",
       ),

@@ -96,6 +96,7 @@ const apiList = {
   ApiType.addDevice: "/api/v1/user/device",
   ApiType.sendFeedback: "/api/v1/user/feedback",
   ApiType.getEvents: "/api/v1/events",
+  ApiType.createEvent: "/api/v1/events",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -472,4 +473,11 @@ Future<List<dynamic>> getEvents() async {
     method: HttpMethods.get,
   );
   return data["events"];
+}
+
+Future<void> createEvents(Map<String, dynamic> bodyParams) async {
+  await callAPI(getApiEndpoint(ApiType.createEvent),
+      bodyParams: bodyParams,
+      method: HttpMethods.post,
+    );
 }

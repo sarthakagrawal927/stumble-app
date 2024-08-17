@@ -55,7 +55,7 @@ void setEventState(context) {
       backgroundColor: AppColors.backgroundColor,
         appBar: TopAppBar(
             centerTitle: false,
-            showActions: true,
+            showActions: DropDownType.addItem,
             showLeading: false,
             heading: "Events",
             screen: Screen.eventsScreen,

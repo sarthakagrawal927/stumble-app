@@ -124,7 +124,7 @@ class _SwipingScreenState extends State<SwipingScreen> {
           child: TopAppBar(
             centerTitle: false,
             heading: "Stumble",
-            showActions: true,
+            showActions: DropDownType.dropDown,
             showLeading: false,
             dropDownItems: dropdownWithScreenOptions,
             dropDownKey: _dropDownKey,

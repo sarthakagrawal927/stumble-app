@@ -1,4 +1,6 @@
 import 'package:dating_made_better/app_colors.dart';
+import 'package:dating_made_better/constants_fonts.dart';
+import 'package:dating_made_better/screens/create_events_screen.dart';
 import 'package:dating_made_better/widgets/dropdown_options_constants.dart';
 import 'package:dating_made_better/widgets/top_app_bar_constants.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ import '../constants.dart';
 // ignore: must_be_immutable
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   bool centerTitle;
-  bool showActions;
+  DropDownType showActions;
   bool showLeading;
   String heading;
   GlobalKey dropDownKey;
@@ -43,25 +45,24 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
             : null,
         automaticallyImplyLeading: false,
         centerTitle: centerTitle,
-        actions: showActions
+        actions: showActions == DropDownType.dropDown
             ? [
-                DropdownButtonHideUnderline(
-                    child: ButtonTheme(
-                  alignedDropdown: true,
-                  child: DropdownButton(
-                    borderRadius: BorderRadius.circular(10),
-                    dropdownColor: AppColors.backgroundColor,
-                    iconSize: marginWidth16(context),
-                    items: getDropDownMenuList(context, dropDownItems),
-                    onChanged: (itemIdentifier) async {
-                      dropDownOptions[itemIdentifier]!.onClick(context);
-                    },
-                    icon: (dropDownButtonWithoutPadding(
-                        context, dropDownKey, screen)),
-                  ),
-                )),
+                DropDownButtonForAppBar(
+                  dropDownItems: dropDownItems, dropDownKey: dropDownKey, screen: screen)
               ]
-            : null,
+            : showActions == DropDownType.addItem
+              ?
+            [
+              IconButton(icon: Icon(
+                Icons.add_box_outlined, 
+                color: AppColors.primaryColor,
+                size: fontSize32(context),
+              ), 
+              onPressed: () { 
+                  Navigator.of(context, rootNavigator: true).pushNamed(CreateEventScreen.routeName);
+               },
+              ),
+            ] : null,
         title: screen == Screen.swipingScreen
             ? swipingScreenHeadingWithShowcase(
                 context, locationUsageKey, heading)
@@ -79,4 +80,36 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   // implement preferredSize
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
+}
+
+class DropDownButtonForAppBar extends StatelessWidget {
+  const DropDownButtonForAppBar({
+    super.key,
+    required this.dropDownItems,
+    required this.dropDownKey,
+    required this.screen,
+  });
+
+  final List<DropdownOptionVal?> dropDownItems;
+  final GlobalKey<State<StatefulWidget>> dropDownKey;
+  final Screen screen;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonHideUnderline(
+        child: ButtonTheme(
+      alignedDropdown: true,
+      child: DropdownButton(
+        borderRadius: BorderRadius.circular(10),
+        dropdownColor: AppColors.backgroundColor,
+        iconSize: marginWidth16(context),
+        items: getDropDownMenuList(context, dropDownItems),
+        onChanged: (itemIdentifier) async {
+          dropDownOptions[itemIdentifier]!.onClick(context);
+        },
+        icon: (dropDownButtonWithoutPadding(
+            context, dropDownKey, screen)),
+      ),
+    ));
+  }
 }
