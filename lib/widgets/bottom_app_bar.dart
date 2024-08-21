@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 
 import '../screens/user_profile_overview_screen.dart';
 
-const bottomScreenNameToIcon = {
-  BottomBarScreens.swipingScreen: Icons.favorite,
-  BottomBarScreens.chatScreen: Icons.chat,
-  BottomBarScreens.userProfileOverviewScreen: Icons.account_box_rounded,
-  BottomBarScreens.eventsScreen: Icons.groups_3_outlined
+Map<BottomBarScreens, BottomBarIcon> bottomScreenNameToIcon = {
+  BottomBarScreens.swipingScreen: BottomBarIcon(Icons.favorite, "Stumble!"),
+  BottomBarScreens.chatScreen: BottomBarIcon(Icons.chat, "Chats"),
+  BottomBarScreens.userProfileOverviewScreen: BottomBarIcon(Icons.account_box_rounded, "Profile"),
+  BottomBarScreens.eventsScreen: BottomBarIcon(Icons.groups_3_outlined, "Events"),
 };
 
 const bottomScreenNameToRoute = {
@@ -21,30 +21,55 @@ const bottomScreenNameToRoute = {
   BottomBarScreens.eventsScreen: EventsScreen.routeName
 };
 
+class BottomBarIcon {
+  final IconData icon;
+  final String iconText;
+
+  BottomBarIcon(this.icon, this.iconText);
+}
+
 class BottomBar extends StatelessWidget {
-  IconButton iconButtonBasedOnCurrentScreen(Icon icon, Color color,
-      BuildContext context, String routeNameOfScreenToPush) {
-    return IconButton(
-      icon: icon,
-      iconSize: fontSize32(context),
-      color: color,
-      onPressed: () {
+GestureDetector iconButtonBasedOnCurrentScreen(Icon icon, Color color,
+      BuildContext context, String routeNameOfScreenToPush, String iconText) {
+    return GestureDetector(
+      onTap: () {
         if (routeNameOfScreenToPush != "") {
           Navigator.pushReplacementNamed(context, routeNameOfScreenToPush);
         }
       },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          IconButton(
+            icon: icon,
+            padding: EdgeInsets.all(0),
+            iconSize: fontSize32(context),
+            constraints: BoxConstraints(),
+            color: color,
+            onPressed: () {
+              if (routeNameOfScreenToPush != "") {
+                Navigator.pushReplacementNamed(context, routeNameOfScreenToPush);
+              }
+            },
+          ),
+          Text(
+            iconText,
+            style: TextStyle(fontSize: fontSize80(context), color: color, height: 0.0),
+          ),
+        ],
+      ),
     );
   }
 
   Padding bottomAppBarConfigurationBasedOnCurrentScreen(
       BuildContext context, BottomBarScreens currentScreen) {
     return Padding(
-      padding: EdgeInsets.only(bottom: marginHeight128(context)),
+      padding: EdgeInsets.zero,
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: BottomBarScreens.values
               .map((value) => iconButtonBasedOnCurrentScreen(
-                    Icon(bottomScreenNameToIcon[value]),
+                    Icon(bottomScreenNameToIcon[value]!.icon),
                     currentScreen == value
                         ? selectedScreenIconColor
                         : nonSelectedScreenIconColor,
@@ -52,6 +77,7 @@ class BottomBar extends StatelessWidget {
                     currentScreen == value
                         ? ""
                         : bottomScreenNameToRoute[value] ?? "",
+                    bottomScreenNameToIcon[value]!.iconText
                   ))
               .toList()),
     );
@@ -86,6 +112,7 @@ class BottomBar extends StatelessWidget {
       ),
       child: BottomAppBar(
         color: bottomAppBarColor,
+        height: marginHeight16(context) * 1.5,
         child: returnWidgetBasedOnCurrentScreen(context),
       ),
     );
