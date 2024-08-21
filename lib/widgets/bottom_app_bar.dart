@@ -112,6 +112,8 @@ GestureDetector iconButtonBasedOnCurrentScreen(Icon icon, Color color,
       ),
       child: BottomAppBar(
         color: bottomAppBarColor,
+        surfaceTintColor: Colors.black,
+        shadowColor: Colors.black,
         height: marginHeight16(context) * 1.5,
         child: returnWidgetBasedOnCurrentScreen(context),
       ),
