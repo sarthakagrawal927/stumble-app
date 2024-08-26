@@ -62,13 +62,18 @@ void setEventState(context) {
         ),
         body: listOfEvents.isNotEmpty
             ? GridView.builder(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 itemCount: listOfEvents.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
+                    crossAxisCount: 1),
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    margin: EdgeInsets.only(left: marginWidth128(context), top: marginHeight128(context), bottom: marginHeight128(context)),
+                    margin: EdgeInsets.only(
+                      left: marginWidth64(context), 
+                      top: marginHeight64(context), 
+                      right: marginWidth64(context), 
+                      bottom: marginHeight32(context),
+                    ),
                     child: GestureDetector(
                       onDoubleTap: () => DoNothingAction(),
                       onTap: () async {
@@ -141,11 +146,11 @@ void setEventState(context) {
                       child: Card(
                         borderOnForeground: true,
                         shape: BeveledRectangleBorder(),
-                        elevation: 3,
+                        elevation: 4,
                         child: Column(
                           children: [
                             Container(
-                              height: marginHeight4(context) / 1.5,
+                              height: marginHeight4(context),
                               width: MediaQuery.of(context).size.width / 1.1,
                               margin: EdgeInsets.all(marginHeight128(context)),
                               alignment: Alignment.bottomLeft,
