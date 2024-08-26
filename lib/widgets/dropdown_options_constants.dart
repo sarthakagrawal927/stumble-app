@@ -47,11 +47,11 @@ final Map<String, DropdownOptionVal?> dropDownOptions = {
         context, "/stumbled-onto-me-screen",
         arguments: value))),
   ),
-  'Filters': DropdownOptionVal(
-    'Filters',
-    Icons.menu_book_outlined,
-    ((context) => Navigator.pushNamed(context, "/filters-screen")),
-  ),
+  // 'Filters': DropdownOptionVal(
+  //   'Filters',
+  //   Icons.menu_book_outlined,
+  //   ((context) => Navigator.pushNamed(context, "/filters-screen")),
+  // ),
   'Leave feedback!': DropdownOptionVal('Leave feedback!', Icons.pages,
       ((context) => userFeedbackWidget(context: context))),
   'Privacy terms': DropdownOptionVal(
@@ -81,7 +81,7 @@ final Map<String, DropdownOptionVal?> dropDownOptions = {
 final dropdownWithScreenOptions = [
   dropDownOptions['I stumbled into'],
   dropDownOptions['Stumbled onto me'],
-  dropDownOptions['Filters'],
+  // dropDownOptions['Filters'],
 ];
 
 final profileScreensDropdownOptions = [

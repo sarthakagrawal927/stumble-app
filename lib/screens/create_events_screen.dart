@@ -121,6 +121,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     backgroundColor: widgetColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(marginWidth64(context)),
+                      side: BorderSide(width: 0.5),
                     ),
                     padding: EdgeInsets.zero,
                     fixedSize: Size(

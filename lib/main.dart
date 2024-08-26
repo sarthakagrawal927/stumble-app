@@ -21,7 +21,7 @@ import 'package:showcaseview/showcaseview.dart';
 
 import './providers/profile.dart';
 import 'screens/login_or_signup_screen.dart';
-import './screens/filters_screen.dart';
+// import './screens/filters_screen.dart';
 import './screens/swiping_screen.dart';
 import './screens/user_profile_completion_screen.dart';
 import './screens/user_profile_overview_screen.dart';
@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
           // ChatScreen.routeName: (context) => const ChatScreen(),
           MatchesAndChatsScreen.routeName: (context) =>
               const MatchesAndChatsScreen(),
-          FiltersScreen.routeName: (context) => const FiltersScreen(),
+          // FiltersScreen.routeName: (context) => const FiltersScreen(),
           StumbledOntoMeScreen.routeName: (context) =>
               const StumbledOntoMeScreen(),
           IStumbledIntoScreen.routeName: (context) =>
