@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dating_made_better/app_colors.dart';
 import 'package:dating_made_better/constants.dart';
+import 'package:dating_made_better/models/Location.dart';
 import 'package:dating_made_better/text_styles.dart';
 import 'package:dating_made_better/utils/call_api.dart';
 import 'package:dating_made_better/widgets/top_app_bar.dart';
@@ -19,6 +21,24 @@ class CreateEventScreen extends StatefulWidget {
   _CreateEventScreenState createState() => _CreateEventScreenState();
 }
 
+Future<List<Location>> getSuggestions(String location) async {
+  List<dynamic> locationSuggestionsList = await getEventLocation(location);
+  List<Location> suggestionsList = [];
+  for (var locationObject in locationSuggestionsList) {
+    String locationName =  locationObject["terms"][0]["value"];
+    String locationArea = locationObject["terms"][1]["value"] +  " " + locationObject["terms"][2]["value"];
+    locationName.substring(0, min(locationName.length, 50));
+    locationArea.substring(0, min(locationName.length, 50));
+    suggestionsList.add(
+      Location(
+        locationName: locationName,
+        locationArea: locationArea,
+      ),
+    );
+  }
+  return suggestionsList;
+}
+
 class _CreateEventScreenState extends State<CreateEventScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -28,6 +48,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   DateTime _startDateTime = DateTime.now();
   DateTime _endDateTime = DateTime.now().add(Duration(hours: 1));
   String imageUrl = "";
+  String locationEntered = "";
+  List<Location> locationSuggestionsList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -94,25 +116,59 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                 context: context,
               ),
               SizedBox(height: marginHeight48(context)),
-              TextFormField(
-                style: AppTextStyles.regularText(context),
-                key: Key('locationField'), // Add this line
-                controller: _locationController,
-                decoration: InputDecoration(
-                  labelText: 'Location',
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.search),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a location';
-                  }
-                  return null;
-                },
-                onTap: () {
-                  // TODO: Implement location search functionality
-                  // This should call the backend to search for locations
-                },
+              Column(
+                children: [
+                  TextFormField(
+                    style: AppTextStyles.regularText(context),
+                    key: Key('locationField'), // Add this line
+                    controller: _locationController,
+                    decoration: InputDecoration(
+                      labelText: 'Location',
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.search),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a location';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) async {
+                      List<Location> listOfSuggestions = await getSuggestions(value);
+                      setState(() {
+                        locationSuggestionsList = listOfSuggestions;
+                      });
+                    },
+                  ),
+                  Container(
+                    child: FutureBuilder(
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } 
+                      else {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: locationSuggestionsList.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              onTap: () {
+                                _locationController.text = locationSuggestionsList[index].locationName;
+                                setState(() {
+                                  locationSuggestionsList.clear();
+                                });
+                              },
+                              title: Text(locationSuggestionsList[index].locationName),
+                              subtitle: Text(locationSuggestionsList[index].locationArea),
+                            );
+                          },
+                        );
+                      } 
+                    },
+                    future: getSuggestions(_locationController.text),
+                  )
+                  ),
+                ],
               ),
                SizedBox(height: marginHeight48(context)),
               Center(

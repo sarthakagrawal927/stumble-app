@@ -22,6 +22,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 const String localBaseUrl = "https://ipgtvmwff6.us-east-1.awsapprunner.com";
 const String prodBaseUrl = "https://ipgtvmwff6.us-east-1.awsapprunner.com";
 const String baseURL = prodBaseUrl;
+const String mapUrl = "https://api.olamaps.io/places/v1/autocomplete";
 final _chuckerHttpClient = ChuckerHttpClient(http.Client());
 final logger = Logger();
 
@@ -32,6 +33,11 @@ enum HttpMethods {
   get,
   put,
   delete,
+}
+
+enum UrlType {
+  baseUrl,
+  mapApiUrl,
 }
 
 const Map<String, String> defaultHeaders = {
@@ -67,6 +73,7 @@ enum ApiType {
   sendFeedback,
   getEvents,
   createEvent,
+  getLocations,
 }
 
 const apiList = {
@@ -97,6 +104,7 @@ const apiList = {
   ApiType.sendFeedback: "/api/v1/user/feedback",
   ApiType.getEvents: "/api/v1/events",
   ApiType.createEvent: "/api/v1/events",
+  ApiType.getLocations: "",
 };
 
 String getApiEndpoint(ApiType apiType) {
@@ -119,6 +127,7 @@ Future<Map<String, dynamic>> callAPI(
   queryParams,
   HttpMethods method = HttpMethods.get,
   headers = defaultHeaders,
+  urlType = UrlType.baseUrl,
 }) async {
   try {
     final response = await (method == HttpMethods.post
@@ -142,7 +151,10 @@ Future<Map<String, dynamic>> callAPI(
                 },
               )
             : _chuckerHttpClient.get(
-                Uri.parse(
+              urlType == UrlType.mapApiUrl
+                ? Uri.parse(
+                    mapUrl + getUrlFromQueryParams(queryParams))
+                : Uri.parse(
                     baseURL + reqUrl + getUrlFromQueryParams(queryParams)),
                 headers: {
                     ...headers,
@@ -158,6 +170,7 @@ Future<Map<String, dynamic>> callAPI(
     }
     final decodedResponse = jsonDecode(response.body);
     logger.i(response.body);
+    if (urlType == UrlType.mapApiUrl) return decodedResponse;
     final data = decodedResponse['data'] ?? {"": ""};
     return data;
   } catch (e) {
@@ -480,4 +493,17 @@ Future<void> createEvents(Map<String, dynamic> bodyParams) async {
       bodyParams: bodyParams,
       method: HttpMethods.post,
     );
+}
+
+Future<List<dynamic>> getEventLocation(String location) async {
+  var data = await callAPI(
+    getApiEndpoint(ApiType.getLocations),
+    urlType: UrlType.mapApiUrl,
+    method: HttpMethods.get,
+    queryParams: {
+      "input": location,
+      "api_key": "U8vpbEUZ0HpILC2NM3bOWCREc0Y0hgv9xqwCaXhn"
+    }
+  );
+  return data["predictions"];
 }
