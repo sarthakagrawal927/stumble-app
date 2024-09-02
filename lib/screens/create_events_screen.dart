@@ -28,7 +28,7 @@ Future<List<Location>> getSuggestions(String location) async {
     String locationName =  locationObject["terms"][0]["value"];
     String locationArea = locationObject["terms"][1]["value"] +  " " + locationObject["terms"][2]["value"];
     locationName.substring(0, min(locationName.length, 50));
-    locationArea.substring(0, min(locationName.length, 50));
+    locationArea.substring(0, min(locationArea.length, 50));
     suggestionsList.add(
       Location(
         locationName: locationName,
