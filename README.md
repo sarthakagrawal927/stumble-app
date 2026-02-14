@@ -1,5 +1,8 @@
 # Stumble.
 
+![AI Generated](https://ai-percentage-pin.vercel.app/api/ai-percentage?value=5)
+![AI PRs Welcome](https://ai-percentage-pin.vercel.app/api/ai-prs?welcome=yes)
+
 ## Fix errors:
 
 ```bash
